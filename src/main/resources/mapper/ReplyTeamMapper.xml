@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.graduationaldesign.graduation.mapper.LikeMapper">
-  <resultMap id="BaseResultMap" type="com.graduationaldesign.graduation.pojo.Like">
+<mapper namespace="com.graduationaldesign.graduation.mapper.ReplyTeamMapper">
+  <resultMap id="BaseResultMap" type="com.graduationaldesign.graduation.pojo.ReplyTeam">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="diary_id" jdbcType="INTEGER" property="diaryId" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="team_name" jdbcType="VARCHAR" property="teamName" />
+    <result column="team_address" jdbcType="VARCHAR" property="teamAddress" />
+    <result column="reply_time" jdbcType="TIMESTAMP" property="replyTime" />
+    <result column="team_leader_id" jdbcType="VARCHAR" property="teamLeaderId" />
+    <association column="team_leader_id" property="teacher" select="getTeacher" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -65,16 +68,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, diary_id, user_id
+    id, team_name, team_address, reply_time, team_leader_id
   </sql>
-  <select id="selectByExample" parameterType="com.graduationaldesign.graduation.pojo.LikeExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.graduationaldesign.graduation.pojo.ReplyTeamExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     'true' as QUERYID,
     <include refid="Base_Column_List" />
-    from like_diary
+    from reply_team
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -85,65 +88,85 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 'false' as QUERYID,
     <include refid="Base_Column_List" />
-    from like_diary
+    from reply_team
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from like_diary
+    delete from reply_team
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.graduationaldesign.graduation.pojo.LikeExample">
-    delete from like_diary
+  <delete id="deleteByExample" parameterType="com.graduationaldesign.graduation.pojo.ReplyTeamExample">
+    delete from reply_team
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.graduationaldesign.graduation.pojo.Like">
+  <insert id="insert" parameterType="com.graduationaldesign.graduation.pojo.ReplyTeam">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into like_diary (diary_id, user_id)
-    values (#{diaryId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER})
+    insert into reply_team (team_name, team_address, reply_time, 
+      team_leader_id)
+    values (#{teamName,jdbcType=VARCHAR}, #{teamAddress,jdbcType=VARCHAR}, #{replyTime,jdbcType=TIMESTAMP}, 
+      #{teamLeaderId,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.graduationaldesign.graduation.pojo.Like">
+  <insert id="insertSelective" parameterType="com.graduationaldesign.graduation.pojo.ReplyTeam">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into like_diary
+    insert into reply_team
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="diaryId != null">
-        diary_id,
+      <if test="teamName != null">
+        team_name,
       </if>
-      <if test="userId != null">
-        user_id,
+      <if test="teamAddress != null">
+        team_address,
+      </if>
+      <if test="replyTime != null">
+        reply_time,
+      </if>
+      <if test="teamLeaderId != null">
+        team_leader_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="diaryId != null">
-        #{diaryId,jdbcType=INTEGER},
+      <if test="teamName != null">
+        #{teamName,jdbcType=VARCHAR},
       </if>
-      <if test="userId != null">
-        #{userId,jdbcType=INTEGER},
+      <if test="teamAddress != null">
+        #{teamAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="replyTime != null">
+        #{replyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="teamLeaderId != null">
+        #{teamLeaderId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.graduationaldesign.graduation.pojo.LikeExample" resultType="java.lang.Long">
-    select count(*) from like_diary
+  <select id="countByExample" parameterType="com.graduationaldesign.graduation.pojo.ReplyTeamExample" resultType="java.lang.Long">
+    select count(*) from reply_team
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update like_diary
+    update reply_team
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.diaryId != null">
-        diary_id = #{record.diaryId,jdbcType=INTEGER},
+      <if test="record.teamName != null">
+        team_name = #{record.teamName,jdbcType=VARCHAR},
       </if>
-      <if test="record.userId != null">
-        user_id = #{record.userId,jdbcType=INTEGER},
+      <if test="record.teamAddress != null">
+        team_address = #{record.teamAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.replyTime != null">
+        reply_time = #{record.replyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.teamLeaderId != null">
+        team_leader_id = #{record.teamLeaderId,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -151,43 +174,62 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update like_diary
+    update reply_team
     set id = #{record.id,jdbcType=INTEGER},
-      diary_id = #{record.diaryId,jdbcType=INTEGER},
-      user_id = #{record.userId,jdbcType=INTEGER}
+      team_name = #{record.teamName,jdbcType=VARCHAR},
+      team_address = #{record.teamAddress,jdbcType=VARCHAR},
+      reply_time = #{record.replyTime,jdbcType=TIMESTAMP},
+      team_leader_id = #{record.teamLeaderId,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.graduationaldesign.graduation.pojo.Like">
-    update like_diary
+  <update id="updateByPrimaryKeySelective" parameterType="com.graduationaldesign.graduation.pojo.ReplyTeam">
+    update reply_team
     <set>
-      <if test="diaryId != null">
-        diary_id = #{diaryId,jdbcType=INTEGER},
+      <if test="teamName != null">
+        team_name = #{teamName,jdbcType=VARCHAR},
       </if>
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=INTEGER},
+      <if test="teamAddress != null">
+        team_address = #{teamAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="replyTime != null">
+        reply_time = #{replyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="teamLeaderId != null">
+        team_leader_id = #{teamLeaderId,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.graduationaldesign.graduation.pojo.Like">
-    update like_diary
-    set diary_id = #{diaryId,jdbcType=INTEGER},
-      user_id = #{userId,jdbcType=INTEGER}
+  <update id="updateByPrimaryKey" parameterType="com.graduationaldesign.graduation.pojo.ReplyTeam">
+    update reply_team
+    set team_name = #{teamName,jdbcType=VARCHAR},
+      team_address = #{teamAddress,jdbcType=VARCHAR},
+      reply_time = #{replyTime,jdbcType=TIMESTAMP},
+      team_leader_id = #{teamLeaderId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="getTeacher" resultMap="com.graduationaldesign.graduation.mapper.TeacherMapper.BaseResultMap">
+    select tea_id,tea_password,tea_name,tea_sex,tea_age,tea_birthday,tea_phone,tea_mail,tea_address,tea_remarks,academy_id from t_teacher where tea_id=#{teamLeaderId}
+  </select>
   <insert id="insertBatchSelective" parameterType="java.util.List">
-    insert into like_diary
+    insert into reply_team
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="list[0].id!=null">
         id,
       </if>
-      <if test="list[0].diaryId!=null">
-        diary_id,
+      <if test="list[0].teamName!=null">
+        team_name,
       </if>
-      <if test="list[0].userId!=null">
-        user_id,
+      <if test="list[0].teamAddress!=null">
+        team_address,
+      </if>
+      <if test="list[0].replyTime!=null">
+        reply_time,
+      </if>
+      <if test="list[0].teamLeaderId!=null">
+        team_leader_id,
       </if>
     </trim>
      values 
@@ -196,24 +238,36 @@
         <if test="item.id!=null">
           #{item.id,jdbcType=INTEGER},
         </if>
-        <if test="item.diaryId!=null">
-          #{item.diaryId,jdbcType=INTEGER},
+        <if test="item.teamName!=null">
+          #{item.teamName,jdbcType=VARCHAR},
         </if>
-        <if test="item.userId!=null">
-          #{item.userId,jdbcType=INTEGER},
+        <if test="item.teamAddress!=null">
+          #{item.teamAddress,jdbcType=VARCHAR},
+        </if>
+        <if test="item.replyTime!=null">
+          #{item.replyTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.teamLeaderId!=null">
+          #{item.teamLeaderId,jdbcType=VARCHAR},
         </if>
       </trim>
     </foreach>
   </insert>
   <update id="updateBatchByPrimaryKeySelective" parameterType="java.util.List">
     <foreach collection="list" index="index" item="item" separator=";">
-      update like_diary
+      update reply_team
       <set>
-        <if test="item.diaryId!=null">
-          diary_id=#{item.diaryId,jdbcType=INTEGER},
+        <if test="item.teamName!=null">
+          team_name=#{item.teamName,jdbcType=VARCHAR},
         </if>
-        <if test="item.userId!=null">
-          user_id=#{item.userId,jdbcType=INTEGER},
+        <if test="item.teamAddress!=null">
+          team_address=#{item.teamAddress,jdbcType=VARCHAR},
+        </if>
+        <if test="item.replyTime!=null">
+          reply_time=#{item.replyTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.teamLeaderId!=null">
+          team_leader_id=#{item.teamLeaderId,jdbcType=VARCHAR},
         </if>
       </set>
       where 

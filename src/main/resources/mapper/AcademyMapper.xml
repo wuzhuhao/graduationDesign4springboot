@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.graduationaldesign.graduation.mapper.DiaryPhotoMapper">
-  <resultMap id="BaseResultMap" type="com.graduationaldesign.graduation.pojo.DiaryPhoto">
+<mapper namespace="com.graduationaldesign.graduation.mapper.AcademyMapper">
+  <resultMap id="BaseResultMap" type="com.graduationaldesign.graduation.pojo.Academy">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="images" jdbcType="VARCHAR" property="images" />
-    <result column="did" jdbcType="INTEGER" property="did" />
+    <result column="aca_name" jdbcType="VARCHAR" property="acaName" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.graduationaldesign.graduation.pojo.Academy">
+    <result column="aca_introduce" jdbcType="LONGVARCHAR" property="acaIntroduce" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -65,16 +67,21 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, images, did
+    id, aca_name
   </sql>
-  <select id="selectByExample" parameterType="com.graduationaldesign.graduation.pojo.DiaryPhotoExample" resultMap="BaseResultMap">
+  <sql id="Blob_Column_List">
+    aca_introduce
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.graduationaldesign.graduation.pojo.AcademyExample" resultMap="ResultMapWithBLOBs">
     select
     <if test="distinct">
       distinct
     </if>
     'true' as QUERYID,
     <include refid="Base_Column_List" />
-    from diaryphoto
+    ,
+    <include refid="Blob_Column_List" />
+    from t_academy
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -82,112 +89,142 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.graduationaldesign.graduation.pojo.AcademyExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_academy
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 'false' as QUERYID,
     <include refid="Base_Column_List" />
-    from diaryphoto
+    ,
+    <include refid="Blob_Column_List" />
+    from t_academy
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from diaryphoto
+    delete from t_academy
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.graduationaldesign.graduation.pojo.DiaryPhotoExample">
-    delete from diaryphoto
+  <delete id="deleteByExample" parameterType="com.graduationaldesign.graduation.pojo.AcademyExample">
+    delete from t_academy
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.graduationaldesign.graduation.pojo.DiaryPhoto">
+  <insert id="insert" parameterType="com.graduationaldesign.graduation.pojo.Academy">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into diaryphoto (images, did)
-    values (#{images,jdbcType=VARCHAR}, #{did,jdbcType=INTEGER})
+    insert into t_academy (aca_name, aca_introduce)
+    values (#{acaName,jdbcType=VARCHAR}, #{acaIntroduce,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.graduationaldesign.graduation.pojo.DiaryPhoto">
+  <insert id="insertSelective" parameterType="com.graduationaldesign.graduation.pojo.Academy">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into diaryphoto
+    insert into t_academy
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="images != null">
-        images,
+      <if test="acaName != null">
+        aca_name,
       </if>
-      <if test="did != null">
-        did,
+      <if test="acaIntroduce != null">
+        aca_introduce,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="images != null">
-        #{images,jdbcType=VARCHAR},
+      <if test="acaName != null">
+        #{acaName,jdbcType=VARCHAR},
       </if>
-      <if test="did != null">
-        #{did,jdbcType=INTEGER},
+      <if test="acaIntroduce != null">
+        #{acaIntroduce,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.graduationaldesign.graduation.pojo.DiaryPhotoExample" resultType="java.lang.Long">
-    select count(*) from diaryphoto
+  <select id="countByExample" parameterType="com.graduationaldesign.graduation.pojo.AcademyExample" resultType="java.lang.Long">
+    select count(*) from t_academy
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update diaryphoto
+    update t_academy
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.images != null">
-        images = #{record.images,jdbcType=VARCHAR},
+      <if test="record.acaName != null">
+        aca_name = #{record.acaName,jdbcType=VARCHAR},
       </if>
-      <if test="record.did != null">
-        did = #{record.did,jdbcType=INTEGER},
+      <if test="record.acaIntroduce != null">
+        aca_introduce = #{record.acaIntroduce,jdbcType=LONGVARCHAR},
       </if>
     </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update t_academy
+    set id = #{record.id,jdbcType=INTEGER},
+      aca_name = #{record.acaName,jdbcType=VARCHAR},
+      aca_introduce = #{record.acaIntroduce,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update diaryphoto
+    update t_academy
     set id = #{record.id,jdbcType=INTEGER},
-      images = #{record.images,jdbcType=VARCHAR},
-      did = #{record.did,jdbcType=INTEGER}
+      aca_name = #{record.acaName,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.graduationaldesign.graduation.pojo.DiaryPhoto">
-    update diaryphoto
+  <update id="updateByPrimaryKeySelective" parameterType="com.graduationaldesign.graduation.pojo.Academy">
+    update t_academy
     <set>
-      <if test="images != null">
-        images = #{images,jdbcType=VARCHAR},
+      <if test="acaName != null">
+        aca_name = #{acaName,jdbcType=VARCHAR},
       </if>
-      <if test="did != null">
-        did = #{did,jdbcType=INTEGER},
+      <if test="acaIntroduce != null">
+        aca_introduce = #{acaIntroduce,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.graduationaldesign.graduation.pojo.DiaryPhoto">
-    update diaryphoto
-    set images = #{images,jdbcType=VARCHAR},
-      did = #{did,jdbcType=INTEGER}
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.graduationaldesign.graduation.pojo.Academy">
+    update t_academy
+    set aca_name = #{acaName,jdbcType=VARCHAR},
+      aca_introduce = #{acaIntroduce,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.graduationaldesign.graduation.pojo.Academy">
+    update t_academy
+    set aca_name = #{acaName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <insert id="insertBatchSelective" parameterType="java.util.List">
-    insert into diaryphoto
+    insert into t_academy
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="list[0].id!=null">
         id,
       </if>
-      <if test="list[0].images!=null">
-        images,
+      <if test="list[0].acaName!=null">
+        aca_name,
       </if>
-      <if test="list[0].did!=null">
-        did,
+      <if test="list[0].acaIntroduce!=null">
+        aca_introduce,
       </if>
     </trim>
      values 
@@ -196,24 +233,24 @@
         <if test="item.id!=null">
           #{item.id,jdbcType=INTEGER},
         </if>
-        <if test="item.images!=null">
-          #{item.images,jdbcType=VARCHAR},
+        <if test="item.acaName!=null">
+          #{item.acaName,jdbcType=VARCHAR},
         </if>
-        <if test="item.did!=null">
-          #{item.did,jdbcType=INTEGER},
+        <if test="item.acaIntroduce!=null">
+          #{item.acaIntroduce,jdbcType=LONGVARCHAR},
         </if>
       </trim>
     </foreach>
   </insert>
   <update id="updateBatchByPrimaryKeySelective" parameterType="java.util.List">
     <foreach collection="list" index="index" item="item" separator=";">
-      update diaryphoto
+      update t_academy
       <set>
-        <if test="item.images!=null">
-          images=#{item.images,jdbcType=VARCHAR},
+        <if test="item.acaName!=null">
+          aca_name=#{item.acaName,jdbcType=VARCHAR},
         </if>
-        <if test="item.did!=null">
-          did=#{item.did,jdbcType=INTEGER},
+        <if test="item.acaIntroduce!=null">
+          aca_introduce=#{item.acaIntroduce,jdbcType=LONGVARCHAR},
         </if>
       </set>
       where 

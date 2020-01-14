@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.graduationaldesign.graduation.mapper.ProgressMapper">
+  <resultMap id="BaseResultMap" type="com.graduationaldesign.graduation.pojo.Progress">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="sub_id" jdbcType="VARCHAR" property="subId" />
+    <result column="prog_content_time" jdbcType="TIMESTAMP" property="progContentTime" />
+    <result column="prog_reply_time" jdbcType="TIMESTAMP" property="progReplyTime" />
+    <association column="sub_id" property="subject" select="getSubject" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.graduationaldesign.graduation.pojo.Progress">
+    <result column="prog_content" jdbcType="LONGVARCHAR" property="progContent" />
+    <result column="prog_reply" jdbcType="LONGVARCHAR" property="progReply" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, sub_id, prog_content_time, prog_reply_time
+  </sql>
+  <sql id="Blob_Column_List">
+    prog_content, prog_reply
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.graduationaldesign.graduation.pojo.ProgressExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_progress
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.graduationaldesign.graduation.pojo.ProgressExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_progress
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_progress
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_progress
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.graduationaldesign.graduation.pojo.ProgressExample">
+    delete from t_progress
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.graduationaldesign.graduation.pojo.Progress">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_progress (sub_id, prog_content_time, prog_reply_time, 
+      prog_content, prog_reply)
+    values (#{subId,jdbcType=VARCHAR}, #{progContentTime,jdbcType=TIMESTAMP}, #{progReplyTime,jdbcType=TIMESTAMP}, 
+      #{progContent,jdbcType=LONGVARCHAR}, #{progReply,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.graduationaldesign.graduation.pojo.Progress">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_progress
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="subId != null">
+        sub_id,
+      </if>
+      <if test="progContentTime != null">
+        prog_content_time,
+      </if>
+      <if test="progReplyTime != null">
+        prog_reply_time,
+      </if>
+      <if test="progContent != null">
+        prog_content,
+      </if>
+      <if test="progReply != null">
+        prog_reply,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="subId != null">
+        #{subId,jdbcType=VARCHAR},
+      </if>
+      <if test="progContentTime != null">
+        #{progContentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="progReplyTime != null">
+        #{progReplyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="progContent != null">
+        #{progContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="progReply != null">
+        #{progReply,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.graduationaldesign.graduation.pojo.ProgressExample" resultType="java.lang.Long">
+    select count(*) from t_progress
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_progress
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.subId != null">
+        sub_id = #{record.subId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.progContentTime != null">
+        prog_content_time = #{record.progContentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.progReplyTime != null">
+        prog_reply_time = #{record.progReplyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.progContent != null">
+        prog_content = #{record.progContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.progReply != null">
+        prog_reply = #{record.progReply,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update t_progress
+    set id = #{record.id,jdbcType=INTEGER},
+      sub_id = #{record.subId,jdbcType=VARCHAR},
+      prog_content_time = #{record.progContentTime,jdbcType=TIMESTAMP},
+      prog_reply_time = #{record.progReplyTime,jdbcType=TIMESTAMP},
+      prog_content = #{record.progContent,jdbcType=LONGVARCHAR},
+      prog_reply = #{record.progReply,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_progress
+    set id = #{record.id,jdbcType=INTEGER},
+      sub_id = #{record.subId,jdbcType=VARCHAR},
+      prog_content_time = #{record.progContentTime,jdbcType=TIMESTAMP},
+      prog_reply_time = #{record.progReplyTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.graduationaldesign.graduation.pojo.Progress">
+    update t_progress
+    <set>
+      <if test="subId != null">
+        sub_id = #{subId,jdbcType=VARCHAR},
+      </if>
+      <if test="progContentTime != null">
+        prog_content_time = #{progContentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="progReplyTime != null">
+        prog_reply_time = #{progReplyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="progContent != null">
+        prog_content = #{progContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="progReply != null">
+        prog_reply = #{progReply,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.graduationaldesign.graduation.pojo.Progress">
+    update t_progress
+    set sub_id = #{subId,jdbcType=VARCHAR},
+      prog_content_time = #{progContentTime,jdbcType=TIMESTAMP},
+      prog_reply_time = #{progReplyTime,jdbcType=TIMESTAMP},
+      prog_content = #{progContent,jdbcType=LONGVARCHAR},
+      prog_reply = #{progReply,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.graduationaldesign.graduation.pojo.Progress">
+    update t_progress
+    set sub_id = #{subId,jdbcType=VARCHAR},
+      prog_content_time = #{progContentTime,jdbcType=TIMESTAMP},
+      prog_reply_time = #{progReplyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getSubject" resultMap="com.graduationaldesign.graduation.mapper.SubjectMapper.BaseResultMap">
+    select sub_id,sub_name,sub_nature,sub_source,sub_tea_id,sub_file,first_report_deadline,last_report_deadline,stu_id,sub_stu_state,sub_last_score,show_id,sub_introduce from t_subject where sub_id=#{subId}
+  </select>
+  <insert id="insertBatchSelective" parameterType="java.util.List">
+    insert into t_progress
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="list[0].id!=null">
+        id,
+      </if>
+      <if test="list[0].subId!=null">
+        sub_id,
+      </if>
+      <if test="list[0].progContentTime!=null">
+        prog_content_time,
+      </if>
+      <if test="list[0].progReplyTime!=null">
+        prog_reply_time,
+      </if>
+      <if test="list[0].progContent!=null">
+        prog_content,
+      </if>
+      <if test="list[0].progReply!=null">
+        prog_reply,
+      </if>
+    </trim>
+     values 
+    <foreach collection="list" index="index" item="item" separator=",">
+      <trim prefix=" (" suffix=")" suffixOverrides=",">
+        <if test="item.id!=null">
+          #{item.id,jdbcType=INTEGER},
+        </if>
+        <if test="item.subId!=null">
+          #{item.subId,jdbcType=VARCHAR},
+        </if>
+        <if test="item.progContentTime!=null">
+          #{item.progContentTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.progReplyTime!=null">
+          #{item.progReplyTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.progContent!=null">
+          #{item.progContent,jdbcType=LONGVARCHAR},
+        </if>
+        <if test="item.progReply!=null">
+          #{item.progReply,jdbcType=LONGVARCHAR},
+        </if>
+      </trim>
+    </foreach>
+  </insert>
+  <update id="updateBatchByPrimaryKeySelective" parameterType="java.util.List">
+    <foreach collection="list" index="index" item="item" separator=";">
+      update t_progress
+      <set>
+        <if test="item.subId!=null">
+          sub_id=#{item.subId,jdbcType=VARCHAR},
+        </if>
+        <if test="item.progContentTime!=null">
+          prog_content_time=#{item.progContentTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.progReplyTime!=null">
+          prog_reply_time=#{item.progReplyTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.progContent!=null">
+          prog_content=#{item.progContent,jdbcType=LONGVARCHAR},
+        </if>
+        <if test="item.progReply!=null">
+          prog_reply=#{item.progReply,jdbcType=LONGVARCHAR},
+        </if>
+      </set>
+      where 
+      id = #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+</mapper>

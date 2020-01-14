@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.graduationaldesign.graduation.mapper.OperationMapper">
+  <resultMap id="BaseResultMap" type="com.graduationaldesign.graduation.pojo.Operation">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="opera_role" jdbcType="VARCHAR" property="operaRole" />
+    <result column="opera_time" jdbcType="TIMESTAMP" property="operaTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.graduationaldesign.graduation.pojo.Operation">
+    <result column="opera_content" jdbcType="LONGVARCHAR" property="operaContent" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, opera_role, opera_time
+  </sql>
+  <sql id="Blob_Column_List">
+    opera_content
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.graduationaldesign.graduation.pojo.OperationExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from log_operation
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.graduationaldesign.graduation.pojo.OperationExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from log_operation
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from log_operation
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from log_operation
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.graduationaldesign.graduation.pojo.OperationExample">
+    delete from log_operation
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.graduationaldesign.graduation.pojo.Operation">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into log_operation (opera_role, opera_time, opera_content
+      )
+    values (#{operaRole,jdbcType=VARCHAR}, #{operaTime,jdbcType=TIMESTAMP}, #{operaContent,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.graduationaldesign.graduation.pojo.Operation">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into log_operation
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="operaRole != null">
+        opera_role,
+      </if>
+      <if test="operaTime != null">
+        opera_time,
+      </if>
+      <if test="operaContent != null">
+        opera_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="operaRole != null">
+        #{operaRole,jdbcType=VARCHAR},
+      </if>
+      <if test="operaTime != null">
+        #{operaTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operaContent != null">
+        #{operaContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.graduationaldesign.graduation.pojo.OperationExample" resultType="java.lang.Long">
+    select count(*) from log_operation
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update log_operation
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.operaRole != null">
+        opera_role = #{record.operaRole,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operaTime != null">
+        opera_time = #{record.operaTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.operaContent != null">
+        opera_content = #{record.operaContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update log_operation
+    set id = #{record.id,jdbcType=INTEGER},
+      opera_role = #{record.operaRole,jdbcType=VARCHAR},
+      opera_time = #{record.operaTime,jdbcType=TIMESTAMP},
+      opera_content = #{record.operaContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update log_operation
+    set id = #{record.id,jdbcType=INTEGER},
+      opera_role = #{record.operaRole,jdbcType=VARCHAR},
+      opera_time = #{record.operaTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.graduationaldesign.graduation.pojo.Operation">
+    update log_operation
+    <set>
+      <if test="operaRole != null">
+        opera_role = #{operaRole,jdbcType=VARCHAR},
+      </if>
+      <if test="operaTime != null">
+        opera_time = #{operaTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operaContent != null">
+        opera_content = #{operaContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.graduationaldesign.graduation.pojo.Operation">
+    update log_operation
+    set opera_role = #{operaRole,jdbcType=VARCHAR},
+      opera_time = #{operaTime,jdbcType=TIMESTAMP},
+      opera_content = #{operaContent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.graduationaldesign.graduation.pojo.Operation">
+    update log_operation
+    set opera_role = #{operaRole,jdbcType=VARCHAR},
+      opera_time = #{operaTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <insert id="insertBatchSelective" parameterType="java.util.List">
+    insert into log_operation
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="list[0].id!=null">
+        id,
+      </if>
+      <if test="list[0].operaRole!=null">
+        opera_role,
+      </if>
+      <if test="list[0].operaTime!=null">
+        opera_time,
+      </if>
+      <if test="list[0].operaContent!=null">
+        opera_content,
+      </if>
+    </trim>
+     values 
+    <foreach collection="list" index="index" item="item" separator=",">
+      <trim prefix=" (" suffix=")" suffixOverrides=",">
+        <if test="item.id!=null">
+          #{item.id,jdbcType=INTEGER},
+        </if>
+        <if test="item.operaRole!=null">
+          #{item.operaRole,jdbcType=VARCHAR},
+        </if>
+        <if test="item.operaTime!=null">
+          #{item.operaTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.operaContent!=null">
+          #{item.operaContent,jdbcType=LONGVARCHAR},
+        </if>
+      </trim>
+    </foreach>
+  </insert>
+  <update id="updateBatchByPrimaryKeySelective" parameterType="java.util.List">
+    <foreach collection="list" index="index" item="item" separator=";">
+      update log_operation
+      <set>
+        <if test="item.operaRole!=null">
+          opera_role=#{item.operaRole,jdbcType=VARCHAR},
+        </if>
+        <if test="item.operaTime!=null">
+          opera_time=#{item.operaTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.operaContent!=null">
+          opera_content=#{item.operaContent,jdbcType=LONGVARCHAR},
+        </if>
+      </set>
+      where 
+      id = #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+</mapper>

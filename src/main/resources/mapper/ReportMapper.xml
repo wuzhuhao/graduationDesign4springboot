@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.graduationaldesign.graduation.mapper.ReportMapper">
+  <resultMap id="BaseResultMap" type="com.graduationaldesign.graduation.pojo.Report">
+    <id column="sub_id" jdbcType="VARCHAR" property="subId" />
+    <id column="report_type" jdbcType="INTEGER" property="reportType" />
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="report_subtime" jdbcType="TIMESTAMP" property="reportSubtime" />
+    <result column="report_state" jdbcType="INTEGER" property="reportState" />
+    <result column="report_version" jdbcType="REAL" property="reportVersion" />
+    <result column="report_file" jdbcType="VARCHAR" property="reportFile" />
+    <association column="sub_id" property="subject" select="getSubject" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.graduationaldesign.graduation.pojo.Report">
+    <result column="report_content" jdbcType="LONGVARCHAR" property="reportContent" />
+    <result column="stu_message" jdbcType="LONGVARCHAR" property="stuMessage" />
+    <result column="tea_suggestion" jdbcType="LONGVARCHAR" property="teaSuggestion" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    sub_id, report_type, id, report_subtime, report_state, report_version, report_file
+  </sql>
+  <sql id="Blob_Column_List">
+    report_content, stu_message, tea_suggestion
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.graduationaldesign.graduation.pojo.ReportExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_report
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.graduationaldesign.graduation.pojo.ReportExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_report
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="map" resultMap="ResultMapWithBLOBs">
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_report
+    where sub_id = #{subId,jdbcType=VARCHAR}
+      and report_type = #{reportType,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    delete from t_report
+    where sub_id = #{subId,jdbcType=VARCHAR}
+      and report_type = #{reportType,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.graduationaldesign.graduation.pojo.ReportExample">
+    delete from t_report
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.graduationaldesign.graduation.pojo.Report">
+    insert into t_report (sub_id, report_type, id, 
+      report_subtime, report_state, report_version, 
+      report_file, report_content, stu_message, 
+      tea_suggestion)
+    values (#{subId,jdbcType=VARCHAR}, #{reportType,jdbcType=INTEGER}, #{id,jdbcType=INTEGER}, 
+      #{reportSubtime,jdbcType=TIMESTAMP}, #{reportState,jdbcType=INTEGER}, #{reportVersion,jdbcType=REAL}, 
+      #{reportFile,jdbcType=VARCHAR}, #{reportContent,jdbcType=LONGVARCHAR}, #{stuMessage,jdbcType=LONGVARCHAR}, 
+      #{teaSuggestion,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.graduationaldesign.graduation.pojo.Report">
+    insert into t_report
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="subId != null">
+        sub_id,
+      </if>
+      <if test="reportType != null">
+        report_type,
+      </if>
+      <if test="id != null">
+        id,
+      </if>
+      <if test="reportSubtime != null">
+        report_subtime,
+      </if>
+      <if test="reportState != null">
+        report_state,
+      </if>
+      <if test="reportVersion != null">
+        report_version,
+      </if>
+      <if test="reportFile != null">
+        report_file,
+      </if>
+      <if test="reportContent != null">
+        report_content,
+      </if>
+      <if test="stuMessage != null">
+        stu_message,
+      </if>
+      <if test="teaSuggestion != null">
+        tea_suggestion,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="subId != null">
+        #{subId,jdbcType=VARCHAR},
+      </if>
+      <if test="reportType != null">
+        #{reportType,jdbcType=INTEGER},
+      </if>
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="reportSubtime != null">
+        #{reportSubtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reportState != null">
+        #{reportState,jdbcType=INTEGER},
+      </if>
+      <if test="reportVersion != null">
+        #{reportVersion,jdbcType=REAL},
+      </if>
+      <if test="reportFile != null">
+        #{reportFile,jdbcType=VARCHAR},
+      </if>
+      <if test="reportContent != null">
+        #{reportContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="stuMessage != null">
+        #{stuMessage,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="teaSuggestion != null">
+        #{teaSuggestion,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.graduationaldesign.graduation.pojo.ReportExample" resultType="java.lang.Long">
+    select count(*) from t_report
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_report
+    <set>
+      <if test="record.subId != null">
+        sub_id = #{record.subId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reportType != null">
+        report_type = #{record.reportType,jdbcType=INTEGER},
+      </if>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.reportSubtime != null">
+        report_subtime = #{record.reportSubtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.reportState != null">
+        report_state = #{record.reportState,jdbcType=INTEGER},
+      </if>
+      <if test="record.reportVersion != null">
+        report_version = #{record.reportVersion,jdbcType=REAL},
+      </if>
+      <if test="record.reportFile != null">
+        report_file = #{record.reportFile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reportContent != null">
+        report_content = #{record.reportContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.stuMessage != null">
+        stu_message = #{record.stuMessage,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.teaSuggestion != null">
+        tea_suggestion = #{record.teaSuggestion,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update t_report
+    set sub_id = #{record.subId,jdbcType=VARCHAR},
+      report_type = #{record.reportType,jdbcType=INTEGER},
+      id = #{record.id,jdbcType=INTEGER},
+      report_subtime = #{record.reportSubtime,jdbcType=TIMESTAMP},
+      report_state = #{record.reportState,jdbcType=INTEGER},
+      report_version = #{record.reportVersion,jdbcType=REAL},
+      report_file = #{record.reportFile,jdbcType=VARCHAR},
+      report_content = #{record.reportContent,jdbcType=LONGVARCHAR},
+      stu_message = #{record.stuMessage,jdbcType=LONGVARCHAR},
+      tea_suggestion = #{record.teaSuggestion,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_report
+    set sub_id = #{record.subId,jdbcType=VARCHAR},
+      report_type = #{record.reportType,jdbcType=INTEGER},
+      id = #{record.id,jdbcType=INTEGER},
+      report_subtime = #{record.reportSubtime,jdbcType=TIMESTAMP},
+      report_state = #{record.reportState,jdbcType=INTEGER},
+      report_version = #{record.reportVersion,jdbcType=REAL},
+      report_file = #{record.reportFile,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.graduationaldesign.graduation.pojo.Report">
+    update t_report
+    <set>
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="reportSubtime != null">
+        report_subtime = #{reportSubtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reportState != null">
+        report_state = #{reportState,jdbcType=INTEGER},
+      </if>
+      <if test="reportVersion != null">
+        report_version = #{reportVersion,jdbcType=REAL},
+      </if>
+      <if test="reportFile != null">
+        report_file = #{reportFile,jdbcType=VARCHAR},
+      </if>
+      <if test="reportContent != null">
+        report_content = #{reportContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="stuMessage != null">
+        stu_message = #{stuMessage,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="teaSuggestion != null">
+        tea_suggestion = #{teaSuggestion,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where sub_id = #{subId,jdbcType=VARCHAR}
+      and report_type = #{reportType,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.graduationaldesign.graduation.pojo.Report">
+    update t_report
+    set id = #{id,jdbcType=INTEGER},
+      report_subtime = #{reportSubtime,jdbcType=TIMESTAMP},
+      report_state = #{reportState,jdbcType=INTEGER},
+      report_version = #{reportVersion,jdbcType=REAL},
+      report_file = #{reportFile,jdbcType=VARCHAR},
+      report_content = #{reportContent,jdbcType=LONGVARCHAR},
+      stu_message = #{stuMessage,jdbcType=LONGVARCHAR},
+      tea_suggestion = #{teaSuggestion,jdbcType=LONGVARCHAR}
+    where sub_id = #{subId,jdbcType=VARCHAR}
+      and report_type = #{reportType,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.graduationaldesign.graduation.pojo.Report">
+    update t_report
+    set id = #{id,jdbcType=INTEGER},
+      report_subtime = #{reportSubtime,jdbcType=TIMESTAMP},
+      report_state = #{reportState,jdbcType=INTEGER},
+      report_version = #{reportVersion,jdbcType=REAL},
+      report_file = #{reportFile,jdbcType=VARCHAR}
+    where sub_id = #{subId,jdbcType=VARCHAR}
+      and report_type = #{reportType,jdbcType=INTEGER}
+  </update>
+  <select id="getSubject" resultMap="com.graduationaldesign.graduation.mapper.SubjectMapper.BaseResultMap">
+    select sub_id,sub_name,sub_nature,sub_source,sub_tea_id,sub_file,first_report_deadline,last_report_deadline,stu_id,sub_stu_state,sub_last_score,show_id,sub_introduce from t_subject where sub_id=#{subId}
+  </select>
+  <insert id="insertBatchSelective" parameterType="java.util.List">
+    insert into t_report
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="list[0].subId!=null">
+        sub_id,
+      </if>
+      <if test="list[0].reportType!=null">
+        report_type,
+      </if>
+      <if test="list[0].id!=null">
+        id,
+      </if>
+      <if test="list[0].reportSubtime!=null">
+        report_subtime,
+      </if>
+      <if test="list[0].reportState!=null">
+        report_state,
+      </if>
+      <if test="list[0].reportVersion!=null">
+        report_version,
+      </if>
+      <if test="list[0].reportFile!=null">
+        report_file,
+      </if>
+      <if test="list[0].reportContent!=null">
+        report_content,
+      </if>
+      <if test="list[0].stuMessage!=null">
+        stu_message,
+      </if>
+      <if test="list[0].teaSuggestion!=null">
+        tea_suggestion,
+      </if>
+    </trim>
+     values 
+    <foreach collection="list" index="index" item="item" separator=",">
+      <trim prefix=" (" suffix=")" suffixOverrides=",">
+        <if test="item.subId!=null">
+          #{item.subId,jdbcType=VARCHAR},
+        </if>
+        <if test="item.reportType!=null">
+          #{item.reportType,jdbcType=INTEGER},
+        </if>
+        <if test="item.id!=null">
+          #{item.id,jdbcType=INTEGER},
+        </if>
+        <if test="item.reportSubtime!=null">
+          #{item.reportSubtime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.reportState!=null">
+          #{item.reportState,jdbcType=INTEGER},
+        </if>
+        <if test="item.reportVersion!=null">
+          #{item.reportVersion,jdbcType=REAL},
+        </if>
+        <if test="item.reportFile!=null">
+          #{item.reportFile,jdbcType=VARCHAR},
+        </if>
+        <if test="item.reportContent!=null">
+          #{item.reportContent,jdbcType=LONGVARCHAR},
+        </if>
+        <if test="item.stuMessage!=null">
+          #{item.stuMessage,jdbcType=LONGVARCHAR},
+        </if>
+        <if test="item.teaSuggestion!=null">
+          #{item.teaSuggestion,jdbcType=LONGVARCHAR},
+        </if>
+      </trim>
+    </foreach>
+  </insert>
+  <update id="updateBatchByPrimaryKeySelective" parameterType="java.util.List">
+    <foreach collection="list" index="index" item="item" separator=";">
+      update t_report
+      <set>
+        <if test="item.reportType!=null">
+          report_type=#{item.reportType,jdbcType=INTEGER},
+        </if>
+        <if test="item.id!=null">
+          id=#{item.id,jdbcType=INTEGER},
+        </if>
+        <if test="item.reportSubtime!=null">
+          report_subtime=#{item.reportSubtime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.reportState!=null">
+          report_state=#{item.reportState,jdbcType=INTEGER},
+        </if>
+        <if test="item.reportVersion!=null">
+          report_version=#{item.reportVersion,jdbcType=REAL},
+        </if>
+        <if test="item.reportFile!=null">
+          report_file=#{item.reportFile,jdbcType=VARCHAR},
+        </if>
+        <if test="item.reportContent!=null">
+          report_content=#{item.reportContent,jdbcType=LONGVARCHAR},
+        </if>
+        <if test="item.stuMessage!=null">
+          stu_message=#{item.stuMessage,jdbcType=LONGVARCHAR},
+        </if>
+        <if test="item.teaSuggestion!=null">
+          tea_suggestion=#{item.teaSuggestion,jdbcType=LONGVARCHAR},
+        </if>
+      </set>
+      where 
+      sub_id = #{item.subId,jdbcType=VARCHAR}
+      report_type = #{item.reportType,jdbcType=INTEGER}
+    </foreach>
+  </update>
+</mapper>

@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.graduationaldesign.graduation.mapper.TaskMapper">
+  <resultMap id="BaseResultMap" type="com.graduationaldesign.graduation.pojo.Task">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="task_file" jdbcType="VARCHAR" property="taskFile" />
+    <result column="task_state" jdbcType="VARCHAR" property="taskState" />
+    <result column="task_number" jdbcType="INTEGER" property="taskNumber" />
+    <result column="task_sub_id" jdbcType="VARCHAR" property="taskSubId" />
+    <result column="reply_file" jdbcType="VARCHAR" property="replyFile" />
+    <result column="task_time" jdbcType="TIMESTAMP" property="taskTime" />
+    <result column="reply_time" jdbcType="TIMESTAMP" property="replyTime" />
+    <association column="task_sub_id" property="subject" select="getSubject" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.graduationaldesign.graduation.pojo.Task">
+    <result column="task_content" jdbcType="LONGVARCHAR" property="taskContent" />
+    <result column="task_require" jdbcType="LONGVARCHAR" property="taskRequire" />
+    <result column="task_schedule" jdbcType="LONGVARCHAR" property="taskSchedule" />
+    <result column="task_literature" jdbcType="LONGVARCHAR" property="taskLiterature" />
+    <result column="reply_content" jdbcType="LONGVARCHAR" property="replyContent" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, task_file, task_state, task_number, task_sub_id, reply_file, task_time, reply_time
+  </sql>
+  <sql id="Blob_Column_List">
+    task_content, task_require, task_schedule, task_literature, reply_content
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.graduationaldesign.graduation.pojo.TaskExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_task
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.graduationaldesign.graduation.pojo.TaskExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_task
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_task
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_task
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.graduationaldesign.graduation.pojo.TaskExample">
+    delete from t_task
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.graduationaldesign.graduation.pojo.Task">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_task (task_file, task_state, task_number, 
+      task_sub_id, reply_file, task_time, 
+      reply_time, task_content, task_require, 
+      task_schedule, task_literature, reply_content
+      )
+    values (#{taskFile,jdbcType=VARCHAR}, #{taskState,jdbcType=VARCHAR}, #{taskNumber,jdbcType=INTEGER}, 
+      #{taskSubId,jdbcType=VARCHAR}, #{replyFile,jdbcType=VARCHAR}, #{taskTime,jdbcType=TIMESTAMP}, 
+      #{replyTime,jdbcType=TIMESTAMP}, #{taskContent,jdbcType=LONGVARCHAR}, #{taskRequire,jdbcType=LONGVARCHAR}, 
+      #{taskSchedule,jdbcType=LONGVARCHAR}, #{taskLiterature,jdbcType=LONGVARCHAR}, #{replyContent,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.graduationaldesign.graduation.pojo.Task">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_task
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="taskFile != null">
+        task_file,
+      </if>
+      <if test="taskState != null">
+        task_state,
+      </if>
+      <if test="taskNumber != null">
+        task_number,
+      </if>
+      <if test="taskSubId != null">
+        task_sub_id,
+      </if>
+      <if test="replyFile != null">
+        reply_file,
+      </if>
+      <if test="taskTime != null">
+        task_time,
+      </if>
+      <if test="replyTime != null">
+        reply_time,
+      </if>
+      <if test="taskContent != null">
+        task_content,
+      </if>
+      <if test="taskRequire != null">
+        task_require,
+      </if>
+      <if test="taskSchedule != null">
+        task_schedule,
+      </if>
+      <if test="taskLiterature != null">
+        task_literature,
+      </if>
+      <if test="replyContent != null">
+        reply_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="taskFile != null">
+        #{taskFile,jdbcType=VARCHAR},
+      </if>
+      <if test="taskState != null">
+        #{taskState,jdbcType=VARCHAR},
+      </if>
+      <if test="taskNumber != null">
+        #{taskNumber,jdbcType=INTEGER},
+      </if>
+      <if test="taskSubId != null">
+        #{taskSubId,jdbcType=VARCHAR},
+      </if>
+      <if test="replyFile != null">
+        #{replyFile,jdbcType=VARCHAR},
+      </if>
+      <if test="taskTime != null">
+        #{taskTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="replyTime != null">
+        #{replyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taskContent != null">
+        #{taskContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="taskRequire != null">
+        #{taskRequire,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="taskSchedule != null">
+        #{taskSchedule,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="taskLiterature != null">
+        #{taskLiterature,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="replyContent != null">
+        #{replyContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.graduationaldesign.graduation.pojo.TaskExample" resultType="java.lang.Long">
+    select count(*) from t_task
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_task
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.taskFile != null">
+        task_file = #{record.taskFile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskState != null">
+        task_state = #{record.taskState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskNumber != null">
+        task_number = #{record.taskNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.taskSubId != null">
+        task_sub_id = #{record.taskSubId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.replyFile != null">
+        reply_file = #{record.replyFile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskTime != null">
+        task_time = #{record.taskTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.replyTime != null">
+        reply_time = #{record.replyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.taskContent != null">
+        task_content = #{record.taskContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.taskRequire != null">
+        task_require = #{record.taskRequire,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.taskSchedule != null">
+        task_schedule = #{record.taskSchedule,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.taskLiterature != null">
+        task_literature = #{record.taskLiterature,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.replyContent != null">
+        reply_content = #{record.replyContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update t_task
+    set id = #{record.id,jdbcType=INTEGER},
+      task_file = #{record.taskFile,jdbcType=VARCHAR},
+      task_state = #{record.taskState,jdbcType=VARCHAR},
+      task_number = #{record.taskNumber,jdbcType=INTEGER},
+      task_sub_id = #{record.taskSubId,jdbcType=VARCHAR},
+      reply_file = #{record.replyFile,jdbcType=VARCHAR},
+      task_time = #{record.taskTime,jdbcType=TIMESTAMP},
+      reply_time = #{record.replyTime,jdbcType=TIMESTAMP},
+      task_content = #{record.taskContent,jdbcType=LONGVARCHAR},
+      task_require = #{record.taskRequire,jdbcType=LONGVARCHAR},
+      task_schedule = #{record.taskSchedule,jdbcType=LONGVARCHAR},
+      task_literature = #{record.taskLiterature,jdbcType=LONGVARCHAR},
+      reply_content = #{record.replyContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_task
+    set id = #{record.id,jdbcType=INTEGER},
+      task_file = #{record.taskFile,jdbcType=VARCHAR},
+      task_state = #{record.taskState,jdbcType=VARCHAR},
+      task_number = #{record.taskNumber,jdbcType=INTEGER},
+      task_sub_id = #{record.taskSubId,jdbcType=VARCHAR},
+      reply_file = #{record.replyFile,jdbcType=VARCHAR},
+      task_time = #{record.taskTime,jdbcType=TIMESTAMP},
+      reply_time = #{record.replyTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.graduationaldesign.graduation.pojo.Task">
+    update t_task
+    <set>
+      <if test="taskFile != null">
+        task_file = #{taskFile,jdbcType=VARCHAR},
+      </if>
+      <if test="taskState != null">
+        task_state = #{taskState,jdbcType=VARCHAR},
+      </if>
+      <if test="taskNumber != null">
+        task_number = #{taskNumber,jdbcType=INTEGER},
+      </if>
+      <if test="taskSubId != null">
+        task_sub_id = #{taskSubId,jdbcType=VARCHAR},
+      </if>
+      <if test="replyFile != null">
+        reply_file = #{replyFile,jdbcType=VARCHAR},
+      </if>
+      <if test="taskTime != null">
+        task_time = #{taskTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="replyTime != null">
+        reply_time = #{replyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taskContent != null">
+        task_content = #{taskContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="taskRequire != null">
+        task_require = #{taskRequire,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="taskSchedule != null">
+        task_schedule = #{taskSchedule,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="taskLiterature != null">
+        task_literature = #{taskLiterature,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="replyContent != null">
+        reply_content = #{replyContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.graduationaldesign.graduation.pojo.Task">
+    update t_task
+    set task_file = #{taskFile,jdbcType=VARCHAR},
+      task_state = #{taskState,jdbcType=VARCHAR},
+      task_number = #{taskNumber,jdbcType=INTEGER},
+      task_sub_id = #{taskSubId,jdbcType=VARCHAR},
+      reply_file = #{replyFile,jdbcType=VARCHAR},
+      task_time = #{taskTime,jdbcType=TIMESTAMP},
+      reply_time = #{replyTime,jdbcType=TIMESTAMP},
+      task_content = #{taskContent,jdbcType=LONGVARCHAR},
+      task_require = #{taskRequire,jdbcType=LONGVARCHAR},
+      task_schedule = #{taskSchedule,jdbcType=LONGVARCHAR},
+      task_literature = #{taskLiterature,jdbcType=LONGVARCHAR},
+      reply_content = #{replyContent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.graduationaldesign.graduation.pojo.Task">
+    update t_task
+    set task_file = #{taskFile,jdbcType=VARCHAR},
+      task_state = #{taskState,jdbcType=VARCHAR},
+      task_number = #{taskNumber,jdbcType=INTEGER},
+      task_sub_id = #{taskSubId,jdbcType=VARCHAR},
+      reply_file = #{replyFile,jdbcType=VARCHAR},
+      task_time = #{taskTime,jdbcType=TIMESTAMP},
+      reply_time = #{replyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getSubject" resultMap="com.graduationaldesign.graduation.mapper.SubjectMapper.BaseResultMap">
+    select sub_id,sub_name,sub_nature,sub_source,sub_tea_id,sub_file,first_report_deadline,last_report_deadline,stu_id,sub_stu_state,sub_last_score,show_id,sub_introduce from t_subject where sub_id=#{taskSubId}
+  </select>
+  <insert id="insertBatchSelective" parameterType="java.util.List">
+    insert into t_task
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="list[0].id!=null">
+        id,
+      </if>
+      <if test="list[0].taskFile!=null">
+        task_file,
+      </if>
+      <if test="list[0].taskState!=null">
+        task_state,
+      </if>
+      <if test="list[0].taskNumber!=null">
+        task_number,
+      </if>
+      <if test="list[0].taskSubId!=null">
+        task_sub_id,
+      </if>
+      <if test="list[0].replyFile!=null">
+        reply_file,
+      </if>
+      <if test="list[0].taskTime!=null">
+        task_time,
+      </if>
+      <if test="list[0].replyTime!=null">
+        reply_time,
+      </if>
+      <if test="list[0].taskContent!=null">
+        task_content,
+      </if>
+      <if test="list[0].taskRequire!=null">
+        task_require,
+      </if>
+      <if test="list[0].taskSchedule!=null">
+        task_schedule,
+      </if>
+      <if test="list[0].taskLiterature!=null">
+        task_literature,
+      </if>
+      <if test="list[0].replyContent!=null">
+        reply_content,
+      </if>
+    </trim>
+     values 
+    <foreach collection="list" index="index" item="item" separator=",">
+      <trim prefix=" (" suffix=")" suffixOverrides=",">
+        <if test="item.id!=null">
+          #{item.id,jdbcType=INTEGER},
+        </if>
+        <if test="item.taskFile!=null">
+          #{item.taskFile,jdbcType=VARCHAR},
+        </if>
+        <if test="item.taskState!=null">
+          #{item.taskState,jdbcType=VARCHAR},
+        </if>
+        <if test="item.taskNumber!=null">
+          #{item.taskNumber,jdbcType=INTEGER},
+        </if>
+        <if test="item.taskSubId!=null">
+          #{item.taskSubId,jdbcType=VARCHAR},
+        </if>
+        <if test="item.replyFile!=null">
+          #{item.replyFile,jdbcType=VARCHAR},
+        </if>
+        <if test="item.taskTime!=null">
+          #{item.taskTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.replyTime!=null">
+          #{item.replyTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.taskContent!=null">
+          #{item.taskContent,jdbcType=LONGVARCHAR},
+        </if>
+        <if test="item.taskRequire!=null">
+          #{item.taskRequire,jdbcType=LONGVARCHAR},
+        </if>
+        <if test="item.taskSchedule!=null">
+          #{item.taskSchedule,jdbcType=LONGVARCHAR},
+        </if>
+        <if test="item.taskLiterature!=null">
+          #{item.taskLiterature,jdbcType=LONGVARCHAR},
+        </if>
+        <if test="item.replyContent!=null">
+          #{item.replyContent,jdbcType=LONGVARCHAR},
+        </if>
+      </trim>
+    </foreach>
+  </insert>
+  <update id="updateBatchByPrimaryKeySelective" parameterType="java.util.List">
+    <foreach collection="list" index="index" item="item" separator=";">
+      update t_task
+      <set>
+        <if test="item.taskFile!=null">
+          task_file=#{item.taskFile,jdbcType=VARCHAR},
+        </if>
+        <if test="item.taskState!=null">
+          task_state=#{item.taskState,jdbcType=VARCHAR},
+        </if>
+        <if test="item.taskNumber!=null">
+          task_number=#{item.taskNumber,jdbcType=INTEGER},
+        </if>
+        <if test="item.taskSubId!=null">
+          task_sub_id=#{item.taskSubId,jdbcType=VARCHAR},
+        </if>
+        <if test="item.replyFile!=null">
+          reply_file=#{item.replyFile,jdbcType=VARCHAR},
+        </if>
+        <if test="item.taskTime!=null">
+          task_time=#{item.taskTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.replyTime!=null">
+          reply_time=#{item.replyTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.taskContent!=null">
+          task_content=#{item.taskContent,jdbcType=LONGVARCHAR},
+        </if>
+        <if test="item.taskRequire!=null">
+          task_require=#{item.taskRequire,jdbcType=LONGVARCHAR},
+        </if>
+        <if test="item.taskSchedule!=null">
+          task_schedule=#{item.taskSchedule,jdbcType=LONGVARCHAR},
+        </if>
+        <if test="item.taskLiterature!=null">
+          task_literature=#{item.taskLiterature,jdbcType=LONGVARCHAR},
+        </if>
+        <if test="item.replyContent!=null">
+          reply_content=#{item.replyContent,jdbcType=LONGVARCHAR},
+        </if>
+      </set>
+      where 
+      id = #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+</mapper>

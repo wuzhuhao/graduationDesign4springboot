@@ -1,0 +1,541 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.graduationaldesign.graduation.mapper.SubjectMapper">
+  <resultMap id="BaseResultMap" type="com.graduationaldesign.graduation.pojo.Subject">
+    <id column="sub_id" jdbcType="VARCHAR" property="subId" />
+    <result column="sub_name" jdbcType="VARCHAR" property="subName" />
+    <result column="sub_nature" jdbcType="INTEGER" property="subNature" />
+    <result column="sub_source" jdbcType="INTEGER" property="subSource" />
+    <result column="sub_tea_id" jdbcType="VARCHAR" property="subTeaId" />
+    <result column="sub_file" jdbcType="VARCHAR" property="subFile" />
+    <result column="first_report_deadline" jdbcType="TIMESTAMP" property="firstReportDeadline" />
+    <result column="last_report_deadline" jdbcType="TIMESTAMP" property="lastReportDeadline" />
+    <result column="stu_id" jdbcType="VARCHAR" property="stuId" />
+    <result column="sub_stu_state" jdbcType="INTEGER" property="subStuState" />
+    <result column="sub_last_score" jdbcType="DECIMAL" property="subLastScore" />
+    <result column="show_id" jdbcType="INTEGER" property="showId" />
+    <association column="sub_tea_id" property="teacher" select="getTeacher" />
+    <association column="stu_id" property="student" select="getStudent" />
+    <association column="show_id" property="designShow" select="getDesignShow" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.graduationaldesign.graduation.pojo.Subject">
+    <result column="sub_introduce" jdbcType="LONGVARCHAR" property="subIntroduce" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    sub_id, sub_name, sub_nature, sub_source, sub_tea_id, sub_file, first_report_deadline, 
+    last_report_deadline, stu_id, sub_stu_state, sub_last_score, show_id
+  </sql>
+  <sql id="Blob_Column_List">
+    sub_introduce
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.graduationaldesign.graduation.pojo.SubjectExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_subject
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.graduationaldesign.graduation.pojo.SubjectExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_subject
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_subject
+    where sub_id = #{subId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_subject
+    where sub_id = #{subId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.graduationaldesign.graduation.pojo.SubjectExample">
+    delete from t_subject
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.graduationaldesign.graduation.pojo.Subject">
+    insert into t_subject (sub_id, sub_name, sub_nature, 
+      sub_source, sub_tea_id, sub_file, 
+      first_report_deadline, last_report_deadline, 
+      stu_id, sub_stu_state, sub_last_score, 
+      show_id, sub_introduce)
+    values (#{subId,jdbcType=VARCHAR}, #{subName,jdbcType=VARCHAR}, #{subNature,jdbcType=INTEGER}, 
+      #{subSource,jdbcType=INTEGER}, #{subTeaId,jdbcType=VARCHAR}, #{subFile,jdbcType=VARCHAR}, 
+      #{firstReportDeadline,jdbcType=TIMESTAMP}, #{lastReportDeadline,jdbcType=TIMESTAMP}, 
+      #{stuId,jdbcType=VARCHAR}, #{subStuState,jdbcType=INTEGER}, #{subLastScore,jdbcType=DECIMAL}, 
+      #{showId,jdbcType=INTEGER}, #{subIntroduce,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.graduationaldesign.graduation.pojo.Subject">
+    insert into t_subject
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="subId != null">
+        sub_id,
+      </if>
+      <if test="subName != null">
+        sub_name,
+      </if>
+      <if test="subNature != null">
+        sub_nature,
+      </if>
+      <if test="subSource != null">
+        sub_source,
+      </if>
+      <if test="subTeaId != null">
+        sub_tea_id,
+      </if>
+      <if test="subFile != null">
+        sub_file,
+      </if>
+      <if test="firstReportDeadline != null">
+        first_report_deadline,
+      </if>
+      <if test="lastReportDeadline != null">
+        last_report_deadline,
+      </if>
+      <if test="stuId != null">
+        stu_id,
+      </if>
+      <if test="subStuState != null">
+        sub_stu_state,
+      </if>
+      <if test="subLastScore != null">
+        sub_last_score,
+      </if>
+      <if test="showId != null">
+        show_id,
+      </if>
+      <if test="subIntroduce != null">
+        sub_introduce,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="subId != null">
+        #{subId,jdbcType=VARCHAR},
+      </if>
+      <if test="subName != null">
+        #{subName,jdbcType=VARCHAR},
+      </if>
+      <if test="subNature != null">
+        #{subNature,jdbcType=INTEGER},
+      </if>
+      <if test="subSource != null">
+        #{subSource,jdbcType=INTEGER},
+      </if>
+      <if test="subTeaId != null">
+        #{subTeaId,jdbcType=VARCHAR},
+      </if>
+      <if test="subFile != null">
+        #{subFile,jdbcType=VARCHAR},
+      </if>
+      <if test="firstReportDeadline != null">
+        #{firstReportDeadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastReportDeadline != null">
+        #{lastReportDeadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stuId != null">
+        #{stuId,jdbcType=VARCHAR},
+      </if>
+      <if test="subStuState != null">
+        #{subStuState,jdbcType=INTEGER},
+      </if>
+      <if test="subLastScore != null">
+        #{subLastScore,jdbcType=DECIMAL},
+      </if>
+      <if test="showId != null">
+        #{showId,jdbcType=INTEGER},
+      </if>
+      <if test="subIntroduce != null">
+        #{subIntroduce,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.graduationaldesign.graduation.pojo.SubjectExample" resultType="java.lang.Long">
+    select count(*) from t_subject
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_subject
+    <set>
+      <if test="record.subId != null">
+        sub_id = #{record.subId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subName != null">
+        sub_name = #{record.subName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subNature != null">
+        sub_nature = #{record.subNature,jdbcType=INTEGER},
+      </if>
+      <if test="record.subSource != null">
+        sub_source = #{record.subSource,jdbcType=INTEGER},
+      </if>
+      <if test="record.subTeaId != null">
+        sub_tea_id = #{record.subTeaId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subFile != null">
+        sub_file = #{record.subFile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.firstReportDeadline != null">
+        first_report_deadline = #{record.firstReportDeadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastReportDeadline != null">
+        last_report_deadline = #{record.lastReportDeadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.stuId != null">
+        stu_id = #{record.stuId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subStuState != null">
+        sub_stu_state = #{record.subStuState,jdbcType=INTEGER},
+      </if>
+      <if test="record.subLastScore != null">
+        sub_last_score = #{record.subLastScore,jdbcType=DECIMAL},
+      </if>
+      <if test="record.showId != null">
+        show_id = #{record.showId,jdbcType=INTEGER},
+      </if>
+      <if test="record.subIntroduce != null">
+        sub_introduce = #{record.subIntroduce,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update t_subject
+    set sub_id = #{record.subId,jdbcType=VARCHAR},
+      sub_name = #{record.subName,jdbcType=VARCHAR},
+      sub_nature = #{record.subNature,jdbcType=INTEGER},
+      sub_source = #{record.subSource,jdbcType=INTEGER},
+      sub_tea_id = #{record.subTeaId,jdbcType=VARCHAR},
+      sub_file = #{record.subFile,jdbcType=VARCHAR},
+      first_report_deadline = #{record.firstReportDeadline,jdbcType=TIMESTAMP},
+      last_report_deadline = #{record.lastReportDeadline,jdbcType=TIMESTAMP},
+      stu_id = #{record.stuId,jdbcType=VARCHAR},
+      sub_stu_state = #{record.subStuState,jdbcType=INTEGER},
+      sub_last_score = #{record.subLastScore,jdbcType=DECIMAL},
+      show_id = #{record.showId,jdbcType=INTEGER},
+      sub_introduce = #{record.subIntroduce,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_subject
+    set sub_id = #{record.subId,jdbcType=VARCHAR},
+      sub_name = #{record.subName,jdbcType=VARCHAR},
+      sub_nature = #{record.subNature,jdbcType=INTEGER},
+      sub_source = #{record.subSource,jdbcType=INTEGER},
+      sub_tea_id = #{record.subTeaId,jdbcType=VARCHAR},
+      sub_file = #{record.subFile,jdbcType=VARCHAR},
+      first_report_deadline = #{record.firstReportDeadline,jdbcType=TIMESTAMP},
+      last_report_deadline = #{record.lastReportDeadline,jdbcType=TIMESTAMP},
+      stu_id = #{record.stuId,jdbcType=VARCHAR},
+      sub_stu_state = #{record.subStuState,jdbcType=INTEGER},
+      sub_last_score = #{record.subLastScore,jdbcType=DECIMAL},
+      show_id = #{record.showId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.graduationaldesign.graduation.pojo.Subject">
+    update t_subject
+    <set>
+      <if test="subName != null">
+        sub_name = #{subName,jdbcType=VARCHAR},
+      </if>
+      <if test="subNature != null">
+        sub_nature = #{subNature,jdbcType=INTEGER},
+      </if>
+      <if test="subSource != null">
+        sub_source = #{subSource,jdbcType=INTEGER},
+      </if>
+      <if test="subTeaId != null">
+        sub_tea_id = #{subTeaId,jdbcType=VARCHAR},
+      </if>
+      <if test="subFile != null">
+        sub_file = #{subFile,jdbcType=VARCHAR},
+      </if>
+      <if test="firstReportDeadline != null">
+        first_report_deadline = #{firstReportDeadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastReportDeadline != null">
+        last_report_deadline = #{lastReportDeadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stuId != null">
+        stu_id = #{stuId,jdbcType=VARCHAR},
+      </if>
+      <if test="subStuState != null">
+        sub_stu_state = #{subStuState,jdbcType=INTEGER},
+      </if>
+      <if test="subLastScore != null">
+        sub_last_score = #{subLastScore,jdbcType=DECIMAL},
+      </if>
+      <if test="showId != null">
+        show_id = #{showId,jdbcType=INTEGER},
+      </if>
+      <if test="subIntroduce != null">
+        sub_introduce = #{subIntroduce,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where sub_id = #{subId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.graduationaldesign.graduation.pojo.Subject">
+    update t_subject
+    set sub_name = #{subName,jdbcType=VARCHAR},
+      sub_nature = #{subNature,jdbcType=INTEGER},
+      sub_source = #{subSource,jdbcType=INTEGER},
+      sub_tea_id = #{subTeaId,jdbcType=VARCHAR},
+      sub_file = #{subFile,jdbcType=VARCHAR},
+      first_report_deadline = #{firstReportDeadline,jdbcType=TIMESTAMP},
+      last_report_deadline = #{lastReportDeadline,jdbcType=TIMESTAMP},
+      stu_id = #{stuId,jdbcType=VARCHAR},
+      sub_stu_state = #{subStuState,jdbcType=INTEGER},
+      sub_last_score = #{subLastScore,jdbcType=DECIMAL},
+      show_id = #{showId,jdbcType=INTEGER},
+      sub_introduce = #{subIntroduce,jdbcType=LONGVARCHAR}
+    where sub_id = #{subId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.graduationaldesign.graduation.pojo.Subject">
+    update t_subject
+    set sub_name = #{subName,jdbcType=VARCHAR},
+      sub_nature = #{subNature,jdbcType=INTEGER},
+      sub_source = #{subSource,jdbcType=INTEGER},
+      sub_tea_id = #{subTeaId,jdbcType=VARCHAR},
+      sub_file = #{subFile,jdbcType=VARCHAR},
+      first_report_deadline = #{firstReportDeadline,jdbcType=TIMESTAMP},
+      last_report_deadline = #{lastReportDeadline,jdbcType=TIMESTAMP},
+      stu_id = #{stuId,jdbcType=VARCHAR},
+      sub_stu_state = #{subStuState,jdbcType=INTEGER},
+      sub_last_score = #{subLastScore,jdbcType=DECIMAL},
+      show_id = #{showId,jdbcType=INTEGER}
+    where sub_id = #{subId,jdbcType=VARCHAR}
+  </update>
+  <select id="getTeacher" resultMap="com.graduationaldesign.graduation.mapper.TeacherMapper.BaseResultMap">
+    select tea_id,tea_password,tea_name,tea_sex,tea_age,tea_birthday,tea_phone,tea_mail,tea_address,tea_remarks,academy_id from t_teacher where tea_id=#{subTeaId}
+  </select>
+  <select id="getStudent" resultMap="com.graduationaldesign.graduation.mapper.StudentMapper.BaseResultMap">
+    select stu_id,stu_password,stu_name,stu_major,stu_class,stu_sex,stu_age,stu_birthday,stu_phone,stu_mail,stu_address,stu_remarks,academy_id from t_student where stu_id=#{stuId}
+  </select>
+  <select id="getDesignShow" resultMap="com.graduationaldesign.graduation.mapper.DesignShowMapper.BaseResultMap">
+    select id,sub_id,show_file,show_time,show_content from t_designShow where id=#{showId}
+  </select>
+  <insert id="insertBatchSelective" parameterType="java.util.List">
+    insert into t_subject
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="list[0].subId!=null">
+        sub_id,
+      </if>
+      <if test="list[0].subName!=null">
+        sub_name,
+      </if>
+      <if test="list[0].subNature!=null">
+        sub_nature,
+      </if>
+      <if test="list[0].subSource!=null">
+        sub_source,
+      </if>
+      <if test="list[0].subTeaId!=null">
+        sub_tea_id,
+      </if>
+      <if test="list[0].subFile!=null">
+        sub_file,
+      </if>
+      <if test="list[0].firstReportDeadline!=null">
+        first_report_deadline,
+      </if>
+      <if test="list[0].lastReportDeadline!=null">
+        last_report_deadline,
+      </if>
+      <if test="list[0].stuId!=null">
+        stu_id,
+      </if>
+      <if test="list[0].subStuState!=null">
+        sub_stu_state,
+      </if>
+      <if test="list[0].subLastScore!=null">
+        sub_last_score,
+      </if>
+      <if test="list[0].showId!=null">
+        show_id,
+      </if>
+      <if test="list[0].subIntroduce!=null">
+        sub_introduce,
+      </if>
+    </trim>
+     values 
+    <foreach collection="list" index="index" item="item" separator=",">
+      <trim prefix=" (" suffix=")" suffixOverrides=",">
+        <if test="item.subId!=null">
+          #{item.subId,jdbcType=VARCHAR},
+        </if>
+        <if test="item.subName!=null">
+          #{item.subName,jdbcType=VARCHAR},
+        </if>
+        <if test="item.subNature!=null">
+          #{item.subNature,jdbcType=INTEGER},
+        </if>
+        <if test="item.subSource!=null">
+          #{item.subSource,jdbcType=INTEGER},
+        </if>
+        <if test="item.subTeaId!=null">
+          #{item.subTeaId,jdbcType=VARCHAR},
+        </if>
+        <if test="item.subFile!=null">
+          #{item.subFile,jdbcType=VARCHAR},
+        </if>
+        <if test="item.firstReportDeadline!=null">
+          #{item.firstReportDeadline,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.lastReportDeadline!=null">
+          #{item.lastReportDeadline,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.stuId!=null">
+          #{item.stuId,jdbcType=VARCHAR},
+        </if>
+        <if test="item.subStuState!=null">
+          #{item.subStuState,jdbcType=INTEGER},
+        </if>
+        <if test="item.subLastScore!=null">
+          #{item.subLastScore,jdbcType=DECIMAL},
+        </if>
+        <if test="item.showId!=null">
+          #{item.showId,jdbcType=INTEGER},
+        </if>
+        <if test="item.subIntroduce!=null">
+          #{item.subIntroduce,jdbcType=LONGVARCHAR},
+        </if>
+      </trim>
+    </foreach>
+  </insert>
+  <update id="updateBatchByPrimaryKeySelective" parameterType="java.util.List">
+    <foreach collection="list" index="index" item="item" separator=";">
+      update t_subject
+      <set>
+        <if test="item.subName!=null">
+          sub_name=#{item.subName,jdbcType=VARCHAR},
+        </if>
+        <if test="item.subNature!=null">
+          sub_nature=#{item.subNature,jdbcType=INTEGER},
+        </if>
+        <if test="item.subSource!=null">
+          sub_source=#{item.subSource,jdbcType=INTEGER},
+        </if>
+        <if test="item.subTeaId!=null">
+          sub_tea_id=#{item.subTeaId,jdbcType=VARCHAR},
+        </if>
+        <if test="item.subFile!=null">
+          sub_file=#{item.subFile,jdbcType=VARCHAR},
+        </if>
+        <if test="item.firstReportDeadline!=null">
+          first_report_deadline=#{item.firstReportDeadline,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.lastReportDeadline!=null">
+          last_report_deadline=#{item.lastReportDeadline,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.stuId!=null">
+          stu_id=#{item.stuId,jdbcType=VARCHAR},
+        </if>
+        <if test="item.subStuState!=null">
+          sub_stu_state=#{item.subStuState,jdbcType=INTEGER},
+        </if>
+        <if test="item.subLastScore!=null">
+          sub_last_score=#{item.subLastScore,jdbcType=DECIMAL},
+        </if>
+        <if test="item.showId!=null">
+          show_id=#{item.showId,jdbcType=INTEGER},
+        </if>
+        <if test="item.subIntroduce!=null">
+          sub_introduce=#{item.subIntroduce,jdbcType=LONGVARCHAR},
+        </if>
+      </set>
+      where 
+      sub_id = #{item.subId,jdbcType=VARCHAR}
+    </foreach>
+  </update>
+</mapper>
