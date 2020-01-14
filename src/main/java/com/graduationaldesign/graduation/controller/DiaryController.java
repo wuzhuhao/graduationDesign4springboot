@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class DiaryController {
-    @Autowired
-    DiaryService diaryService;
-    @RequestMapping(value="/list" ,produces = "application/json; charset=utf-8")
-    @ResponseBody
-    public ResponseEntity<Object> list(Integer userid,Integer page){
-        return ResponseEntity.status(HttpStatus.SC_OK).body(Result.success(diaryService.listByPage(userid,page)));
-    }
+//    @Autowired
+//    DiaryService diaryService;
+//    @RequestMapping(value="/list" ,produces = "application/json; charset=utf-8")
+//    @ResponseBody
+//    public ResponseEntity<Object> list(Integer userid,Integer page){
+//        return ResponseEntity.status(HttpStatus.SC_OK).body(Result.success(diaryService.listByPage(userid,page)));
+//    }
 }

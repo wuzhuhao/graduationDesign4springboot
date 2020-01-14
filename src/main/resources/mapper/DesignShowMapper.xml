@@ -11,6 +11,9 @@
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.graduationaldesign.graduation.pojo.DesignShow">
     <result column="show_content" jdbcType="LONGVARCHAR" property="showContent" />
   </resultMap>
+  <resultMap extends="com.graduationaldesign.graduation.mapper.SubjectMapper.BaseResultMap" id="SubjectResultMapWithBLOBs" type="com.graduationaldesign.graduation.pojo.Subject">
+    <result column="sub_introduce" jdbcType="LONGVARCHAR" property="subIntroduce" />
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -251,7 +254,7 @@
       show_time = #{showTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="getSubject" resultMap="com.graduationaldesign.graduation.mapper.SubjectMapper.BaseResultMap">
+  <select id="getSubject" resultMap="SubjectResultMapWithBLOBs">
     select sub_id,sub_name,sub_nature,sub_source,sub_tea_id,sub_file,first_report_deadline,last_report_deadline,stu_id,sub_stu_state,sub_last_score,show_id,sub_introduce from t_subject where sub_id=#{subId}
   </select>
   <insert id="insertBatchSelective" parameterType="java.util.List">

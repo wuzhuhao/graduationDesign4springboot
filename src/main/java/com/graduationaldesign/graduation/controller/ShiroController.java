@@ -1,5 +1,6 @@
 package com.graduationaldesign.graduation.controller;
 
+import com.graduationaldesign.graduation.pojo.Admin;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -13,13 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ShiroController {
 
-    @RequestMapping("/login1")
-    public String login(User user) {
+//    @RequestMapping("/login1")
+    public String login(Admin user) {
         //添加用户认证信息
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(
-                user.getUserName(),
-                user.getPasswd()
+                user.getAdminId(),
+                user.getAdminPassword()
         );
         try {
             //进行验证，这里可以捕获异常，然后返回对应信息
@@ -36,9 +37,9 @@ public class ShiroController {
         return "login success";
     }
     //注解验角色和权限
-    @RequiresRoles("admin")
-    @RequiresPermissions("add")
-    @RequestMapping("/index")
+//    @RequiresRoles("admin")
+//    @RequiresPermissions("add")
+//    @RequestMapping("/index")
     public String index() {
         return "index!";
     }

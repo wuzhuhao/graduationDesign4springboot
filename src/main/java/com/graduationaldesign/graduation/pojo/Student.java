@@ -1,7 +1,10 @@
 package com.graduationaldesign.graduation.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 
+@JsonIgnoreProperties(value = {"handler"})
 public class Student implements Serializable {
     /**
      * 学生登陆账号

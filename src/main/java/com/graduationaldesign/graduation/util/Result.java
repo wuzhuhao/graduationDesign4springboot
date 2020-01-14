@@ -3,14 +3,24 @@ package com.graduationaldesign.graduation.util;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Zhou Jie on 2017/5/24.
  */
-public class Result {
+public class Result implements Serializable{
+    /**
+     * 成功状态
+     */
     private static final Integer SUCCESS_STATUS = 200;
+    /**
+     * 失败状态
+     */
     private static final Integer FAILURE_STATUS = 400;
+    /**
+     * 系统内部错误
+     */
     private static final Integer INTERNAL_ERROR_STATUS = 500;
     private static final String SUCCESS_MESSAGE = "success";
     private static final String FAILURE_MESSAGE = "failure";

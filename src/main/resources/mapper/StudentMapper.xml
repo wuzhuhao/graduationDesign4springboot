@@ -17,6 +17,9 @@
     <result column="academy_id" jdbcType="INTEGER" property="academyId" />
     <association column="academy_id" property="academy" select="getAcademy" />
   </resultMap>
+  <resultMap extends="com.graduationaldesign.graduation.mapper.AcademyMapper.BaseResultMap" id="ResultMapWithBLOBs" type="com.graduationaldesign.graduation.pojo.Academy">
+    <result column="aca_introduce" jdbcType="LONGVARCHAR" property="acaIntroduce" />
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -337,9 +340,10 @@
       academy_id = #{academyId,jdbcType=INTEGER}
     where stu_id = #{stuId,jdbcType=VARCHAR}
   </update>
-  <select id="getAcademy" resultMap="com.graduationaldesign.graduation.mapper.AcademyMapper.BaseResultMap">
+  <select id="getAcademy" resultMap="ResultMapWithBLOBs">
     select id,aca_name,aca_introduce from t_academy where id=#{academyId}
   </select>
+
   <insert id="insertBatchSelective" parameterType="java.util.List">
     insert into t_student
     <trim prefix="(" suffix=")" suffixOverrides=",">

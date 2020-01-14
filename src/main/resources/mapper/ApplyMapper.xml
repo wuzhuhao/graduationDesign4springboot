@@ -17,6 +17,7 @@
     <result column="apply_reason" jdbcType="LONGVARCHAR" property="applyReason" />
     <result column="apply_reply" jdbcType="LONGVARCHAR" property="applyReply" />
   </resultMap>
+
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">

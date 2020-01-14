@@ -8,6 +8,6 @@ import com.graduationaldesign.graduation.util.PageBean;
  */
 
 public interface DiaryService {
-    PageBean<Diary> listByPage(int uid, int page);
+//    PageBean<Diary> listByPage(int uid, int page);
 
 }

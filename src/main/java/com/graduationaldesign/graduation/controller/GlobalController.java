@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class GlobalController {
-    @RequestMapping("/login")
+//    @RequestMapping("/login")
     public String loginForward(){
         return "login";
     }

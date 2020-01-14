@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.graduationaldesign.graduation.mapper.PermissionMapper">
+  <resultMap id="BaseResultMap" type="com.graduationaldesign.graduation.pojo.Permission">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="per_name" jdbcType="VARCHAR" property="perName" />
+    <result column="per_desc" jdbcType="VARCHAR" property="perDesc" />
+    <result column="per_url" jdbcType="VARCHAR" property="perUrl" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, per_name, per_desc, per_url
+  </sql>
+  <select id="selectByExample" parameterType="com.graduationaldesign.graduation.pojo.PermissionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_permission
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_permission
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_permission
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.graduationaldesign.graduation.pojo.PermissionExample">
+    delete from t_permission
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.graduationaldesign.graduation.pojo.Permission">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_permission (per_name, per_desc, per_url
+      )
+    values (#{perName,jdbcType=VARCHAR}, #{perDesc,jdbcType=VARCHAR}, #{perUrl,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.graduationaldesign.graduation.pojo.Permission">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_permission
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="perName != null">
+        per_name,
+      </if>
+      <if test="perDesc != null">
+        per_desc,
+      </if>
+      <if test="perUrl != null">
+        per_url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="perName != null">
+        #{perName,jdbcType=VARCHAR},
+      </if>
+      <if test="perDesc != null">
+        #{perDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="perUrl != null">
+        #{perUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.graduationaldesign.graduation.pojo.PermissionExample" resultType="java.lang.Long">
+    select count(*) from t_permission
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_permission
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.perName != null">
+        per_name = #{record.perName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.perDesc != null">
+        per_desc = #{record.perDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.perUrl != null">
+        per_url = #{record.perUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_permission
+    set id = #{record.id,jdbcType=BIGINT},
+      per_name = #{record.perName,jdbcType=VARCHAR},
+      per_desc = #{record.perDesc,jdbcType=VARCHAR},
+      per_url = #{record.perUrl,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.graduationaldesign.graduation.pojo.Permission">
+    update t_permission
+    <set>
+      <if test="perName != null">
+        per_name = #{perName,jdbcType=VARCHAR},
+      </if>
+      <if test="perDesc != null">
+        per_desc = #{perDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="perUrl != null">
+        per_url = #{perUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.graduationaldesign.graduation.pojo.Permission">
+    update t_permission
+    set per_name = #{perName,jdbcType=VARCHAR},
+      per_desc = #{perDesc,jdbcType=VARCHAR},
+      per_url = #{perUrl,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <insert id="insertBatchSelective" parameterType="java.util.List">
+    insert into t_permission
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="list[0].id!=null">
+        id,
+      </if>
+      <if test="list[0].perName!=null">
+        per_name,
+      </if>
+      <if test="list[0].perDesc!=null">
+        per_desc,
+      </if>
+      <if test="list[0].perUrl!=null">
+        per_url,
+      </if>
+    </trim>
+     values 
+    <foreach collection="list" index="index" item="item" separator=",">
+      <trim prefix=" (" suffix=")" suffixOverrides=",">
+        <if test="item.id!=null">
+          #{item.id,jdbcType=BIGINT},
+        </if>
+        <if test="item.perName!=null">
+          #{item.perName,jdbcType=VARCHAR},
+        </if>
+        <if test="item.perDesc!=null">
+          #{item.perDesc,jdbcType=VARCHAR},
+        </if>
+        <if test="item.perUrl!=null">
+          #{item.perUrl,jdbcType=VARCHAR},
+        </if>
+      </trim>
+    </foreach>
+  </insert>
+  <update id="updateBatchByPrimaryKeySelective" parameterType="java.util.List">
+    <foreach collection="list" index="index" item="item" separator=";">
+      update t_permission
+      <set>
+        <if test="item.perName!=null">
+          per_name=#{item.perName,jdbcType=VARCHAR},
+        </if>
+        <if test="item.perDesc!=null">
+          per_desc=#{item.perDesc,jdbcType=VARCHAR},
+        </if>
+        <if test="item.perUrl!=null">
+          per_url=#{item.perUrl,jdbcType=VARCHAR},
+        </if>
+      </set>
+      where 
+      id = #{item.id,jdbcType=BIGINT}
+    </foreach>
+  </update>
+</mapper>
