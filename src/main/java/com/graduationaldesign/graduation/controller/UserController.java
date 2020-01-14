@@ -1,6 +1,5 @@
 package com.graduationaldesign.graduation.controller;
 
-import com.graduationaldesign.graduation.pojo.User;
 import com.graduationaldesign.graduation.service.UserService;
 import com.graduationaldesign.graduation.util.ResponseStatus;
 import com.graduationaldesign.graduation.util.Result;

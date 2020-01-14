@@ -2,7 +2,6 @@ package com.graduationaldesign.graduation.shiro;
 
 import com.graduationaldesign.graduation.pojo.Permissions;
 import com.graduationaldesign.graduation.pojo.Role;
-import com.graduationaldesign.graduation.pojo.User;
 import com.graduationaldesign.graduation.service.UserService;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;

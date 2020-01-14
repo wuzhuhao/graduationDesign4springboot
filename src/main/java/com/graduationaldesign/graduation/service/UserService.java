@@ -1,8 +1,6 @@
 package com.graduationaldesign.graduation.service;
 
 
-import com.graduationaldesign.graduation.pojo.User;
-
 public interface UserService {
 
     User getUserById(Integer id);

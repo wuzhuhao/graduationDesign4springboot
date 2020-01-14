@@ -1,10 +1,7 @@
 package com.graduationaldesign.graduation.service.impl;
 
-import com.graduationaldesign.graduation.mapper.UserMapper;
 import com.graduationaldesign.graduation.pojo.Permissions;
 import com.graduationaldesign.graduation.pojo.Role;
-import com.graduationaldesign.graduation.pojo.User;
-import com.graduationaldesign.graduation.pojo.UserExample;
 import com.graduationaldesign.graduation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
