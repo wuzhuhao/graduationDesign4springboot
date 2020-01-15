@@ -1,7 +1,9 @@
 package com.graduationaldesign.graduation.pojo;
 
-import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.io.Serializable;
+@JsonIgnoreProperties(value = {"handler"})
 public class Admin implements Serializable {
     /**
      * 管理员账号
@@ -76,6 +78,13 @@ public class Admin implements Serializable {
      * @mbg.generated
      */
     private static final long serialVersionUID = 1L;
+
+    public Admin(String adminId, String adminPassword) {
+        this.adminId = adminId;
+        this.adminPassword = adminPassword;
+    }
+    public Admin() {
+    }
 
     /**
      * 获取 管理员账号 字段:t_admin.admin_id
@@ -273,5 +282,22 @@ public class Admin implements Serializable {
      */
     public void setAdminType(Integer adminType) {
         this.adminType = adminType;
+    }
+
+    @Override
+    public String toString() {
+        return "Admin{" +
+                "adminId='" + adminId + '\'' +
+                ", adminPassword='" + adminPassword + '\'' +
+                ", adminName='" + adminName + '\'' +
+                ", adminSex='" + adminSex + '\'' +
+                ", adminAge=" + adminAge +
+                ", adminBirthday='" + adminBirthday + '\'' +
+                ", adminPhone='" + adminPhone + '\'' +
+                ", adminMail='" + adminMail + '\'' +
+                ", adminAddress='" + adminAddress + '\'' +
+                ", adminRemarks='" + adminRemarks + '\'' +
+                ", adminType=" + adminType +
+                '}';
     }
 }

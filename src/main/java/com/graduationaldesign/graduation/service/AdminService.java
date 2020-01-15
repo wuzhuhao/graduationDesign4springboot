@@ -1,6 +1,7 @@
 package com.graduationaldesign.graduation.service;
 
 import com.graduationaldesign.graduation.pojo.Admin;
+import com.graduationaldesign.graduation.pojo.Teacher;
 
 /**
  * @Author: wuzhuhao
@@ -8,5 +9,5 @@ import com.graduationaldesign.graduation.pojo.Admin;
  */
 public interface AdminService {
     Admin getAdminByName(String adminID);
-
+    Admin login(Admin admin);
 }

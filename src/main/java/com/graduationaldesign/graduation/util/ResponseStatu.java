@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
  * @Author: wuzhuhao
  * @Date: 2020/1/10 19:30
  */
-public class ResponseStatus {
+public class ResponseStatu {
     /**
      * 添加状态码和封装结果
      * @param status

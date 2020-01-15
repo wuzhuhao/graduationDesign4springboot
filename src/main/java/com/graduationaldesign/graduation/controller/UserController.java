@@ -20,8 +20,7 @@ public class UserController {
 
 //    @Autowired
 //    UserService userService;
-    @Autowired
-    HttpServletRequest request;
+
 
 //    @RequestMapping("/user/{userid}")
 //    @ResponseBody

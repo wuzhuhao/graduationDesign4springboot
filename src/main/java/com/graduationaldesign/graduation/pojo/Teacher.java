@@ -1,7 +1,9 @@
 package com.graduationaldesign.graduation.pojo;
 
-import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.io.Serializable;
+@JsonIgnoreProperties(value = {"handler"})
 public class Teacher implements Serializable {
     /**
      * 教师id
@@ -283,5 +285,32 @@ public class Teacher implements Serializable {
 
     public void setAcademy(Academy academy) {
         this.academy=academy;
+    }
+
+    public Teacher(String teaId, String teaPassword) {
+        this.teaId = teaId;
+        this.teaPassword = teaPassword;
+    }
+
+    public Teacher() {
+
+    }
+
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "teaId='" + teaId + '\'' +
+                ", teaPassword='" + teaPassword + '\'' +
+                ", teaName='" + teaName + '\'' +
+                ", teaSex='" + teaSex + '\'' +
+                ", teaAge=" + teaAge +
+                ", teaBirthday='" + teaBirthday + '\'' +
+                ", teaPhone='" + teaPhone + '\'' +
+                ", teaMail='" + teaMail + '\'' +
+                ", teaAddress='" + teaAddress + '\'' +
+                ", teaRemarks='" + teaRemarks + '\'' +
+                ", academyId=" + academyId +
+                ", academy=" + academy +
+                '}';
     }
 }

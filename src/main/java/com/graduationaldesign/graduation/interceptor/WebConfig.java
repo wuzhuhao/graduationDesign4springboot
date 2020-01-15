@@ -14,13 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+
 /**
- * @TODO //
- * @Author Lensen
- * @Date 2018/7/21
- * @Description 实现WebMvcConfigurer接口，
+ * 拦截器配置类
  */
-//@Configuration
+@Configuration
 public class WebConfig implements WebMvcConfigurer {
 
     /**
@@ -96,7 +94,8 @@ public class WebConfig implements WebMvcConfigurer {
 //    }
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/list");
+        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/list")
+                .addPathPatterns("/changPassword");
     }
 
 }

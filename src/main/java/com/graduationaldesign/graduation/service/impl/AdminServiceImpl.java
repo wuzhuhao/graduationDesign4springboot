@@ -1,17 +1,47 @@
 package com.graduationaldesign.graduation.service.impl;
 
+import com.graduationaldesign.graduation.mapper.AdminMapper;
 import com.graduationaldesign.graduation.pojo.Admin;
+import com.graduationaldesign.graduation.pojo.AdminExample;
+import com.graduationaldesign.graduation.pojo.Teacher;
+import com.graduationaldesign.graduation.pojo.TeacherExample;
 import com.graduationaldesign.graduation.service.AdminService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @Author: wuzhuhao
  * @Date: 2020/1/14 16:50
  */
+@Service
 public class AdminServiceImpl implements AdminService {
+    @Autowired
+    AdminMapper adminMapper;
     @Override
     public Admin getAdminByName(String adminID) {
         //模拟数据库查询，正常情况此处是从数据库或者缓存查询。
         return getMapByName(adminID);
+    }
+
+    @Override
+    public Admin login(Admin admin) {
+        AdminExample example = new AdminExample();
+        AdminExample.Criteria criteria = example.createCriteria();
+        criteria.andAdminIdEqualTo(admin.getAdminId());
+        if (adminMapper.selectByExample(example).size()==0){
+            throw new RuntimeException("账号不存在！");
+        }
+        else{
+            criteria.andAdminPasswordEqualTo(admin.getAdminPassword());
+            List<Admin> list = adminMapper.selectByExample(example);
+            if (list.size()==0){
+                throw new RuntimeException("密码错误！");
+            }else{
+                return list.get(0);
+            }
+        }
     }
 
     /**

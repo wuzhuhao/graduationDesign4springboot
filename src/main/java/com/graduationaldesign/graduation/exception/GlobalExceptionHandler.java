@@ -5,19 +5,25 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.graduationaldesign.graduation.util.JsonUtils;
 import com.graduationaldesign.graduation.util.Result;
+import org.apache.http.HttpStatus;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.apache.shiro.authz.AuthorizationException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
-//implements HandlerExceptionResolver
+import java.util.HashMap;
+import java.util.Map;
+
 @ControllerAdvice
-public class GlobalExceptionHandler {
+public class GlobalExceptionHandler implements HandlerExceptionResolver{
     private static final Logger logger;
 
     static {
@@ -33,6 +39,14 @@ public class GlobalExceptionHandler {
         return mav;
     }
 
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    @ResponseBody
+    public ResponseEntity<Object> paramException(Exception e) {
+        logger.error("接受表单字段类型错误");
+        /*可以在此处加日志输出exception*/
+        return ResponseEntity.status(HttpStatus.SC_OK).body(Result.failure("接受表单字段类型错误"));
+    }
+
     @ExceptionHandler
     @ResponseBody
     public String ErrorHandler(AuthorizationException e) {
@@ -40,6 +54,15 @@ public class GlobalExceptionHandler {
         return "没有通过权限验证！";
     }
 
+    /**
+     * 异常默认处理方法
+     * @param httpServletRequest
+     * @param httpServletResponse
+     * @param o
+     * @param e
+     * @return
+     */
+    @Override
     public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) {
             logger.error("服务器出错", e);
         //如果是ajax请求，就返回一个json格式的出错提示信息

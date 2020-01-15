@@ -335,4 +335,36 @@ public class Student implements Serializable {
     public void setAcademy(Academy academy) {
         this.academy=academy;
     }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "stuId='" + stuId + '\'' +
+                ", stuPassword='" + stuPassword + '\'' +
+                ", stuName='" + stuName + '\'' +
+                ", stuMajor='" + stuMajor + '\'' +
+                ", stuClass='" + stuClass + '\'' +
+                ", stuSex='" + stuSex + '\'' +
+                ", stuAge=" + stuAge +
+                ", stuBirthday='" + stuBirthday + '\'' +
+                ", stuPhone='" + stuPhone + '\'' +
+                ", stuMail='" + stuMail + '\'' +
+                ", stuAddress='" + stuAddress + '\'' +
+                ", stuRemarks='" + stuRemarks + '\'' +
+                ", academyId=" + academyId +
+                ", academy=" + academy +
+                '}';
+    }
+
+    public Student(String stuId, String stuPassword) {
+        this.stuId = stuId;
+        this.stuPassword = stuPassword;
+    }
+
+    public Student(String stuPassword) {
+        this.stuPassword = stuPassword;
+    }
+
+    public Student() {
+    }
 }

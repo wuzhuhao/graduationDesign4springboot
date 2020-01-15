@@ -36,4 +36,20 @@ public class StudentServiceImpl implements StudentService {
             }
         }
     }
+
+    public boolean checkPassword(String id,String oldPassword){
+        Student student = studentMapper.selectByPrimaryKey(id);
+        boolean flag = true;
+        if (!student.getStuPassword().equals(oldPassword)){
+                flag = false;
+        }
+        return flag;
+    }
+
+    public boolean changPassword(String id,String newPassword){
+        StudentExample studentExample = new StudentExample();
+        StudentExample.Criteria criteria = studentExample.createCriteria();
+        criteria.andStuIdEqualTo(id);
+        return studentMapper.updateByExampleSelective(new Student(newPassword),studentExample)>0;
+    }
 }
