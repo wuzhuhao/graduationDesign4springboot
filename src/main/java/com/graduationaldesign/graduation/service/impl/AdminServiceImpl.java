@@ -1,10 +1,7 @@
 package com.graduationaldesign.graduation.service.impl;
 
 import com.graduationaldesign.graduation.mapper.AdminMapper;
-import com.graduationaldesign.graduation.pojo.Admin;
-import com.graduationaldesign.graduation.pojo.AdminExample;
-import com.graduationaldesign.graduation.pojo.Teacher;
-import com.graduationaldesign.graduation.pojo.TeacherExample;
+import com.graduationaldesign.graduation.pojo.*;
 import com.graduationaldesign.graduation.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,6 +41,28 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
+    private boolean checkPassword(String id,String oldPassword){
+        Admin admin = adminMapper.selectByPrimaryKey(id);
+        boolean flag = true;
+        if (!admin.getAdminPassword().equals(oldPassword)){
+            flag = false;
+        }
+        return flag;
+    }
+
+    public String changPassword(String id,String oldPassword,String newPassword){
+        if (!checkPassword(id, oldPassword)){
+            throw new RuntimeException("原密码不正确!");
+        }
+        AdminExample adminExample = new AdminExample();
+        AdminExample.Criteria criteria = adminExample.createCriteria();
+        criteria.andAdminIdEqualTo(id);
+        if (adminMapper.updateByExampleSelective(new Admin(newPassword),adminExample)>0){
+            return "修改成功！";
+        }
+        return "修改失败！";
+    }
+
     /**
      * 模拟数据库查询
      * @param userName
@@ -74,5 +93,24 @@ public class AdminServiceImpl implements AdminService {
 //        map.put(user1.getUserName(), user1);
 //        return map.get(userName);
         return null;
+    }
+
+    private Admin getUsetById(String id){
+        Admin list = adminMapper.selectByPrimaryKey(id);
+        return list;
+    }
+    public String changeInformation(UserModel userModel) {
+        String message;
+        Admin admin = getUsetById(userModel.getId());
+        if (admin==null){
+            throw new RuntimeException("账号不存在,请重新登陆！");
+        }
+        admin.setModel(userModel);
+        if (adminMapper.updateByPrimaryKey(admin)>0){
+            message = "修改成功！";
+        }else{
+            message = "修改失败！";
+        }
+        return message;
     }
 }

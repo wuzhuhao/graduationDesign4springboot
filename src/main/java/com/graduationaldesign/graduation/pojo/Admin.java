@@ -86,6 +86,10 @@ public class Admin implements Serializable {
     public Admin() {
     }
 
+    public Admin(String adminPassword) {
+        this.adminPassword = adminPassword;
+    }
+
     /**
      * 获取 管理员账号 字段:t_admin.admin_id
      *
@@ -299,5 +303,17 @@ public class Admin implements Serializable {
                 ", adminRemarks='" + adminRemarks + '\'' +
                 ", adminType=" + adminType +
                 '}';
+    }
+    public void setModel(UserModel userModel){
+        this.setAdminAddress(userModel.getAddress());
+        this.setAdminAge(userModel.getAge());
+        this.setAdminBirthday(userModel.getBirthday());
+//        this.setStuClass(userModel.getClass_());
+        this.setAdminMail(userModel.getMail());
+//        this.setStuMajor(userModel.getMajor());
+        this.setAdminName(userModel.getName());
+        this.setAdminPhone(userModel.getPhone());
+        this.setAdminRemarks(userModel.getRemarks());
+        this.setAdminSex(userModel.getSex());
     }
 }

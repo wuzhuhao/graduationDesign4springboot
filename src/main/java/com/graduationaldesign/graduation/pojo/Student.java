@@ -367,4 +367,16 @@ public class Student implements Serializable {
 
     public Student() {
     }
+    public void setModel(UserModel userModel){
+        this.setStuAddress(userModel.getAddress());
+        this.setStuAge(userModel.getAge());
+        this.setStuBirthday(userModel.getBirthday());
+        this.setStuClass(userModel.getClass_());
+        this.setStuMail(userModel.getMail());
+        this.setStuMajor(userModel.getMajor());
+        this.setStuName(userModel.getName());
+        this.setStuPhone(userModel.getPhone());
+        this.setStuRemarks(userModel.getRemarks());
+        this.setStuSex(userModel.getSex());
+    }
 }

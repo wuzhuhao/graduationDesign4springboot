@@ -3,10 +3,12 @@ package com.graduationaldesign.graduation.service.impl;
 import com.graduationaldesign.graduation.mapper.StudentMapper;
 import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.StudentExample;
+import com.graduationaldesign.graduation.pojo.UserModel;
 import com.graduationaldesign.graduation.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.PublicKey;
 import java.util.List;
 
 /**
@@ -16,7 +18,7 @@ import java.util.List;
 @Service
 public class StudentServiceImpl implements StudentService {
     @Autowired
-    StudentMapper studentMapper;
+    private StudentMapper studentMapper;
     @Override
     public Student login(Student student) {
         StudentExample studentExample = new StudentExample();
@@ -37,7 +39,27 @@ public class StudentServiceImpl implements StudentService {
         }
     }
 
-    public boolean checkPassword(String id,String oldPassword){
+    private Student getUsetById(String id){
+        Student list = studentMapper.selectByPrimaryKey(id);
+        return list;
+    }
+    public String changeInformation(UserModel userModel) {
+        String message;
+        Student student = getUsetById(userModel.getId());
+        if (student==null){
+            throw new RuntimeException("账号不存在,请重新登陆！");
+        }
+        student.setModel(userModel);
+        if (studentMapper.updateByPrimaryKey(student)>0){
+            message = "修改成功！";
+        }else{
+            message = "修改失败！";
+        }
+        return message;
+    }
+
+
+    private boolean checkPassword(String id,String oldPassword){
         Student student = studentMapper.selectByPrimaryKey(id);
         boolean flag = true;
         if (!student.getStuPassword().equals(oldPassword)){
@@ -46,10 +68,18 @@ public class StudentServiceImpl implements StudentService {
         return flag;
     }
 
-    public boolean changPassword(String id,String newPassword){
+    public String changPassword(String id,String oldPassword,String newPassword){
+        if (!checkPassword(id, oldPassword)){
+            throw new RuntimeException("原密码不正确!");
+        }
         StudentExample studentExample = new StudentExample();
         StudentExample.Criteria criteria = studentExample.createCriteria();
         criteria.andStuIdEqualTo(id);
-        return studentMapper.updateByExampleSelective(new Student(newPassword),studentExample)>0;
+        if (studentMapper.updateByExampleSelective(new Student(newPassword),studentExample)>0){
+            return "修改成功！";
+        }
+        return "修改失败！";
     }
+
+
 }

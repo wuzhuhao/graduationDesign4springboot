@@ -28,20 +28,5 @@ public class StudentController {
     @Autowired
     HttpServletRequest request;
 
-    @RequestMapping(value="/changPassword")
-    @ResponseBody
-    public ResponseEntity<Object> changPassword(String oldPassword,String newPassword){
-        Student user = (Student) request.getSession().getAttribute("LOGIN_USER");
-        ResponseEntity<Object> result;
-        if (studentService.checkPassword(user.getStuId(),oldPassword)){
-            if (studentService.changPassword(user.getStuId(),newPassword)){
-                result = ResponseStatu.response(HttpStatus.SC_OK,Result.success("修改成功"));
-            }else{
-                result = ResponseStatu.response(HttpStatus.SC_OK,Result.success("修改失败！"));
-            }
-        }else{
-            result =  ResponseStatu.response(HttpStatus.SC_OK,Result.success("原密码不正确！"));
-        }
-        return result;
-    }
+
 }

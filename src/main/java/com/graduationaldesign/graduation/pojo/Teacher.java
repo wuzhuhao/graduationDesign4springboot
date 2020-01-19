@@ -296,6 +296,10 @@ public class Teacher implements Serializable {
 
     }
 
+    public Teacher(String teaPassword) {
+        this.teaPassword = teaPassword;
+    }
+
     @Override
     public String toString() {
         return "Teacher{" +
@@ -312,5 +316,17 @@ public class Teacher implements Serializable {
                 ", academyId=" + academyId +
                 ", academy=" + academy +
                 '}';
+    }
+    public void setModel(UserModel userModel){
+        this.setTeaAddress(userModel.getAddress());
+        this.setTeaAge(userModel.getAge());
+        this.setTeaBirthday(userModel.getBirthday());
+//        this.setStuClass(userModel.getClass_());
+        this.setTeaMail(userModel.getMail());
+//        this.setStuMajor(userModel.getMajor());
+        this.setTeaName(userModel.getName());
+        this.setTeaPhone(userModel.getPhone());
+        this.setTeaRemarks(userModel.getRemarks());
+        this.setTeaSex(userModel.getSex());
     }
 }

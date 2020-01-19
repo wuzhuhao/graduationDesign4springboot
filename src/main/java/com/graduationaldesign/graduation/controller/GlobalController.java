@@ -3,12 +3,14 @@ package com.graduationaldesign.graduation.controller;
 import com.graduationaldesign.graduation.pojo.Admin;
 import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.Teacher;
+import com.graduationaldesign.graduation.pojo.UserModel;
 import com.graduationaldesign.graduation.service.AdminService;
 import com.graduationaldesign.graduation.service.StudentService;
 import com.graduationaldesign.graduation.service.TeacherService;
 import com.graduationaldesign.graduation.service.impl.AdminServiceImpl;
 import com.graduationaldesign.graduation.service.impl.StudentServiceImpl;
 import com.graduationaldesign.graduation.service.impl.TeacherServiceImpl;
+import com.graduationaldesign.graduation.util.ResponseStatu;
 import com.graduationaldesign.graduation.util.Result;
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,33 +46,97 @@ public class GlobalController {
         Map<String, Object> map = model.asMap();
         System.out.println(map);
         HttpSession session = request.getSession();
-        Object result = null;
+        Object result;
         if (type==1){
             try {
                 result = studentService.login(new Student(number,password));
-
             }catch (RuntimeException e){
-                return ResponseEntity.status(HttpStatus.SC_OK).body(Result.failure(e.getMessage()));
+                return ResponseStatu.failure(e.getMessage());
             }
         }else if(type==2){
             try {
                 result = teacherService.login(new Teacher(number,password));
             }catch (RuntimeException e){
-                return ResponseEntity.status(HttpStatus.SC_OK).body(Result.failure(e.getMessage()));
+                return ResponseStatu.failure(e.getMessage());
             }
         }
         else if(type==3){
             try {
                 result = adminService.login(new Admin(number,password));
             }catch (RuntimeException e){
-                return ResponseEntity.status(HttpStatus.SC_OK).body(Result.failure(e.getMessage()));
+                return ResponseStatu.failure(e.getMessage());
             }
         }
         else {
-            return ResponseEntity.status(HttpStatus.SC_OK).body(Result.failure("请选择正确的身份"));
+            return ResponseStatu.failure("请选择正确的身份");
         }
         session.setAttribute("LOGIN_USER",result);
-        return ResponseEntity.status(HttpStatus.SC_OK).body(Result.success(result));
+        return ResponseStatu.success(result);
+    }
+    @RequestMapping(value="/changPassword")
+    @ResponseBody
+    public ResponseEntity<Object> changPassword(String oldPassword,String newPassword,Integer type){
+        Object user;
+        user = request.getSession().getAttribute("LOGIN_USER");
+        String userID;
+        ResponseEntity<Object> result;
+        String message;
+        try {
+            if (type.equals(1)){
+            /*学生修改密码*/
+                userID = ((Student)user).getStuId();
+                message = studentService.changPassword(userID,oldPassword,newPassword);
+            }else if(type.equals(2)){
+            /*教师修改密码*/
+                userID = ((Teacher)user).getTeaId();
+                message = teacherService.changPassword(userID,oldPassword,newPassword);
+            }else if(type.equals(3)){
+            /*管理员修改密码*/
+                userID = ((Admin)user).getAdminId();
+                message = adminService.changPassword(userID,oldPassword,newPassword);
+            }else{
+                message = "请求参数不对！";
+            }
+
+        }catch (RuntimeException e){
+            message = e.getMessage();
+        }
+        result = ResponseStatu.success(message);
+        return result;
+    }
+
+    @RequestMapping(value="/changeInformation")
+    @ResponseBody
+    public ResponseEntity<Object> changeInformation(UserModel userModel,Integer type){
+        Object user;
+        user = request.getSession().getAttribute("LOGIN_USER");
+        String userID;
+        ResponseEntity<Object> result;
+        String message;
+        try {
+            if (type.equals(1)){
+            /*学生修改密码*/
+                userID = ((Student)user).getStuId();
+                userModel.setId(userID);
+                message = studentService.changeInformation(userModel);
+            }else if(type.equals(2)){
+            /*教师修改密码*/
+                userID = ((Teacher)user).getTeaId();
+                userModel.setId(userID);
+                message = teacherService.changeInformation(userModel);
+            }else if(type.equals(3)){
+            /*管理员修改密码*/
+                userID = ((Admin)user).getAdminId();
+                userModel.setId(userID);
+                message = adminService.changeInformation(userModel);
+            }else{
+                message = "请求参数不对！";
+            }
+        }catch (RuntimeException e){
+            message = e.getMessage();
+        }
+        result = ResponseStatu.success(message);
+        return result;
     }
 //    @RequestMapping("/login")
     public String loginForward(){

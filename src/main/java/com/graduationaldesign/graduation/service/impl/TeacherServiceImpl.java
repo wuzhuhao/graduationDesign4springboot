@@ -1,10 +1,7 @@
 package com.graduationaldesign.graduation.service.impl;
 
 import com.graduationaldesign.graduation.mapper.TeacherMapper;
-import com.graduationaldesign.graduation.pojo.Student;
-import com.graduationaldesign.graduation.pojo.StudentExample;
-import com.graduationaldesign.graduation.pojo.Teacher;
-import com.graduationaldesign.graduation.pojo.TeacherExample;
+import com.graduationaldesign.graduation.pojo.*;
 import com.graduationaldesign.graduation.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,5 +33,46 @@ public class TeacherServiceImpl implements TeacherService {
                 return list.get(0);
             }
         }
+    }
+
+    private boolean checkPassword(String id,String oldPassword){
+        Teacher teacher = teacherMapper.selectByPrimaryKey(id);
+        boolean flag = true;
+        if (!teacher.getTeaPassword().equals(oldPassword)){
+            flag = false;
+        }
+        return flag;
+    }
+
+    public String changPassword(String id,String oldPassword,String newPassword){
+        if (!checkPassword(id, oldPassword)){
+            throw new RuntimeException("原密码不正确!");
+        }
+        TeacherExample studentExample = new TeacherExample();
+        TeacherExample.Criteria criteria = studentExample.createCriteria();
+        criteria.andTeaIdEqualTo(id);
+        if (teacherMapper.updateByExampleSelective(new Teacher(newPassword),studentExample)>0){
+            return "修改成功！";
+        }
+        return "修改失败！";
+    }
+
+    private Teacher getUsetById(String id){
+        Teacher list = teacherMapper.selectByPrimaryKey(id);
+        return list;
+    }
+    public String changeInformation(UserModel userModel) {
+        String message;
+        Teacher teacher = getUsetById(userModel.getId());
+        if (teacher==null){
+            throw new RuntimeException("账号不存在,请重新登陆！");
+        }
+        teacher.setModel(userModel);
+        if (teacherMapper.updateByPrimaryKey(teacher)>0){
+            message = "修改成功！";
+        }else{
+            message = "修改失败！";
+        }
+        return message;
     }
 }

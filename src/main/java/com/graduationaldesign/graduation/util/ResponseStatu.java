@@ -17,4 +17,15 @@ public class ResponseStatu {
     public static ResponseEntity<Object> response(int status,Result result){
         return ResponseEntity.status(status).body(result);
     }
+
+    public static ResponseEntity<Object> success(String message){
+        return ResponseStatu.response(HttpStatus.SC_OK,Result.success(message));
+    }
+    public static ResponseEntity<Object> success(Object result){
+        return ResponseStatu.response(HttpStatus.SC_OK,Result.success(result));
+    }
+    public static ResponseEntity<Object> failure(String message){
+        return ResponseStatu.response(HttpStatus.SC_OK,Result.failure(message));
+    }
+
 }
