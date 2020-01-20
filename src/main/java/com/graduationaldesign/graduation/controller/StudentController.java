@@ -22,6 +22,7 @@ import java.util.Map;
  * @Date: 2020/1/14 19:41
  */
 @Controller
+@RequestMapping("/stu")
 public class StudentController {
     @Autowired
     private StudentServiceImpl studentService;

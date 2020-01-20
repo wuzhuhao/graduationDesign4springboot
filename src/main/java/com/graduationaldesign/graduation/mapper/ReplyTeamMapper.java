@@ -3,9 +3,10 @@ package com.graduationaldesign.graduation.mapper;
 import com.graduationaldesign.graduation.pojo.ReplyTeam;
 import com.graduationaldesign.graduation.pojo.ReplyTeamExample;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
-
+@Component
 public interface ReplyTeamMapper {
     /**
      *  根据指定的条件获取数据库记录数,reply_team

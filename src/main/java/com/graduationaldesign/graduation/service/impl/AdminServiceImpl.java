@@ -105,6 +105,9 @@ public class AdminServiceImpl implements AdminService {
         if (admin==null){
             throw new RuntimeException("账号不存在,请重新登陆！");
         }
+        if(true) {
+            System.out.println("哈哈哈哈");
+        }
         admin.setModel(userModel);
         if (adminMapper.updateByPrimaryKey(admin)>0){
             message = "修改成功！";

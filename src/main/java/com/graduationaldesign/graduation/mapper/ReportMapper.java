@@ -3,9 +3,10 @@ package com.graduationaldesign.graduation.mapper;
 import com.graduationaldesign.graduation.pojo.Report;
 import com.graduationaldesign.graduation.pojo.ReportExample;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
-
+@Component
 public interface ReportMapper {
     /**
      *  根据指定的条件获取数据库记录数,t_report

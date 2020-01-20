@@ -1,7 +1,7 @@
 package com.graduationaldesign.graduation.controller;
 
 import com.graduationaldesign.graduation.service.UserService;
-import com.graduationaldesign.graduation.util.ResponseStatus;
+//import com.graduationaldesign.graduation.util.ResponseStatus;
 import com.graduationaldesign.graduation.util.Result;
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -3,9 +3,10 @@ package com.graduationaldesign.graduation.mapper;
 import com.graduationaldesign.graduation.pojo.DesignShow;
 import com.graduationaldesign.graduation.pojo.DesignShowExample;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
-
+@Component
 public interface DesignShowMapper {
     /**
      *  根据指定的条件获取数据库记录数,t_designshow

@@ -3,9 +3,10 @@ package com.graduationaldesign.graduation.mapper;
 import com.graduationaldesign.graduation.pojo.Operation;
 import com.graduationaldesign.graduation.pojo.OperationExample;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
-
+@Component
 public interface OperationMapper {
     /**
      *  根据指定的条件获取数据库记录数,log_operation

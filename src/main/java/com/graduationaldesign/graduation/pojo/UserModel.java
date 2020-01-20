@@ -30,6 +30,9 @@ public class UserModel {
 
     private Integer academyId;
 
+    public UserModel() {
+    }
+
     public UserModel(String id, String password, String name, String sex, Integer age, String birthday, String phone, String mail, String address, String remarks, String class_, String major, Integer academyId) {
         this.id = id;
         this.password = password;

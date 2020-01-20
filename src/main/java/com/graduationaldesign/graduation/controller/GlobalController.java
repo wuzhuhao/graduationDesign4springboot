@@ -32,6 +32,9 @@ import java.util.Map;
  */
 @Controller
 public class GlobalController {
+    private final int STU = 1;
+    private final int TEA = 2;
+    private final int ADMIN = 3;
     @Autowired
     private StudentServiceImpl studentService;
     @Autowired
@@ -47,20 +50,20 @@ public class GlobalController {
         System.out.println(map);
         HttpSession session = request.getSession();
         Object result;
-        if (type==1){
+        if (type.equals(STU)){
             try {
                 result = studentService.login(new Student(number,password));
             }catch (RuntimeException e){
                 return ResponseStatu.failure(e.getMessage());
             }
-        }else if(type==2){
+        }else if(type.equals(TEA)){
             try {
                 result = teacherService.login(new Teacher(number,password));
             }catch (RuntimeException e){
                 return ResponseStatu.failure(e.getMessage());
             }
         }
-        else if(type==3){
+        else if(type.equals(ADMIN)){
             try {
                 result = adminService.login(new Admin(number,password));
             }catch (RuntimeException e){
@@ -73,9 +76,24 @@ public class GlobalController {
         session.setAttribute("LOGIN_USER",result);
         return ResponseStatu.success(result);
     }
-    @RequestMapping(value="/changPassword")
+    @RequestMapping(value="/stu/changPassword")
     @ResponseBody
-    public ResponseEntity<Object> changPassword(String oldPassword,String newPassword,Integer type){
+    public ResponseEntity<Object> stuChangPassword(String oldPassword,String newPassword){
+        return changPassword(oldPassword,newPassword,STU);
+    }
+    @RequestMapping(value="/tea/changPassword")
+    @ResponseBody
+    public ResponseEntity<Object> teaChangPassword(String oldPassword,String newPassword){
+        return changPassword(oldPassword,newPassword,TEA);
+    }
+
+    @RequestMapping(value="/admin/changPassword")
+    @ResponseBody
+    public ResponseEntity<Object> adminChangPassword(String oldPassword,String newPassword){
+        return changPassword(oldPassword,newPassword,ADMIN);
+    }
+
+    private ResponseEntity<Object> changPassword(String oldPassword,String newPassword,Integer type){
         Object user;
         user = request.getSession().getAttribute("LOGIN_USER");
         String userID;
@@ -104,10 +122,25 @@ public class GlobalController {
         result = ResponseStatu.success(message);
         return result;
     }
-
-    @RequestMapping(value="/changeInformation")
+    @RequestMapping({"/stu/changeInformation"})
     @ResponseBody
-    public ResponseEntity<Object> changeInformation(UserModel userModel,Integer type){
+    public ResponseEntity<Object> stuChangeInformation(UserModel userModel){
+        return changeInformation(userModel,STU);
+    }
+
+    @RequestMapping({"/tea/changeInformation"})
+    @ResponseBody
+    public ResponseEntity<Object> teaChangeInformation(UserModel userModel){
+        return changeInformation(userModel,TEA);
+    }
+
+    @RequestMapping({"/admin/changeInformation"})
+    @ResponseBody
+    public ResponseEntity<Object> adminChangeInformation(UserModel userModel){
+        return changeInformation(userModel,ADMIN);
+    }
+
+    private ResponseEntity<Object> changeInformation(UserModel userModel,Integer type){
         Object user;
         user = request.getSession().getAttribute("LOGIN_USER");
         String userID;
@@ -155,6 +188,6 @@ public class GlobalController {
     @RequestMapping(value="/exit")
     public ResponseEntity<Object> exit(){
         request.getSession().removeAttribute("LOGIN_USER");
-        return ResponseEntity.status(HttpStatus.SC_OK).body(Result.success("退出登陆成功"));
+        return ResponseStatu.success("退出登陆成功");
     }
 }
