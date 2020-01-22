@@ -9,15 +9,15 @@ import com.graduationaldesign.graduation.pojo.Subject;
 public interface SubjectService{
 
 
-int deleteByPrimaryKey(String subId);
+String deleteByPrimaryKey(String subId);
 
-int insert(Subject record);
+String insert(Subject record);
 
 int insertSelective(Subject record);
 
 Subject selectByPrimaryKey(String subId);
 
-int updateByPrimaryKeySelective(Subject record);
+String updateByPrimaryKeySelective(Subject record);
 
 int updateByPrimaryKey(Subject record);
 

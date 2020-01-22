@@ -353,4 +353,26 @@ public class Subject implements Serializable {
     public void setDesignShow(DesignShow designShow) {
         this.designShow=designShow;
     }
+
+    @Override
+    public String toString() {
+        return "Subject{" +
+                "subId='" + subId + '\'' +
+                ", subName='" + subName + '\'' +
+                ", subNature=" + subNature +
+                ", subSource=" + subSource +
+                ", subTeaId='" + subTeaId + '\'' +
+                ", subFile='" + subFile + '\'' +
+                ", firstReportDeadline=" + firstReportDeadline +
+                ", lastReportDeadline=" + lastReportDeadline +
+                ", stuId='" + stuId + '\'' +
+                ", subStuState=" + subStuState +
+                ", subLastScore=" + subLastScore +
+                ", showId=" + showId +
+                ", subIntroduce='" + subIntroduce + '\'' +
+                ", teacher=" + teacher +
+                ", student=" + student +
+                ", designShow=" + designShow +
+                '}';
+    }
 }

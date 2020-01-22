@@ -3,6 +3,7 @@ package com.graduationaldesign.graduation.service.impl;
 import com.graduationaldesign.graduation.mapper.SubjectMapper;
 import com.graduationaldesign.graduation.pojo.Subject;
 import com.graduationaldesign.graduation.service.SubjectService;
+import com.graduationaldesign.graduation.util.IDUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -18,13 +19,26 @@ public class SubjectServiceImpl implements SubjectService {
     private SubjectMapper subjectMapper;
 
     @Override
-    public int deleteByPrimaryKey(String subId) {
-        return subjectMapper.deleteByPrimaryKey(subId);
+    public String deleteByPrimaryKey(String subId) {
+        String message = "删除课题成功";
+        if(subjectMapper.deleteByPrimaryKey(subId)<=0){
+            message = "删除课题失败";
+        }
+        return message;
     }
 
     @Override
-    public int insert(Subject record) {
-        return subjectMapper.insert(record);
+    public String insert(Subject record) {
+        String message = "增加课题成功！";
+        try {
+            record.setSubId(IDUtil.generateSubID(record.getSubSource()));
+        }catch (NullPointerException ne){
+            message ="参数错误，请检查参数！";
+        }
+        if (subjectMapper.insert(record)<=0){
+            message = "增加课题失败！";
+        }
+        return message;
     }
 
     @Override
@@ -38,8 +52,12 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public int updateByPrimaryKeySelective(Subject record) {
-        return subjectMapper.updateByPrimaryKeySelective(record);
+    public String updateByPrimaryKeySelective(Subject record) {
+        String message = "修改课题成功";
+        if (subjectMapper.updateByPrimaryKeySelective(record)<=0){
+            message = "修改课题失败";
+        }
+        return message;
     }
 
     @Override

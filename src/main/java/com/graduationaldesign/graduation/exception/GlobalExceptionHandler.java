@@ -76,7 +76,11 @@ public class GlobalExceptionHandler implements HandlerExceptionResolver{
             //return null表示使用默认的处理方式，等于没处理
             return new ModelAndView();
         } else {
-            return new ModelAndView("errorPage");
+            ModelAndView mav = new ModelAndView();
+            mav.addObject("exception", e);
+            mav.addObject("url", httpServletRequest.getRequestURL());
+            mav.setViewName("errorPage");
+            return mav;
         }
     }
 }
