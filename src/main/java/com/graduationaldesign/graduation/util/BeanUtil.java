@@ -23,8 +23,9 @@ public class BeanUtil {
      * @param target 转换到的目标对象
      * */
     public static void convert(Object source, Object target) {
-        if(source == null || target == null)
+        if(source == null || target == null) {
             return;
+        }
 
         try {
             // 获取源对象的属性描述
@@ -42,14 +43,16 @@ public class BeanUtil {
                 String name = targetPd.getName();
 
                 // 如果是class属性或者在源对象中没有这个属性
-                if("class".equals(name) || !sourcePdMap.containsKey(name))
+                if("class".equals(name) || !sourcePdMap.containsKey(name)) {
                     continue;
+                }
 
                 // 获取源对象中目标字段的值
                 Object value = sourcePdMap.get(name).getReadMethod().invoke(source);
 
-                if(value == null)
+                if(value == null) {
                     continue;
+                }
 
                 setValue(target, targetPd.getWriteMethod(), value);
             }
@@ -64,8 +67,9 @@ public class BeanUtil {
     private static Map<String, PropertyDescriptor> toMap(PropertyDescriptor[] pds) {
         Map<String, PropertyDescriptor> result = new HashMap<String, PropertyDescriptor>();
 
-        for(PropertyDescriptor pd : pds)
+        for(PropertyDescriptor pd : pds) {
             result.put(pd.getName(), pd);
+        }
 
         return result;
     }

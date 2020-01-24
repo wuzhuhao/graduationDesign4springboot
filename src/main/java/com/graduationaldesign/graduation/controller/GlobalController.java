@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,51 +44,43 @@ public class GlobalController {
     private AdminServiceImpl adminService;
     @Autowired
     HttpServletRequest request;
-    @RequestMapping(value="/login" ,produces = "application/json; charset=utf-8")
+    @RequestMapping(value="/login",method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<Object> login(String number,String password,Integer type,Model model){
-        Map<String, Object> map = model.asMap();
-        System.out.println(map);
+    public ResponseEntity<Object> login(String number,String password,Integer type){
         HttpSession session = request.getSession();
         Object result;
-        if (type.equals(STU)){
-            try {
+        try {
+            if (type.equals(STU)){
                 result = studentService.login(new Student(number,password));
-            }catch (RuntimeException e){
-                return ResponseStatu.failure(e.getMessage());
-            }
-        }else if(type.equals(TEA)){
-            try {
+            }else if(type.equals(TEA)){
                 result = teacherService.login(new Teacher(number,password));
-            }catch (RuntimeException e){
-                return ResponseStatu.failure(e.getMessage());
             }
-        }
-        else if(type.equals(ADMIN)){
-            try {
+            else if(type.equals(ADMIN)){
                 result = adminService.login(new Admin(number,password));
-            }catch (RuntimeException e){
-                return ResponseStatu.failure(e.getMessage());
             }
-        }
-        else {
-            return ResponseStatu.failure("请选择正确的身份");
+            else {
+                return ResponseStatu.failure("请选择正确的身份");
+            }
+        } catch (NullPointerException e) {
+            return ResponseStatu.failure("请选择登陆身份");
+        } catch (RuntimeException e){
+            return ResponseStatu.failure(e.getMessage());
         }
         session.setAttribute("LOGIN_USER",result);
         return ResponseStatu.success(result);
     }
-    @RequestMapping(value="/stu/changPassword")
+    @RequestMapping(value="/stu/changPassword",method = RequestMethod.PUT)
     @ResponseBody
     public ResponseEntity<Object> stuChangPassword(String oldPassword,String newPassword){
         return changPassword(oldPassword,newPassword,STU);
     }
-    @RequestMapping(value="/tea/changPassword")
+    @RequestMapping(value="/tea/changPassword",method = RequestMethod.PUT)
     @ResponseBody
     public ResponseEntity<Object> teaChangPassword(String oldPassword,String newPassword){
         return changPassword(oldPassword,newPassword,TEA);
     }
 
-    @RequestMapping(value="/admin/changPassword")
+    @RequestMapping(value="/admin/changPassword",method = RequestMethod.PUT)
     @ResponseBody
     public ResponseEntity<Object> adminChangPassword(String oldPassword,String newPassword){
         return changPassword(oldPassword,newPassword,ADMIN);
@@ -122,19 +115,19 @@ public class GlobalController {
         result = ResponseStatu.success(message);
         return result;
     }
-    @RequestMapping({"/stu/changeInformation"})
+    @RequestMapping(value = "/stu/changeInformation",method = RequestMethod.PUT)
     @ResponseBody
     public ResponseEntity<Object> stuChangeInformation(UserModel userModel){
         return changeInformation(userModel,STU);
     }
 
-    @RequestMapping({"/tea/changeInformation"})
+    @RequestMapping(value = "/tea/changeInformation",method = RequestMethod.PUT)
     @ResponseBody
     public ResponseEntity<Object> teaChangeInformation(UserModel userModel){
         return changeInformation(userModel,TEA);
     }
 
-    @RequestMapping({"/admin/changeInformation"})
+    @RequestMapping(value = "/admin/changeInformation",method = RequestMethod.PUT)
     @ResponseBody
     public ResponseEntity<Object> adminChangeInformation(UserModel userModel){
         return changeInformation(userModel,ADMIN);
@@ -185,7 +178,7 @@ public class GlobalController {
         return "Hello Spring Boot!";
     }
 
-    @RequestMapping(value="/exit")
+    @RequestMapping(value="/exit",method = RequestMethod.GET)
     public ResponseEntity<Object> exit(){
         request.getSession().removeAttribute("LOGIN_USER");
         return ResponseStatu.success("退出登陆成功");

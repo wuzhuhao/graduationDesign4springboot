@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 @Component
 public interface SubjectMapper {
+    int PAGE_SIZE = 5;
+
     /**
      *  根据指定的条件获取数据库记录数,t_subject
      *

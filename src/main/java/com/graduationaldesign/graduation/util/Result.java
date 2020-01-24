@@ -56,6 +56,11 @@ public class Result implements Serializable{
         return new Result(SUCCESS_STATUS,SUCCESS_MESSAGE,data);
     }
 
+    //无数据的成功结果
+    public static Result success(String message){
+        return new Result(SUCCESS_STATUS,message,null);
+    }
+
     //无消息的失败结果
     public static Result failure(){
         return new Result(FAILURE_STATUS,FAILURE_MESSAGE,null);

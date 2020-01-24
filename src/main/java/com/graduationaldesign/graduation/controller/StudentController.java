@@ -29,5 +29,13 @@ public class StudentController {
     @Autowired
     HttpServletRequest request;
 
+    @RequestMapping(value="/getStuById")
+    public ResponseEntity<Object> getStuById(String stuId){
+        Student student = studentService.getStuById(stuId);
+        if (student==null){
+            return ResponseStatu.failure("该学生不存在");
+        }
+        return ResponseStatu.success(student);
+    }
 
 }

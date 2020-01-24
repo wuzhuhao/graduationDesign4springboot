@@ -21,6 +21,12 @@ public class ResponseStatu {
     public static ResponseEntity<Object> success(String message){
         return ResponseStatu.response(HttpStatus.SC_OK,Result.success(message));
     }
+
+    /**
+     * 封装有data的response
+     * @param result
+     * @return
+     */
     public static ResponseEntity<Object> success(Object result){
         return ResponseStatu.response(HttpStatus.SC_OK,Result.success(result));
     }

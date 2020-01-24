@@ -1,8 +1,10 @@
 package com.graduationaldesign.graduation.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 import java.util.Date;
-
+@JsonIgnoreProperties(value = {"handler"})
 public class Subject implements Serializable {
     /**
      * 课题id

@@ -39,13 +39,13 @@ public class StudentServiceImpl implements StudentService {
         }
     }
 
-    private Student getUsetById(String id){
-        Student list = studentMapper.selectByPrimaryKey(id);
-        return list;
+    public Student getStuById(String id){
+        Student student = studentMapper.selectByPrimaryKey(id);
+        return student;
     }
     public String changeInformation(UserModel userModel) {
         String message;
-        Student student = getUsetById(userModel.getId());
+        Student student = getStuById(userModel.getId());
         if (student==null){
             throw new RuntimeException("账号不存在,请重新登陆！");
         }
