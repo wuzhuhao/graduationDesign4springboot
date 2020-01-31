@@ -1,10 +1,14 @@
 package com.graduationaldesign.graduation.util;
 
+import org.springframework.stereotype.Component;
+
 /**
  *  逆向工具类
  * 处理sql语句相关
  */
+@Component
 public class SqlUtil {
+
     private SqlUtil() {}
 
     /**
@@ -14,8 +18,9 @@ public class SqlUtil {
      * @return 格式化结果
      */
     public static String formatParameters(String... parameters) {
-        if(parameters == null || parameters.length == 0)
+        if(parameters == null || parameters.length == 0) {
             return null;
+        }
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append(parameters[0]);
@@ -33,8 +38,9 @@ public class SqlUtil {
      * @return 格式化结果
      */
     public static String formatParametersForAlias(String[]... parameters) {
-        if(parameters == null || parameters.length == 0)
+        if(parameters == null || parameters.length == 0) {
             return null;
+        }
         StringBuilder stringBuilder = new StringBuilder();
 
         formatParameter(stringBuilder, parameters[0]);
@@ -54,8 +60,9 @@ public class SqlUtil {
      * @return 格式化结果
      * */
     private static void formatParameter(StringBuilder parametersStr, String[] parameter) {
-        if(StringUtil.isNullOrEmpty(parameter[0]))
+        if(StringUtil.isNullOrEmpty(parameter[0])) {
             return;
+        }
 
         parametersStr.append(parameter[0]);
 

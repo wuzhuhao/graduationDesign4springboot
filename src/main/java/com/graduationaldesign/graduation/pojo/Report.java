@@ -1,5 +1,7 @@
 package com.graduationaldesign.graduation.pojo;
 
+import cn.hutool.core.date.DateUtil;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -133,8 +135,8 @@ public class Report implements Serializable {
      *
      * @return t_report.report_subtime, 报告提交时间
      */
-    public Date getReportSubtime() {
-        return reportSubtime;
+    public String getReportSubtime() {
+        return DateUtil.formatDateTime(reportSubtime);
     }
 
     /**

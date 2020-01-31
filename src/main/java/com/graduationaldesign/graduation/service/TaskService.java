@@ -1,6 +1,9 @@
 package com.graduationaldesign.graduation.service;
 
 import com.graduationaldesign.graduation.pojo.Task;
+import com.graduationaldesign.graduation.util.PageBean;
+
+import java.util.HashMap;
 
 /**
 * @Author: wuzhuhao
@@ -9,16 +12,18 @@ import com.graduationaldesign.graduation.pojo.Task;
 public interface TaskService{
 
 
-int deleteByPrimaryKey(Integer id);
+String deleteByPrimaryKey(Integer id);
 
 int insert(Task record);
 
-int insertSelective(Task record);
+String insertSelective(Task record);
 
 Task selectByPrimaryKey(Integer id);
 
-int updateByPrimaryKeySelective(Task record);
+String updateByPrimaryKeySelective(Task record);
 
 int updateByPrimaryKey(Task record);
+PageBean<Task> listByTeaWithPage(HashMap<String, Object> param, int page, String teaId);
 
+    PageBean<Task> listByStuPage(HashMap<String, Object> param, int page, String stuId, String type);
 }

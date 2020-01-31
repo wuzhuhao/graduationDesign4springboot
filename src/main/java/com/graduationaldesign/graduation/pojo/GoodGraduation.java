@@ -1,5 +1,7 @@
 package com.graduationaldesign.graduation.pojo;
 
+import cn.hutool.core.date.DateUtil;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -79,8 +81,8 @@ public class GoodGraduation implements Serializable {
      *
      * @return t_goodgraduation.good_time, 评定时间
      */
-    public Date getGoodTime() {
-        return goodTime;
+    public String getGoodTime() {
+        return DateUtil.formatDateTime(goodTime);
     }
 
     /**

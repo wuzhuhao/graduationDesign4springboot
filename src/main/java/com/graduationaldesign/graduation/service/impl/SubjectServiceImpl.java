@@ -13,6 +13,7 @@ import com.graduationaldesign.graduation.util.PageBean;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +53,11 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public String deleteByPrimaryKey(String subId) {
         String message = "删除课题成功";
+        Subject subject = selectByPrimaryKey(subId);
+        File file = new File(subject.getSubFile());
+        if (file.exists()){
+            file.delete();
+        }
         if(subjectMapper.deleteByPrimaryKey(subId)<=0){
             message = "删除课题失败";
         }

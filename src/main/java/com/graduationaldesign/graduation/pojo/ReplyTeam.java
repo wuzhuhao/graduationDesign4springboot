@@ -1,5 +1,7 @@
 package com.graduationaldesign.graduation.pojo;
 
+import cn.hutool.core.date.DateUtil;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -103,8 +105,8 @@ public class ReplyTeam implements Serializable {
      *
      * @return reply_team.reply_time, 答辩时间
      */
-    public Date getReplyTime() {
-        return replyTime;
+    public String getReplyTime() {
+        return DateUtil.formatDateTime(replyTime);
     }
 
     /**

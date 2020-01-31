@@ -1,5 +1,7 @@
 package com.graduationaldesign.graduation.pojo;
 
+import cn.hutool.core.date.DateUtil;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -67,8 +69,8 @@ public class Notice implements Serializable {
      *
      * @return t_notice.notice_time, 公告发布时间
      */
-    public Date getNoticeTime() {
-        return noticeTime;
+    public String getNoticeTime() {
+        return DateUtil.formatDateTime(noticeTime);
     }
 
     /**

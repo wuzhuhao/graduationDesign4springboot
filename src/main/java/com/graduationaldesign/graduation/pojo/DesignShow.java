@@ -1,5 +1,7 @@
 package com.graduationaldesign.graduation.pojo;
 
+import cn.hutool.core.date.DateUtil;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -103,8 +105,8 @@ public class DesignShow implements Serializable {
      *
      * @return t_designshow.show_time, 上传时间
      */
-    public Date getShowTime() {
-        return showTime;
+    public String getShowTime() {
+        return DateUtil.formatDateTime(showTime);
     }
 
     /**

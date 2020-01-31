@@ -1,8 +1,12 @@
 package com.graduationaldesign.graduation.pojo;
 
+import cn.hutool.Hutool;
+import cn.hutool.core.date.DateUtil;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 import java.util.Date;
-
+@JsonIgnoreProperties(value = {"handler"})
 public class Task implements Serializable {
     /**
      * 
@@ -205,8 +209,8 @@ public class Task implements Serializable {
      *
      * @return t_task.task_time, 任务发布时间
      */
-    public Date getTaskTime() {
-        return taskTime;
+    public String getTaskTime() {
+        return DateUtil.formatDateTime(taskTime);
     }
 
     /**
@@ -223,8 +227,8 @@ public class Task implements Serializable {
      *
      * @return t_task.reply_time, 回复时间
      */
-    public Date getReplyTime() {
-        return replyTime;
+    public String getReplyTime() {
+        return DateUtil.formatDateTime(replyTime);
     }
 
     /**
@@ -332,5 +336,25 @@ public class Task implements Serializable {
 
     public void setSubject(Subject subject) {
         this.subject=subject;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", taskFile='" + taskFile + '\'' +
+                ", taskState='" + taskState + '\'' +
+                ", taskNumber=" + taskNumber +
+                ", taskSubId='" + taskSubId + '\'' +
+                ", replyFile='" + replyFile + '\'' +
+                ", taskTime=" + taskTime +
+                ", replyTime=" + replyTime +
+                ", taskContent='" + taskContent + '\'' +
+                ", taskRequire='" + taskRequire + '\'' +
+                ", taskSchedule='" + taskSchedule + '\'' +
+                ", taskLiterature='" + taskLiterature + '\'' +
+                ", replyContent='" + replyContent + '\'' +
+                ", subject=" + subject +
+                '}';
     }
 }

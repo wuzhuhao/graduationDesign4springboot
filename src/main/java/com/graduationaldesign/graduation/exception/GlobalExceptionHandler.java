@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.graduationaldesign.graduation.util.JsonUtils;
 import com.graduationaldesign.graduation.util.Result;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -23,12 +24,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler implements HandlerExceptionResolver{
-    private static final Logger logger;
 
-    static {
-        logger = LogManager.getLogger(GlobalExceptionHandler.class);
-    }
 
 //    @ExceptionHandler(value = Exception.class)
     public ModelAndView defaultErrorHandler(HttpServletRequest req, Exception e) throws Exception {
@@ -42,7 +40,7 @@ public class GlobalExceptionHandler implements HandlerExceptionResolver{
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     @ResponseBody
     public ResponseEntity<Object> paramException(Exception e) {
-        logger.error("接受表单字段类型错误");
+        log.error("接受表单字段类型错误");
         /*可以在此处加日志输出exception*/
         return ResponseEntity.status(HttpStatus.SC_OK).body(Result.failure("接受表单字段类型错误"));
     }
@@ -50,7 +48,7 @@ public class GlobalExceptionHandler implements HandlerExceptionResolver{
     @ExceptionHandler
     @ResponseBody
     public String ErrorHandler(AuthorizationException e) {
-        logger.error("没有通过权限验证！", e);
+        log.error("没有通过权限验证！", e);
         return "没有通过权限验证！";
     }
 
@@ -64,13 +62,13 @@ public class GlobalExceptionHandler implements HandlerExceptionResolver{
      */
     @Override
     public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) {
-            logger.error("服务器出错", e);
+            log.error("服务器出错", e);
         //如果是ajax请求，就返回一个json格式的出错提示信息
         if (httpServletRequest.getHeader("X-Requested-With") != null) {
             try {
                 httpServletResponse.getWriter().println(JsonUtils.objectToJson(Result.failure("服务器出错了")));
             } catch (IOException ex) {
-                logger.error("服务器失败时发送错误提示信息失败", ex);
+                log.error("服务器失败时发送错误提示信息失败", ex);
             }
             //返回一个空的ModelAndView表示已经手动生成响应
             //return null表示使用默认的处理方式，等于没处理

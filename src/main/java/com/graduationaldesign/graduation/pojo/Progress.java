@@ -1,5 +1,7 @@
 package com.graduationaldesign.graduation.pojo;
 
+import cn.hutool.core.date.DateUtil;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -91,8 +93,8 @@ public class Progress implements Serializable {
      *
      * @return t_progress.prog_content_time, 问题发表时间
      */
-    public Date getProgContentTime() {
-        return progContentTime;
+    public String getProgContentTime() {
+        return DateUtil.formatDateTime(progContentTime);
     }
 
     /**
@@ -109,8 +111,8 @@ public class Progress implements Serializable {
      *
      * @return t_progress.prog_reply_time, 导师回复时间
      */
-    public Date getProgReplyTime() {
-        return progReplyTime;
+    public String getProgReplyTime() {
+        return DateUtil.formatDateTime(progReplyTime);
     }
 
     /**

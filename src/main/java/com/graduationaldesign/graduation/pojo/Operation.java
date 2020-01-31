@@ -1,5 +1,7 @@
 package com.graduationaldesign.graduation.pojo;
 
+import cn.hutool.core.date.DateUtil;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -77,8 +79,8 @@ public class Operation implements Serializable {
      *
      * @return log_operation.opera_time, 操作时间
      */
-    public Date getOperaTime() {
-        return operaTime;
+    public String getOperaTime() {
+        return DateUtil.formatDateTime(operaTime);
     }
 
     /**

@@ -1,5 +1,7 @@
 package com.graduationaldesign.graduation.pojo;
 
+import cn.hutool.core.date.DateUtil;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -171,8 +173,8 @@ public class Apply implements Serializable {
      *
      * @return t_apply.apply_time, 申请时间
      */
-    public Date getApplyTime() {
-        return applyTime;
+    public String getApplyTime() {
+        return DateUtil.formatDateTime(applyTime);
     }
 
     /**
@@ -189,8 +191,8 @@ public class Apply implements Serializable {
      *
      * @return t_apply.apply_reply_time, 处理时间
      */
-    public Date getApplyReplyTime() {
-        return applyReplyTime;
+    public String getApplyReplyTime() {
+        return DateUtil.formatDateTime(applyReplyTime);
     }
 
     /**

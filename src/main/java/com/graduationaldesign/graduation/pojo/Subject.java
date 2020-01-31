@@ -1,5 +1,6 @@
 package com.graduationaldesign.graduation.pojo;
 
+import cn.hutool.core.date.DateUtil;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
@@ -211,8 +212,8 @@ public class Subject implements Serializable {
      *
      * @return t_subject.first_report_deadline, 开题报告最后的时间
      */
-    public Date getFirstReportDeadline() {
-        return firstReportDeadline;
+    public String getFirstReportDeadline() {
+        return DateUtil.formatDateTime(firstReportDeadline);
     }
 
     /**
@@ -229,8 +230,8 @@ public class Subject implements Serializable {
      *
      * @return t_subject.last_report_deadline, 论文定稿最后时间
      */
-    public Date getLastReportDeadline() {
-        return lastReportDeadline;
+    public String getLastReportDeadline() {
+        return DateUtil.formatDateTime(lastReportDeadline);
     }
 
     /**

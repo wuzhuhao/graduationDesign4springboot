@@ -75,4 +75,16 @@ public class PageBean<T> {
 	public void setParams(Map<String, Object> params) {
 		this.params = params;
 	}
+
+	@Override
+	public String toString() {
+		return "PageBean{" +
+				"currentPage=" + currentPage +
+				", totalRecord=" + totalRecord +
+				", pageSize=" + pageSize +
+				", beanList=" + beanList +
+				", url='" + url + '\'' +
+				", params=" + params +
+				'}';
+	}
 }

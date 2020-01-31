@@ -57,12 +57,27 @@ public interface TaskMapper {
      */
     List<Task> selectByExample(TaskExample example);
 
+
     /**
      *  根据指定主键获取一条数据库记录,t_task
      *
      * @param id
      */
     Task selectByPrimaryKey(Integer id);
+
+    /**
+     *  根据指定教师ID获取所发布任务列表
+     *
+     * @param id
+     */
+    List<Task> selectByTeaId(String id);
+
+    /**
+     *  根据指定教师ID获取所发布任务列表
+     *
+     * @param id
+     */
+    int countByTeaId(String id);
 
     /**
      *  动态根据指定的条件来更新符合条件的数据库记录,t_task

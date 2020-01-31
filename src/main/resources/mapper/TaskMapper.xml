@@ -111,6 +111,9 @@
     'true' as QUERYID,
     <include refid="Base_Column_List" />
     from t_task
+    <if test="join != null">
+      ${join}
+    </if>
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -126,6 +129,7 @@
     from t_task
     where id = #{id,jdbcType=INTEGER}
   </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_task
     where id = #{id,jdbcType=INTEGER}
@@ -235,6 +239,9 @@
   </insert>
   <select id="countByExample" parameterType="com.graduationaldesign.graduation.pojo.TaskExample" resultType="java.lang.Long">
     select count(*) from t_task
+    <if test="join != null">
+      ${join}
+    </if>
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -391,7 +398,12 @@
   <select id="getSubject" resultMap="SubjectResultMapWithBLOBs">
     select sub_id,sub_name,sub_nature,sub_source,sub_tea_id,sub_file,first_report_deadline,last_report_deadline,stu_id,sub_stu_state,sub_last_score,show_id,sub_introduce from t_subject where sub_id=#{taskSubId}
   </select>
-  <insert id="insertBatchSelective" parameterType="java.util.List">
+    <select id="countByTeaId" resultType="java.lang.Integer">
+        select count(*)
+        from t_task t,t_subject s
+        where s.sub_tea_id = #{id,jdbcType=INTEGER} and t.task_sub_id = s.sub_id
+    </select>
+    <insert id="insertBatchSelective" parameterType="java.util.List">
     insert into t_task
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="list[0].id!=null">
@@ -524,4 +536,12 @@
       id = #{item.id,jdbcType=INTEGER}
     </foreach>
   </update>
+  <select id="selectByTeaId" resultMap="ResultMapWithBLOBs">
+      select 'false' as QUERYID,
+      <include refid="Base_Column_List" />
+      ,
+      <include refid="Blob_Column_List" />
+      from t_task t,t_subject s
+      where s.sub_tea_id = #{id,jdbcType=INTEGER} and t.task_sub_id = s.sub_id
+  </select>
 </mapper>
