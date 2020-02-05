@@ -1,19 +1,10 @@
 package com.graduationaldesign.graduation.interceptor;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.format.FormatterRegistry;
-import org.springframework.http.MediaType;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.JsonbHttpMessageConverter;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 
 /**
@@ -33,6 +24,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     /**
      * 跨域支持
+     *
      * @param registry
      */
     @Override
@@ -46,6 +38,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     /**
      * 添加静态资源--过滤swagger-api (开源的在线API文档)
+     *
      * @param registry
      */
     @Override
@@ -103,8 +96,8 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns("/sub/listOfChoice")
                 .addPathPatterns("/sub/delete/**")
                 .addPathPatterns("/sub/update")
-                .addPathPatterns("/sub/add")
-                .addPathPatterns("/stu/getStuById");
+                .addPathPatterns("/sub/add");
+//                .addPathPatterns("/stu/getStuById");
     }
 
 }

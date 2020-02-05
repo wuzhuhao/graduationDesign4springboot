@@ -159,8 +159,13 @@ public class GlobalController {
         return "login";
     }
 
-
+    /**
+     * 退出登陆
+     *
+     * @return
+     */
     @RequestMapping(value = "/exit", method = RequestMethod.GET)
+//    @CacheEvict(cacheNames = {"student", "teacher", "admin"}, allEntries = true)
     public ResponseEntity<Object> exit() {
         System.out.println(rootPropeties.getUserAttribute());
         request.getSession().removeAttribute(rootPropeties.getUserAttribute());
