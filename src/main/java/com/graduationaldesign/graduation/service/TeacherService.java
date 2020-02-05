@@ -1,6 +1,5 @@
 package com.graduationaldesign.graduation.service;
 
-import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.Teacher;
 
 /**
@@ -8,5 +7,6 @@ import com.graduationaldesign.graduation.pojo.Teacher;
  * @Date: 2020/1/15 0:49
  */
 public interface TeacherService {
+
     Teacher login(Teacher teacher);
 }

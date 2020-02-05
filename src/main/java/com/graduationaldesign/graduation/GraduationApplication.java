@@ -8,12 +8,11 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 /**
  * @author wuzhuhao
  */
-@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @MapperScan(basePackages = "com.graduationaldesign.graduation.mapper")
 public class GraduationApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(GraduationApplication.class, args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(GraduationApplication.class, args);
+    }
 }

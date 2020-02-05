@@ -7,5 +7,6 @@ import com.graduationaldesign.graduation.pojo.Student;
  * @Date: 2020/1/14 19:32
  */
 public interface StudentService {
+
     Student login(Student student);
 }

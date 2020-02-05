@@ -2,7 +2,9 @@ package com.graduationaldesign.graduation.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.graduationaldesign.graduation.mapper.ReportMapper;
 import com.graduationaldesign.graduation.mapper.SubjectMapper;
+import com.graduationaldesign.graduation.pojo.Report;
 import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.Subject;
 import com.graduationaldesign.graduation.pojo.SubjectExample;
@@ -10,25 +12,30 @@ import com.graduationaldesign.graduation.pojo.Teacher;
 import com.graduationaldesign.graduation.service.SubjectService;
 import com.graduationaldesign.graduation.util.IDUtil;
 import com.graduationaldesign.graduation.util.PageBean;
-import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
+import com.graduationaldesign.graduation.util.ResponseStatu;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import javax.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 /**
  * @Author: wuzhuhao
  * @Date: 2020/1/20 21:10
  */
 @Service
+@Slf4j
 public class SubjectServiceImpl implements SubjectService {
 
     @Resource
     private SubjectMapper subjectMapper;
+    @Resource
+    private ReportMapper reportMapper;
+
     /*==============私有接口=====================*/
-    private PageBean<Subject> pageByExample(SubjectExample subjectExample,int page){
+    private PageBean<Subject> pageByExample(SubjectExample subjectExample, int page) {
         int totalpage;
         int totalSize;
         PageBean<Subject> pageBean = new PageBean<>();
@@ -37,10 +44,10 @@ public class SubjectServiceImpl implements SubjectService {
         pageBean.setTotalRecord(totalSize);
         totalpage = pageBean.getTotalPage();
         //页数大于时选最后一页
-        page = (page<=0)?1:page>totalpage?totalpage:page;
+        page = (page <= 0) ? 1 : page > totalpage ? totalpage : page;
         pageBean.setCurrentPage(page);
-        PageHelper.startPage(page , SubjectMapper.PAGE_SIZE);
-        List<Subject> list =  subjectMapper.selectByExample(subjectExample);
+        PageHelper.startPage(page, SubjectMapper.PAGE_SIZE);
+        List<Subject> list = subjectMapper.selectByExample(subjectExample);
         //得到分页的结果对象
         PageInfo<Subject> personPageInfo = new PageInfo<>(list);
         //得到分页中的person条目对象
@@ -55,27 +62,32 @@ public class SubjectServiceImpl implements SubjectService {
         String message = "删除课题成功";
         Subject subject = selectByPrimaryKey(subId);
         File file = new File(subject.getSubFile());
-        if (file.exists()){
+        if (file.exists()) {
             file.delete();
         }
-        if(subjectMapper.deleteByPrimaryKey(subId)<=0){
+        if (subjectMapper.deleteByPrimaryKey(subId) <= 0) {
             message = "删除课题失败";
         }
         return message;
     }
 
     @Override
-    public String insert(Subject record) {
+    public ResponseEntity<Object> insert(Subject record) {
         String message = "增加课题成功！";
         try {
             record.setSubId(IDUtil.generateSubID(record.getSubSource()));
-        }catch (NullPointerException ne){
-            message ="参数错误，请检查参数！";
+        } catch (NullPointerException ne) {
+            message = "参数错误，请检查参数！";
         }
-        if (subjectMapper.insert(record)<=0){
+        if (subjectMapper.insert(record) <= 0) {
             message = "增加课题失败！";
+        } else {
+            Report one = new Report(record.getSubId(), 1, 1);
+            Report two = new Report(record.getSubId(), 2, 1);
+            reportMapper.insertSelective(one);
+            reportMapper.insertSelective(two);
         }
-        return message;
+        return ResponseStatu.success(message);
     }
 
     @Override
@@ -89,12 +101,12 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public String updateByPrimaryKeySelective(Subject record) {
+    public ResponseEntity<Object> updateByPrimaryKeySelective(Subject record) {
         String message = "修改课题成功";
-        if (subjectMapper.updateByPrimaryKeySelective(record)<=0){
+        if (subjectMapper.updateByPrimaryKeySelective(record) <= 0) {
             message = "修改课题失败";
         }
-        return message;
+        return ResponseStatu.success(message);
     }
 
     @Override
@@ -105,31 +117,34 @@ public class SubjectServiceImpl implements SubjectService {
 
     /**
      * 选题service层
+     *
      * @param subId
      * @return
      */
+    @Override
     public String ChoiceSubject(String subId, Student student) {
         Subject subject = subjectMapper.selectByPrimaryKey(subId);
         String message = "选定课题成功";
-        if (subject==null||subject.getSubStuState()==null||(!subject.getSubStuState().equals(1))){
+        if (subject == null || subject.getSubStuState() == null || (!subject.getSubStuState()
+                .equals(1))) {
             return "选定课题失败，请刷新页面";
         }
         subject.setSubStuState(2);
         subject.setStuId(student.getStuId());
-        if (subjectMapper.updateByPrimaryKey(subject)<=0){
+        if (subjectMapper.updateByPrimaryKey(subject) <= 0) {
             message = "选定课题失败，请刷新页面";
         }
         return message;
     }
 
+    @Override
     public String cancelChoice(String subId, Student student) {
         Subject subject = subjectMapper.selectByPrimaryKey(subId);
         String message = "取消选定课题成功";
         try {
-            if (subject.getSubStuState().equals(1)){
+            if (subject.getSubStuState().equals(1)) {
                 return "取消选定课题失败，请刷新页面";
-            }
-            else if (!subject.getStuId().equals(student.getStuId())){
+            } else if (!subject.getStuId().equals(student.getStuId())) {
                 return "取消选定课题失败，请刷新页面";
             }
         } catch (NullPointerException e) {
@@ -137,7 +152,7 @@ public class SubjectServiceImpl implements SubjectService {
         }
         subject.setSubStuState(1);
         subject.setStuId(null);
-        if (subjectMapper.updateByPrimaryKey(subject)<=0){
+        if (subjectMapper.updateByPrimaryKey(subject) <= 0) {
             message = "取消选定课题失败，请刷新页面";
         }
         return message;
@@ -145,10 +160,12 @@ public class SubjectServiceImpl implements SubjectService {
 
     /**
      * 选题列表service层
+     *
      * @param params
      * @param page
      * @return
      */
+    @Override
     public PageBean<Subject> listByPageOfNotChoice(HashMap<String, Object> params, int page) {
         PageBean<Subject> pageBean;
         SubjectExample subjectExample = new SubjectExample();
@@ -162,44 +179,51 @@ public class SubjectServiceImpl implements SubjectService {
 //        diaryExample.setOrderByClause("dTime desc");
         criteria.andSubStuStateEqualTo(1);
 //        pageBean.setParams();
-        pageBean = pageByExample(subjectExample,page);
+        pageBean = pageByExample(subjectExample, page);
+        return pageBean;
+    }
+
+    @Override
+    public PageBean<Subject> listByPage(HashMap<String, Object> params, int page) {
+        PageBean<Subject> pageBean;
+        SubjectExample subjectExample = new SubjectExample();
+        SubjectExample.Criteria criteria = subjectExample.createCriteria();
+        pageBean = pageByExample(subjectExample, page);
+//        pageBean.setParams();
         return pageBean;
     }
 
     /**
-     *获取已选列表service层
+     * 获取已选列表service层
+     *
      * @param param
      * @param page
      * @return
      */
-    public PageBean<Subject> listByPageOfChoice(Map<String,Object> param,int page,Student student) {
+    @Override
+    public PageBean<Subject> listByPageOfChoice(HashMap<String, Object> param, int page,
+            Student student) {
         PageBean<Subject> pageBean;
         SubjectExample subjectExample = new SubjectExample();
         SubjectExample.Criteria criteria = subjectExample.createCriteria();
         criteria.andStuIdEqualTo(student.getStuId());
         criteria.andSubStuStateNotEqualTo(1);
-        pageBean = pageByExample(subjectExample,page);
+        pageBean = pageByExample(subjectExample, page);
 //        pageBean.setParams();
         return pageBean;
     }
 
-    public PageBean<Subject> listByPageOfTea(HashMap<String, Object> params, int page, Teacher teacher) {
+    @Override
+    public PageBean<Subject> listByPageOfTea(HashMap<String, Object> params, int page,
+            Teacher teacher) {
         PageBean<Subject> pageBean;
         SubjectExample subjectExample = new SubjectExample();
         SubjectExample.Criteria criteria = subjectExample.createCriteria();
         criteria.andSubTeaIdEqualTo(teacher.getTeaId());
         criteria.andSubStuStateNotEqualTo(1);
-        pageBean = pageByExample(subjectExample,page);
+        pageBean = pageByExample(subjectExample, page);
 //        pageBean.setParams();
         return pageBean;
     }
 
-    public PageBean<Subject> listByPage(HashMap<String, Object> params, int page) {
-        PageBean<Subject> pageBean;
-        SubjectExample subjectExample = new SubjectExample();
-        SubjectExample.Criteria criteria = subjectExample.createCriteria();
-        pageBean = pageByExample(subjectExample,page);
-//        pageBean.setParams();
-        return pageBean;
-    }
 }
