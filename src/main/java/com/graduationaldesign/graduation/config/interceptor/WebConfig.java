@@ -1,5 +1,8 @@
-package com.graduationaldesign.graduation.interceptor;
+package com.graduationaldesign.graduation.config.interceptor;
 
+import com.graduationaldesign.graduation.interceptor.LoginInterceptor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -11,12 +14,18 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * 拦截器配置类
  */
 @Configuration
+@Slf4j
 public class WebConfig implements WebMvcConfigurer {
 
-    /**
-     * 添加类型转换器和格式化器
-     * @param registry
-     */
+    @Bean
+    public LoginInterceptor loggerInterceptor() {
+        log.warn("进行拦截器Bean的装载");
+        return new LoginInterceptor();
+    }
+//    /**
+//     * 添加类型转换器和格式化器
+//     * @param registry
+//     */
 //    @Override
 //    public void addFormatters(FormatterRegistry registry) {
 //        registry.addFormatterForFieldType(LocalDate.class, new USLocalDateFormatter());
@@ -88,8 +97,8 @@ public class WebConfig implements WebMvcConfigurer {
 //    }
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginInterceptor())
-                .addPathPatterns("/sub/list")
+        registry.addInterceptor(loggerInterceptor())
+//                .addPathPatterns("/sub/list")
                 .addPathPatterns("/**/changPassword")
                 .addPathPatterns("/**/changeInformation")
                 .addPathPatterns("/sub/choice")

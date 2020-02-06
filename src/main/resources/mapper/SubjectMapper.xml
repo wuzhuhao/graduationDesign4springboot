@@ -1,28 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.graduationaldesign.graduation.mapper.SubjectMapper">
   <resultMap id="BaseResultMap" type="com.graduationaldesign.graduation.pojo.Subject">
-    <id column="sub_id" jdbcType="VARCHAR" property="subId" />
-    <result column="sub_name" jdbcType="VARCHAR" property="subName" />
-    <result column="sub_nature" jdbcType="INTEGER" property="subNature" />
-    <result column="sub_source" jdbcType="INTEGER" property="subSource" />
-    <result column="sub_tea_id" jdbcType="VARCHAR" property="subTeaId" />
-    <result column="sub_file" jdbcType="VARCHAR" property="subFile" />
-    <result column="first_report_deadline" jdbcType="TIMESTAMP" property="firstReportDeadline" />
-    <result column="last_report_deadline" jdbcType="TIMESTAMP" property="lastReportDeadline" />
-    <result column="stu_id" jdbcType="VARCHAR" property="stuId" />
-    <result column="sub_stu_state" jdbcType="INTEGER" property="subStuState" />
-    <result column="sub_last_score" jdbcType="DECIMAL" property="subLastScore" />
-    <result column="show_id" jdbcType="INTEGER" property="showId" />
-    <association column="sub_tea_id" property="teacher" select="getTeacher" />
-    <association column="stu_id" property="student" select="getStudent" />
-    <association column="show_id" property="designShow" select="getDesignShow" />
+    <id column="sub_id" jdbcType="VARCHAR" property="subId"/>
+    <result column="sub_name" jdbcType="VARCHAR" property="subName"/>
+    <result column="sub_nature" jdbcType="INTEGER" property="subNature"/>
+    <result column="sub_source" jdbcType="INTEGER" property="subSource"/>
+    <result column="sub_tea_id" jdbcType="VARCHAR" property="subTeaId"/>
+    <result column="sub_file" jdbcType="VARCHAR" property="subFile"/>
+    <result column="first_report_deadline" jdbcType="TIMESTAMP" property="firstReportDeadline"/>
+    <result column="last_report_deadline" jdbcType="TIMESTAMP" property="lastReportDeadline"/>
+    <result column="stu_id" jdbcType="VARCHAR" property="stuId"/>
+    <result column="sub_stu_state" jdbcType="INTEGER" property="subStuState"/>
+    <result column="sub_last_score" jdbcType="DECIMAL" property="subLastScore"/>
+    <result column="show_id" jdbcType="INTEGER" property="showId"/>
+    <association column="sub_tea_id" property="teacher" select="getTeacher"/>
+    <association column="stu_id" property="student" select="getStudent"/>
+    <association column="show_id" property="designShow" select="getDesignShow"/>
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.graduationaldesign.graduation.pojo.Subject">
-    <result column="sub_introduce" jdbcType="LONGVARCHAR" property="subIntroduce" />
+
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs"
+    type="com.graduationaldesign.graduation.pojo.Subject">
+    <result column="sub_introduce" jdbcType="LONGVARCHAR" property="subIntroduce"/>
   </resultMap>
-  <resultMap extends="com.graduationaldesign.graduation.mapper.DesignShowMapper.BaseResultMap" id="DesignShowResultMapWithBLOBs" type="com.graduationaldesign.graduation.pojo.DesignShow">
-    <result column="show_content" jdbcType="LONGVARCHAR" property="showContent" />
+  <resultMap extends="com.graduationaldesign.graduation.mapper.DesignShowMapper.BaseResultMap"
+    id="DesignShowResultMapWithBLOBs" type="com.graduationaldesign.graduation.pojo.DesignShow">
+    <result column="show_content" jdbcType="LONGVARCHAR" property="showContent"/>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -42,7 +46,8 @@
                 </when>
                 <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach close=")" collection="criterion.value" item="listItem" open="("
+                    separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -71,7 +76,8 @@
                 </when>
                 <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach close=")" collection="criterion.value" item="listItem" open="("
+                    separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -89,33 +95,36 @@
   <sql id="Blob_Column_List">
     sub_introduce
   </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.graduationaldesign.graduation.pojo.SubjectExample" resultMap="ResultMapWithBLOBs">
+  <select id="selectByExampleWithBLOBs"
+    parameterType="com.graduationaldesign.graduation.pojo.SubjectExample"
+    resultMap="ResultMapWithBLOBs">
     select
     <if test="distinct">
       distinct
     </if>
     'true' as QUERYID,
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List"/>
     ,
-    <include refid="Blob_Column_List" />
+    <include refid="Blob_Column_List"/>
     from t_subject
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
+      <include refid="Example_Where_Clause"/>
     </if>
     <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" parameterType="com.graduationaldesign.graduation.pojo.SubjectExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.graduationaldesign.graduation.pojo.SubjectExample"
+    resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     'true' as QUERYID,
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List"/>
     from t_subject
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
+      <include refid="Example_Where_Clause"/>
     </if>
     <if test="orderByClause != null">
       order by ${orderByClause}
@@ -123,9 +132,9 @@
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
     select 'false' as QUERYID,
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List"/>
     ,
-    <include refid="Blob_Column_List" />
+    <include refid="Blob_Column_List"/>
     from t_subject
     where sub_id = #{subId,jdbcType=VARCHAR}
   </select>
@@ -133,23 +142,24 @@
     delete from t_subject
     where sub_id = #{subId,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.graduationaldesign.graduation.pojo.SubjectExample">
+  <delete id="deleteByExample"
+    parameterType="com.graduationaldesign.graduation.pojo.SubjectExample">
     delete from t_subject
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
+      <include refid="Example_Where_Clause"/>
     </if>
   </delete>
   <insert id="insert" parameterType="com.graduationaldesign.graduation.pojo.Subject">
-    insert into t_subject (sub_id, sub_name, sub_nature, 
-      sub_source, sub_tea_id, sub_file, 
-      first_report_deadline, last_report_deadline, 
-      stu_id, sub_stu_state, sub_last_score, 
-      show_id, sub_introduce)
-    values (#{subId,jdbcType=VARCHAR}, #{subName,jdbcType=VARCHAR}, #{subNature,jdbcType=INTEGER}, 
-      #{subSource,jdbcType=INTEGER}, #{subTeaId,jdbcType=VARCHAR}, #{subFile,jdbcType=VARCHAR}, 
-      #{firstReportDeadline,jdbcType=TIMESTAMP}, #{lastReportDeadline,jdbcType=TIMESTAMP}, 
-      #{stuId,jdbcType=VARCHAR}, #{subStuState,jdbcType=INTEGER}, #{subLastScore,jdbcType=DECIMAL}, 
-      #{showId,jdbcType=INTEGER}, #{subIntroduce,jdbcType=LONGVARCHAR})
+    insert into t_subject (sub_id, sub_name, sub_nature,
+    sub_source, sub_tea_id, sub_file,
+    first_report_deadline, last_report_deadline,
+    stu_id, sub_stu_state, sub_last_score,
+    show_id, sub_introduce)
+    values (#{subId,jdbcType=VARCHAR}, #{subName,jdbcType=VARCHAR}, #{subNature,jdbcType=INTEGER},
+    #{subSource,jdbcType=INTEGER}, #{subTeaId,jdbcType=VARCHAR}, #{subFile,jdbcType=VARCHAR},
+    #{firstReportDeadline,jdbcType=TIMESTAMP}, #{lastReportDeadline,jdbcType=TIMESTAMP},
+    #{stuId,jdbcType=VARCHAR}, #{subStuState,jdbcType=INTEGER}, #{subLastScore,jdbcType=DECIMAL},
+    #{showId,jdbcType=INTEGER}, #{subIntroduce,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.graduationaldesign.graduation.pojo.Subject">
     insert into t_subject
@@ -236,10 +246,11 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.graduationaldesign.graduation.pojo.SubjectExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.graduationaldesign.graduation.pojo.SubjectExample"
+    resultType="java.lang.Long">
     select count(*) from t_subject
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
+      <include refid="Example_Where_Clause"/>
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
@@ -286,47 +297,48 @@
       </if>
     </set>
     <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
+      <include refid="Update_By_Example_Where_Clause"/>
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map">
     update t_subject
     set sub_id = #{record.subId,jdbcType=VARCHAR},
-      sub_name = #{record.subName,jdbcType=VARCHAR},
-      sub_nature = #{record.subNature,jdbcType=INTEGER},
-      sub_source = #{record.subSource,jdbcType=INTEGER},
-      sub_tea_id = #{record.subTeaId,jdbcType=VARCHAR},
-      sub_file = #{record.subFile,jdbcType=VARCHAR},
-      first_report_deadline = #{record.firstReportDeadline,jdbcType=TIMESTAMP},
-      last_report_deadline = #{record.lastReportDeadline,jdbcType=TIMESTAMP},
-      stu_id = #{record.stuId,jdbcType=VARCHAR},
-      sub_stu_state = #{record.subStuState,jdbcType=INTEGER},
-      sub_last_score = #{record.subLastScore,jdbcType=DECIMAL},
-      show_id = #{record.showId,jdbcType=INTEGER},
-      sub_introduce = #{record.subIntroduce,jdbcType=LONGVARCHAR}
+    sub_name = #{record.subName,jdbcType=VARCHAR},
+    sub_nature = #{record.subNature,jdbcType=INTEGER},
+    sub_source = #{record.subSource,jdbcType=INTEGER},
+    sub_tea_id = #{record.subTeaId,jdbcType=VARCHAR},
+    sub_file = #{record.subFile,jdbcType=VARCHAR},
+    first_report_deadline = #{record.firstReportDeadline,jdbcType=TIMESTAMP},
+    last_report_deadline = #{record.lastReportDeadline,jdbcType=TIMESTAMP},
+    stu_id = #{record.stuId,jdbcType=VARCHAR},
+    sub_stu_state = #{record.subStuState,jdbcType=INTEGER},
+    sub_last_score = #{record.subLastScore,jdbcType=DECIMAL},
+    show_id = #{record.showId,jdbcType=INTEGER},
+    sub_introduce = #{record.subIntroduce,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
+      <include refid="Update_By_Example_Where_Clause"/>
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
     update t_subject
     set sub_id = #{record.subId,jdbcType=VARCHAR},
-      sub_name = #{record.subName,jdbcType=VARCHAR},
-      sub_nature = #{record.subNature,jdbcType=INTEGER},
-      sub_source = #{record.subSource,jdbcType=INTEGER},
-      sub_tea_id = #{record.subTeaId,jdbcType=VARCHAR},
-      sub_file = #{record.subFile,jdbcType=VARCHAR},
-      first_report_deadline = #{record.firstReportDeadline,jdbcType=TIMESTAMP},
-      last_report_deadline = #{record.lastReportDeadline,jdbcType=TIMESTAMP},
-      stu_id = #{record.stuId,jdbcType=VARCHAR},
-      sub_stu_state = #{record.subStuState,jdbcType=INTEGER},
-      sub_last_score = #{record.subLastScore,jdbcType=DECIMAL},
-      show_id = #{record.showId,jdbcType=INTEGER}
+    sub_name = #{record.subName,jdbcType=VARCHAR},
+    sub_nature = #{record.subNature,jdbcType=INTEGER},
+    sub_source = #{record.subSource,jdbcType=INTEGER},
+    sub_tea_id = #{record.subTeaId,jdbcType=VARCHAR},
+    sub_file = #{record.subFile,jdbcType=VARCHAR},
+    first_report_deadline = #{record.firstReportDeadline,jdbcType=TIMESTAMP},
+    last_report_deadline = #{record.lastReportDeadline,jdbcType=TIMESTAMP},
+    stu_id = #{record.stuId,jdbcType=VARCHAR},
+    sub_stu_state = #{record.subStuState,jdbcType=INTEGER},
+    sub_last_score = #{record.subLastScore,jdbcType=DECIMAL},
+    show_id = #{record.showId,jdbcType=INTEGER}
     <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
+      <include refid="Update_By_Example_Where_Clause"/>
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.graduationaldesign.graduation.pojo.Subject">
+  <update id="updateByPrimaryKeySelective"
+    parameterType="com.graduationaldesign.graduation.pojo.Subject">
     update t_subject
     <set>
       <if test="subName != null">
@@ -368,42 +380,49 @@
     </set>
     where sub_id = #{subId,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.graduationaldesign.graduation.pojo.Subject">
+  <update id="updateByPrimaryKeyWithBLOBs"
+    parameterType="com.graduationaldesign.graduation.pojo.Subject">
     update t_subject
     set sub_name = #{subName,jdbcType=VARCHAR},
-      sub_nature = #{subNature,jdbcType=INTEGER},
-      sub_source = #{subSource,jdbcType=INTEGER},
-      sub_tea_id = #{subTeaId,jdbcType=VARCHAR},
-      sub_file = #{subFile,jdbcType=VARCHAR},
-      first_report_deadline = #{firstReportDeadline,jdbcType=TIMESTAMP},
-      last_report_deadline = #{lastReportDeadline,jdbcType=TIMESTAMP},
-      stu_id = #{stuId,jdbcType=VARCHAR},
-      sub_stu_state = #{subStuState,jdbcType=INTEGER},
-      sub_last_score = #{subLastScore,jdbcType=DECIMAL},
-      show_id = #{showId,jdbcType=INTEGER},
-      sub_introduce = #{subIntroduce,jdbcType=LONGVARCHAR}
+    sub_nature = #{subNature,jdbcType=INTEGER},
+    sub_source = #{subSource,jdbcType=INTEGER},
+    sub_tea_id = #{subTeaId,jdbcType=VARCHAR},
+    sub_file = #{subFile,jdbcType=VARCHAR},
+    first_report_deadline = #{firstReportDeadline,jdbcType=TIMESTAMP},
+    last_report_deadline = #{lastReportDeadline,jdbcType=TIMESTAMP},
+    stu_id = #{stuId,jdbcType=VARCHAR},
+    sub_stu_state = #{subStuState,jdbcType=INTEGER},
+    sub_last_score = #{subLastScore,jdbcType=DECIMAL},
+    show_id = #{showId,jdbcType=INTEGER},
+    sub_introduce = #{subIntroduce,jdbcType=LONGVARCHAR}
     where sub_id = #{subId,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.graduationaldesign.graduation.pojo.Subject">
     update t_subject
     set sub_name = #{subName,jdbcType=VARCHAR},
-      sub_nature = #{subNature,jdbcType=INTEGER},
-      sub_source = #{subSource,jdbcType=INTEGER},
-      sub_tea_id = #{subTeaId,jdbcType=VARCHAR},
-      sub_file = #{subFile,jdbcType=VARCHAR},
-      first_report_deadline = #{firstReportDeadline,jdbcType=TIMESTAMP},
-      last_report_deadline = #{lastReportDeadline,jdbcType=TIMESTAMP},
-      stu_id = #{stuId,jdbcType=VARCHAR},
-      sub_stu_state = #{subStuState,jdbcType=INTEGER},
-      sub_last_score = #{subLastScore,jdbcType=DECIMAL},
-      show_id = #{showId,jdbcType=INTEGER}
+    sub_nature = #{subNature,jdbcType=INTEGER},
+    sub_source = #{subSource,jdbcType=INTEGER},
+    sub_tea_id = #{subTeaId,jdbcType=VARCHAR},
+    sub_file = #{subFile,jdbcType=VARCHAR},
+    first_report_deadline = #{firstReportDeadline,jdbcType=TIMESTAMP},
+    last_report_deadline = #{lastReportDeadline,jdbcType=TIMESTAMP},
+    stu_id = #{stuId,jdbcType=VARCHAR},
+    sub_stu_state = #{subStuState,jdbcType=INTEGER},
+    sub_last_score = #{subLastScore,jdbcType=DECIMAL},
+    show_id = #{showId,jdbcType=INTEGER}
     where sub_id = #{subId,jdbcType=VARCHAR}
   </update>
-  <select id="getTeacher" resultMap="com.graduationaldesign.graduation.mapper.TeacherMapper.BaseResultMap">
-    select tea_id,tea_password,tea_name,tea_sex,tea_age,tea_birthday,tea_phone,tea_mail,tea_address,tea_remarks,academy_id from t_teacher where tea_id=#{subTeaId}
+  <select id="getTeacher"
+    resultMap="com.graduationaldesign.graduation.mapper.TeacherMapper.BaseResultMap">
+    select
+    tea_id,tea_password,tea_name,tea_sex,tea_age,tea_birthday,tea_phone,tea_mail,tea_address,tea_remarks,academy_id
+    from t_teacher where tea_id=#{subTeaId}
   </select>
-  <select id="getStudent" resultMap="com.graduationaldesign.graduation.mapper.StudentMapper.BaseResultMap">
-    select stu_id,stu_password,stu_name,stu_major,stu_class,stu_sex,stu_age,stu_birthday,stu_phone,stu_mail,stu_address,stu_remarks,academy_id from t_student where stu_id=#{stuId}
+  <select id="getStudent"
+    resultMap="com.graduationaldesign.graduation.mapper.StudentMapper.BaseResultMap">
+    select
+    stu_id,stu_password,stu_name,stu_major,stu_class,stu_sex,stu_age,stu_birthday,stu_phone,stu_mail,stu_address,stu_remarks,academy_id
+    from t_student where stu_id=#{stuId}
   </select>
   <select id="getDesignShow" resultMap="DesignShowResultMapWithBLOBs">
     select id,sub_id,show_file,show_time,show_content from t_designShow where id=#{showId}
@@ -451,7 +470,7 @@
         sub_introduce,
       </if>
     </trim>
-     values 
+    values
     <foreach collection="list" index="index" item="item" separator=",">
       <trim prefix=" (" suffix=")" suffixOverrides=",">
         <if test="item.subId!=null">
@@ -537,7 +556,7 @@
           sub_introduce=#{item.subIntroduce,jdbcType=LONGVARCHAR},
         </if>
       </set>
-      where 
+      where
       sub_id = #{item.subId,jdbcType=VARCHAR}
     </foreach>
   </update>

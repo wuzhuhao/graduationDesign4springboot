@@ -1,10 +1,12 @@
 package com.graduationaldesign.graduation.pojo;
 
 import java.io.Serializable;
+import lombok.Data;
 
+@Data
 public class Academy implements Serializable {
+
     /**
-     * 
      * 表字段 : t_academy.id
      */
     private Integer id;
@@ -32,7 +34,7 @@ public class Academy implements Serializable {
     /**
      * 获取  字段:t_academy.id
      *
-     * @return t_academy.id, 
+     * @return t_academy.id,
      */
     public Integer getId() {
         return id;
@@ -41,7 +43,7 @@ public class Academy implements Serializable {
     /**
      * 设置  字段:t_academy.id
      *
-     * @param id the value for t_academy.id, 
+     * @param id the value for t_academy.id,
      */
     public void setId(Integer id) {
         this.id = id;

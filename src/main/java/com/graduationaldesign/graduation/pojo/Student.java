@@ -1,11 +1,15 @@
 package com.graduationaldesign.graduation.pojo;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.io.Serializable;
+import lombok.Data;
 
+@Data
 @JsonIgnoreProperties(value = {"handler"})
 public class Student implements Serializable {
+
     /**
      * 学生登陆账号
      * 表字段 : t_student.stu_id
@@ -79,7 +83,6 @@ public class Student implements Serializable {
     private String stuRemarks;
 
     /**
-     * 
      * 表字段 : t_student.academy_id
      */
     private Integer academyId;
@@ -313,7 +316,7 @@ public class Student implements Serializable {
     /**
      * 获取  字段:t_student.academy_id
      *
-     * @return t_student.academy_id, 
+     * @return t_student.academy_id,
      */
     public Integer getAcademyId() {
         return academyId;
@@ -322,18 +325,24 @@ public class Student implements Serializable {
     /**
      * 设置  字段:t_student.academy_id
      *
-     * @param academyId the value for t_student.academy_id, 
+     * @param academyId the value for t_student.academy_id,
      */
     public void setAcademyId(Integer academyId) {
         this.academyId = academyId;
     }
 
+    @JsonIgnore
     public Academy getAcademy() {
         return academy;
     }
 
+    @JsonGetter(value = "academy")
+    public Academy getAcademyDetail() {//自定的方法
+        return academy;
+    }
+
     public void setAcademy(Academy academy) {
-        this.academy=academy;
+        this.academy = academy;
     }
 
     @Override
@@ -367,7 +376,8 @@ public class Student implements Serializable {
 
     public Student() {
     }
-    public void setModel(UserModel userModel){
+
+    public void setModel(UserModel userModel) {
         this.setStuAddress(userModel.getAddress());
         this.setStuAge(userModel.getAge());
         this.setStuBirthday(userModel.getBirthday());

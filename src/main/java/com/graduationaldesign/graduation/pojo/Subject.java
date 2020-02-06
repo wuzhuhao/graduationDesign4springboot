@@ -1,12 +1,17 @@
 package com.graduationaldesign.graduation.pojo;
 
 import cn.hutool.core.date.DateUtil;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.io.Serializable;
 import java.util.Date;
+import lombok.Data;
+
+@Data
 @JsonIgnoreProperties(value = {"handler"})
 public class Subject implements Serializable {
+
     /**
      * 课题id
      * 表字段 : t_subject.sub_id
@@ -333,28 +338,46 @@ public class Subject implements Serializable {
         this.subIntroduce = subIntroduce == null ? null : subIntroduce.trim();
     }
 
+    @JsonIgnore
     public Teacher getTeacher() {
         return teacher;
     }
 
-    public void setTeacher(Teacher teacher) {
-        this.teacher=teacher;
+    @JsonGetter(value = "teacher")
+    public Teacher getTeacherShowDetail() {
+        return teacher;
     }
 
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
+
+    @JsonIgnore
     public Student getStudent() {
         return student;
     }
 
-    public void setStudent(Student student) {
-        this.student=student;
+    @JsonGetter(value = "student")
+    public Student getStudentDetail() {
+        return student;
     }
 
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    @JsonIgnore
     public DesignShow getDesignShow() {
         return designShow;
     }
 
+    @JsonGetter(value = "designShow")
+    public DesignShow getDesignShowDetail() {
+        return designShow;
+    }
+
     public void setDesignShow(DesignShow designShow) {
-        this.designShow=designShow;
+        this.designShow = designShow;
     }
 
     @Override

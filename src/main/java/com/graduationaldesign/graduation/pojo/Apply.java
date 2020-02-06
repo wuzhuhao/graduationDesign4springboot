@@ -1,13 +1,18 @@
 package com.graduationaldesign.graduation.pojo;
 
 import cn.hutool.core.date.DateUtil;
-
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Date;
+import lombok.Data;
 
+@Data
+@JsonIgnoreProperties(value = {"handler"})
 public class Apply implements Serializable {
+
     /**
-     * 
      * 表字段 : t_apply.id
      */
     private Integer id;
@@ -81,7 +86,7 @@ public class Apply implements Serializable {
     /**
      * 获取  字段:t_apply.id
      *
-     * @return t_apply.id, 
+     * @return t_apply.id,
      */
     public Integer getId() {
         return id;
@@ -90,7 +95,7 @@ public class Apply implements Serializable {
     /**
      * 设置  字段:t_apply.id
      *
-     * @param id the value for t_apply.id, 
+     * @param id the value for t_apply.id,
      */
     public void setId(Integer id) {
         this.id = id;
@@ -258,19 +263,31 @@ public class Apply implements Serializable {
         this.applyReply = applyReply == null ? null : applyReply.trim();
     }
 
+    @JsonIgnore
     public Student getStudent() {
         return student;
     }
 
-    public void setStudent(Student student) {
-        this.student=student;
+    @JsonGetter(value = "student")
+    public Student getStudentDetail() {//自定的方法
+        return student;
     }
 
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    @JsonIgnore
     public Subject getSubject() {
         return subject;
     }
 
+    @JsonGetter(value = "subject")
+    public Subject getSubjectDetail() {//自定的方法
+        return subject;
+    }
+
     public void setSubject(Subject subject) {
-        this.subject=subject;
+        this.subject = subject;
     }
 }

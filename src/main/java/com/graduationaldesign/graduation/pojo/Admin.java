@@ -1,10 +1,13 @@
 package com.graduationaldesign.graduation.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.io.Serializable;
+import lombok.Data;
+
+@Data
 @JsonIgnoreProperties(value = {"handler"})
 public class Admin implements Serializable {
+
     /**
      * 管理员账号
      * 表字段 : t_admin.admin_id
@@ -83,6 +86,7 @@ public class Admin implements Serializable {
         this.adminId = adminId;
         this.adminPassword = adminPassword;
     }
+
     public Admin() {
     }
 
@@ -304,7 +308,8 @@ public class Admin implements Serializable {
                 ", adminType=" + adminType +
                 '}';
     }
-    public void setModel(UserModel userModel){
+
+    public void setModel(UserModel userModel) {
         this.setAdminAddress(userModel.getAddress());
         this.setAdminAge(userModel.getAge());
         this.setAdminBirthday(userModel.getBirthday());

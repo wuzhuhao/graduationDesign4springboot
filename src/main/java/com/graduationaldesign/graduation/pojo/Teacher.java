@@ -1,10 +1,15 @@
 package com.graduationaldesign.graduation.pojo;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.io.Serializable;
+import lombok.Data;
+
+@Data
 @JsonIgnoreProperties(value = {"handler"})
 public class Teacher implements Serializable {
+
     /**
      * 教师id
      * 表字段 : t_teacher.tea_id
@@ -279,12 +284,18 @@ public class Teacher implements Serializable {
         this.academyId = academyId;
     }
 
+    @JsonIgnore
     public Academy getAcademy() {
         return academy;
     }
 
+    @JsonGetter(value = "academy")
+    public Academy getAcademyDetail() {//自定的方法
+        return academy;
+    }
+
     public void setAcademy(Academy academy) {
-        this.academy=academy;
+        this.academy = academy;
     }
 
     public Teacher(String teaId, String teaPassword) {
@@ -317,7 +328,8 @@ public class Teacher implements Serializable {
                 ", academy=" + academy +
                 '}';
     }
-    public void setModel(UserModel userModel){
+
+    public void setModel(UserModel userModel) {
         this.setTeaAddress(userModel.getAddress());
         this.setTeaAge(userModel.getAge());
         this.setTeaBirthday(userModel.getBirthday());

@@ -1,5 +1,7 @@
 package com.graduationaldesign.graduation.pojo;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Date;
@@ -291,7 +293,13 @@ public class Report implements Serializable {
         this.teaSuggestion = teaSuggestion == null ? null : teaSuggestion.trim();
     }
 
+    @JsonIgnore
     public Subject getSubject() {
+        return subject;
+    }
+
+    @JsonGetter(value = "subject")
+    public Subject getSubjectDetail() {//自定的方法
         return subject;
     }
 

@@ -1,10 +1,12 @@
 package com.graduationaldesign.graduation.pojo;
 
 import java.io.Serializable;
+import lombok.Data;
 
+@Data
 public class Role implements Serializable {
+
     /**
-     * 
      * 表字段 : t_role.id
      */
     private Long id;
@@ -32,7 +34,7 @@ public class Role implements Serializable {
     /**
      * 获取  字段:t_role.id
      *
-     * @return t_role.id, 
+     * @return t_role.id,
      */
     public Long getId() {
         return id;
@@ -41,7 +43,7 @@ public class Role implements Serializable {
     /**
      * 设置  字段:t_role.id
      *
-     * @param id the value for t_role.id, 
+     * @param id the value for t_role.id,
      */
     public void setId(Long id) {
         this.id = id;

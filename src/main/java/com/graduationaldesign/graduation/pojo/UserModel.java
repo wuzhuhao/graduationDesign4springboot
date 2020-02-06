@@ -1,10 +1,14 @@
 package com.graduationaldesign.graduation.pojo;
 
+import lombok.Data;
+
 /**
  * @Author: wuzhuhao
  * @Date: 2020/1/19 22:52
  */
+@Data
 public class UserModel {
+
     private String id;
 
     private String password;
@@ -33,7 +37,9 @@ public class UserModel {
     public UserModel() {
     }
 
-    public UserModel(String id, String password, String name, String sex, Integer age, String birthday, String phone, String mail, String address, String remarks, String class_, String major, Integer academyId) {
+    public UserModel(String id, String password, String name, String sex, Integer age,
+            String birthday, String phone, String mail, String address, String remarks,
+            String class_, String major, Integer academyId) {
         this.id = id;
         this.password = password;
         this.name = name;

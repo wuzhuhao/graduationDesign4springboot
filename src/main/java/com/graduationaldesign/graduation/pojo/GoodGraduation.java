@@ -1,13 +1,18 @@
 package com.graduationaldesign.graduation.pojo;
 
 import cn.hutool.core.date.DateUtil;
-
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Date;
+import lombok.Data;
 
+@Data
+@JsonIgnoreProperties(value = {"handler"})
 public class GoodGraduation implements Serializable {
+
     /**
-     * 
      * 表字段 : t_goodgraduation.id
      */
     private Integer id;
@@ -43,7 +48,7 @@ public class GoodGraduation implements Serializable {
     /**
      * 获取  字段:t_goodgraduation.id
      *
-     * @return t_goodgraduation.id, 
+     * @return t_goodgraduation.id,
      */
     public Integer getId() {
         return id;
@@ -52,7 +57,7 @@ public class GoodGraduation implements Serializable {
     /**
      * 设置  字段:t_goodgraduation.id
      *
-     * @param id the value for t_goodgraduation.id, 
+     * @param id the value for t_goodgraduation.id,
      */
     public void setId(Integer id) {
         this.id = id;
@@ -112,11 +117,17 @@ public class GoodGraduation implements Serializable {
         this.goodReason = goodReason == null ? null : goodReason.trim();
     }
 
+    @JsonIgnore
     public Subject getSubject() {
         return subject;
     }
 
+    @JsonGetter(value = "subject")
+    public Subject getSubjectDetail() {//自定的方法
+        return subject;
+    }
+
     public void setSubject(Subject subject) {
-        this.subject=subject;
+        this.subject = subject;
     }
 }

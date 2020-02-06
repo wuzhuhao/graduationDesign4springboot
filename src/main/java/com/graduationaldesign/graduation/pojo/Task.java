@@ -1,15 +1,18 @@
 package com.graduationaldesign.graduation.pojo;
 
-import cn.hutool.Hutool;
 import cn.hutool.core.date.DateUtil;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.io.Serializable;
 import java.util.Date;
+import lombok.Data;
+
+@Data
 @JsonIgnoreProperties(value = {"handler"})
 public class Task implements Serializable {
+
     /**
-     * 
      * 表字段 : t_task.id
      */
     private Integer id;
@@ -69,7 +72,6 @@ public class Task implements Serializable {
     private String taskRequire;
 
     /**
-     * 
      * 表字段 : t_task.task_schedule
      */
     private String taskSchedule;
@@ -99,7 +101,7 @@ public class Task implements Serializable {
     /**
      * 获取  字段:t_task.id
      *
-     * @return t_task.id, 
+     * @return t_task.id,
      */
     public Integer getId() {
         return id;
@@ -108,7 +110,7 @@ public class Task implements Serializable {
     /**
      * 设置  字段:t_task.id
      *
-     * @param id the value for t_task.id, 
+     * @param id the value for t_task.id,
      */
     public void setId(Integer id) {
         this.id = id;
@@ -279,7 +281,7 @@ public class Task implements Serializable {
     /**
      * 获取  字段:t_task.task_schedule
      *
-     * @return t_task.task_schedule, 
+     * @return t_task.task_schedule,
      */
     public String getTaskSchedule() {
         return taskSchedule;
@@ -288,7 +290,7 @@ public class Task implements Serializable {
     /**
      * 设置  字段:t_task.task_schedule
      *
-     * @param taskSchedule the value for t_task.task_schedule, 
+     * @param taskSchedule the value for t_task.task_schedule,
      */
     public void setTaskSchedule(String taskSchedule) {
         this.taskSchedule = taskSchedule == null ? null : taskSchedule.trim();
@@ -330,12 +332,18 @@ public class Task implements Serializable {
         this.replyContent = replyContent == null ? null : replyContent.trim();
     }
 
+    @JsonIgnore
     public Subject getSubject() {
         return subject;
     }
 
+    @JsonGetter(value = "subject")
+    public Subject getSubjectDetail() {//自定的方法
+        return subject;
+    }
+
     public void setSubject(Subject subject) {
-        this.subject=subject;
+        this.subject = subject;
     }
 
     @Override

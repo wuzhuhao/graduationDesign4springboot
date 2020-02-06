@@ -1,11 +1,17 @@
 package com.graduationaldesign.graduation.pojo;
 
 import cn.hutool.core.date.DateUtil;
-
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Date;
+import lombok.Data;
 
+@Data
+@JsonIgnoreProperties(value = {"handler"})
 public class Notice implements Serializable {
+
     /**
      * 自增id
      * 表字段 : t_notice.id
@@ -136,11 +142,17 @@ public class Notice implements Serializable {
         this.noticeContent = noticeContent == null ? null : noticeContent.trim();
     }
 
+    @JsonIgnore
     public Academy getAcademy() {
         return academy;
     }
 
+    @JsonGetter(value = "academy")
+    public Academy getAcademyDetail() {//自定的方法
+        return academy;
+    }
+
     public void setAcademy(Academy academy) {
-        this.academy=academy;
+        this.academy = academy;
     }
 }

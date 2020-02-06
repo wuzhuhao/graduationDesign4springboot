@@ -5,14 +5,14 @@ import com.graduationaldesign.graduation.aop.RootPropeties;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+@Slf4j
 public class LoginInterceptor implements HandlerInterceptor {
 
-    public static final Logger LOGGER = Logger.getLogger(LoginInterceptor.class);
     @Autowired
     RootPropeties rootPropeties;
 
@@ -35,8 +35,10 @@ public class LoginInterceptor implements HandlerInterceptor {
             throws Exception {
         // 在拦截点执行前拦截，如果返回true则不执行拦截点后的操作（拦截成功）
         // 返回false则不执行拦截
-        LOGGER.info("拦截器启动");
+        log.warn("拦截器启动");
         HttpSession session = request.getSession();
+        log.warn(session + "");
+        log.warn(rootPropeties + "");
         //String uri = request.getRequestURI(); // 获取登录的uri，这个是不进行拦截的
         //if(session.getAttribute("LOGIN_USER")!=null || uri.indexOf("system/login")!=-1) {// 说明登录成功 或者 执行登录功能
         if (session.getAttribute(rootPropeties.getUserAttribute()) != null) {
