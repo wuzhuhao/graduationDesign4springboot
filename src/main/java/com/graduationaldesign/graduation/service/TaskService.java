@@ -22,8 +22,12 @@ public interface TaskService {
 
     int updateByPrimaryKey(Task record);
 
-    PageBean<Task> listByTeaWithPage(HashMap<String, Object> param, int page, String teaId);
+    PageBean<Task> listByPageOfTea(HashMap<String, Object> param, int page, int pageSize,
+            String teaId);
 
-    PageBean<Task> listByStuPage(HashMap<String, Object> param, int page, String stuId,
+    PageBean<Task> listByPageOfStu(HashMap<String, Object> param, int page, int pageSize,
+            String stuId,
             String type);
+
+    public PageBean<Task> listByPage(HashMap<String, Object> param, int page, int pageSize);
 }

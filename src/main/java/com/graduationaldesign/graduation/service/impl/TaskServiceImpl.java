@@ -1,7 +1,5 @@
 package com.graduationaldesign.graduation.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.mapper.TaskMapper;
 import com.graduationaldesign.graduation.pojo.Task;
@@ -30,30 +28,6 @@ public class TaskServiceImpl implements TaskService {
     RootPropeties rootPropeties;
 
     /*==============私有接口=====================*/
-    private PageBean<Task> pageByExample(TaskExample taskExample, int page) {
-        int totalpage;
-        int totalSize;
-        PageBean<Task> pageBean = new PageBean<>();
-        //计算数据库总数
-        totalSize = (int) taskMapper.countByExample(taskExample);
-        //设置一页的数量
-        pageBean.setPageSize(rootPropeties.getPageSize());
-        //设置总数
-        pageBean.setTotalRecord(totalSize);
-        //获取总页数
-        totalpage = pageBean.getTotalPage();
-        //初始化page
-        page = (page <= 0) ? 1 : page > totalpage ? totalpage : page;
-        pageBean.setCurrentPage(page);
-        PageHelper.startPage(page, rootPropeties.getPageSize());
-        List<Task> list = taskMapper.selectByExample(taskExample);
-        //得到分页的结果对象
-        PageInfo<Task> personPageInfo = new PageInfo<>(list);
-        //得到分页中的person条目对象
-        List<Task> pageList = personPageInfo.getList();
-        pageBean.setBeanList(pageList);
-        return pageBean;
-    }
 
     /*==============公开接口=====================*/
     @Override
@@ -99,37 +73,47 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.updateByPrimaryKey(record);
     }
 
-    public PageBean<Task> listByPage(HashMap<String, Object> param, int page) {
-        PageBean<Task> pageBean;
+    @Override
+    public PageBean<Task> listByPage(HashMap<String, Object> param, int page, int pageSize) {
+        PageBean<Task> pageBean = new PageBean<>();
         TaskExample taskExample = new TaskExample();
         TaskExample.Criteria criteria = taskExample.createCriteria();
-        pageBean = pageByExample(taskExample, page);
+        List<Task> list = taskMapper.selectByExample(taskExample);
+        pageBean.setBeanList(list);
 //        pageBean.setParams();
         return pageBean;
     }
 
+    //listByTeaWithPage listByPageOfTea
     @Override
-    public PageBean<Task> listByTeaWithPage(HashMap<String, Object> param, int page, String teaId) {
+    public PageBean<Task> listByPageOfTea(HashMap<String, Object> param, int page, int pageSize,
+            String teaId) {
 //        int total = taskMapper.countByTeaId()
-        List<Task> taskList = taskMapper.selectByTeaId(teaId);
+        TaskExample taskExample = new TaskExample();
+        taskExample.setJoin("left join t_subject on t_task.task_sub_id = t_subject.sub_id");
+        TaskExample.Criteria criteria = taskExample.createCriteria();
+        criteria.andJoinTeaIdEqualTo(teaId);
+        List<Task> taskList = taskMapper.selectByExample(taskExample);
         PageBean<Task> pageBean = new PageBean<>();
         pageBean.setBeanList(taskList);
         return pageBean;
     }
 
     @Override
-    public PageBean<Task> listByStuPage(HashMap<String, Object> param, int page, String stuId,
+    public PageBean<Task> listByPageOfStu(HashMap<String, Object> param, int page, int pageSize,
+            String stuId,
             String type) {
         if (!(type.equals("1") || type.equals("2"))) {
             throw new RuntimeException("type参数错误");
         }
-        PageBean<Task> pageBean;
+        PageBean<Task> pageBean = new PageBean<>();
         TaskExample taskExample = new TaskExample();
         taskExample.setJoin("left join t_subject on t_task.task_sub_id = t_subject.sub_id");
         TaskExample.Criteria criteria = taskExample.createCriteria();
         criteria.andJoinStuIdEqualTo(stuId);
         criteria.andTaskStateEqualTo(type);
-        pageBean = pageByExample(taskExample, page);
+        List<Task> list = taskMapper.selectByExample(taskExample);
+        pageBean.setBeanList(list);
         return pageBean;
     }
 }

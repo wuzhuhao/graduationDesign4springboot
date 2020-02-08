@@ -1,6 +1,7 @@
 package com.graduationaldesign.graduation.service;
 
 import com.graduationaldesign.graduation.pojo.Teacher;
+import com.graduationaldesign.graduation.pojo.UserModel;
 
 /**
  * @Author: wuzhuhao
@@ -9,4 +10,8 @@ import com.graduationaldesign.graduation.pojo.Teacher;
 public interface TeacherService {
 
     Teacher login(Teacher teacher);
+
+    String changPassword(String id, String oldPassword, String newPassword);
+
+    String changeInformation(UserModel userModel);
 }

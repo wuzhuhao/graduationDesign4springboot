@@ -1,20 +1,17 @@
-package com.graduationaldesign.graduation.controller;
+package com.graduationaldesign.graduation.controller.shiro;
 
 import com.graduationaldesign.graduation.pojo.Admin;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationException;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ShiroController {
 
-//    @RequestMapping("/login1")
+    //    @RequestMapping("/login1")
     public String login(Admin user) {
         //添加用户认证信息
         Subject subject = SecurityUtils.getSubject();
@@ -36,6 +33,7 @@ public class ShiroController {
         }
         return "login success";
     }
+
     //注解验角色和权限
 //    @RequiresRoles("admin")
 //    @RequiresPermissions("add")

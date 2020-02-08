@@ -26,14 +26,15 @@ public interface SubjectService {
 
     int updateByPrimaryKey(Subject record);
 
-    PageBean<Subject> listByPageOfNotChoice(HashMap<String, Object> params, int page);
+    PageBean<Subject> listByPageOfNotChoice(HashMap<String, Object> params, int page, int pageSize);
 
     PageBean<Subject> listByPageOfChoice(HashMap<String, Object> params, int page,
-            Student login_user);
+            Student login_user, int pageSize);
 
-    PageBean<Subject> listByPageOfTea(HashMap<String, Object> params, int page, Teacher login_user);
+    PageBean<Subject> listByPageOfTea(HashMap<String, Object> params, int page, Teacher login_user,
+            int pageSize);
 
-    PageBean<Subject> listByPage(HashMap<String, Object> params, int page);
+    PageBean<Subject> listByPage(HashMap<String, Object> params, int page, int pageSize);
 
     String ChoiceSubject(String subId, Student login_user);
 

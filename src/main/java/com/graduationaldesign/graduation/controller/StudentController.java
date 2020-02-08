@@ -1,7 +1,7 @@
 package com.graduationaldesign.graduation.controller;
 
 import com.graduationaldesign.graduation.pojo.Student;
-import com.graduationaldesign.graduation.service.impl.StudentServiceImpl;
+import com.graduationaldesign.graduation.service.StudentService;
 import com.graduationaldesign.graduation.util.ResponseStatu;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class StudentController {
 
     @Autowired
-    private StudentServiceImpl studentService;
+    private StudentService studentService;
     @Autowired
     HttpServletRequest request;
 

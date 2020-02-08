@@ -20,6 +20,8 @@ import org.springframework.transaction.interceptor.TransactionAttribute;
 import org.springframework.transaction.interceptor.TransactionInterceptor;
 
 /**
+ * 事务配置
+ *
  * @Author: wuzhuhao
  * @Date: 2020/2/4 14:37
  */

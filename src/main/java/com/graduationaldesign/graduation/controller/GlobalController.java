@@ -5,9 +5,9 @@ import com.graduationaldesign.graduation.pojo.Admin;
 import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.Teacher;
 import com.graduationaldesign.graduation.pojo.UserModel;
-import com.graduationaldesign.graduation.service.impl.AdminServiceImpl;
-import com.graduationaldesign.graduation.service.impl.StudentServiceImpl;
-import com.graduationaldesign.graduation.service.impl.TeacherServiceImpl;
+import com.graduationaldesign.graduation.service.AdminService;
+import com.graduationaldesign.graduation.service.StudentService;
+import com.graduationaldesign.graduation.service.TeacherService;
 import com.graduationaldesign.graduation.util.ResponseStatu;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -28,11 +28,11 @@ public class GlobalController {
     private final int TEA = 2;
     private final int ADMIN = 3;
     @Autowired
-    private StudentServiceImpl studentService;
+    private StudentService studentService;
     @Autowired
-    private TeacherServiceImpl teacherService;
+    private TeacherService teacherService;
     @Autowired
-    private AdminServiceImpl adminService;
+    private AdminService adminService;
     @Autowired
     HttpServletRequest request;
     @Autowired

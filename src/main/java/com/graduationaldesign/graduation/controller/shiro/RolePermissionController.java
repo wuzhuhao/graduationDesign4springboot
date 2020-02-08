@@ -1,8 +1,8 @@
-package com.graduationaldesign.graduation.controller;
+package com.graduationaldesign.graduation.controller.shiro;
 
 
 import com.graduationaldesign.graduation.aop.RootPropeties;
-import com.graduationaldesign.graduation.service.impl.RolePermissionServiceImpl;
+import com.graduationaldesign.graduation.service.RolePermissionService;
 import com.graduationaldesign.graduation.util.ResponseStatu;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Controller;
 public class RolePermissionController {
 
     @Autowired
-    RolePermissionServiceImpl RolePermissionMapper;
+    RolePermissionService rolePermissionService;
     @Autowired
     HttpServletRequest request;
     @Autowired

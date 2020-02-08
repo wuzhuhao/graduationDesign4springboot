@@ -95,7 +95,8 @@ public class SubjectController {
     @RequestMapping(value = "/listOfNotChoice", method = RequestMethod.GET)
     public ResponseEntity<Object> getSubjectOfNotChoice(
             @RequestParam HashMap<String, Object> params, int page) {
-        return ResponseStatu.success(subjectService.listByPageOfNotChoice(params, page));
+        return ResponseStatu.success(
+                subjectService.listByPageOfNotChoice(params, page, rootPropeties.getPageSize()));
     }
 
     /**
@@ -107,7 +108,8 @@ public class SubjectController {
     public ResponseEntity<Object> getSubjectOfChoice(@RequestParam HashMap<String, Object> params,
             int page) {
         return ResponseStatu.success(subjectService.listByPageOfChoice(params, page,
-                ((Student) request.getSession().getAttribute("LOGIN_USER"))));
+                ((Student) request.getSession().getAttribute(rootPropeties.getUserAttribute())),
+                rootPropeties.getPageSize()));
     }
 
     /**
@@ -119,7 +121,8 @@ public class SubjectController {
     public ResponseEntity<Object> getSubjectOfTea(@RequestParam HashMap<String, Object> params,
             int page) {
         return ResponseStatu.success(subjectService.listByPageOfTea(params, page,
-                ((Teacher) request.getSession().getAttribute(rootPropeties.getUserAttribute()))));
+                ((Teacher) request.getSession().getAttribute(rootPropeties.getUserAttribute())),
+                rootPropeties.getPageSize()));
     }
 
     /**
@@ -129,7 +132,8 @@ public class SubjectController {
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ResponseEntity<Object> list(@RequestParam HashMap<String, Object> params, int page) {
-        return ResponseStatu.success(subjectService.listByPage(params, page));
+        return ResponseStatu
+                .success(subjectService.listByPage(params, page, rootPropeties.getPageSize()));
     }
 
     /**

@@ -1,7 +1,5 @@
 package com.graduationaldesign.graduation.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.graduationaldesign.graduation.mapper.ReportMapper;
 import com.graduationaldesign.graduation.mapper.SubjectMapper;
 import com.graduationaldesign.graduation.pojo.Report;
@@ -22,6 +20,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 /**
+ * 课题服务实现类
+ *
  * @Author: wuzhuhao
  * @Date: 2020/1/20 21:10
  */
@@ -35,26 +35,6 @@ public class SubjectServiceImpl implements SubjectService {
     private ReportMapper reportMapper;
 
     /*==============私有接口=====================*/
-    private PageBean<Subject> pageByExample(SubjectExample subjectExample, int page) {
-        int totalpage;
-        int totalSize;
-        PageBean<Subject> pageBean = new PageBean<>();
-        totalSize = (int) subjectMapper.countByExample(subjectExample);
-        pageBean.setPageSize(SubjectMapper.PAGE_SIZE);
-        pageBean.setTotalRecord(totalSize);
-        totalpage = pageBean.getTotalPage();
-        //页数大于时选最后一页
-        page = (page <= 0) ? 1 : page > totalpage ? totalpage : page;
-        pageBean.setCurrentPage(page);
-        PageHelper.startPage(page, SubjectMapper.PAGE_SIZE);
-        List<Subject> list = subjectMapper.selectByExample(subjectExample);
-        //得到分页的结果对象
-        PageInfo<Subject> personPageInfo = new PageInfo<>(list);
-        //得到分页中的person条目对象
-        List<Subject> pageList = personPageInfo.getList();
-        pageBean.setBeanList(pageList);
-        return pageBean;
-    }
 
     /*==============公开接口=====================*/
     @Override
@@ -166,8 +146,9 @@ public class SubjectServiceImpl implements SubjectService {
      * @return
      */
     @Override
-    public PageBean<Subject> listByPageOfNotChoice(HashMap<String, Object> params, int page) {
-        PageBean<Subject> pageBean;
+    public PageBean<Subject> listByPageOfNotChoice(HashMap<String, Object> params, int page,
+            int pageSize) {
+        PageBean<Subject> pageBean = new PageBean<>();
         SubjectExample subjectExample = new SubjectExample();
         SubjectExample.Criteria criteria = subjectExample.createCriteria();
 //        if (uid!=0){
@@ -178,17 +159,20 @@ public class SubjectServiceImpl implements SubjectService {
 //        }
 //        diaryExample.setOrderByClause("dTime desc");
         criteria.andSubStuStateEqualTo(1);
+        List<Subject> list = subjectMapper.selectByExample(subjectExample);
+        pageBean.setBeanList(list);
 //        pageBean.setParams();
-        pageBean = pageByExample(subjectExample, page);
         return pageBean;
     }
 
     @Override
-    public PageBean<Subject> listByPage(HashMap<String, Object> params, int page) {
-        PageBean<Subject> pageBean;
+    public PageBean<Subject> listByPage(HashMap<String, Object> params, int page, int pageSize) {
+        PageBean<Subject> pageBean = new PageBean<>();
         SubjectExample subjectExample = new SubjectExample();
         SubjectExample.Criteria criteria = subjectExample.createCriteria();
-        pageBean = pageByExample(subjectExample, page);
+        int totalSize = (int) subjectMapper.countByExample(subjectExample);
+        List<Subject> list = subjectMapper.selectByExample(subjectExample);
+        pageBean.setBeanList(list);
 //        pageBean.setParams();
         return pageBean;
     }
@@ -202,26 +186,28 @@ public class SubjectServiceImpl implements SubjectService {
      */
     @Override
     public PageBean<Subject> listByPageOfChoice(HashMap<String, Object> param, int page,
-            Student student) {
-        PageBean<Subject> pageBean;
+            Student student, int pageSize) {
+        PageBean<Subject> pageBean = new PageBean<>();
         SubjectExample subjectExample = new SubjectExample();
         SubjectExample.Criteria criteria = subjectExample.createCriteria();
         criteria.andStuIdEqualTo(student.getStuId());
         criteria.andSubStuStateNotEqualTo(1);
-        pageBean = pageByExample(subjectExample, page);
+        List<Subject> list = subjectMapper.selectByExample(subjectExample);
+        pageBean.setBeanList(list);
 //        pageBean.setParams();
         return pageBean;
     }
 
     @Override
     public PageBean<Subject> listByPageOfTea(HashMap<String, Object> params, int page,
-            Teacher teacher) {
-        PageBean<Subject> pageBean;
+            Teacher teacher, int pageSize) {
+        PageBean<Subject> pageBean = new PageBean<>();
         SubjectExample subjectExample = new SubjectExample();
         SubjectExample.Criteria criteria = subjectExample.createCriteria();
         criteria.andSubTeaIdEqualTo(teacher.getTeaId());
         criteria.andSubStuStateNotEqualTo(1);
-        pageBean = pageByExample(subjectExample, page);
+        List<Subject> list = subjectMapper.selectByExample(subjectExample);
+        pageBean.setBeanList(list);
 //        pageBean.setParams();
         return pageBean;
     }

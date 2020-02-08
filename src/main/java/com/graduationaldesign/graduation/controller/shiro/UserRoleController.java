@@ -1,8 +1,8 @@
-package com.graduationaldesign.graduation.controller;
+package com.graduationaldesign.graduation.controller.shiro;
 
 
 import com.graduationaldesign.graduation.aop.RootPropeties;
-import com.graduationaldesign.graduation.service.impl.RoleServiceImpl;
+import com.graduationaldesign.graduation.service.UserRoleService;
 import com.graduationaldesign.graduation.util.ResponseStatu;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +11,13 @@ import org.springframework.stereotype.Controller;
 
 /**
  * @author wuzhuhao
- * @version $Id: RoleController.java, v 0.1 2020-01-21 10:52:40 wuzhuhao Exp $$
+ * @version $Id: UserRoleController.java, v 0.1 2020-01-21 10:53:39 wuzhuhao Exp $$
  */
 @Controller
-public class RoleController {
+public class UserRoleController {
 
     @Autowired
-    RoleServiceImpl RoleMapper;
+    UserRoleService userRoleService;
     @Autowired
     HttpServletRequest request;
     @Autowired

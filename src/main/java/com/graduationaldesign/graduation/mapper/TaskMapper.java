@@ -2,42 +2,43 @@ package com.graduationaldesign.graduation.mapper;
 
 import com.graduationaldesign.graduation.pojo.Task;
 import com.graduationaldesign.graduation.pojo.TaskExample;
+import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 @Component
 public interface TaskMapper {
+
     /**
-     *  根据指定的条件获取数据库记录数,t_task
+     * 根据指定的条件获取数据库记录数,t_task
      *
      * @param example
      */
     long countByExample(TaskExample example);
 
     /**
-     *  根据指定的条件删除数据库符合条件的记录,t_task
+     * 根据指定的条件删除数据库符合条件的记录,t_task
      *
      * @param example
      */
     int deleteByExample(TaskExample example);
 
     /**
-     *  根据主键删除数据库的记录,t_task
+     * 根据主键删除数据库的记录,t_task
      *
      * @param id
      */
     int deleteByPrimaryKey(Integer id);
 
     /**
-     *  新写入数据库记录,t_task
+     * 新写入数据库记录,t_task
      *
      * @param record
      */
     int insert(Task record);
 
     /**
-     *  动态字段,写入数据库记录,t_task
+     * 动态字段,写入数据库记录,t_task
      *
      * @param record
      */
@@ -51,7 +52,7 @@ public interface TaskMapper {
     List<Task> selectByExampleWithBLOBs(TaskExample example);
 
     /**
-     *  根据指定的条件查询符合条件的数据库记录,t_task
+     * 根据指定的条件查询符合条件的数据库记录,t_task
      *
      * @param example
      */
@@ -59,33 +60,21 @@ public interface TaskMapper {
 
 
     /**
-     *  根据指定主键获取一条数据库记录,t_task
+     * 根据指定主键获取一条数据库记录,t_task
      *
      * @param id
      */
     Task selectByPrimaryKey(Integer id);
 
-    /**
-     *  根据指定教师ID获取所发布任务列表
-     *
-     * @param id
-     */
-    List<Task> selectByTeaId(String id);
 
     /**
-     *  根据指定教师ID获取所发布任务列表
-     *
-     * @param id
-     */
-    int countByTeaId(String id);
-
-    /**
-     *  动态根据指定的条件来更新符合条件的数据库记录,t_task
+     * 动态根据指定的条件来更新符合条件的数据库记录,t_task
      *
      * @param record
      * @param example
      */
-    int updateByExampleSelective(@Param("record") Task record, @Param("example") TaskExample example);
+    int updateByExampleSelective(@Param("record") Task record,
+            @Param("example") TaskExample example);
 
     /**
      * ,t_task
@@ -93,10 +82,11 @@ public interface TaskMapper {
      * @param record
      * @param example
      */
-    int updateByExampleWithBLOBs(@Param("record") Task record, @Param("example") TaskExample example);
+    int updateByExampleWithBLOBs(@Param("record") Task record,
+            @Param("example") TaskExample example);
 
     /**
-     *  根据指定的条件来更新符合条件的数据库记录,t_task
+     * 根据指定的条件来更新符合条件的数据库记录,t_task
      *
      * @param record
      * @param example
@@ -104,7 +94,7 @@ public interface TaskMapper {
     int updateByExample(@Param("record") Task record, @Param("example") TaskExample example);
 
     /**
-     *  动态字段,根据主键来更新符合条件的数据库记录,t_task
+     * 动态字段,根据主键来更新符合条件的数据库记录,t_task
      *
      * @param record
      */
@@ -118,7 +108,7 @@ public interface TaskMapper {
     int updateByPrimaryKeyWithBLOBs(Task record);
 
     /**
-     *  根据主键来更新符合条件的数据库记录,t_task
+     * 根据主键来更新符合条件的数据库记录,t_task
      *
      * @param record
      */

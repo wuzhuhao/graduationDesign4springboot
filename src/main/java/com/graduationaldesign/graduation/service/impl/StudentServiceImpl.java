@@ -44,6 +44,7 @@ public class StudentServiceImpl implements StudentService {
     //    @Cacheable //开启缓存
     //    @Cacheable(key = "#p0", unless = "#result == null")
     //    sync=true 有一个线程正在忙于计算该值，而其他线程则被阻塞，直到缓存中更新该条目为止
+    @Override
     @Cacheable(keyGenerator = "keyGenerator", unless = "#result == null")
     public Student getStuById(String id) {
         Student student = studentMapper.selectByPrimaryKey(id);
@@ -51,6 +52,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     //    @CachePut(keyGenerator = "keyGenerator")
+    @Override
     public String changeInformation(UserModel userModel) {
         String message;
         Student student = getStuById(userModel.getId());
@@ -76,6 +78,7 @@ public class StudentServiceImpl implements StudentService {
         return flag;
     }
 
+    @Override
     public String changPassword(String id, String oldPassword, String newPassword) {
         if (!checkPassword(id, oldPassword)) {
             throw new RuntimeException("原密码不正确!");

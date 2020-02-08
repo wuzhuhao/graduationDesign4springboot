@@ -16,7 +16,7 @@ public interface ReportService {
 
     Report selectByPrimaryKey(String subId, Integer reportType);
 
-    int updateByPrimaryKeySelective(Report record);
+    String updateByPrimaryKeySelective(Report record);
 
     int updateByPrimaryKey(Report record);
 

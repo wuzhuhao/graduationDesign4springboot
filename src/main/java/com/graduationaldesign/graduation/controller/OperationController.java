@@ -2,7 +2,7 @@ package com.graduationaldesign.graduation.controller;
 
 
 import com.graduationaldesign.graduation.aop.RootPropeties;
-import com.graduationaldesign.graduation.service.impl.OperationServiceImpl;
+import com.graduationaldesign.graduation.service.OperationService;
 import com.graduationaldesign.graduation.util.ResponseStatu;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Controller;
 public class OperationController {
 
     @Autowired
-    OperationServiceImpl OperationMapper;
+    OperationService operationService;
     @Autowired
     HttpServletRequest request;
     @Autowired
