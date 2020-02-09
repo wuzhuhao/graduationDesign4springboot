@@ -693,6 +693,11 @@ public class ReportExample {
             addCriterion("t_subject.stu_id = ", value, "t_subject.stu_id");
             return (Criteria) this;
         }
+
+        public Criteria andJoinTeaIdEqualTo(String value) {
+            addCriterion("t_subject.sub_tea_id = ", value, "t_subject.sub_tea_id");
+            return (Criteria) this;
+        }
     }
 
     /**

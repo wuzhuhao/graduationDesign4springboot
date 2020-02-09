@@ -2,6 +2,7 @@ package com.graduationaldesign.graduation.service;
 
 import com.graduationaldesign.graduation.pojo.Report;
 import com.graduationaldesign.graduation.pojo.Student;
+import com.graduationaldesign.graduation.pojo.Teacher;
 import com.graduationaldesign.graduation.util.PageBean;
 import java.util.HashMap;
 
@@ -13,7 +14,9 @@ public interface ReportService {
 
     int deleteByPrimaryKey(String subId, Integer reportType);
 
-    int insert(Report record);
+    String deleteById(Integer reportId);
+
+    String insert(Report record);
 
     int insertSelective(Report record);
 
@@ -25,8 +28,12 @@ public interface ReportService {
 
     int updateByPrimaryKey(Report record);
 
-    PageBean<Report> listByPage(HashMap<String, Object> params, int page, Integer pageSize);
+    PageBean<Report> listByPage(HashMap<String, Object> params, int page, Integer pageSize,
+            int reportType);
 
     PageBean<Report> listByPageOfStu(HashMap<String, Object> params, int page, Integer pageSize,
             Student student, int reportType);
+
+    PageBean<Report> listByPageOfTea(HashMap<String, Object> params, int page, Integer pageSize,
+            Teacher teacher, int reportType);
 }

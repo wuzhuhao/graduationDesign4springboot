@@ -4,6 +4,7 @@ package com.graduationaldesign.graduation.controller;
 import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.pojo.Report;
 import com.graduationaldesign.graduation.pojo.Student;
+import com.graduationaldesign.graduation.pojo.Teacher;
 import com.graduationaldesign.graduation.service.ReportService;
 import com.graduationaldesign.graduation.util.ResponseStatu;
 import java.util.HashMap;
@@ -31,10 +32,22 @@ public class ReportController {
     @Autowired
     RootPropeties rootPropeties;
 
-    //    @RequestMapping(value="/temp")
-    public ResponseEntity<Object> temp() {
-        request.getSession().removeAttribute(rootPropeties.getUserAttribute());
-        return ResponseStatu.success("退出登陆成功");
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public ResponseEntity<Object> add(Report report) {
+        try {
+            return ResponseStatu.success(reportService.insert(report));
+        } catch (RuntimeException e) {
+            return ResponseStatu.failure(e.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> delete(Integer reportId) {
+        try {
+            return ResponseStatu.success(reportService.deleteById(reportId));
+        } catch (RuntimeException e) {
+            return ResponseStatu.failure(e.getMessage());
+        }
     }
 
     /**
@@ -43,7 +56,7 @@ public class ReportController {
      * @param report
      * @return
      */
-    @RequestMapping(value = "/update")
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public ResponseEntity<Object> update(Report report) {
         try {
             return ResponseStatu.success(reportService.updateByPrimaryKeySelective(report));
@@ -73,10 +86,12 @@ public class ReportController {
      * @return
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ResponseEntity<Object> list(@RequestParam HashMap<String, Object> params, int page) {
+    public ResponseEntity<Object> list(@RequestParam HashMap<String, Object> params, int page,
+            int reportType) {
         try {
             return ResponseStatu
-                    .success(reportService.listByPage(params, page, rootPropeties.getPageSize()));
+                    .success(reportService
+                            .listByPage(params, page, rootPropeties.getPageSize(), reportType));
         } catch (RuntimeException e) {
             return ResponseStatu.failure(e.getMessage());
         }
@@ -101,16 +116,20 @@ public class ReportController {
     }
 
     /**
-     * 获取老师的全部选题
+     * 获取老师的全部报告
      *
      * @return
      */
-//    @RequestMapping(value = "/listOfTea", method = RequestMethod.GET)
-//    public ResponseEntity<Object> listOfTea(@RequestParam HashMap<String, Object> params,
-//            int page) {
-//        return ResponseStatu.success(reportService.listByPageOfTea(params, page,
-//                rootPropeties.getPageSize(),
-//                ((Teacher) request.getSession().getAttribute(rootPropeties.getUserAttribute()))
-//        ));
-//    }
+    @RequestMapping(value = "/listOfTea", method = RequestMethod.GET)
+    public ResponseEntity<Object> listOfTea(@RequestParam HashMap<String, Object> params,
+            int page, int reportType, String teaId) {
+        Teacher teacher = (Teacher) request.getSession()
+                .getAttribute(rootPropeties.getUserAttribute());
+        teacher = new Teacher();
+        teacher.setTeaId(teaId);
+        return ResponseStatu.success(reportService.listByPageOfTea(params, page,
+                rootPropeties.getPageSize(),
+                teacher
+                , reportType));
+    }
 }

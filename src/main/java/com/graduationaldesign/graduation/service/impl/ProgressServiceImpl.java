@@ -2,10 +2,16 @@ package com.graduationaldesign.graduation.service.impl;
 
 import com.graduationaldesign.graduation.mapper.ProgressMapper;
 import com.graduationaldesign.graduation.pojo.Progress;
+import com.graduationaldesign.graduation.pojo.ProgressExample;
+import com.graduationaldesign.graduation.pojo.Student;
+import com.graduationaldesign.graduation.pojo.Teacher;
 import com.graduationaldesign.graduation.service.ProgressService;
-import org.springframework.stereotype.Service;
-
+import com.graduationaldesign.graduation.util.PageBean;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import javax.annotation.Resource;
+import org.springframework.stereotype.Service;
 
 /**
  * @Author: wuzhuhao
@@ -18,8 +24,11 @@ public class ProgressServiceImpl implements ProgressService {
     private ProgressMapper progressMapper;
 
     @Override
-    public int deleteByPrimaryKey(Integer id) {
-        return progressMapper.deleteByPrimaryKey(id);
+    public String deleteByPrimaryKey(Integer id) {
+        if (id == null || progressMapper.deleteByPrimaryKey(id) <= 0) {
+            throw new RuntimeException("删除问题失败");
+        }
+        return "删除问题成功";
     }
 
     @Override
@@ -28,8 +37,11 @@ public class ProgressServiceImpl implements ProgressService {
     }
 
     @Override
-    public int insertSelective(Progress record) {
-        return progressMapper.insertSelective(record);
+    public String insertSelective(Progress record) {
+        if (progressMapper.insertSelective(record) <= 0) {
+            throw new RuntimeException("添加问题失败");
+        }
+        return "添加问题成功";
     }
 
     @Override
@@ -38,8 +50,23 @@ public class ProgressServiceImpl implements ProgressService {
     }
 
     @Override
-    public int updateByPrimaryKeySelective(Progress record) {
-        return progressMapper.updateByPrimaryKeySelective(record);
+    public String updateByPrimaryKeySelective(Progress record) {
+        String message = "修改问题成功";
+        record.setProgContentTime(new Date());
+        if (progressMapper.updateByPrimaryKeySelective(record) <= 0) {
+            throw new RuntimeException("修改问题失败");
+        }
+        return message;
+    }
+
+    @Override
+    public String reply(Progress record) {
+        String message = "回复问题成功";
+        record.setProgReplyTime(new Date());
+        if (progressMapper.updateByPrimaryKeySelective(record) <= 0) {
+            throw new RuntimeException("回复问题失败");
+        }
+        return message;
     }
 
     @Override
@@ -47,4 +74,97 @@ public class ProgressServiceImpl implements ProgressService {
         return progressMapper.updateByPrimaryKey(record);
     }
 
+    @Override
+    public PageBean<Progress> listByPage(HashMap<String, Object> params, int page,
+            Integer pageSize) {
+        PageBean<Progress> pageBean = new PageBean<>();
+        ProgressExample example = new ProgressExample();
+        StringBuilder orderby = getOrderString(params);
+        if (orderby.length() != 0) {
+            example.setOrderByClause(orderby.toString());
+        }
+        ProgressExample.Criteria criteria = example.createCriteria();
+        List<Progress> list = progressMapper.selectByExample(example);
+        pageBean.setBeanList(list);
+        pageBean.setParams(params);
+        return pageBean;
+    }
+
+    @Override
+    public PageBean<Progress> listByPageOfStu(HashMap<String, Object> params, int page,
+            Integer pageSize, Student student) {
+        PageBean<Progress> pageBean = new PageBean<>();
+        ProgressExample example = new ProgressExample();
+        example.setJoin("left join t_subject on t_progress.progress_sub_id = t_subject.sub_id");
+        StringBuilder orderby = getOrderString(params);
+        if (orderby.length() != 0) {
+            example.setOrderByClause(orderby.toString());
+        }
+        ProgressExample.Criteria criteria = example.createCriteria();
+        criteria.andJoinStuIdEqualTo(student.getStuId());
+        List<Progress> list = progressMapper.selectByExample(example);
+        pageBean.setBeanList(list);
+        pageBean.setParams(params);
+        return pageBean;
+    }
+
+    @Override
+    public PageBean<Progress> listByPageOfTea(HashMap<String, Object> params, int page,
+            Integer pageSize, Teacher teacher) {
+        PageBean<Progress> pageBean = new PageBean<>();
+        ProgressExample example = new ProgressExample();
+        example.setJoin("left join t_subject on t_progress.progress_sub_id = t_subject.sub_id");
+        StringBuilder orderby = getOrderString(params);
+        if (orderby.length() != 0) {
+            example.setOrderByClause(orderby.toString());
+        }
+        ProgressExample.Criteria criteria = example.createCriteria();
+        criteria.andJoinTeaIdEqualTo(teacher.getTeaId());
+        List<Progress> list = progressMapper.selectByExample(example);
+        pageBean.setBeanList(list);
+        pageBean.setParams(params);
+        return pageBean;
+    }
+
+    private StringBuilder getOrderString(HashMap<String, Object> params) {
+        StringBuilder orderby = new StringBuilder();
+        if (params.get("orderId") != null) {
+            if (params.get("orderId").equals("2")) {
+                orderby.append("id DESC");
+            } else {
+                orderby.append("id ASC");
+            }
+        }
+        if (params.get("orderContenTime") != null) {
+            if (orderby.length() != 0) {
+                orderby.append(",");
+            }
+            if (params.get("orderContenTime").equals("2")) {
+                orderby.append("prog_content_time DESC");
+            } else {
+                orderby.append("prog_content_time ASC");
+            }
+        }
+        if (params.get("orderReplyTime") != null) {
+            if (orderby.length() != 0) {
+                orderby.append(",");
+            }
+            if (params.get("orderReplyTime").equals("2")) {
+                orderby.append("prog_reply_time DESC");
+            } else {
+                orderby.append("prog_reply_time ASC");
+            }
+        }
+        if (params.get("orderSubId") != null) {
+            if (orderby.length() != 0) {
+                orderby.append(",");
+            }
+            if (params.get("orderSubId").equals("2")) {
+                orderby.append("progress_sub_id DESC");
+            } else {
+                orderby.append("progress_sub_id ASC");
+            }
+        }
+        return orderby;
+    }
 }
