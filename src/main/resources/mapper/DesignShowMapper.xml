@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.graduationaldesign.graduation.mapper.DesignShowMapper">
   <resultMap id="BaseResultMap" type="com.graduationaldesign.graduation.pojo.DesignShow">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="sub_id" jdbcType="VARCHAR" property="subId" />
-    <result column="show_file" jdbcType="VARCHAR" property="showFile" />
-    <result column="show_time" jdbcType="TIMESTAMP" property="showTime" />
-    <association column="sub_id" property="subject" select="getSubject" />
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="show_sub_id" jdbcType="VARCHAR" property="showSubId"/>
+    <result column="show_file" jdbcType="VARCHAR" property="showFile"/>
+    <result column="show_time" jdbcType="TIMESTAMP" property="showTime"/>
+    <association column="show_sub_id" property="subject" select="getSubject"/>
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.graduationaldesign.graduation.pojo.DesignShow">
-    <result column="show_content" jdbcType="LONGVARCHAR" property="showContent" />
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs"
+    type="com.graduationaldesign.graduation.pojo.DesignShow">
+    <result column="show_content" jdbcType="LONGVARCHAR" property="showContent"/>
   </resultMap>
-  <resultMap extends="com.graduationaldesign.graduation.mapper.SubjectMapper.BaseResultMap" id="SubjectResultMapWithBLOBs" type="com.graduationaldesign.graduation.pojo.Subject">
-    <result column="sub_introduce" jdbcType="LONGVARCHAR" property="subIntroduce" />
+  <resultMap extends="com.graduationaldesign.graduation.mapper.SubjectMapper.BaseResultMap"
+    id="SubjectResultMapWithBLOBs" type="com.graduationaldesign.graduation.pojo.Subject">
+    <result column="sub_introduce" jdbcType="LONGVARCHAR" property="subIntroduce"/>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -32,7 +35,8 @@
                 </when>
                 <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach close=")" collection="criterion.value" item="listItem" open="("
+                    separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -61,7 +65,8 @@
                 </when>
                 <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach close=")" collection="criterion.value" item="listItem" open="("
+                    separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -73,38 +78,42 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, sub_id, show_file, show_time
+    id, show_sub_id, show_file, show_time
   </sql>
   <sql id="Blob_Column_List">
     show_content
   </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.graduationaldesign.graduation.pojo.DesignShowExample" resultMap="ResultMapWithBLOBs">
+  <select id="selectByExampleWithBLOBs"
+    parameterType="com.graduationaldesign.graduation.pojo.DesignShowExample"
+    resultMap="ResultMapWithBLOBs">
     select
     <if test="distinct">
       distinct
     </if>
     'true' as QUERYID,
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List"/>
     ,
-    <include refid="Blob_Column_List" />
+    <include refid="Blob_Column_List"/>
     from t_designshow
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
+      <include refid="Example_Where_Clause"/>
     </if>
     <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" parameterType="com.graduationaldesign.graduation.pojo.DesignShowExample" resultMap="BaseResultMap">
+  <select id="selectByExample"
+    parameterType="com.graduationaldesign.graduation.pojo.DesignShowExample"
+    resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     'true' as QUERYID,
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List"/>
     from t_designshow
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
+      <include refid="Example_Where_Clause"/>
     </if>
     <if test="orderByClause != null">
       order by ${orderByClause}
@@ -112,9 +121,9 @@
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 'false' as QUERYID,
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List"/>
     ,
-    <include refid="Blob_Column_List" />
+    <include refid="Blob_Column_List"/>
     from t_designshow
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -122,20 +131,22 @@
     delete from t_designshow
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.graduationaldesign.graduation.pojo.DesignShowExample">
+  <delete id="deleteByExample"
+    parameterType="com.graduationaldesign.graduation.pojo.DesignShowExample">
     delete from t_designshow
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
+      <include refid="Example_Where_Clause"/>
     </if>
   </delete>
   <insert id="insert" parameterType="com.graduationaldesign.graduation.pojo.DesignShow">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into t_designshow (sub_id, show_file, show_time, 
-      show_content)
-    values (#{subId,jdbcType=VARCHAR}, #{showFile,jdbcType=VARCHAR}, #{showTime,jdbcType=TIMESTAMP}, 
-      #{showContent,jdbcType=LONGVARCHAR})
+    insert into t_designshow (show_sub_id, show_file, show_time,
+    show_content)
+    values (#{showSubId,jdbcType=VARCHAR}, #{showFile,jdbcType=VARCHAR},
+    #{showTime,jdbcType=TIMESTAMP},
+    #{showContent,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.graduationaldesign.graduation.pojo.DesignShow">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -143,8 +154,8 @@
     </selectKey>
     insert into t_designshow
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="subId != null">
-        sub_id,
+      <if test="showSubId != null">
+        show_sub_id,
       </if>
       <if test="showFile != null">
         show_file,
@@ -157,8 +168,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="subId != null">
-        #{subId,jdbcType=VARCHAR},
+      <if test="showSubId != null">
+        #{showSubId,jdbcType=VARCHAR},
       </if>
       <if test="showFile != null">
         #{showFile,jdbcType=VARCHAR},
@@ -171,10 +182,12 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.graduationaldesign.graduation.pojo.DesignShowExample" resultType="java.lang.Long">
+  <select id="countByExample"
+    parameterType="com.graduationaldesign.graduation.pojo.DesignShowExample"
+    resultType="java.lang.Long">
     select count(*) from t_designshow
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
+      <include refid="Example_Where_Clause"/>
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
@@ -183,8 +196,8 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.subId != null">
-        sub_id = #{record.subId,jdbcType=VARCHAR},
+      <if test="record.showSubId != null">
+        show_sub_id = #{record.showSubId,jdbcType=VARCHAR},
       </if>
       <if test="record.showFile != null">
         show_file = #{record.showFile,jdbcType=VARCHAR},
@@ -197,35 +210,36 @@
       </if>
     </set>
     <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
+      <include refid="Update_By_Example_Where_Clause"/>
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map">
     update t_designshow
     set id = #{record.id,jdbcType=INTEGER},
-      sub_id = #{record.subId,jdbcType=VARCHAR},
-      show_file = #{record.showFile,jdbcType=VARCHAR},
-      show_time = #{record.showTime,jdbcType=TIMESTAMP},
-      show_content = #{record.showContent,jdbcType=LONGVARCHAR}
+    show_sub_id = #{record.showSubId,jdbcType=VARCHAR},
+    show_file = #{record.showFile,jdbcType=VARCHAR},
+    show_time = #{record.showTime,jdbcType=TIMESTAMP},
+    show_content = #{record.showContent,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
+      <include refid="Update_By_Example_Where_Clause"/>
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
     update t_designshow
     set id = #{record.id,jdbcType=INTEGER},
-      sub_id = #{record.subId,jdbcType=VARCHAR},
-      show_file = #{record.showFile,jdbcType=VARCHAR},
-      show_time = #{record.showTime,jdbcType=TIMESTAMP}
+    show_sub_id = #{record.showSubId,jdbcType=VARCHAR},
+    show_file = #{record.showFile,jdbcType=VARCHAR},
+    show_time = #{record.showTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
+      <include refid="Update_By_Example_Where_Clause"/>
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.graduationaldesign.graduation.pojo.DesignShow">
+  <update id="updateByPrimaryKeySelective"
+    parameterType="com.graduationaldesign.graduation.pojo.DesignShow">
     update t_designshow
     <set>
-      <if test="subId != null">
-        sub_id = #{subId,jdbcType=VARCHAR},
+      <if test="showSubId != null">
+        show_sub_id = #{showSubId,jdbcType=VARCHAR},
       </if>
       <if test="showFile != null">
         show_file = #{showFile,jdbcType=VARCHAR},
@@ -239,23 +253,26 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.graduationaldesign.graduation.pojo.DesignShow">
+  <update id="updateByPrimaryKeyWithBLOBs"
+    parameterType="com.graduationaldesign.graduation.pojo.DesignShow">
     update t_designshow
-    set sub_id = #{subId,jdbcType=VARCHAR},
-      show_file = #{showFile,jdbcType=VARCHAR},
-      show_time = #{showTime,jdbcType=TIMESTAMP},
-      show_content = #{showContent,jdbcType=LONGVARCHAR}
+    set show_sub_id = #{showSubId,jdbcType=VARCHAR},
+    show_file = #{showFile,jdbcType=VARCHAR},
+    show_time = #{showTime,jdbcType=TIMESTAMP},
+    show_content = #{showContent,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.graduationaldesign.graduation.pojo.DesignShow">
     update t_designshow
-    set sub_id = #{subId,jdbcType=VARCHAR},
-      show_file = #{showFile,jdbcType=VARCHAR},
-      show_time = #{showTime,jdbcType=TIMESTAMP}
+    set show_sub_id = #{showSubId,jdbcType=VARCHAR},
+    show_file = #{showFile,jdbcType=VARCHAR},
+    show_time = #{showTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="getSubject" resultMap="SubjectResultMapWithBLOBs">
-    select sub_id,sub_name,sub_nature,sub_source,sub_tea_id,sub_file,first_report_deadline,last_report_deadline,stu_id,sub_stu_state,sub_last_score,show_id,sub_introduce from t_subject where sub_id=#{subId}
+    select
+    sub_id,sub_name,sub_nature,sub_source,sub_tea_id,sub_file,first_report_deadline,last_report_deadline,stu_id,sub_stu_state,sub_last_score,show_id,sub_introduce
+    from t_subject where sub_id=#{showSubId}
   </select>
   <insert id="insertBatchSelective" parameterType="java.util.List">
     insert into t_designshow
@@ -263,8 +280,8 @@
       <if test="list[0].id!=null">
         id,
       </if>
-      <if test="list[0].subId!=null">
-        sub_id,
+      <if test="list[0].showSubId!=null">
+        show_sub_id,
       </if>
       <if test="list[0].showFile!=null">
         show_file,
@@ -276,14 +293,14 @@
         show_content,
       </if>
     </trim>
-     values 
+    values
     <foreach collection="list" index="index" item="item" separator=",">
       <trim prefix=" (" suffix=")" suffixOverrides=",">
         <if test="item.id!=null">
           #{item.id,jdbcType=INTEGER},
         </if>
-        <if test="item.subId!=null">
-          #{item.subId,jdbcType=VARCHAR},
+        <if test="item.showSubId!=null">
+          #{item.showSubId,jdbcType=VARCHAR},
         </if>
         <if test="item.showFile!=null">
           #{item.showFile,jdbcType=VARCHAR},
@@ -301,8 +318,8 @@
     <foreach collection="list" index="index" item="item" separator=";">
       update t_designshow
       <set>
-        <if test="item.subId!=null">
-          sub_id=#{item.subId,jdbcType=VARCHAR},
+        <if test="item.showSubId!=null">
+          show_sub_id=#{item.showSubId,jdbcType=VARCHAR},
         </if>
         <if test="item.showFile!=null">
           show_file=#{item.showFile,jdbcType=VARCHAR},
@@ -314,7 +331,7 @@
           show_content=#{item.showContent,jdbcType=LONGVARCHAR},
         </if>
       </set>
-      where 
+      where
       id = #{item.id,jdbcType=INTEGER}
     </foreach>
   </update>

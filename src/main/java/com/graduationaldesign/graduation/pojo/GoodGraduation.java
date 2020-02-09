@@ -19,9 +19,9 @@ public class GoodGraduation implements Serializable {
 
     /**
      * 外键课题id
-     * 表字段 : t_goodgraduation.sub_id
+     * 表字段 : t_goodgraduation.good_sub_id
      */
-    private String subId;
+    private String goodSubId;
 
     /**
      * 评定时间
@@ -64,21 +64,21 @@ public class GoodGraduation implements Serializable {
     }
 
     /**
-     * 获取 外键课题id 字段:t_goodgraduation.sub_id
+     * 获取 外键课题id 字段:t_goodgraduation.good_sub_id
      *
-     * @return t_goodgraduation.sub_id, 外键课题id
+     * @return t_goodgraduation.good_sub_id, 外键课题id
      */
-    public String getSubId() {
-        return subId;
+    public String getGoodSubId() {
+        return goodSubId;
     }
 
     /**
-     * 设置 外键课题id 字段:t_goodgraduation.sub_id
+     * 设置 外键课题id 字段:t_goodgraduation.good_sub_id
      *
-     * @param subId the value for t_goodgraduation.sub_id, 外键课题id
+     * @param goodSubId the value for t_goodgraduation.good_sub_id, 外键课题id
      */
-    public void setSubId(String subId) {
-        this.subId = subId == null ? null : subId.trim();
+    public void setGoodSubId(String goodSubId) {
+        this.goodSubId = goodSubId == null ? null : goodSubId.trim();
     }
 
     /**

@@ -133,7 +133,6 @@ public class ReportExample {
     }
 
     /**
-     * InnoDB free: 11264 kB; (`sub_id`) REFER `graduationmanagement/t_subject`(`sub_id
      * GeneratedCriteria
      * 数据库表：t_report
      */
@@ -180,73 +179,73 @@ public class ReportExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andSubIdIsNull() {
-            addCriterion("sub_id is null");
+        public Criteria andReportSubIdIsNull() {
+            addCriterion("report_sub_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andSubIdIsNotNull() {
-            addCriterion("sub_id is not null");
+        public Criteria andReportSubIdIsNotNull() {
+            addCriterion("report_sub_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andSubIdEqualTo(String value) {
-            addCriterion("sub_id =", value, "subId");
+        public Criteria andReportSubIdEqualTo(String value) {
+            addCriterion("report_sub_id =", value, "reportSubId");
             return (Criteria) this;
         }
 
-        public Criteria andSubIdNotEqualTo(String value) {
-            addCriterion("sub_id <>", value, "subId");
+        public Criteria andReportSubIdNotEqualTo(String value) {
+            addCriterion("report_sub_id <>", value, "reportSubId");
             return (Criteria) this;
         }
 
-        public Criteria andSubIdGreaterThan(String value) {
-            addCriterion("sub_id >", value, "subId");
+        public Criteria andReportSubIdGreaterThan(String value) {
+            addCriterion("report_sub_id >", value, "reportSubId");
             return (Criteria) this;
         }
 
-        public Criteria andSubIdGreaterThanOrEqualTo(String value) {
-            addCriterion("sub_id >=", value, "subId");
+        public Criteria andReportSubIdGreaterThanOrEqualTo(String value) {
+            addCriterion("report_sub_id >=", value, "reportSubId");
             return (Criteria) this;
         }
 
-        public Criteria andSubIdLessThan(String value) {
-            addCriterion("sub_id <", value, "subId");
+        public Criteria andReportSubIdLessThan(String value) {
+            addCriterion("report_sub_id <", value, "reportSubId");
             return (Criteria) this;
         }
 
-        public Criteria andSubIdLessThanOrEqualTo(String value) {
-            addCriterion("sub_id <=", value, "subId");
+        public Criteria andReportSubIdLessThanOrEqualTo(String value) {
+            addCriterion("report_sub_id <=", value, "reportSubId");
             return (Criteria) this;
         }
 
-        public Criteria andSubIdLike(String value) {
-            addCriterion("sub_id like", value, "subId");
+        public Criteria andReportSubIdLike(String value) {
+            addCriterion("report_sub_id like", value, "reportSubId");
             return (Criteria) this;
         }
 
-        public Criteria andSubIdNotLike(String value) {
-            addCriterion("sub_id not like", value, "subId");
+        public Criteria andReportSubIdNotLike(String value) {
+            addCriterion("report_sub_id not like", value, "reportSubId");
             return (Criteria) this;
         }
 
-        public Criteria andSubIdIn(List<String> values) {
-            addCriterion("sub_id in", values, "subId");
+        public Criteria andReportSubIdIn(List<String> values) {
+            addCriterion("report_sub_id in", values, "reportSubId");
             return (Criteria) this;
         }
 
-        public Criteria andSubIdNotIn(List<String> values) {
-            addCriterion("sub_id not in", values, "subId");
+        public Criteria andReportSubIdNotIn(List<String> values) {
+            addCriterion("report_sub_id not in", values, "reportSubId");
             return (Criteria) this;
         }
 
-        public Criteria andSubIdBetween(String value1, String value2) {
-            addCriterion("sub_id between", value1, value2, "subId");
+        public Criteria andReportSubIdBetween(String value1, String value2) {
+            addCriterion("report_sub_id between", value1, value2, "reportSubId");
             return (Criteria) this;
         }
 
-        public Criteria andSubIdNotBetween(String value1, String value2) {
-            addCriterion("sub_id not between", value1, value2, "subId");
+        public Criteria andReportSubIdNotBetween(String value1, String value2) {
+            addCriterion("report_sub_id not between", value1, value2, "reportSubId");
             return (Criteria) this;
         }
 
@@ -691,7 +690,7 @@ public class ReportExample {
         }
 
         public Criteria andJoinStuIdEqualTo(String value) {
-            addCriterion("t_subject.stu_id = ", value, "reportTemp");
+            addCriterion("t_subject.stu_id = ", value, "t_subject.stu_id");
             return (Criteria) this;
         }
     }
@@ -709,7 +708,6 @@ public class ReportExample {
     }
 
     /**
-     * InnoDB free: 11264 kB; (`sub_id`) REFER `graduationmanagement/t_subject`(`sub_id
      * Criterion
      * 数据库表：t_report
      */

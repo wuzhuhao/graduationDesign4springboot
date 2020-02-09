@@ -116,10 +116,12 @@ public class ReportServiceImpl implements ReportService {
             Student student, int reportType) {
         PageBean<Report> pageBean = new PageBean<>();
         ReportExample example = new ReportExample();
-        example.setJoin("left join t_subject on t_report.sub_id = t_subject.sub_id");
+        example.setJoin("left join t_subject on t_report.report_sub_id = t_subject.sub_id");
         ReportExample.Criteria criteria = example.createCriteria();
         criteria.andJoinStuIdEqualTo(student.getStuId());
-        criteria.andReportTypeEqualTo(reportType);
+        if (reportType == 1 || reportType == 2) {
+            criteria.andReportTypeEqualTo(reportType);
+        }
 //        criteria.andSubStuStateNotEqualTo(1);
         List<Report> list = reportMapper.selectByExample(example);
         pageBean.setBeanList(list);

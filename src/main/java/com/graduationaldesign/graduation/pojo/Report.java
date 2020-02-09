@@ -13,9 +13,9 @@ public class Report implements Serializable {
 
     /**
      * 课题id，外键对课题表id
-     * 表字段 : t_report.sub_id
+     * 表字段 : t_report.report_sub_id
      */
-    private String subId;
+    private String reportSubId;
 
     /**
      * 报告类型，1是开题报告，2是论文定稿
@@ -87,7 +87,7 @@ public class Report implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public Report(String subId, Integer reportType, Integer reportState) {
-        this.subId = subId;
+        this.reportSubId = subId;
         this.reportType = reportType;
         this.reportState = reportState;
     }
@@ -96,21 +96,21 @@ public class Report implements Serializable {
     }
 
     /**
-     * 获取 课题id，外键对课题表id 字段:t_report.sub_id
+     * 获取 课题id，外键对课题表id 字段:t_report.report_sub_id
      *
-     * @return t_report.sub_id, 课题id，外键对课题表id
+     * @return t_report.report_sub_id, 课题id，外键对课题表id
      */
-    public String getSubId() {
-        return subId;
+    public String getReportSubId() {
+        return reportSubId;
     }
 
     /**
-     * 设置 课题id，外键对课题表id 字段:t_report.sub_id
+     * 设置 课题id，外键对课题表id 字段:t_report.report_sub_id
      *
-     * @param subId the value for t_report.sub_id, 课题id，外键对课题表id
+     * @param reportSubId the value for t_report.report_sub_id, 课题id，外键对课题表id
      */
-    public void setSubId(String subId) {
-        this.subId = subId == null ? null : subId.trim();
+    public void setReportSubId(String reportSubId) {
+        this.reportSubId = reportSubId == null ? null : reportSubId.trim();
     }
 
     /**
@@ -306,5 +306,4 @@ public class Report implements Serializable {
     public void setSubject(Subject subject) {
         this.subject = subject;
     }
-
 }

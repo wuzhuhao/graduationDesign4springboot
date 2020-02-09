@@ -3,7 +3,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.graduationaldesign.graduation.mapper.ReportMapper">
   <resultMap id="BaseResultMap" type="com.graduationaldesign.graduation.pojo.Report">
-    <id column="sub_id" jdbcType="VARCHAR" property="subId"/>
+    <id column="report_sub_id" jdbcType="VARCHAR" property="reportSubId"/>
     <id column="report_type" jdbcType="INTEGER" property="reportType"/>
     <result column="id" jdbcType="INTEGER" property="id"/>
     <result column="report_state" jdbcType="INTEGER" property="reportState"/>
@@ -11,7 +11,7 @@
     <result column="report_version" jdbcType="REAL" property="reportVersion"/>
     <result column="report_file" jdbcType="VARCHAR" property="reportFile"/>
     <result column="report_temp" jdbcType="VARCHAR" property="reportTemp"/>
-    <association column="sub_id" property="subject" select="getSubject"/>
+    <association column="report_sub_id" property="subject" select="getSubject"/>
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs"
     type="com.graduationaldesign.graduation.pojo.Report">
@@ -84,7 +84,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    sub_id, report_type, id, report_state, report_subtime, report_version, report_file,
+    report_sub_id, report_type, id, report_state, report_subtime, report_version, report_file,
     report_temp
   </sql>
   <sql id="Blob_Column_List">
@@ -134,12 +134,12 @@
     ,
     <include refid="Blob_Column_List"/>
     from t_report
-    where sub_id = #{subId,jdbcType=VARCHAR}
+    where report_sub_id = #{reportSubId,jdbcType=VARCHAR}
     and report_type = #{reportType,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="map">
     delete from t_report
-    where sub_id = #{subId,jdbcType=VARCHAR}
+    where report_sub_id = #{reportSubId,jdbcType=VARCHAR}
     and report_type = #{reportType,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.graduationaldesign.graduation.pojo.ReportExample">
@@ -149,11 +149,11 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.graduationaldesign.graduation.pojo.Report">
-    insert into t_report (sub_id, report_type, id,
+    insert into t_report (report_sub_id, report_type, id,
     report_state, report_subtime, report_version,
     report_file, report_temp, report_content,
     stu_message, tea_suggestion)
-    values (#{subId,jdbcType=VARCHAR}, #{reportType,jdbcType=INTEGER}, #{id,jdbcType=INTEGER},
+    values (#{reportSubId,jdbcType=VARCHAR}, #{reportType,jdbcType=INTEGER}, #{id,jdbcType=INTEGER},
     #{reportState,jdbcType=INTEGER}, #{reportSubtime,jdbcType=TIMESTAMP},
     #{reportVersion,jdbcType=REAL},
     #{reportFile,jdbcType=VARCHAR}, #{reportTemp,jdbcType=VARCHAR},
@@ -163,8 +163,8 @@
   <insert id="insertSelective" parameterType="com.graduationaldesign.graduation.pojo.Report">
     insert into t_report
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="subId != null">
-        sub_id,
+      <if test="reportSubId != null">
+        report_sub_id,
       </if>
       <if test="reportType != null">
         report_type,
@@ -198,8 +198,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="subId != null">
-        #{subId,jdbcType=VARCHAR},
+      <if test="reportSubId != null">
+        #{reportSubId,jdbcType=VARCHAR},
       </if>
       <if test="reportType != null">
         #{reportType,jdbcType=INTEGER},
@@ -243,8 +243,8 @@
   <update id="updateByExampleSelective" parameterType="map">
     update t_report
     <set>
-      <if test="record.subId != null">
-        sub_id = #{record.subId,jdbcType=VARCHAR},
+      <if test="record.reportSubId != null">
+        report_sub_id = #{record.reportSubId,jdbcType=VARCHAR},
       </if>
       <if test="record.reportType != null">
         report_type = #{record.reportType,jdbcType=INTEGER},
@@ -283,7 +283,7 @@
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map">
     update t_report
-    set sub_id = #{record.subId,jdbcType=VARCHAR},
+    set report_sub_id = #{record.reportSubId,jdbcType=VARCHAR},
     report_type = #{record.reportType,jdbcType=INTEGER},
     id = #{record.id,jdbcType=INTEGER},
     report_state = #{record.reportState,jdbcType=INTEGER},
@@ -300,7 +300,7 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update t_report
-    set sub_id = #{record.subId,jdbcType=VARCHAR},
+    set report_sub_id = #{record.reportSubId,jdbcType=VARCHAR},
     report_type = #{record.reportType,jdbcType=INTEGER},
     id = #{record.id,jdbcType=INTEGER},
     report_state = #{record.reportState,jdbcType=INTEGER},
@@ -344,7 +344,7 @@
         tea_suggestion = #{teaSuggestion,jdbcType=LONGVARCHAR},
       </if>
     </set>
-    where sub_id = #{subId,jdbcType=VARCHAR}
+    where report_sub_id = #{reportSubId,jdbcType=VARCHAR}
     and report_type = #{reportType,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs"
@@ -359,7 +359,7 @@
     report_content = #{reportContent,jdbcType=LONGVARCHAR},
     stu_message = #{stuMessage,jdbcType=LONGVARCHAR},
     tea_suggestion = #{teaSuggestion,jdbcType=LONGVARCHAR}
-    where sub_id = #{subId,jdbcType=VARCHAR}
+    where report_sub_id = #{reportSubId,jdbcType=VARCHAR}
     and report_type = #{reportType,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.graduationaldesign.graduation.pojo.Report">
@@ -370,19 +370,19 @@
     report_version = #{reportVersion,jdbcType=REAL},
     report_file = #{reportFile,jdbcType=VARCHAR},
     report_temp = #{reportTemp,jdbcType=VARCHAR}
-    where sub_id = #{subId,jdbcType=VARCHAR}
+    where report_sub_id = #{reportSubId,jdbcType=VARCHAR}
     and report_type = #{reportType,jdbcType=INTEGER}
   </update>
   <select id="getSubject" resultMap="SubjectResultMapWithBLOBs">
     select
     sub_id,sub_name,sub_nature,sub_source,sub_tea_id,sub_file,first_report_deadline,last_report_deadline,stu_id,sub_stu_state,sub_last_score,show_id,sub_introduce
-    from t_subject where sub_id=#{subId}
+    from t_subject where sub_id=#{reportSubId}
   </select>
   <insert id="insertBatchSelective" parameterType="java.util.List">
     insert into t_report
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="list[0].subId!=null">
-        sub_id,
+      <if test="list[0].reportSubId!=null">
+        report_sub_id,
       </if>
       <if test="list[0].reportType!=null">
         report_type,
@@ -418,8 +418,8 @@
     values
     <foreach collection="list" index="index" item="item" separator=",">
       <trim prefix=" (" suffix=")" suffixOverrides=",">
-        <if test="item.subId!=null">
-          #{item.subId,jdbcType=VARCHAR},
+        <if test="item.reportSubId!=null">
+          #{item.reportSubId,jdbcType=VARCHAR},
         </if>
         <if test="item.reportType!=null">
           #{item.reportType,jdbcType=INTEGER},
@@ -490,7 +490,7 @@
         </if>
       </set>
       where
-      sub_id = #{item.subId,jdbcType=VARCHAR}
+      report_sub_id = #{item.reportSubId,jdbcType=VARCHAR}
       report_type = #{item.reportType,jdbcType=INTEGER}
     </foreach>
   </update>

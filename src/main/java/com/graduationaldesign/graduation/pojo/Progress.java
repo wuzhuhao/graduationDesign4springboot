@@ -19,9 +19,9 @@ public class Progress implements Serializable {
 
     /**
      * 课题id，外键课题表id
-     * 表字段 : t_progress.sub_id
+     * 表字段 : t_progress.progress_sub_id
      */
-    private String subId;
+    private String progressSubId;
 
     /**
      * 问题发表时间
@@ -76,21 +76,21 @@ public class Progress implements Serializable {
     }
 
     /**
-     * 获取 课题id，外键课题表id 字段:t_progress.sub_id
+     * 获取 课题id，外键课题表id 字段:t_progress.progress_sub_id
      *
-     * @return t_progress.sub_id, 课题id，外键课题表id
+     * @return t_progress.progress_sub_id, 课题id，外键课题表id
      */
-    public String getSubId() {
-        return subId;
+    public String getProgressSubId() {
+        return progressSubId;
     }
 
     /**
-     * 设置 课题id，外键课题表id 字段:t_progress.sub_id
+     * 设置 课题id，外键课题表id 字段:t_progress.progress_sub_id
      *
-     * @param subId the value for t_progress.sub_id, 课题id，外键课题表id
+     * @param progressSubId the value for t_progress.progress_sub_id, 课题id，外键课题表id
      */
-    public void setSubId(String subId) {
-        this.subId = subId == null ? null : subId.trim();
+    public void setProgressSubId(String progressSubId) {
+        this.progressSubId = progressSubId == null ? null : progressSubId.trim();
     }
 
     /**

@@ -18,9 +18,9 @@ public class DesignShow implements Serializable {
     private Integer id;
 
     /**
-     * 表字段 : t_designshow.sub_id
+     * 表字段 : t_designshow.show_sub_id
      */
-    private String subId;
+    private String showSubId;
 
     /**
      * 附件
@@ -69,21 +69,21 @@ public class DesignShow implements Serializable {
     }
 
     /**
-     * 获取  字段:t_designshow.sub_id
+     * 获取  字段:t_designshow.show_sub_id
      *
-     * @return t_designshow.sub_id,
+     * @return t_designshow.show_sub_id,
      */
-    public String getSubId() {
-        return subId;
+    public String getShowSubId() {
+        return showSubId;
     }
 
     /**
-     * 设置  字段:t_designshow.sub_id
+     * 设置  字段:t_designshow.show_sub_id
      *
-     * @param subId the value for t_designshow.sub_id,
+     * @param showSubId the value for t_designshow.show_sub_id,
      */
-    public void setSubId(String subId) {
-        this.subId = subId == null ? null : subId.trim();
+    public void setShowSubId(String showSubId) {
+        this.showSubId = showSubId == null ? null : showSubId.trim();
     }
 
     /**

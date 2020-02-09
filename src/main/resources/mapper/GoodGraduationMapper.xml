@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.graduationaldesign.graduation.mapper.GoodGraduationMapper">
   <resultMap id="BaseResultMap" type="com.graduationaldesign.graduation.pojo.GoodGraduation">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="sub_id" jdbcType="VARCHAR" property="subId" />
-    <result column="good_time" jdbcType="TIMESTAMP" property="goodTime" />
-    <association column="sub_id" property="subject" select="getSubject" />
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="good_sub_id" jdbcType="VARCHAR" property="goodSubId"/>
+    <result column="good_time" jdbcType="TIMESTAMP" property="goodTime"/>
+    <association column="good_sub_id" property="subject" select="getSubject"/>
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.graduationaldesign.graduation.pojo.GoodGraduation">
-    <result column="good_reason" jdbcType="LONGVARCHAR" property="goodReason" />
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs"
+    type="com.graduationaldesign.graduation.pojo.GoodGraduation">
+    <result column="good_reason" jdbcType="LONGVARCHAR" property="goodReason"/>
   </resultMap>
-  <resultMap extends="com.graduationaldesign.graduation.mapper.SubjectMapper.BaseResultMap" id="SubjectResultMapWithBLOBs" type="com.graduationaldesign.graduation.pojo.Subject">
-    <result column="sub_introduce" jdbcType="LONGVARCHAR" property="subIntroduce" />
+  <resultMap extends="com.graduationaldesign.graduation.mapper.SubjectMapper.BaseResultMap"
+    id="SubjectResultMapWithBLOBs" type="com.graduationaldesign.graduation.pojo.Subject">
+    <result column="sub_introduce" jdbcType="LONGVARCHAR" property="subIntroduce"/>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -31,7 +34,8 @@
                 </when>
                 <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach close=")" collection="criterion.value" item="listItem" open="("
+                    separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -60,7 +64,8 @@
                 </when>
                 <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach close=")" collection="criterion.value" item="listItem" open="("
+                    separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -72,38 +77,42 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, sub_id, good_time
+    id, good_sub_id, good_time
   </sql>
   <sql id="Blob_Column_List">
     good_reason
   </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.graduationaldesign.graduation.pojo.GoodGraduationExample" resultMap="ResultMapWithBLOBs">
+  <select id="selectByExampleWithBLOBs"
+    parameterType="com.graduationaldesign.graduation.pojo.GoodGraduationExample"
+    resultMap="ResultMapWithBLOBs">
     select
     <if test="distinct">
       distinct
     </if>
     'true' as QUERYID,
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List"/>
     ,
-    <include refid="Blob_Column_List" />
+    <include refid="Blob_Column_List"/>
     from t_goodgraduation
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
+      <include refid="Example_Where_Clause"/>
     </if>
     <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" parameterType="com.graduationaldesign.graduation.pojo.GoodGraduationExample" resultMap="BaseResultMap">
+  <select id="selectByExample"
+    parameterType="com.graduationaldesign.graduation.pojo.GoodGraduationExample"
+    resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     'true' as QUERYID,
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List"/>
     from t_goodgraduation
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
+      <include refid="Example_Where_Clause"/>
     </if>
     <if test="orderByClause != null">
       order by ${orderByClause}
@@ -111,9 +120,9 @@
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 'false' as QUERYID,
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List"/>
     ,
-    <include refid="Blob_Column_List" />
+    <include refid="Blob_Column_List"/>
     from t_goodgraduation
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -121,29 +130,32 @@
     delete from t_goodgraduation
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.graduationaldesign.graduation.pojo.GoodGraduationExample">
+  <delete id="deleteByExample"
+    parameterType="com.graduationaldesign.graduation.pojo.GoodGraduationExample">
     delete from t_goodgraduation
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
+      <include refid="Example_Where_Clause"/>
     </if>
   </delete>
   <insert id="insert" parameterType="com.graduationaldesign.graduation.pojo.GoodGraduation">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into t_goodgraduation (sub_id, good_time, good_reason
-      )
-    values (#{subId,jdbcType=VARCHAR}, #{goodTime,jdbcType=TIMESTAMP}, #{goodReason,jdbcType=LONGVARCHAR}
-      )
+    insert into t_goodgraduation (good_sub_id, good_time, good_reason
+    )
+    values (#{goodSubId,jdbcType=VARCHAR}, #{goodTime,jdbcType=TIMESTAMP},
+    #{goodReason,jdbcType=LONGVARCHAR}
+    )
   </insert>
-  <insert id="insertSelective" parameterType="com.graduationaldesign.graduation.pojo.GoodGraduation">
+  <insert id="insertSelective"
+    parameterType="com.graduationaldesign.graduation.pojo.GoodGraduation">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into t_goodgraduation
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="subId != null">
-        sub_id,
+      <if test="goodSubId != null">
+        good_sub_id,
       </if>
       <if test="goodTime != null">
         good_time,
@@ -153,8 +165,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="subId != null">
-        #{subId,jdbcType=VARCHAR},
+      <if test="goodSubId != null">
+        #{goodSubId,jdbcType=VARCHAR},
       </if>
       <if test="goodTime != null">
         #{goodTime,jdbcType=TIMESTAMP},
@@ -164,10 +176,12 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.graduationaldesign.graduation.pojo.GoodGraduationExample" resultType="java.lang.Long">
+  <select id="countByExample"
+    parameterType="com.graduationaldesign.graduation.pojo.GoodGraduationExample"
+    resultType="java.lang.Long">
     select count(*) from t_goodgraduation
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
+      <include refid="Example_Where_Clause"/>
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
@@ -176,8 +190,8 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.subId != null">
-        sub_id = #{record.subId,jdbcType=VARCHAR},
+      <if test="record.goodSubId != null">
+        good_sub_id = #{record.goodSubId,jdbcType=VARCHAR},
       </if>
       <if test="record.goodTime != null">
         good_time = #{record.goodTime,jdbcType=TIMESTAMP},
@@ -187,33 +201,34 @@
       </if>
     </set>
     <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
+      <include refid="Update_By_Example_Where_Clause"/>
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map">
     update t_goodgraduation
     set id = #{record.id,jdbcType=INTEGER},
-      sub_id = #{record.subId,jdbcType=VARCHAR},
-      good_time = #{record.goodTime,jdbcType=TIMESTAMP},
-      good_reason = #{record.goodReason,jdbcType=LONGVARCHAR}
+    good_sub_id = #{record.goodSubId,jdbcType=VARCHAR},
+    good_time = #{record.goodTime,jdbcType=TIMESTAMP},
+    good_reason = #{record.goodReason,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
+      <include refid="Update_By_Example_Where_Clause"/>
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
     update t_goodgraduation
     set id = #{record.id,jdbcType=INTEGER},
-      sub_id = #{record.subId,jdbcType=VARCHAR},
-      good_time = #{record.goodTime,jdbcType=TIMESTAMP}
+    good_sub_id = #{record.goodSubId,jdbcType=VARCHAR},
+    good_time = #{record.goodTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
+      <include refid="Update_By_Example_Where_Clause"/>
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.graduationaldesign.graduation.pojo.GoodGraduation">
+  <update id="updateByPrimaryKeySelective"
+    parameterType="com.graduationaldesign.graduation.pojo.GoodGraduation">
     update t_goodgraduation
     <set>
-      <if test="subId != null">
-        sub_id = #{subId,jdbcType=VARCHAR},
+      <if test="goodSubId != null">
+        good_sub_id = #{goodSubId,jdbcType=VARCHAR},
       </if>
       <if test="goodTime != null">
         good_time = #{goodTime,jdbcType=TIMESTAMP},
@@ -224,21 +239,25 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.graduationaldesign.graduation.pojo.GoodGraduation">
+  <update id="updateByPrimaryKeyWithBLOBs"
+    parameterType="com.graduationaldesign.graduation.pojo.GoodGraduation">
     update t_goodgraduation
-    set sub_id = #{subId,jdbcType=VARCHAR},
-      good_time = #{goodTime,jdbcType=TIMESTAMP},
-      good_reason = #{goodReason,jdbcType=LONGVARCHAR}
+    set good_sub_id = #{goodSubId,jdbcType=VARCHAR},
+    good_time = #{goodTime,jdbcType=TIMESTAMP},
+    good_reason = #{goodReason,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.graduationaldesign.graduation.pojo.GoodGraduation">
+  <update id="updateByPrimaryKey"
+    parameterType="com.graduationaldesign.graduation.pojo.GoodGraduation">
     update t_goodgraduation
-    set sub_id = #{subId,jdbcType=VARCHAR},
-      good_time = #{goodTime,jdbcType=TIMESTAMP}
+    set good_sub_id = #{goodSubId,jdbcType=VARCHAR},
+    good_time = #{goodTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="getSubject" resultMap="SubjectResultMapWithBLOBs">
-    select sub_id,sub_name,sub_nature,sub_source,sub_tea_id,sub_file,first_report_deadline,last_report_deadline,stu_id,sub_stu_state,sub_last_score,show_id,sub_introduce from t_subject where sub_id=#{subId}
+    select
+    sub_id,sub_name,sub_nature,sub_source,sub_tea_id,sub_file,first_report_deadline,last_report_deadline,stu_id,sub_stu_state,sub_last_score,show_id,sub_introduce
+    from t_subject where sub_id=#{goodSubId}
   </select>
   <insert id="insertBatchSelective" parameterType="java.util.List">
     insert into t_goodgraduation
@@ -246,8 +265,8 @@
       <if test="list[0].id!=null">
         id,
       </if>
-      <if test="list[0].subId!=null">
-        sub_id,
+      <if test="list[0].goodSubId!=null">
+        good_sub_id,
       </if>
       <if test="list[0].goodTime!=null">
         good_time,
@@ -256,14 +275,14 @@
         good_reason,
       </if>
     </trim>
-     values 
+    values
     <foreach collection="list" index="index" item="item" separator=",">
       <trim prefix=" (" suffix=")" suffixOverrides=",">
         <if test="item.id!=null">
           #{item.id,jdbcType=INTEGER},
         </if>
-        <if test="item.subId!=null">
-          #{item.subId,jdbcType=VARCHAR},
+        <if test="item.goodSubId!=null">
+          #{item.goodSubId,jdbcType=VARCHAR},
         </if>
         <if test="item.goodTime!=null">
           #{item.goodTime,jdbcType=TIMESTAMP},
@@ -278,8 +297,8 @@
     <foreach collection="list" index="index" item="item" separator=";">
       update t_goodgraduation
       <set>
-        <if test="item.subId!=null">
-          sub_id=#{item.subId,jdbcType=VARCHAR},
+        <if test="item.goodSubId!=null">
+          good_sub_id=#{item.goodSubId,jdbcType=VARCHAR},
         </if>
         <if test="item.goodTime!=null">
           good_time=#{item.goodTime,jdbcType=TIMESTAMP},
@@ -288,7 +307,7 @@
           good_reason=#{item.goodReason,jdbcType=LONGVARCHAR},
         </if>
       </set>
-      where 
+      where
       id = #{item.id,jdbcType=INTEGER}
     </foreach>
   </update>
