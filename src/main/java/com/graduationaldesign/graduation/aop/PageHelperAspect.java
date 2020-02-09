@@ -61,8 +61,8 @@ public class PageHelperAspect {
             log.info("当前页[{}]", pageInfo.getPageNum());
             //每页页数
             log.info("每页数量[{}]", pageInfo.getPageSize());
-            //总页数
-            log.info("总页数[{}]", pageInfo.getTotal());
+            //总数
+            log.info("总数[{}]", pageInfo.getTotal());
             pageBean.setTotalRecord((int) pageInfo.getTotal());
             pageBean.setCurrentPage(pageInfo.getPageNum());
             pageBean.setPageSize(pageInfo.getPageSize());

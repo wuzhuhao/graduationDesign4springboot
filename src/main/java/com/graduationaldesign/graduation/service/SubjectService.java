@@ -29,10 +29,10 @@ public interface SubjectService {
     PageBean<Subject> listByPageOfNotChoice(HashMap<String, Object> params, int page, int pageSize);
 
     PageBean<Subject> listByPageOfChoice(HashMap<String, Object> params, int page,
-            Student login_user, int pageSize);
+            int pageSize, Student student);
 
-    PageBean<Subject> listByPageOfTea(HashMap<String, Object> params, int page, Teacher login_user,
-            int pageSize);
+    PageBean<Subject> listByPageOfTea(HashMap<String, Object> params, int page, int pageSize,
+            Teacher teacher);
 
     PageBean<Subject> listByPage(HashMap<String, Object> params, int page, int pageSize);
 

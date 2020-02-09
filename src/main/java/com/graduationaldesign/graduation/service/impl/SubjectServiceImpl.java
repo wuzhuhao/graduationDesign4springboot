@@ -170,7 +170,6 @@ public class SubjectServiceImpl implements SubjectService {
         PageBean<Subject> pageBean = new PageBean<>();
         SubjectExample subjectExample = new SubjectExample();
         SubjectExample.Criteria criteria = subjectExample.createCriteria();
-        int totalSize = (int) subjectMapper.countByExample(subjectExample);
         List<Subject> list = subjectMapper.selectByExample(subjectExample);
         pageBean.setBeanList(list);
 //        pageBean.setParams();
@@ -186,7 +185,7 @@ public class SubjectServiceImpl implements SubjectService {
      */
     @Override
     public PageBean<Subject> listByPageOfChoice(HashMap<String, Object> param, int page,
-            Student student, int pageSize) {
+            int pageSize, Student student) {
         PageBean<Subject> pageBean = new PageBean<>();
         SubjectExample subjectExample = new SubjectExample();
         SubjectExample.Criteria criteria = subjectExample.createCriteria();
@@ -200,7 +199,7 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public PageBean<Subject> listByPageOfTea(HashMap<String, Object> params, int page,
-            Teacher teacher, int pageSize) {
+            int pageSize, Teacher teacher) {
         PageBean<Subject> pageBean = new PageBean<>();
         SubjectExample subjectExample = new SubjectExample();
         SubjectExample.Criteria criteria = subjectExample.createCriteria();

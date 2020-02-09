@@ -108,8 +108,8 @@ public class SubjectController {
     public ResponseEntity<Object> getSubjectOfChoice(@RequestParam HashMap<String, Object> params,
             int page) {
         return ResponseStatu.success(subjectService.listByPageOfChoice(params, page,
-                ((Student) request.getSession().getAttribute(rootPropeties.getUserAttribute())),
-                rootPropeties.getPageSize()));
+                rootPropeties.getPageSize(),
+                ((Student) request.getSession().getAttribute(rootPropeties.getUserAttribute()))));
     }
 
     /**
@@ -121,8 +121,8 @@ public class SubjectController {
     public ResponseEntity<Object> getSubjectOfTea(@RequestParam HashMap<String, Object> params,
             int page) {
         return ResponseStatu.success(subjectService.listByPageOfTea(params, page,
-                ((Teacher) request.getSession().getAttribute(rootPropeties.getUserAttribute())),
-                rootPropeties.getPageSize()));
+                rootPropeties.getPageSize(),
+                ((Teacher) request.getSession().getAttribute(rootPropeties.getUserAttribute()))));
     }
 
     /**
