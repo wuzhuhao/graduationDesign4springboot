@@ -29,6 +29,32 @@ export default new Router({
         }
       ]
     },
+
+    //管理员用户的树
+    {
+      path: '/admin',
+      name: 'adminHome',
+      component: () => import('@/views/admin/components/Layout'),
+      children:[
+        {
+          path: '/admin/adminManage',
+          name: 'adminManage',
+          component: () => import('@/views/admin/adminManage')
+        },
+        {
+          path: '/home',
+          name: 'test1',
+          component: () => import('@/views/Home')
+        },
+        {
+          path: '/admin/notice',
+          name: 'adminNotice',
+          component: () => import('@/views/notice/notice')
+        }
+      ]
+    },
+
+
     {
       path:'/login',
       name:'login',
