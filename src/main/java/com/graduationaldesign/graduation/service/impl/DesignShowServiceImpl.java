@@ -2,10 +2,13 @@ package com.graduationaldesign.graduation.service.impl;
 
 import com.graduationaldesign.graduation.mapper.DesignShowMapper;
 import com.graduationaldesign.graduation.pojo.DesignShow;
+import com.graduationaldesign.graduation.pojo.DesignShowExample;
 import com.graduationaldesign.graduation.service.DesignShowService;
-import org.springframework.stereotype.Service;
-
+import com.graduationaldesign.graduation.util.PageBean;
+import java.util.HashMap;
+import java.util.List;
 import javax.annotation.Resource;
+import org.springframework.stereotype.Service;
 
 /**
  * @Author: wuzhuhao
@@ -45,6 +48,17 @@ public class DesignShowServiceImpl implements DesignShowService {
     @Override
     public int updateByPrimaryKey(DesignShow record) {
         return designShowMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public PageBean<DesignShow> listByPage(HashMap<String, Object> params, int page, int pageSize) {
+        PageBean<DesignShow> pageBean = new PageBean<>();
+        DesignShowExample example = new DesignShowExample();
+        DesignShowExample.Criteria criteria = example.createCriteria();
+        List<DesignShow> list = this.designShowMapper.selectByExample(example);
+        pageBean.setBeanList(list);
+//        pageBean.setParams();
+        return pageBean;
     }
 
 }

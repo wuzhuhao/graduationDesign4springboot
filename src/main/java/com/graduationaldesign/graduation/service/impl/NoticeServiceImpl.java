@@ -2,10 +2,13 @@ package com.graduationaldesign.graduation.service.impl;
 
 import com.graduationaldesign.graduation.mapper.NoticeMapper;
 import com.graduationaldesign.graduation.pojo.Notice;
+import com.graduationaldesign.graduation.pojo.NoticeExample;
 import com.graduationaldesign.graduation.service.NoticeService;
-import org.springframework.stereotype.Service;
-
+import com.graduationaldesign.graduation.util.PageBean;
+import java.util.HashMap;
+import java.util.List;
 import javax.annotation.Resource;
+import org.springframework.stereotype.Service;
 
 /**
  * @Author: wuzhuhao
@@ -47,4 +50,14 @@ public class NoticeServiceImpl implements NoticeService {
         return noticeMapper.updateByPrimaryKey(record);
     }
 
+    @Override
+    public PageBean<Notice> listByPage(HashMap<String, Object> params, int page, int pageSize) {
+        PageBean<Notice> pageBean = new PageBean<>();
+        NoticeExample example = new NoticeExample();
+        NoticeExample.Criteria criteria = example.createCriteria();
+        List<Notice> list = this.noticeMapper.selectByExample(example);
+        pageBean.setBeanList(list);
+//        pageBean.setParams();
+        return pageBean;
+    }
 }

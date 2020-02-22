@@ -2,10 +2,13 @@ package com.graduationaldesign.graduation.service.impl;
 
 import com.graduationaldesign.graduation.mapper.ApplyMapper;
 import com.graduationaldesign.graduation.pojo.Apply;
+import com.graduationaldesign.graduation.pojo.ApplyExample;
 import com.graduationaldesign.graduation.service.ApplyService;
-import org.springframework.stereotype.Service;
-
+import com.graduationaldesign.graduation.util.PageBean;
+import java.util.HashMap;
+import java.util.List;
 import javax.annotation.Resource;
+import org.springframework.stereotype.Service;
 
 /**
  * @Author: wuzhuhao
@@ -47,4 +50,14 @@ public class ApplyServiceImpl implements ApplyService {
         return applyMapper.updateByPrimaryKey(record);
     }
 
+    @Override
+    public PageBean<Apply> listByPage(HashMap<String, Object> params, int page, int pageSize) {
+        PageBean<Apply> pageBean = new PageBean<>();
+        ApplyExample example = new ApplyExample();
+        ApplyExample.Criteria criteria = example.createCriteria();
+        List<Apply> list = this.applyMapper.selectByExample(example);
+        pageBean.setBeanList(list);
+//        pageBean.setParams();
+        return pageBean;
+    }
 }

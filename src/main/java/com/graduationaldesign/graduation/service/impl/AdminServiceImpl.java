@@ -5,6 +5,8 @@ import com.graduationaldesign.graduation.pojo.Admin;
 import com.graduationaldesign.graduation.pojo.AdminExample;
 import com.graduationaldesign.graduation.pojo.UserModel;
 import com.graduationaldesign.graduation.service.AdminService;
+import com.graduationaldesign.graduation.util.PageBean;
+import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,36 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     AdminMapper adminMapper;
+
+    @Override
+    public int deleteByPrimaryKey(String adminId) {
+        return adminMapper.deleteByPrimaryKey(adminId);
+    }
+
+    @Override
+    public int insert(Admin record) {
+        return adminMapper.insert(record);
+    }
+
+    @Override
+    public int insertSelective(Admin record) {
+        return adminMapper.insertSelective(record);
+    }
+
+    @Override
+    public Admin selectByPrimaryKey(String adminId) {
+        return adminMapper.selectByPrimaryKey(adminId);
+    }
+
+    @Override
+    public int updateByPrimaryKeySelective(Admin record) {
+        return adminMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    public int updateByPrimaryKey(Admin record) {
+        return adminMapper.updateByPrimaryKey(record);
+    }
 
     @Override
     public Admin getAdminByName(String adminID) {
@@ -97,6 +129,17 @@ public class AdminServiceImpl implements AdminService {
 //        map.put(user1.getUserName(), user1);
 //        return map.get(userName);
         return null;
+    }
+
+    @Override
+    public PageBean<Admin> listByPage(HashMap<String, Object> params, int page, int pageSize) {
+        PageBean<Admin> pageBean = new PageBean<>();
+        AdminExample adminExample = new AdminExample();
+        AdminExample.Criteria criteria = adminExample.createCriteria();
+        List<Admin> list = this.adminMapper.selectByExample(adminExample);
+        pageBean.setBeanList(list);
+//        pageBean.setParams();
+        return pageBean;
     }
 
     private Admin getUsetById(String id) {

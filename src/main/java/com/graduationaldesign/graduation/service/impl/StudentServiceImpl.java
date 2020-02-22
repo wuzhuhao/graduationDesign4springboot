@@ -5,6 +5,8 @@ import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.StudentExample;
 import com.graduationaldesign.graduation.pojo.UserModel;
 import com.graduationaldesign.graduation.service.StudentService;
+import com.graduationaldesign.graduation.util.PageBean;
+import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -92,5 +94,44 @@ public class StudentServiceImpl implements StudentService {
         return "修改失败！";
     }
 
+    @Override
+    public int deleteByPrimaryKey(String stuId) {
+        return studentMapper.deleteByPrimaryKey(stuId);
+    }
 
+    @Override
+    public int insert(Student record) {
+        return studentMapper.insert(record);
+    }
+
+    @Override
+    public int insertSelective(Student record) {
+        return studentMapper.insertSelective(record);
+    }
+
+    @Override
+    public Student selectByPrimaryKey(String stuId) {
+        return studentMapper.selectByPrimaryKey(stuId);
+    }
+
+    @Override
+    public int updateByPrimaryKeySelective(Student record) {
+        return studentMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    public int updateByPrimaryKey(Student record) {
+        return studentMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public PageBean<Student> listByPage(HashMap<String, Object> params, int page, int pageSize) {
+        PageBean<Student> pageBean = new PageBean<>();
+        StudentExample example = new StudentExample();
+        StudentExample.Criteria criteria = example.createCriteria();
+        List<Student> list = this.studentMapper.selectByExample(example);
+        pageBean.setBeanList(list);
+//        pageBean.setParams();
+        return pageBean;
+    }
 }

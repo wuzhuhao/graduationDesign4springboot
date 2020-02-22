@@ -2,10 +2,13 @@ package com.graduationaldesign.graduation.service.impl;
 
 import com.graduationaldesign.graduation.mapper.GoodGraduationMapper;
 import com.graduationaldesign.graduation.pojo.GoodGraduation;
+import com.graduationaldesign.graduation.pojo.GoodGraduationExample;
 import com.graduationaldesign.graduation.service.GoodGraduationService;
-import org.springframework.stereotype.Service;
-
+import com.graduationaldesign.graduation.util.PageBean;
+import java.util.HashMap;
+import java.util.List;
 import javax.annotation.Resource;
+import org.springframework.stereotype.Service;
 
 /**
  * @Author: wuzhuhao
@@ -45,6 +48,18 @@ public class GoodGraduationServiceImpl implements GoodGraduationService {
     @Override
     public int updateByPrimaryKey(GoodGraduation record) {
         return goodGraduationMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public PageBean<GoodGraduation> listByPage(HashMap<String, Object> params, int page,
+            int pageSize) {
+        PageBean<GoodGraduation> pageBean = new PageBean<>();
+        GoodGraduationExample example = new GoodGraduationExample();
+        GoodGraduationExample.Criteria criteria = example.createCriteria();
+        List<GoodGraduation> list = this.goodGraduationMapper.selectByExample(example);
+        pageBean.setBeanList(list);
+//        pageBean.setParams();
+        return pageBean;
     }
 
 }

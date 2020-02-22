@@ -2,10 +2,13 @@ package com.graduationaldesign.graduation.service.impl;
 
 import com.graduationaldesign.graduation.mapper.OperationMapper;
 import com.graduationaldesign.graduation.pojo.Operation;
+import com.graduationaldesign.graduation.pojo.OperationExample;
 import com.graduationaldesign.graduation.service.OperationService;
-import org.springframework.stereotype.Service;
-
+import com.graduationaldesign.graduation.util.PageBean;
+import java.util.HashMap;
+import java.util.List;
 import javax.annotation.Resource;
+import org.springframework.stereotype.Service;
 
 /**
  * @Author: wuzhuhao
@@ -45,6 +48,17 @@ public class OperationServiceImpl implements OperationService {
     @Override
     public int updateByPrimaryKey(Operation record) {
         return operationMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public PageBean<Operation> listByPage(HashMap<String, Object> params, int page, int pageSize) {
+        PageBean<Operation> pageBean = new PageBean<>();
+        OperationExample example = new OperationExample();
+        OperationExample.Criteria criteria = example.createCriteria();
+        List<Operation> list = this.operationMapper.selectByExample(example);
+        pageBean.setBeanList(list);
+//        pageBean.setParams();
+        return pageBean;
     }
 
 }

@@ -1,6 +1,8 @@
 package com.graduationaldesign.graduation.service;
 
 import com.graduationaldesign.graduation.pojo.Notice;
+import com.graduationaldesign.graduation.util.PageBean;
+import java.util.HashMap;
 
 /**
  * @Author: wuzhuhao
@@ -19,5 +21,7 @@ public interface NoticeService {
     int updateByPrimaryKeySelective(Notice record);
 
     int updateByPrimaryKey(Notice record);
+
+    PageBean<Notice> listByPage(HashMap<String, Object> params, int page, int pageSize);
 
 }

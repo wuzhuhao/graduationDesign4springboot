@@ -2,10 +2,13 @@ package com.graduationaldesign.graduation.service.impl;
 
 import com.graduationaldesign.graduation.mapper.ReplyTeamMapper;
 import com.graduationaldesign.graduation.pojo.ReplyTeam;
+import com.graduationaldesign.graduation.pojo.ReplyTeamExample;
 import com.graduationaldesign.graduation.service.ReplyTeamService;
-import org.springframework.stereotype.Service;
-
+import com.graduationaldesign.graduation.util.PageBean;
+import java.util.HashMap;
+import java.util.List;
 import javax.annotation.Resource;
+import org.springframework.stereotype.Service;
 
 /**
  * @Author: wuzhuhao
@@ -45,6 +48,17 @@ public class ReplyTeamServiceImpl implements ReplyTeamService {
     @Override
     public int updateByPrimaryKey(ReplyTeam record) {
         return replyTeamMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public PageBean<ReplyTeam> listByPage(HashMap<String, Object> params, int page, int pageSize) {
+        PageBean<ReplyTeam> pageBean = new PageBean<>();
+        ReplyTeamExample example = new ReplyTeamExample();
+        ReplyTeamExample.Criteria criteria = example.createCriteria();
+        List<ReplyTeam> list = this.replyTeamMapper.selectByExample(example);
+        pageBean.setBeanList(list);
+//        pageBean.setParams();
+        return pageBean;
     }
 
 }

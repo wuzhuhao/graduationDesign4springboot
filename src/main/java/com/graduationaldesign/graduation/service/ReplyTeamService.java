@@ -1,6 +1,8 @@
 package com.graduationaldesign.graduation.service;
 
 import com.graduationaldesign.graduation.pojo.ReplyTeam;
+import com.graduationaldesign.graduation.util.PageBean;
+import java.util.HashMap;
 
 /**
  * @Author: wuzhuhao
@@ -19,5 +21,7 @@ public interface ReplyTeamService {
     int updateByPrimaryKeySelective(ReplyTeam record);
 
     int updateByPrimaryKey(ReplyTeam record);
+
+    PageBean<ReplyTeam> listByPage(HashMap<String, Object> params, int page, int pageSize);
 
 }

@@ -2,10 +2,13 @@ package com.graduationaldesign.graduation.service.impl;
 
 import com.graduationaldesign.graduation.mapper.RoleMapper;
 import com.graduationaldesign.graduation.pojo.Role;
+import com.graduationaldesign.graduation.pojo.RoleExample;
 import com.graduationaldesign.graduation.service.RoleService;
-import org.springframework.stereotype.Service;
-
+import com.graduationaldesign.graduation.util.PageBean;
+import java.util.HashMap;
+import java.util.List;
 import javax.annotation.Resource;
+import org.springframework.stereotype.Service;
 
 /**
  * @Author: wuzhuhao
@@ -45,6 +48,17 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public int updateByPrimaryKey(Role record) {
         return roleMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public PageBean<Role> listByPage(HashMap<String, Object> params, int page, int pageSize) {
+        PageBean<Role> pageBean = new PageBean<>();
+        RoleExample example = new RoleExample();
+        RoleExample.Criteria criteria = example.createCriteria();
+        List<Role> list = this.roleMapper.selectByExample(example);
+        pageBean.setBeanList(list);
+//        pageBean.setParams();
+        return pageBean;
     }
 
 }

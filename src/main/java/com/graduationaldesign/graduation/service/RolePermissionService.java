@@ -1,6 +1,8 @@
 package com.graduationaldesign.graduation.service;
 
 import com.graduationaldesign.graduation.pojo.RolePermission;
+import com.graduationaldesign.graduation.util.PageBean;
+import java.util.HashMap;
 
 /**
  * @Author: wuzhuhao
@@ -19,5 +21,7 @@ public interface RolePermissionService {
     int updateByPrimaryKeySelective(RolePermission record);
 
     int updateByPrimaryKey(RolePermission record);
+
+    PageBean<RolePermission> listByPage(HashMap<String, Object> params, int page, int pageSize);
 
 }

@@ -2,6 +2,8 @@ package com.graduationaldesign.graduation.service;
 
 import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.UserModel;
+import com.graduationaldesign.graduation.util.PageBean;
+import java.util.HashMap;
 
 /**
  * @Author: wuzhuhao
@@ -16,4 +18,19 @@ public interface StudentService {
     String changeInformation(UserModel userModel);
 
     Student getStuById(String id);
+
+    int deleteByPrimaryKey(String stuId);
+
+    int insert(Student record);
+
+    int insertSelective(Student record);
+
+    Student selectByPrimaryKey(String stuId);
+
+    int updateByPrimaryKeySelective(Student record);
+
+    int updateByPrimaryKey(Student record);
+
+    PageBean<Student> listByPage(HashMap<String, Object> params, int page, int pageSize);
+
 }
