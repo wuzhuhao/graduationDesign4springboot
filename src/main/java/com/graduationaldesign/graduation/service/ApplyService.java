@@ -1,24 +1,27 @@
 package com.graduationaldesign.graduation.service;
 
 import com.graduationaldesign.graduation.pojo.Apply;
+import com.graduationaldesign.graduation.util.PageBean;
+import java.util.HashMap;
 
 /**
-* @Author: wuzhuhao
-* @Date: 2020/1/20 21:05
-*/
-public interface ApplyService{
+ * @Author: wuzhuhao
+ * @Date: 2020/1/20 21:05
+ */
+public interface ApplyService {
 
+    int deleteByPrimaryKey(Integer id);
 
-int deleteByPrimaryKey(Integer id);
+    int insert(Apply record);
 
-int insert(Apply record);
+    int insertSelective(Apply record);
 
-int insertSelective(Apply record);
+    Apply selectByPrimaryKey(Integer id);
 
-Apply selectByPrimaryKey(Integer id);
+    int updateByPrimaryKeySelective(Apply record);
 
-int updateByPrimaryKeySelective(Apply record);
+    int updateByPrimaryKey(Apply record);
 
-int updateByPrimaryKey(Apply record);
+    PageBean<Apply> listByPage(HashMap<String, Object> params, int page, int pageSize);
 
 }

@@ -2,10 +2,13 @@ package com.graduationaldesign.graduation.service.impl;
 
 import com.graduationaldesign.graduation.mapper.UserRoleMapper;
 import com.graduationaldesign.graduation.pojo.UserRole;
+import com.graduationaldesign.graduation.pojo.UserRoleExample;
 import com.graduationaldesign.graduation.service.UserRoleService;
-import org.springframework.stereotype.Service;
-
+import com.graduationaldesign.graduation.util.PageBean;
+import java.util.HashMap;
+import java.util.List;
 import javax.annotation.Resource;
+import org.springframework.stereotype.Service;
 
 /**
  * @Author: wuzhuhao
@@ -47,4 +50,14 @@ public class UserRoleServiceImpl implements UserRoleService {
         return userRoleMapper.updateByPrimaryKey(record);
     }
 
+    @Override
+    public PageBean<UserRole> listByPage(HashMap<String, Object> params, int page, int pageSize) {
+        PageBean<UserRole> pageBean = new PageBean<>();
+        UserRoleExample example = new UserRoleExample();
+        UserRoleExample.Criteria criteria = example.createCriteria();
+        List<UserRole> list = this.userRoleMapper.selectByExample(example);
+        pageBean.setBeanList(list);
+//        pageBean.setParams();
+        return pageBean;
+    }
 }

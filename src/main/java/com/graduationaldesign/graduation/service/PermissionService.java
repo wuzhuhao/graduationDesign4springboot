@@ -1,6 +1,8 @@
 package com.graduationaldesign.graduation.service;
 
 import com.graduationaldesign.graduation.pojo.Permission;
+import com.graduationaldesign.graduation.util.PageBean;
+import java.util.HashMap;
 
 /**
  * @Author: wuzhuhao
@@ -19,5 +21,7 @@ public interface PermissionService {
     int updateByPrimaryKeySelective(Permission record);
 
     int updateByPrimaryKey(Permission record);
+
+    PageBean<Permission> listByPage(HashMap<String, Object> params, int page, int pageSize);
 
 }

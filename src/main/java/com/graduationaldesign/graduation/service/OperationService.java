@@ -1,6 +1,8 @@
 package com.graduationaldesign.graduation.service;
 
 import com.graduationaldesign.graduation.pojo.Operation;
+import com.graduationaldesign.graduation.util.PageBean;
+import java.util.HashMap;
 
 /**
  * @Author: wuzhuhao
@@ -19,5 +21,7 @@ public interface OperationService {
     int updateByPrimaryKeySelective(Operation record);
 
     int updateByPrimaryKey(Operation record);
+
+    PageBean<Operation> listByPage(HashMap<String, Object> params, int page, int pageSize);
 
 }

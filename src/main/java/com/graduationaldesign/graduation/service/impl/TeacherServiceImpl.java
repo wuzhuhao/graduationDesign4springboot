@@ -5,6 +5,8 @@ import com.graduationaldesign.graduation.pojo.Teacher;
 import com.graduationaldesign.graduation.pojo.TeacherExample;
 import com.graduationaldesign.graduation.pojo.UserModel;
 import com.graduationaldesign.graduation.service.TeacherService;
+import com.graduationaldesign.graduation.util.PageBean;
+import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,37 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Autowired
     TeacherMapper teacherMapper;
+
+    @Override
+    public int deleteByPrimaryKey(String teaId) {
+        return teacherMapper.deleteByPrimaryKey(teaId);
+    }
+
+    @Override
+    public int insert(Teacher record) {
+        return teacherMapper.insert(record);
+    }
+
+    @Override
+    public int insertSelective(Teacher record) {
+        return teacherMapper.insertSelective(record);
+    }
+
+    @Override
+    public Teacher selectByPrimaryKey(String teaId) {
+        return teacherMapper.selectByPrimaryKey(teaId);
+    }
+
+    @Override
+    public int updateByPrimaryKeySelective(Teacher record) {
+        return teacherMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    public int updateByPrimaryKey(Teacher record) {
+        return teacherMapper.updateByPrimaryKey(record);
+    }
+
 
     @Override
     public Teacher login(Teacher teacher) {
@@ -79,5 +112,16 @@ public class TeacherServiceImpl implements TeacherService {
             message = "修改失败！";
         }
         return message;
+    }
+
+    @Override
+    public PageBean<Teacher> listByPage(HashMap<String, Object> params, int page, int pageSize) {
+        PageBean<Teacher> pageBean = new PageBean<>();
+        TeacherExample example = new TeacherExample();
+        TeacherExample.Criteria criteria = example.createCriteria();
+        List<Teacher> list = this.teacherMapper.selectByExample(example);
+        pageBean.setBeanList(list);
+//        pageBean.setParams();
+        return pageBean;
     }
 }

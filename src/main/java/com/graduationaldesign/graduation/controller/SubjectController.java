@@ -48,9 +48,8 @@ public class SubjectController {
     public ResponseEntity<Object> addSubject(Subject subject) {
         try {
             return subjectService.insert(subject);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseStatu.failure("添加课题失败");
+        } catch (RuntimeException e) {
+            return ResponseStatu.failure(e.getMessage());
         }
     }
 
@@ -62,7 +61,12 @@ public class SubjectController {
      */
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public ResponseEntity<Object> updateSubject(Subject subject) {
-        return subjectService.updateByPrimaryKeySelective(subject);
+        try {
+            return subjectService.updateByPrimaryKeySelective(subject);
+        } catch (RuntimeException e) {
+            return ResponseStatu.failure(e.getMessage());
+        }
+
     }
 
     /**
