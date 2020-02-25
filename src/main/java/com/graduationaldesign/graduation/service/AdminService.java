@@ -32,4 +32,6 @@ public interface AdminService {
     int updateByPrimaryKey(Admin record);
 
     PageBean<Admin> listByPage(HashMap<String, Object> params, int page, int pageSize);
+
+    Admin findById(String number);
 }

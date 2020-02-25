@@ -30,4 +30,6 @@ public interface TeacherService {
     int updateByPrimaryKey(Teacher record);
 
     PageBean<Teacher> listByPage(HashMap<String, Object> params, int page, int pageSize);
+
+    Teacher findById(String number);
 }

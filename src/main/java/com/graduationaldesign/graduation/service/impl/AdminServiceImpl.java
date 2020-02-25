@@ -165,4 +165,9 @@ public class AdminServiceImpl implements AdminService {
         }
         return message;
     }
+
+    @Override
+    public Admin findById(String number) {
+        return adminMapper.selectByPrimaryKey(number);
+    }
 }

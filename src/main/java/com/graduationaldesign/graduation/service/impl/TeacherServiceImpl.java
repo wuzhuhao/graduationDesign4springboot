@@ -124,4 +124,9 @@ public class TeacherServiceImpl implements TeacherService {
 //        pageBean.setParams();
         return pageBean;
     }
+
+    @Override
+    public Teacher findById(String number) {
+        return teacherMapper.selectByPrimaryKey(number);
+    }
 }
