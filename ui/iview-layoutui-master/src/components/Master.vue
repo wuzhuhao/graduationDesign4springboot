@@ -115,7 +115,7 @@ export default {
         }
     },
     mounted(){
-        console.log('paddingContent=',this.$slots)
+        // console.log('paddingContent=',this.$slots)
     },
     methods:{
 

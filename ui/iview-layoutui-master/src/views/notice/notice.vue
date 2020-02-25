@@ -47,6 +47,7 @@
     
 </template>
 <script>
+import MasterPage from '@/components/Master'
     export default {
         data () {
             return {
@@ -129,7 +130,10 @@
         },
         mounted () {
             this.changeLimit();
-        }
+        },
+         components: {
+             name
+         }
     }
 </script>
 

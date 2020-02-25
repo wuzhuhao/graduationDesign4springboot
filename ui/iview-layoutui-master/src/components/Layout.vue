@@ -437,7 +437,7 @@ export default {
             isCollapsed: false,
             // ------------------------------  菜单操作开始  --------------------------------
             title:'首页',
-            activeMenuName:'admin',
+            activeMenuName:'',
             openMenuName:[],
 
             tagBodyLeft: 0,
@@ -446,14 +446,154 @@ export default {
             contextMenuLeft: 0,
             contextMenuTop: 0,
             visible: false,
-
-            menus:[
+            //管理员树
+            menus:[],
+            adminMenus:[
                 {
                     title:'首页',
                     num:1,
                     name:'admin',
                     icon:'ios-home',
-                    href:'/notice/notice',
+                    href:'/notice',
+                    closable:false,
+                    showInTags:true,
+                    showInMenus:true,
+                    choosed:true
+                },         
+                {
+                    title:'系统模块',
+                    name:'ios-flask',
+                    icon:'ios-people',
+                    children:[
+                         {
+                            title:'学生管理',
+                            name:'studentManage',
+                            href:'/studentManage',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        },
+                        {
+                            title:'教师管理',
+                            name:'teacherManage',
+                            href:'/teacherManage',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        },
+                        {
+                            title:'管理员管理',
+                            name:'/adminManage',
+                            href:'adminManage',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        }
+                    ]
+                },
+                {
+                    title:'操作日志',
+                    name:'system-manage',
+                    icon:'ios-book',
+                    children:[
+                        {
+                            title:'待接收任务书',
+                            name:'backwater-setting',
+                            href:'/home',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        },
+                        {
+                            title:'已接收任务书',
+                            name:'commissionSetting',
+                            href:'/home',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        }
+                    ]
+                },
+                {
+                    title:'展示管理',
+                    name:'accounting-manage',
+                    icon:'md-flask',
+                    children:[
+                        {
+                            title:'查看开题报告（学生）',
+                            name:'companyPayment',
+                            href:'/home',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        }
+                    ]
+                },
+                {
+                    title:'优秀毕业生评估',
+                    name:'report-manage',
+                    icon:'ios-stats',
+                    children:[
+                        {
+                            title:'周进展情况',
+                            name:'about22',
+                            href:'/home',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        }
+                    ]
+                },
+                {
+                    title:'评分',
+                    name:'frontend-setting',
+                    icon:'ios-document',
+                    children:[
+                        {
+                            title:'学生论文定稿',
+                            name:'about26',
+                            href:'/home',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        }
+                    ]
+                },
+                {
+                    title:'拓展模块',
+                    name:'game-platform-manage',
+                    icon:'ios-game-controller-b',
+                    children:[
+                        {
+                            title:'历届优秀毕设（论文）',
+                            name:'platform-manage',
+                            href:'/home',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        }                     
+                    ]
+                },
+               
+            ],
+
+            //默认树为学生
+            studentMenus:[
+                {
+                    title:'首页',
+                    num:1,
+                    name:'student',
+                    icon:'ios-home',
+                    href:'/notice',
                     closable:false,
                     showInTags:true,
                     showInMenus:true,
@@ -467,7 +607,7 @@ export default {
                         {
                             title:'学生选题',
                             name:'memberManage',
-                            href:'/home',
+                            href:'/notice',
                             closable:true,
                             showInTags:false,
                             showInMenus:true,
@@ -602,7 +742,16 @@ export default {
     },
     computed: {
         // 筛选menus中选中的menu
+        // 控制显示的内容
         tags(){
+            
+        //   if(this.$route.query.type==1){   
+        //     this.activeMenuName='student'        
+        //      this.menus =this.studentMenus
+        // }else if(this.$route.query.type==3){  
+        //     this.activeMenuName='admin'         
+        //      this.menus =this.adminMenus
+        // }
             let tags = [];
             // 将menus中showInTags=true的标签放到tags数组中
             this.menus.forEach(menu=>{
@@ -640,6 +789,7 @@ export default {
     // ------------------------------  菜单操作开始  --------------------------------
     //刷新页面之后保存并选中最后一次菜单和标签
     beforeRouteEnter (to, from, next) {
+       
         next(vm => {
             // 通过 `vm` 访问组件实例
             let activeMenuName = localStorage.activeMenuName;
@@ -666,12 +816,29 @@ export default {
                     }
                     else{
                         // 排除首页
-                        if(_menu.name != 'admin'){
-                            _menu.choosed = false;
-                            _menu.showInTags = false;
-                        }else{
-                            _menu.choosed = false;
-                        }
+                         if(vm.$route.query.type==1){   
+                            if(_menu.name != 'student'){
+                                _menu.choosed = false;
+                                _menu.showInTags = false;
+                            }else{
+                                _menu.choosed = false;
+                            }
+                         }else  if(vm.$route.query.type==2){   
+                            if(_menu.name != 'teacher'){
+                                _menu.choosed = false;
+                                _menu.showInTags = false;
+                            }else{
+                                _menu.choosed = false;
+                            }
+                        }else if(vm.$route.query.type==1){   
+                            if(_menu.name != 'admin'){
+                                _menu.choosed = false;
+                                _menu.showInTags = false;
+                            }else{
+                                _menu.choosed = false;
+                            }
+                         }
+                         
                     }
                 })
             }
@@ -712,7 +879,8 @@ export default {
             }
         },
         quit(){
-            this.$router.push('/login')
+            localStorage.removeItem('token');
+            this.$router.push('/')
         },
         clickNotice(){
             this.choosedMenu('notice');
@@ -814,6 +982,18 @@ export default {
             this.choosedMenu(name);
         }
         // ------------------------------  菜单操作结束  --------------------------------
-    }
+    },
+    created() { 
+        let type = localStorage.getItem("type") 
+        //选择菜单
+        if(type==1){   
+            this.activeMenuName='student'        
+             this.menus =this.studentMenus
+        }else if(type==3){  
+            this.activeMenuName='admin'         
+             this.menus =this.adminMenus
+        }
+          
+    },  
 }
 </script>

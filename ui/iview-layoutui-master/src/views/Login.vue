@@ -47,10 +47,13 @@
                     </Input>
                 </FormItem>
                 <FormItem prop="type">
-                    <RadioGroup v-model="userForm.type" number >
-                        <Radio label=1 border></Radio>
-                        <Radio label=2 border></Radio>
-                        <Radio label=3 border></Radio>
+                    <RadioGroup v-model="userForm.type"  >
+                        <Radio  v-for="item in status" :label="item.value"  size = 'large' border >
+                            <span>{{item.label}}</span>
+                        </Radio>
+                        <!-- <Radio label='学生' value= '1' size = 'large' border></Radio>
+                        <Radio label='教师' value= '2' size = 'large' border></Radio>
+                        <Radio label='管理员' value= '3' size = 'large' border></Radio> -->
                     </RadioGroup>
                  </FormItem>
                 <FormItem>
@@ -67,6 +70,18 @@
 export default {
     data(){
         return {
+            status:[
+          {
+            label:'学生',
+            value:'1'
+          },{
+            label:'教师',
+            value:'2'
+          },{
+            label:'管理员',
+            value:'3'
+          }
+        ],
             login_loading:false,
             login_img:require("@/assets/login-bg.jpg"),
             userForm:{
@@ -86,23 +101,23 @@ export default {
     },
     methods:{
         btn_login(){
-            this.$router.push('/login')
+            this.$router.push('/')
         },
    
-      loginAction(userForm) {
-        this.$axios.post('http://localhost:18256/graManagement/login', {
-          number: 'admin',
-          password: '1231231',
-          type:'3'
-        })
-          .then(function(response){
-               console.log(this); //这里 this = undefined
-          })
-          .catch((error)=> {
-              console.log(this); //箭头函数"=>"使this指向vue
-          });
+    //   loginAction(userForm) {
+    //     this.$axios.post('http://localhost:18256/graManagement/login', {
+    //       number: 'admin',
+    //       password: '1231231',
+    //       type:'3'
+    //     })
+    //       .then(function(response){
+    //            console.log(this); //这里 this = undefined
+    //       })
+    //       .catch((error)=> {
+    //           console.log(this); //箭头函数"=>"使this指向vue
+    //       });
 
-        },
+    //     },
       
 
     handleSubmit(name) {
@@ -115,21 +130,30 @@ export default {
                             data: this.$Qs.stringify(this.userForm),//请求的表单数据
                         }).then(res => {
                             // this.$store.commit('$_setToken', userInfo.token);
-                            console.log(res.data.message)
                             if(res.data.message=='success'){
+                                  this.$store.commit('type',this.userForm.type);
+                                  this.$store.commit('token','qwe9527');
                                 if(this.userForm.type==3){
-                                    this.$router.push('/admin')
+                                    // this.$router.push('/admin')
+                                     this.$router.push({
+                                        name:'adminHome',
+                                        // query:{
+                                        // type :this.userForm.type
+                                        // }
+                                        
+                                    })
+                              
                                     
                                 }else  if(this.userForm.type==2){
                                     this.$router.push('/home')
                                 }else if(this.userForm.type==1){
 
-                                    this.$router.push({
-                                        path:'/home',
-                                        name:'home',
-                                        params:{
-                                        id : res.data.adminId
-                                        }
+                                  // this.$router.push('/admin')
+                                     this.$router.push({
+                                        name:'studentHome',
+                                        // query:{
+                                        // type :this.userForm.type
+                                        // }
                                     })
                                 }else{       
                                         this.$Message.info({
