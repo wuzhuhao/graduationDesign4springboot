@@ -86,14 +86,17 @@ public class ReportController {
      * @return
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ResponseEntity<Object> list(@RequestParam HashMap<String, Object> params, int page,
-            int reportType) {
+    public ResponseEntity<Object> list(@RequestParam HashMap<String, Object> params,
+            @RequestParam(required = false, defaultValue = "1") int page,
+            int reportType,
+            @RequestParam(required = false, defaultValue = "5") int pageSize) {
         try {
             return ResponseStatu
                     .success(reportService
-                            .listByPage(params, page, rootPropeties.getPageSize(), reportType));
-        } catch (RuntimeException e) {
-            return ResponseStatu.failure(e.getMessage());
+                            .listByPage(params, page, pageSize, reportType));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseStatu.failure("获取列表失败");
         }
     }
 
@@ -104,15 +107,22 @@ public class ReportController {
      */
     @RequestMapping(value = "/listOfStu", method = RequestMethod.GET)
     public ResponseEntity<Object> listOfStu(@RequestParam HashMap<String, Object> params,
-            int page, int reportType, String stuId) {
+            @RequestParam(required = false, defaultValue = "1") int page, int reportType,
+            String stuId,
+            @RequestParam(required = false, defaultValue = "5") int pageSize) {
         Student student = (Student) request.getSession()
                 .getAttribute(rootPropeties.getUserAttribute());
         student = new Student();
         student.setStuId(stuId);
-        return ResponseStatu.success(reportService.listByPageOfStu(params, page,
-                rootPropeties.getPageSize()
-                , student
-                , reportType));
+        try {
+            return ResponseStatu.success(reportService.listByPageOfStu(params, page,
+                    pageSize
+                    , student
+                    , reportType));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseStatu.failure("获取列表失败");
+        }
     }
 
     /**
@@ -122,14 +132,21 @@ public class ReportController {
      */
     @RequestMapping(value = "/listOfTea", method = RequestMethod.GET)
     public ResponseEntity<Object> listOfTea(@RequestParam HashMap<String, Object> params,
-            int page, int reportType, String teaId) {
+            @RequestParam(required = false, defaultValue = "1") int page, int reportType,
+            String teaId,
+            @RequestParam(required = false, defaultValue = "5") int pageSize) {
         Teacher teacher = (Teacher) request.getSession()
                 .getAttribute(rootPropeties.getUserAttribute());
         teacher = new Teacher();
         teacher.setTeaId(teaId);
-        return ResponseStatu.success(reportService.listByPageOfTea(params, page,
-                rootPropeties.getPageSize(),
-                teacher
-                , reportType));
+        try {
+            return ResponseStatu.success(reportService.listByPageOfTea(params, page,
+                    pageSize,
+                    teacher
+                    , reportType));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseStatu.failure("获取列表失败");
+        }
     }
 }

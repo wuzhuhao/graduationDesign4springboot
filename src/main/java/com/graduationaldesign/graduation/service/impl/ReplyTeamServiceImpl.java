@@ -3,8 +3,10 @@ package com.graduationaldesign.graduation.service.impl;
 import com.graduationaldesign.graduation.mapper.ReplyTeamMapper;
 import com.graduationaldesign.graduation.pojo.ReplyTeam;
 import com.graduationaldesign.graduation.pojo.ReplyTeamExample;
+import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.ReplyTeamService;
 import com.graduationaldesign.graduation.util.PageBean;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.Resource;
@@ -51,13 +53,15 @@ public class ReplyTeamServiceImpl implements ReplyTeamService {
     }
 
     @Override
-    public PageBean<ReplyTeam> listByPage(HashMap<String, Object> params, int page, int pageSize) {
+    public PageBean<ReplyTeam> listByPage(HashMap<String, Object> params, int page, int pageSize)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<ReplyTeam> pageBean = new PageBean<>();
         ReplyTeamExample example = new ReplyTeamExample();
         ReplyTeamExample.Criteria criteria = example.createCriteria();
+        ExampleHelper.addCondition(ReplyTeam.class, criteria, params);
         List<ReplyTeam> list = this.replyTeamMapper.selectByExample(example);
         pageBean.setBeanList(list);
-//        pageBean.setParams();
+        //pageBean.setParams(params);
         return pageBean;
     }
 

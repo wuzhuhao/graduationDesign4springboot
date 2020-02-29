@@ -44,17 +44,31 @@ public class TaskController {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ResponseEntity<Object> listByPage(@RequestParam HashMap<String, Object> param,
-            int page) {
-        return ResponseStatu
-                .success(taskService.listByPage(param, page, rootPropeties.getPageSize()));
+            @RequestParam(required = false, defaultValue = "1") int page,
+            @RequestParam(required = false, defaultValue = "5") int pageSize) {
+        try {
+            return ResponseStatu
+                    .success(taskService.listByPage(param, page, pageSize));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseStatu.failure("获取列表失败");
+        }
     }
 
     @RequestMapping(value = "/listBytea/{teaId}", method = RequestMethod.GET)
-    public ResponseEntity<Object> listBytea(@RequestParam HashMap<String, Object> param, int page,
-            @PathVariable(value = "teaId") String teaId) {
+    public ResponseEntity<Object> listBytea(@RequestParam HashMap<String, Object> param,
+            @RequestParam(required = false, defaultValue = "1") int page,
+            @PathVariable(value = "teaId") String teaId,
+            @RequestParam(required = false, defaultValue = "5") int pageSize) {
         request.getSession().getAttribute("");
-        PageBean<Task> object = taskService
-                .listByPageOfTea(param, page, rootPropeties.getPageSize(), teaId);
+        PageBean<Task> object = null;
+        try {
+            object = taskService
+                    .listByPageOfTea(param, page, pageSize, teaId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseStatu.failure("获取列表失败");
+        }
         object.setTotalRecord(1);
         object.setPageSize(5);
         return ResponseStatu.success(object);
@@ -92,16 +106,17 @@ public class TaskController {
      */
     @RequestMapping(value = "/listByStu/{stuId}/{type}", method = RequestMethod.GET)
     public ResponseEntity<Object> listByStu(@RequestParam HashMap<String, Object> param
-            , int page
+            , @RequestParam(required = false, defaultValue = "1") int page
             , @PathVariable(value = "stuId") String stuId
-            , @PathVariable(value = "type") String type) {
+            , @PathVariable(value = "type") String type,
+            @RequestParam(required = false, defaultValue = "5") int pageSize) {
         try {
             PageBean<Task> object = taskService
-                    .listByPageOfStu(param, page, rootPropeties.getPageSize(), stuId, type);
+                    .listByPageOfStu(param, page, pageSize, stuId, type);
             return ResponseStatu.success(object);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseStatu.failure(e.getMessage());
+            return ResponseStatu.failure("获取列表失败");
         }
     }
 }

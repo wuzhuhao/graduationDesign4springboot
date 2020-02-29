@@ -3,8 +3,10 @@ package com.graduationaldesign.graduation.service.impl;
 import com.graduationaldesign.graduation.mapper.RoleMapper;
 import com.graduationaldesign.graduation.pojo.Role;
 import com.graduationaldesign.graduation.pojo.RoleExample;
+import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.RoleService;
 import com.graduationaldesign.graduation.util.PageBean;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.Resource;
@@ -51,13 +53,15 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public PageBean<Role> listByPage(HashMap<String, Object> params, int page, int pageSize) {
+    public PageBean<Role> listByPage(HashMap<String, Object> params, int page, int pageSize)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<Role> pageBean = new PageBean<>();
         RoleExample example = new RoleExample();
         RoleExample.Criteria criteria = example.createCriteria();
+        ExampleHelper.addCondition(Role.class, criteria, params);
         List<Role> list = this.roleMapper.selectByExample(example);
         pageBean.setBeanList(list);
-//        pageBean.setParams();
+        //pageBean.setParams(params);
         return pageBean;
     }
 

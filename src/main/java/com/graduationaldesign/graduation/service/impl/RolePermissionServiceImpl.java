@@ -3,8 +3,10 @@ package com.graduationaldesign.graduation.service.impl;
 import com.graduationaldesign.graduation.mapper.RolePermissionMapper;
 import com.graduationaldesign.graduation.pojo.RolePermission;
 import com.graduationaldesign.graduation.pojo.RolePermissionExample;
+import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.RolePermissionService;
 import com.graduationaldesign.graduation.util.PageBean;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.Resource;
@@ -52,13 +54,15 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 
     @Override
     public PageBean<RolePermission> listByPage(HashMap<String, Object> params, int page,
-            int pageSize) {
+            int pageSize)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<RolePermission> pageBean = new PageBean<>();
         RolePermissionExample example = new RolePermissionExample();
         RolePermissionExample.Criteria criteria = example.createCriteria();
+        ExampleHelper.addCondition(RolePermission.class, criteria, params);
         List<RolePermission> list = this.rolePermissionMapper.selectByExample(example);
         pageBean.setBeanList(list);
-//        pageBean.setParams();
+        //pageBean.setParams(params);
         return pageBean;
     }
 }

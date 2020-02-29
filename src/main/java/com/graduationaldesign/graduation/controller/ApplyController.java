@@ -88,8 +88,16 @@ public class ApplyController {
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ResponseEntity<Object> list(@RequestParam HashMap<String, Object> params, int page) {
-        return ResponseStatu
-                .success(applyService.listByPage(params, page, rootPropeties.getPageSize()));
+    public ResponseEntity<Object> list(@RequestParam HashMap<String, Object> params,
+            @RequestParam(required = false, defaultValue = "1") int page,
+            @RequestParam(required = false, defaultValue = "5") int pageSize) {
+        try {
+            return ResponseStatu
+                    .success(applyService.listByPage(params, page, pageSize));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseStatu
+                    .failure("列表获取失败");
+        }
     }
 }

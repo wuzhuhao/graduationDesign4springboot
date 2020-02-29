@@ -3,8 +3,10 @@ package com.graduationaldesign.graduation.service.impl;
 import com.graduationaldesign.graduation.mapper.GoodGraduationMapper;
 import com.graduationaldesign.graduation.pojo.GoodGraduation;
 import com.graduationaldesign.graduation.pojo.GoodGraduationExample;
+import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.GoodGraduationService;
 import com.graduationaldesign.graduation.util.PageBean;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.Resource;
@@ -52,13 +54,15 @@ public class GoodGraduationServiceImpl implements GoodGraduationService {
 
     @Override
     public PageBean<GoodGraduation> listByPage(HashMap<String, Object> params, int page,
-            int pageSize) {
+            int pageSize)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<GoodGraduation> pageBean = new PageBean<>();
         GoodGraduationExample example = new GoodGraduationExample();
         GoodGraduationExample.Criteria criteria = example.createCriteria();
+        ExampleHelper.addCondition(GoodGraduation.class, criteria, params);
         List<GoodGraduation> list = this.goodGraduationMapper.selectByExample(example);
         pageBean.setBeanList(list);
-//        pageBean.setParams();
+        //pageBean.setParams(params);
         return pageBean;
     }
 

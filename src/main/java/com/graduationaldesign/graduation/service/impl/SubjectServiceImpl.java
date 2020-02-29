@@ -7,11 +7,13 @@ import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.Subject;
 import com.graduationaldesign.graduation.pojo.SubjectExample;
 import com.graduationaldesign.graduation.pojo.Teacher;
+import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.SubjectService;
 import com.graduationaldesign.graduation.util.IDUtil;
 import com.graduationaldesign.graduation.util.PageBean;
 import com.graduationaldesign.graduation.util.ResponseStatu;
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.Resource;
@@ -147,7 +149,8 @@ public class SubjectServiceImpl implements SubjectService {
      */
     @Override
     public PageBean<Subject> listByPageOfNotChoice(HashMap<String, Object> params, int page,
-            int pageSize) {
+            int pageSize)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<Subject> pageBean = new PageBean<>();
         SubjectExample subjectExample = new SubjectExample();
         SubjectExample.Criteria criteria = subjectExample.createCriteria();
@@ -158,37 +161,42 @@ public class SubjectServiceImpl implements SubjectService {
 //            pageBean.setParams(param);
 //        }
 //        diaryExample.setOrderByClause("dTime desc");
+        ExampleHelper.addCondition(Subject.class, criteria, params);
         criteria.andSubStuStateEqualTo(1);
         List<Subject> list = subjectMapper.selectByExample(subjectExample);
         pageBean.setBeanList(list);
-//        pageBean.setParams();
+        //pageBean.setParams(params);
         return pageBean;
     }
 
     @Override
-    public PageBean<Subject> listByPage(HashMap<String, Object> params, int page, int pageSize) {
+    public PageBean<Subject> listByPage(HashMap<String, Object> params, int page, int pageSize)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<Subject> pageBean = new PageBean<>();
         SubjectExample subjectExample = new SubjectExample();
         SubjectExample.Criteria criteria = subjectExample.createCriteria();
+        ExampleHelper.addCondition(Subject.class, criteria, params);
         List<Subject> list = subjectMapper.selectByExample(subjectExample);
         pageBean.setBeanList(list);
-//        pageBean.setParams();
+//        pageBean.setParams(params);
         return pageBean;
     }
 
     /**
      * 获取已选列表service层
      *
-     * @param param
+     * @param params
      * @param page
      * @return
      */
     @Override
-    public PageBean<Subject> listByPageOfChoice(HashMap<String, Object> param, int page,
-            int pageSize, Student student) {
+    public PageBean<Subject> listByPageOfChoice(HashMap<String, Object> params, int page,
+            int pageSize, Student student)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<Subject> pageBean = new PageBean<>();
         SubjectExample subjectExample = new SubjectExample();
         SubjectExample.Criteria criteria = subjectExample.createCriteria();
+        ExampleHelper.addCondition(Subject.class, criteria, params);
         criteria.andStuIdEqualTo(student.getStuId());
         criteria.andSubStuStateNotEqualTo(1);
         List<Subject> list = subjectMapper.selectByExample(subjectExample);
@@ -199,10 +207,12 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public PageBean<Subject> listByPageOfTea(HashMap<String, Object> params, int page,
-            int pageSize, Teacher teacher) {
+            int pageSize, Teacher teacher)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<Subject> pageBean = new PageBean<>();
         SubjectExample subjectExample = new SubjectExample();
         SubjectExample.Criteria criteria = subjectExample.createCriteria();
+        ExampleHelper.addCondition(Subject.class, criteria, params);
         criteria.andSubTeaIdEqualTo(teacher.getTeaId());
         criteria.andSubStuStateNotEqualTo(1);
         List<Subject> list = subjectMapper.selectByExample(subjectExample);

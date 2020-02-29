@@ -4,8 +4,10 @@ import com.graduationaldesign.graduation.mapper.AdminMapper;
 import com.graduationaldesign.graduation.pojo.Admin;
 import com.graduationaldesign.graduation.pojo.AdminExample;
 import com.graduationaldesign.graduation.pojo.UserModel;
+import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.AdminService;
 import com.graduationaldesign.graduation.util.PageBean;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -132,13 +134,15 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public PageBean<Admin> listByPage(HashMap<String, Object> params, int page, int pageSize) {
+    public PageBean<Admin> listByPage(HashMap<String, Object> params, int page, int pageSize)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<Admin> pageBean = new PageBean<>();
         AdminExample adminExample = new AdminExample();
         AdminExample.Criteria criteria = adminExample.createCriteria();
+        ExampleHelper.addCondition(Admin.class, criteria, params);
         List<Admin> list = this.adminMapper.selectByExample(adminExample);
         pageBean.setBeanList(list);
-//        pageBean.setParams();
+        //pageBean.setParams(params);
         return pageBean;
     }
 
@@ -169,5 +173,12 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Admin findById(String number) {
         return adminMapper.selectByPrimaryKey(number);
+    }
+
+    @Override
+    public void insertListSelective(List<Admin> lstAdmin) throws Exception {
+        for (Admin admin : lstAdmin) {
+            adminMapper.insertSelective(admin);
+        }
     }
 }

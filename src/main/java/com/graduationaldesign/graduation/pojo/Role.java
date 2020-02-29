@@ -1,5 +1,6 @@
 package com.graduationaldesign.graduation.pojo;
 
+import com.graduationaldesign.graduation.pojo.helper.MyPrimaryKey;
 import java.io.Serializable;
 import lombok.Data;
 
@@ -9,6 +10,7 @@ public class Role implements Serializable {
     /**
      * 表字段 : t_role.id
      */
+    @MyPrimaryKey
     private Long id;
 
     /**

@@ -1,35 +1,52 @@
 package com.graduationaldesign.graduation.controller.file;
 
+import com.graduationaldesign.graduation.service.FileDownService;
+import com.graduationaldesign.graduation.util.FileUtil;
 import com.graduationaldesign.graduation.util.ResponseStatu;
 import com.graduationaldesign.graduation.util.ZipUtils;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
- *
  * @author wuzhuhao
  * @description 单文件和多文件下载
  **/
 @RestController
 @Slf4j
+@RequestMapping("/downFile")
 public class FileDownController {
+
+    @Autowired
+    FileDownService fileDownService;
+
     @GetMapping(value = "/downSingleFile")
-    public ResponseEntity<Object> download(HttpServletResponse response, String fileName) throws UnsupportedEncodingException {
+    public ResponseEntity<Object> download(HttpServletResponse response, String fileName)
+            throws UnsupportedEncodingException {
         String filePathName = fileName;
         File file = new File("upload/" + filePathName);
         if (!file.exists()) {
             return ResponseStatu.failure("文件不存在");
         }
         //使用URLEncoder解决中文变__问题
-        response.setHeader("Content-Disposition", "attachment;fileName=" + URLEncoder.encode(filePathName, "utf-8"));
+        response.setHeader("Content-Disposition",
+                "attachment;fileName=" + URLEncoder.encode(filePathName, "utf-8"));
         try {
             InputStream inStream = new FileInputStream(file);
             OutputStream os = response.getOutputStream();
@@ -51,7 +68,8 @@ public class FileDownController {
     }
 
     @GetMapping("/downMultipleFiles")
-    public ResponseEntity<Object> multipleFiles(HttpServletResponse response, String[] fileName) throws IOException {
+    public ResponseEntity<Object> multipleFiles(HttpServletResponse response, String[] fileName)
+            throws IOException {
         //1.创建临时文件夹
         String downPath = System.getProperty("user.dir") + "/downzip/";
         File f = new File(downPath);
@@ -81,4 +99,20 @@ public class FileDownController {
         f.delete();
         return ResponseStatu.success("多文件下载成功");
     }
+
+    @RequestMapping("/export")
+    public void export(HttpServletRequest request, HttpServletResponse response) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("title", "这是标题");
+        params.put("name", "李四");
+        //这里是我说的一行代码
+        FileUtil.exportWord("word/test.docx", "F:/test", "aaa.docx", params, request, response);
+    }
+
+    //, int type, int isdemo
+    @RequestMapping("/exportDemo")
+    public void exportDemo(HttpServletResponse response, int type) {
+        fileDownService.exportDemo(type, response);
+    }
+
 }

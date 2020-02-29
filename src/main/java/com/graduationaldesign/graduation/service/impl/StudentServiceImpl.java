@@ -4,8 +4,10 @@ import com.graduationaldesign.graduation.mapper.StudentMapper;
 import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.StudentExample;
 import com.graduationaldesign.graduation.pojo.UserModel;
+import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.StudentService;
 import com.graduationaldesign.graduation.util.PageBean;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,6 +112,14 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public void insertListSelective(List<Student> lstStudent) throws Exception {
+        for (Student student : lstStudent) {
+            studentMapper.insertSelective(student);
+        }
+    }
+
+
+    @Override
     public Student selectByPrimaryKey(String stuId) {
         return studentMapper.selectByPrimaryKey(stuId);
     }
@@ -125,13 +135,15 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public PageBean<Student> listByPage(HashMap<String, Object> params, int page, int pageSize) {
+    public PageBean<Student> listByPage(HashMap<String, Object> params, int page, int pageSize)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<Student> pageBean = new PageBean<>();
         StudentExample example = new StudentExample();
         StudentExample.Criteria criteria = example.createCriteria();
+        ExampleHelper.addCondition(Student.class, criteria, params);
         List<Student> list = this.studentMapper.selectByExample(example);
         pageBean.setBeanList(list);
-//        pageBean.setParams();
+        //pageBean.setParams(params);
         return pageBean;
     }
 

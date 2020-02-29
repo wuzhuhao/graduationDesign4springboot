@@ -3,8 +3,10 @@ package com.graduationaldesign.graduation.service.impl;
 import com.graduationaldesign.graduation.mapper.DesignShowMapper;
 import com.graduationaldesign.graduation.pojo.DesignShow;
 import com.graduationaldesign.graduation.pojo.DesignShowExample;
+import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.DesignShowService;
 import com.graduationaldesign.graduation.util.PageBean;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.Resource;
@@ -51,13 +53,15 @@ public class DesignShowServiceImpl implements DesignShowService {
     }
 
     @Override
-    public PageBean<DesignShow> listByPage(HashMap<String, Object> params, int page, int pageSize) {
+    public PageBean<DesignShow> listByPage(HashMap<String, Object> params, int page, int pageSize)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<DesignShow> pageBean = new PageBean<>();
         DesignShowExample example = new DesignShowExample();
         DesignShowExample.Criteria criteria = example.createCriteria();
+        ExampleHelper.addCondition(DesignShow.class, criteria, params);
         List<DesignShow> list = this.designShowMapper.selectByExample(example);
         pageBean.setBeanList(list);
-//        pageBean.setParams();
+        //pageBean.setParams(params);
         return pageBean;
     }
 

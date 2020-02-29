@@ -104,13 +104,15 @@ public class ProgressController {
      * @return
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ResponseEntity<Object> list(@RequestParam HashMap<String, Object> params, int page) {
+    public ResponseEntity<Object> list(@RequestParam HashMap<String, Object> params,
+            @RequestParam(required = false, defaultValue = "1") int page,
+            @RequestParam(required = false, defaultValue = "5") int pageSize) {
         try {
             return ResponseStatu
                     .success(progressService
-                            .listByPage(params, page, rootPropeties.getPageSize()));
-        } catch (RuntimeException e) {
-            return ResponseStatu.failure(e.getMessage());
+                            .listByPage(params, page, pageSize));
+        } catch (Exception e) {
+            return ResponseStatu.failure("获取列表失败");
         }
     }
 
@@ -121,17 +123,19 @@ public class ProgressController {
      */
     @RequestMapping(value = "/listOfStu", method = RequestMethod.GET)
     public ResponseEntity<Object> listOfStu(@RequestParam HashMap<String, Object> params,
-            int page, String stuId) {
+            @RequestParam(required = false, defaultValue = "1") int page, String stuId,
+            @RequestParam(required = false, defaultValue = "5") int pageSize) {
         Student student = (Student) request.getSession()
                 .getAttribute(rootPropeties.getUserAttribute());
         student = new Student();
         student.setStuId(stuId);
         try {
             return ResponseStatu.success(progressService.listByPageOfStu(params, page,
-                    rootPropeties.getPageSize()
+                    pageSize
                     , student));
-        } catch (RuntimeException e) {
-            return ResponseStatu.failure(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseStatu.failure("获取列表失败");
         }
     }
 
@@ -142,17 +146,18 @@ public class ProgressController {
      */
     @RequestMapping(value = "/listOfTea", method = RequestMethod.GET)
     public ResponseEntity<Object> listOfTea(@RequestParam HashMap<String, Object> params,
-            int page, String teaId) {
+            @RequestParam(required = false, defaultValue = "1") int page, String teaId,
+            @RequestParam(required = false, defaultValue = "5") int pageSize) {
         Teacher teacher = (Teacher) request.getSession()
                 .getAttribute(rootPropeties.getUserAttribute());
         teacher = new Teacher();
         teacher.setTeaId(teaId);
         try {
             return ResponseStatu.success(progressService.listByPageOfTea(params, page,
-                    rootPropeties.getPageSize(),
+                    pageSize,
                     teacher));
         } catch (Exception e) {
-            return ResponseStatu.failure(e.getMessage());
+            return ResponseStatu.failure("获取列表失败");
         }
     }
 }

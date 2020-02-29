@@ -5,8 +5,10 @@ import com.graduationaldesign.graduation.pojo.Report;
 import com.graduationaldesign.graduation.pojo.ReportExample;
 import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.Teacher;
+import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.ReportService;
 import com.graduationaldesign.graduation.util.PageBean;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.Resource;
@@ -88,7 +90,8 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public PageBean<Report> listByPage(HashMap<String, Object> params, int page, Integer pageSize,
-            int reportType) {
+            int reportType)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<Report> pageBean = new PageBean<>();
         ReportExample reportExample = new ReportExample();
         StringBuilder orderby = new StringBuilder();
@@ -116,9 +119,10 @@ public class ReportServiceImpl implements ReportService {
         if (reportType == 1 || reportType == 2) {
             criteria.andReportTypeEqualTo(reportType);
         }
+        ExampleHelper.addCondition(Report.class, criteria, params);
         List<Report> list = reportMapper.selectByExample(reportExample);
         pageBean.setBeanList(list);
-        pageBean.setParams(params);
+        //pageBean.setParams(params);
         return pageBean;
     }
 
@@ -136,7 +140,8 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public PageBean<Report> listByPageOfStu(HashMap<String, Object> params, int page,
             Integer pageSize,
-            Student student, int reportType) {
+            Student student, int reportType)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<Report> pageBean = new PageBean<>();
         ReportExample example = new ReportExample();
         example.setJoin("left join t_subject on t_report.report_sub_id = t_subject.sub_id");
@@ -160,18 +165,20 @@ public class ReportServiceImpl implements ReportService {
         }
         ReportExample.Criteria criteria = example.createCriteria();
         criteria.andJoinStuIdEqualTo(student.getStuId());
+        ExampleHelper.addCondition(Report.class, criteria, params);
         if (reportType == 1 || reportType == 2) {
             criteria.andReportTypeEqualTo(reportType);
         }
         List<Report> list = reportMapper.selectByExample(example);
         pageBean.setBeanList(list);
-        pageBean.setParams(params);
+        //pageBean.setParams(params);
         return pageBean;
     }
 
     @Override
     public PageBean<Report> listByPageOfTea(HashMap<String, Object> params, int page,
-            Integer pageSize, Teacher teacher, int reportType) {
+            Integer pageSize, Teacher teacher, int reportType)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<Report> pageBean = new PageBean<>();
         ReportExample example = new ReportExample();
         example.setJoin("left join t_subject on t_report.report_sub_id = t_subject.sub_id");
@@ -195,12 +202,13 @@ public class ReportServiceImpl implements ReportService {
         }
         ReportExample.Criteria criteria = example.createCriteria();
         criteria.andJoinTeaIdEqualTo(teacher.getTeaId());
+        ExampleHelper.addCondition(Report.class, criteria, params);
         if (reportType == 1 || reportType == 2) {
             criteria.andReportTypeEqualTo(reportType);
         }
         List<Report> list = reportMapper.selectByExample(example);
         pageBean.setBeanList(list);
-        pageBean.setParams(params);
+        //pageBean.setParams(params);
         return pageBean;
     }
 }

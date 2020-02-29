@@ -3,8 +3,10 @@ package com.graduationaldesign.graduation.service.impl;
 import com.graduationaldesign.graduation.mapper.AcademyMapper;
 import com.graduationaldesign.graduation.pojo.Academy;
 import com.graduationaldesign.graduation.pojo.AcademyExample;
+import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.AcademyService;
 import com.graduationaldesign.graduation.util.PageBean;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.Resource;
@@ -51,13 +53,15 @@ public class AcademyServiceImpl implements AcademyService {
     }
 
     @Override
-    public PageBean<Academy> listByPage(HashMap<String, Object> params, int page, int pageSize) {
+    public PageBean<Academy> listByPage(HashMap<String, Object> params, int page, int pageSize)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<Academy> pageBean = new PageBean<>();
         AcademyExample example = new AcademyExample();
         AcademyExample.Criteria criteria = example.createCriteria();
+        ExampleHelper.addCondition(Academy.class, criteria, params);
         List<Academy> list = this.academyMapper.selectByExample(example);
         pageBean.setBeanList(list);
-//        pageBean.setParams();
+        //pageBean.setParams(params);
         return pageBean;
     }
 }

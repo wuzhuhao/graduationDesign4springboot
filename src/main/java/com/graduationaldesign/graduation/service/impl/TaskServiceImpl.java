@@ -4,8 +4,10 @@ import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.mapper.TaskMapper;
 import com.graduationaldesign.graduation.pojo.Task;
 import com.graduationaldesign.graduation.pojo.TaskExample;
+import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.TaskService;
 import com.graduationaldesign.graduation.util.PageBean;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -74,10 +76,12 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public PageBean<Task> listByPage(HashMap<String, Object> param, int page, int pageSize) {
+    public PageBean<Task> listByPage(HashMap<String, Object> params, int page, int pageSize)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<Task> pageBean = new PageBean<>();
         TaskExample taskExample = new TaskExample();
         TaskExample.Criteria criteria = taskExample.createCriteria();
+        ExampleHelper.addCondition(Task.class, criteria, params);
         List<Task> list = taskMapper.selectByExample(taskExample);
         pageBean.setBeanList(list);
 //        pageBean.setParams();
@@ -86,12 +90,13 @@ public class TaskServiceImpl implements TaskService {
 
     //listByTeaWithPage listByPageOfTea
     @Override
-    public PageBean<Task> listByPageOfTea(HashMap<String, Object> param, int page, int pageSize,
-            String teaId) {
-//        int total = taskMapper.countByTeaId()
+    public PageBean<Task> listByPageOfTea(HashMap<String, Object> params, int page, int pageSize,
+            String teaId)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         TaskExample taskExample = new TaskExample();
         taskExample.setJoin("left join t_subject on t_task.task_sub_id = t_subject.sub_id");
         TaskExample.Criteria criteria = taskExample.createCriteria();
+        ExampleHelper.addCondition(Task.class, criteria, params);
         criteria.andJoinTeaIdEqualTo(teaId);
         List<Task> taskList = taskMapper.selectByExample(taskExample);
         PageBean<Task> pageBean = new PageBean<>();
@@ -100,9 +105,10 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public PageBean<Task> listByPageOfStu(HashMap<String, Object> param, int page, int pageSize,
+    public PageBean<Task> listByPageOfStu(HashMap<String, Object> params, int page, int pageSize,
             String stuId,
-            String type) {
+            String type)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         if (!(type.equals("1") || type.equals("2"))) {
             throw new RuntimeException("type参数错误");
         }
@@ -110,9 +116,10 @@ public class TaskServiceImpl implements TaskService {
         TaskExample taskExample = new TaskExample();
         taskExample.setJoin("left join t_subject on t_task.task_sub_id = t_subject.sub_id");
         TaskExample.Criteria criteria = taskExample.createCriteria();
+        ExampleHelper.addCondition(Task.class, criteria, params);
         criteria.andJoinStuIdEqualTo(stuId);
         criteria.andTaskStateEqualTo(type);
-        List<Task> list = taskMapper.selectByExample(taskExample);
+        List<Task> list = taskMapper.selectByExampleWithBLOBs(taskExample);
         pageBean.setBeanList(list);
         return pageBean;
     }

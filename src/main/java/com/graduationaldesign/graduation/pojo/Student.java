@@ -1,8 +1,10 @@
 package com.graduationaldesign.graduation.pojo;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.graduationaldesign.graduation.pojo.helper.MyPrimaryKey;
 import java.io.Serializable;
 import lombok.Data;
 
@@ -14,72 +16,85 @@ public class Student implements Serializable {
      * 学生登陆账号
      * 表字段 : t_student.stu_id
      */
+    @Excel(name = "学号", orderNum = "0")
+    @MyPrimaryKey
     private String stuId;
 
     /**
      * 学生登陆密码
      * 表字段 : t_student.stu_password
      */
+    @Excel(name = "密码", orderNum = "0")
     private String stuPassword;
 
     /**
      * 学生名称
      * 表字段 : t_student.stu_name
      */
+    @Excel(name = "姓名", orderNum = "0")
     private String stuName;
 
     /**
      * 学生专业
      * 表字段 : t_student.stu_major
      */
+    @Excel(name = "专业", orderNum = "0")
     private String stuMajor;
 
     /**
      * 学生班级
      * 表字段 : t_student.stu_class
      */
+    @Excel(name = "班级", orderNum = "0")
     private String stuClass;
 
     /**
-     * 学生年龄
+     * 学生性别
      * 表字段 : t_student.stu_sex
      */
+    @Excel(name = "性别", orderNum = "0")
     private String stuSex;
 
     /**
      * 学生年龄
      * 表字段 : t_student.stu_age
      */
+    @Excel(name = "年龄", orderNum = "0")
     private Integer stuAge;
 
     /**
      * 学生生日
      * 表字段 : t_student.stu_birthday
      */
+    @Excel(name = "生日", orderNum = "2")
     private String stuBirthday;
 
     /**
      * 学生电话
      * 表字段 : t_student.stu_phone
      */
+    @Excel(name = "电话", orderNum = "0")
     private String stuPhone;
 
     /**
      * 学生邮箱
      * 表字段 : t_student.stu_mail
      */
+    @Excel(name = "邮箱", orderNum = "0")
     private String stuMail;
 
     /**
      * 学生地址
      * 表字段 : t_student.stu_address
      */
+    @Excel(name = "地址", orderNum = "0")
     private String stuAddress;
 
     /**
      * 优秀毕业生标志位，0是无，1是候选人，2是选上了，3是落选
      * 表字段 : t_student.stu_remarks
      */
+    @Excel(name = "优秀毕业生", orderNum = "0")
     private String stuRemarks;
 
     /**
@@ -375,6 +390,22 @@ public class Student implements Serializable {
     }
 
     public Student() {
+    }
+
+    public Student(String stuId, String stuName, String stuMajor, String stuClass,
+            String stuSex, Integer stuAge, String stuBirthday, String stuPhone,
+            String stuMail, String stuAddress, String stuRemarks) {
+        this.stuId = stuId;
+        this.stuName = stuName;
+        this.stuMajor = stuMajor;
+        this.stuClass = stuClass;
+        this.stuSex = stuSex;
+        this.stuAge = stuAge;
+        this.stuBirthday = stuBirthday;
+        this.stuPhone = stuPhone;
+        this.stuMail = stuMail;
+        this.stuAddress = stuAddress;
+        this.stuRemarks = stuRemarks;
     }
 
     public void setModel(UserModel userModel) {

@@ -3,7 +3,9 @@ package com.graduationaldesign.graduation.service;
 import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.UserModel;
 import com.graduationaldesign.graduation.util.PageBean;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @Author: wuzhuhao
@@ -25,12 +27,15 @@ public interface StudentService {
 
     int insertSelective(Student record);
 
+    void insertListSelective(List<Student> lstStudent) throws Exception;
+
     Student selectByPrimaryKey(String stuId);
 
     int updateByPrimaryKeySelective(Student record);
 
     int updateByPrimaryKey(Student record);
 
-    PageBean<Student> listByPage(HashMap<String, Object> params, int page, int pageSize);
+    PageBean<Student> listByPage(HashMap<String, Object> params, int page, int pageSize)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
 }

@@ -4,6 +4,7 @@ import com.graduationaldesign.graduation.pojo.Report;
 import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.Teacher;
 import com.graduationaldesign.graduation.util.PageBean;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 /**
@@ -29,11 +30,14 @@ public interface ReportService {
     int updateByPrimaryKey(Report record);
 
     PageBean<Report> listByPage(HashMap<String, Object> params, int page, Integer pageSize,
-            int reportType);
+            int reportType)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
     PageBean<Report> listByPageOfStu(HashMap<String, Object> params, int page, Integer pageSize,
-            Student student, int reportType);
+            Student student, int reportType)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
     PageBean<Report> listByPageOfTea(HashMap<String, Object> params, int page, Integer pageSize,
-            Teacher teacher, int reportType);
+            Teacher teacher, int reportType)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 }

@@ -1,6 +1,7 @@
 package com.graduationaldesign.graduation.pojo;
 
 import cn.hutool.core.date.DateUtil;
+import com.graduationaldesign.graduation.pojo.helper.MyPrimaryKey;
 import java.io.Serializable;
 import java.util.Date;
 import lombok.Data;
@@ -12,6 +13,7 @@ public class Operation implements Serializable {
      * 自增id
      * 表字段 : log_operation.id
      */
+    @MyPrimaryKey
     private Integer id;
 
     /**

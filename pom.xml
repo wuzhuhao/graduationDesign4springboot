@@ -29,7 +29,7 @@
     <fastdfs-client-java>1.27-SNAPSHOT</fastdfs-client-java>
     <commons-fileupload>1.3.1</commons-fileupload>
     <commons-io>2.2</commons-io>
-    <commons-lang3>3.1</commons-lang3>
+    <commons-lang3>3.7</commons-lang3>
     <json.version>1.1</json.version>
     <ueditor.version>1.1.2</ueditor.version>
     <commons-codec>1.10</commons-codec>
@@ -235,11 +235,17 @@
     </dependency>
 
     <!--JWT-->
-        <dependency>
-          <groupId>com.auth0</groupId>
-          <artifactId>java-jwt</artifactId>
-          <version>3.2.0</version>
-        </dependency>
+    <dependency>
+      <groupId>com.auth0</groupId>
+      <artifactId>java-jwt</artifactId>
+      <version>3.2.0</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>commons-codec</artifactId>
+          <groupId>commons-codec</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
     <!--    <dependency>-->
     <!--      <groupId>io.jsonwebtoken</groupId>-->
     <!--      <artifactId>jjwt</artifactId>-->
@@ -261,6 +267,33 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+
+    <!--word和excel-->
+    <dependency>
+      <groupId>cn.afterturn</groupId>
+      <artifactId>easypoi-base</artifactId>
+      <version>3.0.3</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>commons-lang3</artifactId>
+          <groupId>org.apache.commons</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>commons-codec</artifactId>
+          <groupId>commons-codec</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>cn.afterturn</groupId>
+      <artifactId>easypoi-web</artifactId>
+      <version>3.0.3</version>
+    </dependency>
+    <dependency>
+      <groupId>cn.afterturn</groupId>
+      <artifactId>easypoi-annotation</artifactId>
+      <version>3.0.3</version>
     </dependency>
   </dependencies>
 

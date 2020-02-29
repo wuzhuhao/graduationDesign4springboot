@@ -64,4 +64,5 @@ public class JWTUtil {
         result.put("type", Integer.valueOf(typeClaim.asString()));
         return result;
     }
+
 }

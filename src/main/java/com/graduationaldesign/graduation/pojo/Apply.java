@@ -4,6 +4,7 @@ import cn.hutool.core.date.DateUtil;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.graduationaldesign.graduation.pojo.helper.MyPrimaryKey;
 import java.io.Serializable;
 import java.util.Date;
 import lombok.Data;
@@ -15,6 +16,7 @@ public class Apply implements Serializable {
     /**
      * 表字段 : t_apply.id
      */
+    @MyPrimaryKey
     private Integer id;
 
     /**

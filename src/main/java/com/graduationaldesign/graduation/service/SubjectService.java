@@ -4,6 +4,7 @@ import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.Subject;
 import com.graduationaldesign.graduation.pojo.Teacher;
 import com.graduationaldesign.graduation.util.PageBean;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import org.springframework.http.ResponseEntity;
 
@@ -26,15 +27,19 @@ public interface SubjectService {
 
     int updateByPrimaryKey(Subject record);
 
-    PageBean<Subject> listByPageOfNotChoice(HashMap<String, Object> params, int page, int pageSize);
+    PageBean<Subject> listByPageOfNotChoice(HashMap<String, Object> params, int page, int pageSize)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
     PageBean<Subject> listByPageOfChoice(HashMap<String, Object> params, int page,
-            int pageSize, Student student);
+            int pageSize, Student student)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
     PageBean<Subject> listByPageOfTea(HashMap<String, Object> params, int page, int pageSize,
-            Teacher teacher);
+            Teacher teacher)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
-    PageBean<Subject> listByPage(HashMap<String, Object> params, int page, int pageSize);
+    PageBean<Subject> listByPage(HashMap<String, Object> params, int page, int pageSize)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
     String ChoiceSubject(String subId, Student login_user);
 
