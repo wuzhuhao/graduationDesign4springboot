@@ -1,6 +1,5 @@
 package com.graduationaldesign.graduation.config.redis;
 
-import com.graduationaldesign.graduation.config.serialize.RedisObjectMapper;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;

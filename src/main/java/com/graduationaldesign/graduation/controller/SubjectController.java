@@ -98,9 +98,16 @@ public class SubjectController {
      */
     @RequestMapping(value = "/listOfNotChoice", method = RequestMethod.GET)
     public ResponseEntity<Object> getSubjectOfNotChoice(
-            @RequestParam HashMap<String, Object> params, int page) {
-        return ResponseStatu.success(
-                subjectService.listByPageOfNotChoice(params, page, rootPropeties.getPageSize()));
+            @RequestParam HashMap<String, Object> params,
+            @RequestParam(required = false, defaultValue = "1") int page,
+            @RequestParam(required = false, defaultValue = "5") int pageSize) {
+        try {
+            return ResponseStatu.success(
+                    subjectService.listByPageOfNotChoice(params, page, pageSize));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseStatu.failure("获取列表失败");
+        }
     }
 
     /**
@@ -110,10 +117,17 @@ public class SubjectController {
      */
     @RequestMapping(value = "/listOfChoice", method = RequestMethod.GET)
     public ResponseEntity<Object> getSubjectOfChoice(@RequestParam HashMap<String, Object> params,
-            int page) {
-        return ResponseStatu.success(subjectService.listByPageOfChoice(params, page,
-                rootPropeties.getPageSize(),
-                ((Student) request.getSession().getAttribute(rootPropeties.getUserAttribute()))));
+            @RequestParam(required = false, defaultValue = "1") int page,
+            @RequestParam(required = false, defaultValue = "5") int pageSize) {
+        try {
+            return ResponseStatu.success(subjectService.listByPageOfChoice(params, page,
+                    pageSize,
+                    ((Student) request.getSession()
+                            .getAttribute(rootPropeties.getUserAttribute()))));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseStatu.failure("获取列表失败");
+        }
     }
 
     /**
@@ -123,10 +137,17 @@ public class SubjectController {
      */
     @RequestMapping(value = "/listOfTea", method = RequestMethod.GET)
     public ResponseEntity<Object> getSubjectOfTea(@RequestParam HashMap<String, Object> params,
-            int page) {
-        return ResponseStatu.success(subjectService.listByPageOfTea(params, page,
-                rootPropeties.getPageSize(),
-                ((Teacher) request.getSession().getAttribute(rootPropeties.getUserAttribute()))));
+            @RequestParam(required = false, defaultValue = "1") int page,
+            @RequestParam(required = false, defaultValue = "5") int pageSize) {
+        try {
+            return ResponseStatu.success(subjectService.listByPageOfTea(params, page,
+                    pageSize,
+                    ((Teacher) request.getSession()
+                            .getAttribute(rootPropeties.getUserAttribute()))));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseStatu.failure("获取列表失败");
+        }
     }
 
     /**
@@ -135,9 +156,16 @@ public class SubjectController {
      * @return
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ResponseEntity<Object> list(@RequestParam HashMap<String, Object> params, int page) {
-        return ResponseStatu
-                .success(subjectService.listByPage(params, page, rootPropeties.getPageSize()));
+    public ResponseEntity<Object> list(@RequestParam HashMap<String, Object> params,
+            @RequestParam(required = false, defaultValue = "1") int page,
+            @RequestParam(required = false, defaultValue = "5") int pageSize) {
+        try {
+            return ResponseStatu
+                    .success(subjectService.listByPage(params, page, pageSize));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseStatu.failure("获取列表失败");
+        }
     }
 
     /**

@@ -5,8 +5,10 @@ import com.graduationaldesign.graduation.pojo.Progress;
 import com.graduationaldesign.graduation.pojo.ProgressExample;
 import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.Teacher;
+import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.ProgressService;
 import com.graduationaldesign.graduation.util.PageBean;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -76,7 +78,8 @@ public class ProgressServiceImpl implements ProgressService {
 
     @Override
     public PageBean<Progress> listByPage(HashMap<String, Object> params, int page,
-            Integer pageSize) {
+            Integer pageSize)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<Progress> pageBean = new PageBean<>();
         ProgressExample example = new ProgressExample();
         StringBuilder orderby = getOrderString(params);
@@ -84,15 +87,17 @@ public class ProgressServiceImpl implements ProgressService {
             example.setOrderByClause(orderby.toString());
         }
         ProgressExample.Criteria criteria = example.createCriteria();
+        ExampleHelper.addCondition(Progress.class, criteria, params);
         List<Progress> list = progressMapper.selectByExample(example);
         pageBean.setBeanList(list);
-        pageBean.setParams(params);
+        //pageBean.setParams(params);
         return pageBean;
     }
 
     @Override
     public PageBean<Progress> listByPageOfStu(HashMap<String, Object> params, int page,
-            Integer pageSize, Student student) {
+            Integer pageSize, Student student)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<Progress> pageBean = new PageBean<>();
         ProgressExample example = new ProgressExample();
         example.setJoin("left join t_subject on t_progress.progress_sub_id = t_subject.sub_id");
@@ -102,15 +107,17 @@ public class ProgressServiceImpl implements ProgressService {
         }
         ProgressExample.Criteria criteria = example.createCriteria();
         criteria.andJoinStuIdEqualTo(student.getStuId());
+        ExampleHelper.addCondition(Progress.class, criteria, params);
         List<Progress> list = progressMapper.selectByExample(example);
         pageBean.setBeanList(list);
-        pageBean.setParams(params);
+        //pageBean.setParams(params);
         return pageBean;
     }
 
     @Override
     public PageBean<Progress> listByPageOfTea(HashMap<String, Object> params, int page,
-            Integer pageSize, Teacher teacher) {
+            Integer pageSize, Teacher teacher)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<Progress> pageBean = new PageBean<>();
         ProgressExample example = new ProgressExample();
         example.setJoin("left join t_subject on t_progress.progress_sub_id = t_subject.sub_id");
@@ -120,9 +127,10 @@ public class ProgressServiceImpl implements ProgressService {
         }
         ProgressExample.Criteria criteria = example.createCriteria();
         criteria.andJoinTeaIdEqualTo(teacher.getTeaId());
+        ExampleHelper.addCondition(Progress.class, criteria, params);
         List<Progress> list = progressMapper.selectByExample(example);
         pageBean.setBeanList(list);
-        pageBean.setParams(params);
+        //pageBean.setParams(params);
         return pageBean;
     }
 

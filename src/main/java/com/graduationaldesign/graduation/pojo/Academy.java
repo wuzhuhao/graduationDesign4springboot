@@ -1,5 +1,7 @@
 package com.graduationaldesign.graduation.pojo;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
+import com.graduationaldesign.graduation.pojo.helper.MyPrimaryKey;
 import java.io.Serializable;
 import lombok.Data;
 
@@ -9,12 +11,15 @@ public class Academy implements Serializable {
     /**
      * 表字段 : t_academy.id
      */
+    @Excel(name = "学院代码", orderNum = "0")
+    @MyPrimaryKey
     private Integer id;
 
     /**
      * 学院名称
      * 表字段 : t_academy.aca_name
      */
+    @Excel(name = "学院名称", orderNum = "1")
     private String acaName;
 
     /**

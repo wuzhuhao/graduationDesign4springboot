@@ -22,14 +22,14 @@ public class WebConfig implements WebMvcConfigurer {
         log.warn("进行拦截器Bean的装载");
         return new LoginInterceptor();
     }
-//    /**
-//     * 添加类型转换器和格式化器
-//     * @param registry
-//     */
-//    @Override
-//    public void addFormatters(FormatterRegistry registry) {
-//        registry.addFormatterForFieldType(LocalDate.class, new USLocalDateFormatter());
-//    }
+    /**
+     * 添加类型转换器和格式化器
+     * @param registry
+     */
+    /*@Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addFormatterForFieldType(LocalDate.class, new USLocalDateFormatter());
+    }*/
 
     /**
      * 跨域支持

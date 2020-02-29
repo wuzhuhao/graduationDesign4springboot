@@ -2,6 +2,7 @@ package com.graduationaldesign.graduation.service;
 
 import com.graduationaldesign.graduation.pojo.Task;
 import com.graduationaldesign.graduation.util.PageBean;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 /**
@@ -22,12 +23,15 @@ public interface TaskService {
 
     int updateByPrimaryKey(Task record);
 
-    PageBean<Task> listByPageOfTea(HashMap<String, Object> param, int page, int pageSize,
-            String teaId);
+    PageBean<Task> listByPageOfTea(HashMap<String, Object> params, int page, int pageSize,
+            String teaId)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
-    PageBean<Task> listByPageOfStu(HashMap<String, Object> param, int page, int pageSize,
+    PageBean<Task> listByPageOfStu(HashMap<String, Object> params, int page, int pageSize,
             String stuId,
-            String type);
+            String type)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
-    public PageBean<Task> listByPage(HashMap<String, Object> param, int page, int pageSize);
+    public PageBean<Task> listByPage(HashMap<String, Object> param, int page, int pageSize)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 }

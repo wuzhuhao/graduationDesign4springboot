@@ -1,4 +1,4 @@
-package com.graduationaldesign.graduation.util;
+package com.graduationaldesign.graduation.shiro.utils;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -11,8 +11,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Value;
 
 /**
- * @Author: wuzhuhao
- * @Date: 2020/2/22 19:01
+ * Create by IntelliJ Idea 2018.1
+ * Company: silita
+ * Author: gemingyi
+ * Date: 2018-08-09 15:19
  */
 //@Component
 public class JWTUtil {
@@ -24,7 +26,6 @@ public class JWTUtil {
     public void setTokenExpireTime(String tokenExpireTime) {
         JWTUtil.tokenExpireTime = tokenExpireTime;
     }
-
 
     /**
      * 校验token是否正确
@@ -43,15 +44,14 @@ public class JWTUtil {
             DecodedJWT jwt = verifier.verify(token);
             result.put("isSuccess", true);
             result.put("ex", null);
-// return true;
+//            return true;
         } catch (Exception exception) {
             result.put("isSuccess", false);
             result.put("exception", exception);
-// return false;
+//        return false;
         }
         return result;
     }
-
 
     /**
      * 获得token中的信息无需secret解密也能获得
@@ -68,26 +68,25 @@ public class JWTUtil {
         }
     }
 
-
     /**
      * 生成签名,30min后过期
      *
-     * @param username 用户名
-     * @param secret   用户的密码
+     * @param number 用户名
+     * @param secret 用户的密码
      * @return 加密的token
      */
-    public static String sign(String username, String secret) {
+    public static String sign(String number, String secret) {
         try {
             //token过期时间
             Date date = new Date(
                     System.currentTimeMillis() + (Long.parseLong(tokenExpireTime) * 60 * 1000));
             //密码MD5加密
-// Object md5Password = new SimpleHash("MD5", secret, username, 2);
-// Algorithm algorithm = Algorithm.HMAC256(String.valueOf(md5Password));
+//            Object md5Password = new SimpleHash("MD5", secret, number, 2);
+//            Algorithm algorithm = Algorithm.HMAC256(String.valueOf(md5Password));
             Algorithm algorithm = Algorithm.HMAC256(secret);
             // 附带username信息
             return JWT.create()
-                    .withClaim("userName", username)
+                    .withClaim("userName", number)
                     .withExpiresAt(date)
                     .sign(algorithm);
         } catch (Exception e) {

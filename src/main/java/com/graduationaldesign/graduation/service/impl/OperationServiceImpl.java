@@ -3,8 +3,10 @@ package com.graduationaldesign.graduation.service.impl;
 import com.graduationaldesign.graduation.mapper.OperationMapper;
 import com.graduationaldesign.graduation.pojo.Operation;
 import com.graduationaldesign.graduation.pojo.OperationExample;
+import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.OperationService;
 import com.graduationaldesign.graduation.util.PageBean;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.Resource;
@@ -51,13 +53,15 @@ public class OperationServiceImpl implements OperationService {
     }
 
     @Override
-    public PageBean<Operation> listByPage(HashMap<String, Object> params, int page, int pageSize) {
+    public PageBean<Operation> listByPage(HashMap<String, Object> params, int page, int pageSize)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<Operation> pageBean = new PageBean<>();
         OperationExample example = new OperationExample();
         OperationExample.Criteria criteria = example.createCriteria();
+        ExampleHelper.addCondition(Operation.class, criteria, params);
         List<Operation> list = this.operationMapper.selectByExample(example);
         pageBean.setBeanList(list);
-//        pageBean.setParams();
+        //pageBean.setParams(params);
         return pageBean;
     }
 

@@ -3,8 +3,10 @@ package com.graduationaldesign.graduation.service.impl;
 import com.graduationaldesign.graduation.mapper.NoticeMapper;
 import com.graduationaldesign.graduation.pojo.Notice;
 import com.graduationaldesign.graduation.pojo.NoticeExample;
+import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.NoticeService;
 import com.graduationaldesign.graduation.util.PageBean;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.Resource;
@@ -51,13 +53,15 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    public PageBean<Notice> listByPage(HashMap<String, Object> params, int page, int pageSize) {
+    public PageBean<Notice> listByPage(HashMap<String, Object> params, int page, int pageSize)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<Notice> pageBean = new PageBean<>();
         NoticeExample example = new NoticeExample();
         NoticeExample.Criteria criteria = example.createCriteria();
+        ExampleHelper.addCondition(Notice.class, criteria, params);
         List<Notice> list = this.noticeMapper.selectByExample(example);
         pageBean.setBeanList(list);
-//        pageBean.setParams();
+        //pageBean.setParams(params);
         return pageBean;
     }
 }

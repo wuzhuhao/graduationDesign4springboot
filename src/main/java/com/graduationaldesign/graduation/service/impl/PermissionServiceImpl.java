@@ -3,8 +3,10 @@ package com.graduationaldesign.graduation.service.impl;
 import com.graduationaldesign.graduation.mapper.PermissionMapper;
 import com.graduationaldesign.graduation.pojo.Permission;
 import com.graduationaldesign.graduation.pojo.PermissionExample;
+import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.PermissionService;
 import com.graduationaldesign.graduation.util.PageBean;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.Resource;
@@ -51,13 +53,15 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public PageBean<Permission> listByPage(HashMap<String, Object> params, int page, int pageSize) {
+    public PageBean<Permission> listByPage(HashMap<String, Object> params, int page, int pageSize)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<Permission> pageBean = new PageBean<>();
         PermissionExample example = new PermissionExample();
         PermissionExample.Criteria criteria = example.createCriteria();
+        ExampleHelper.addCondition(Permission.class, criteria, params);
         List<Permission> list = this.permissionMapper.selectByExample(example);
         pageBean.setBeanList(list);
-//        pageBean.setParams();
+        //pageBean.setParams(params);
         return pageBean;
     }
 }

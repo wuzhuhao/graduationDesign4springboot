@@ -4,8 +4,10 @@ import com.graduationaldesign.graduation.mapper.TeacherMapper;
 import com.graduationaldesign.graduation.pojo.Teacher;
 import com.graduationaldesign.graduation.pojo.TeacherExample;
 import com.graduationaldesign.graduation.pojo.UserModel;
+import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.TeacherService;
 import com.graduationaldesign.graduation.util.PageBean;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,13 +117,29 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public PageBean<Teacher> listByPage(HashMap<String, Object> params, int page, int pageSize) {
+    public PageBean<Teacher> listByPage(HashMap<String, Object> params, int page, int pageSize)
+            throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         PageBean<Teacher> pageBean = new PageBean<>();
         TeacherExample example = new TeacherExample();
         TeacherExample.Criteria criteria = example.createCriteria();
+        ExampleHelper.addCondition(Teacher.class, criteria, params);
         List<Teacher> list = this.teacherMapper.selectByExample(example);
         pageBean.setBeanList(list);
-//        pageBean.setParams();
+//        pageBean.setParams(params);
         return pageBean;
     }
+
+    @Override
+    public Teacher findById(String number) {
+        return teacherMapper.selectByPrimaryKey(number);
+    }
+
+    @Override
+    public void insertListSelective(List<Teacher> lstTeacher) throws Exception {
+        for (Teacher teacher : lstTeacher) {
+            teacherMapper.insertSelective(teacher);
+        }
+    }
+
+
 }

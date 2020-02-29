@@ -4,6 +4,7 @@ import com.graduationaldesign.graduation.pojo.Progress;
 import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.Teacher;
 import com.graduationaldesign.graduation.util.PageBean;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 /**
@@ -26,11 +27,14 @@ public interface ProgressService {
 
     int updateByPrimaryKey(Progress record);
 
-    PageBean<Progress> listByPage(HashMap<String, Object> params, int page, Integer pageSize);
+    PageBean<Progress> listByPage(HashMap<String, Object> params, int page, Integer pageSize)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
     PageBean<Progress> listByPageOfStu(HashMap<String, Object> params, int page, Integer pageSize,
-            Student student);
+            Student student)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
     PageBean<Progress> listByPageOfTea(HashMap<String, Object> params, int page, Integer pageSize,
-            Teacher teacher);
+            Teacher teacher)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 }

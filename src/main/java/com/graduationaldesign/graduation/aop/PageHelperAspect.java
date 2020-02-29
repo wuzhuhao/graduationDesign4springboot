@@ -3,6 +3,7 @@ package com.graduationaldesign.graduation.aop;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.graduationaldesign.graduation.util.PageBean;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -44,8 +45,14 @@ public class PageHelperAspect {
         Signature signature = proceedingJoinPoint.getSignature();
         // 获取连接点所在的类的对象(实例)
         Object target = proceedingJoinPoint.getTarget();
-        PageHelper.startPage(Integer.parseInt(args[1].toString()),
-                Integer.parseInt(args[2].toString()));
+        try {
+            PageHelper.startPage(Integer.parseInt(args[1].toString()),
+                    Integer.parseInt(args[2].toString()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            PageHelper.startPage(1,
+                    Integer.parseInt(args[2].toString()));
+        }
 
         log.info("方法[{}]开始执行...", signature.getName());
         Object object = proceedingJoinPoint.proceed();
@@ -66,6 +73,7 @@ public class PageHelperAspect {
             pageBean.setTotalRecord((int) pageInfo.getTotal());
             pageBean.setCurrentPage(pageInfo.getPageNum());
             pageBean.setPageSize(pageInfo.getPageSize());
+            pageBean.setParams((Map<String, Object>) args[0]);
             return pageBean;
         }
         return object;

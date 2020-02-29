@@ -1,6 +1,7 @@
 package com.graduationaldesign.graduation.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.graduationaldesign.graduation.pojo.helper.MyPrimaryKey;
 import java.io.Serializable;
 import lombok.Data;
 
@@ -12,6 +13,7 @@ public class Admin implements Serializable {
      * 管理员账号
      * 表字段 : t_admin.admin_id
      */
+    @MyPrimaryKey
     private String adminId;
 
     /**

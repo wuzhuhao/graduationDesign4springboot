@@ -2,6 +2,7 @@ package com.graduationaldesign.graduation.service;
 
 import com.graduationaldesign.graduation.pojo.Academy;
 import com.graduationaldesign.graduation.util.PageBean;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 /**
@@ -23,6 +24,7 @@ public interface AcademyService {
 
     int updateByPrimaryKey(Academy record);
 
-    PageBean<Academy> listByPage(HashMap<String, Object> params, int page, int pageSize);
+    PageBean<Academy> listByPage(HashMap<String, Object> params, int page, int pageSize)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
 }

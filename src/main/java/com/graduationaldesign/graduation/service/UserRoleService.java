@@ -2,6 +2,7 @@ package com.graduationaldesign.graduation.service;
 
 import com.graduationaldesign.graduation.pojo.UserRole;
 import com.graduationaldesign.graduation.util.PageBean;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 /**
@@ -22,6 +23,7 @@ public interface UserRoleService {
 
     int updateByPrimaryKey(UserRole record);
 
-    PageBean<UserRole> listByPage(HashMap<String, Object> params, int page, int pageSize);
+    PageBean<UserRole> listByPage(HashMap<String, Object> params, int page, int pageSize)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
 }

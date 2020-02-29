@@ -2,6 +2,7 @@ package com.graduationaldesign.graduation.service;
 
 import com.graduationaldesign.graduation.pojo.Notice;
 import com.graduationaldesign.graduation.util.PageBean;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 /**
@@ -22,6 +23,7 @@ public interface NoticeService {
 
     int updateByPrimaryKey(Notice record);
 
-    PageBean<Notice> listByPage(HashMap<String, Object> params, int page, int pageSize);
+    PageBean<Notice> listByPage(HashMap<String, Object> params, int page, int pageSize)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
 }

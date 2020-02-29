@@ -1,5 +1,6 @@
 package com.graduationaldesign.graduation.controller;
 
+import com.graduationaldesign.graduation.JWT.JWTUtil;
 import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.pojo.Admin;
 import com.graduationaldesign.graduation.pojo.Student;
@@ -8,8 +9,10 @@ import com.graduationaldesign.graduation.pojo.UserModel;
 import com.graduationaldesign.graduation.service.AdminService;
 import com.graduationaldesign.graduation.service.StudentService;
 import com.graduationaldesign.graduation.service.TeacherService;
+import com.graduationaldesign.graduation.util.CookieUtil;
 import com.graduationaldesign.graduation.util.ResponseStatu;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,10 +39,13 @@ public class GlobalController {
     @Autowired
     HttpServletRequest request;
     @Autowired
+    private HttpServletResponse response;
+    @Autowired
     RootPropeties rootPropeties;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<Object> login(String number, String password, Integer type) {
+    public ResponseEntity<Object> login(String number, String password, Integer type)
+            throws Exception {
         HttpSession session = request.getSession();
         Object result;
         try {
@@ -57,7 +63,9 @@ public class GlobalController {
         } catch (RuntimeException e) {
             return ResponseStatu.failure(e.getMessage());
         }
-        session.setAttribute(rootPropeties.getUserAttribute(), result);
+//        session.setAttribute(rootPropeties.getUserAttribute(), result);
+        CookieUtil.setCookie(request, response, "token", JWTUtil.createToken(number, type),
+                5 * 60 * 1000);
         return ResponseStatu.success(result);
     }
 

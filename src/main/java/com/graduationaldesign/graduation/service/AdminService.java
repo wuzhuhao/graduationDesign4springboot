@@ -3,7 +3,9 @@ package com.graduationaldesign.graduation.service;
 import com.graduationaldesign.graduation.pojo.Admin;
 import com.graduationaldesign.graduation.pojo.UserModel;
 import com.graduationaldesign.graduation.util.PageBean;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @Author: wuzhuhao
@@ -31,5 +33,10 @@ public interface AdminService {
 
     int updateByPrimaryKey(Admin record);
 
-    PageBean<Admin> listByPage(HashMap<String, Object> params, int page, int pageSize);
+    PageBean<Admin> listByPage(HashMap<String, Object> params, int page, int pageSize)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
+
+    Admin findById(String number);
+
+    void insertListSelective(List<Admin> lstAdmin) throws Exception;
 }
