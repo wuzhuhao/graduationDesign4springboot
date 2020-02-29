@@ -79,6 +79,11 @@ const router = new Router({
           component: () => import('@/views/admin/adminManage')
         },
         {
+          path: '/taskManage',
+          name: 'taskManage',
+          component: () => import('@/views/admin/taskManage2')
+        },
+        {
           path: '/admin/notice',
           name: 'adminNotice',
           component: () => import('@/views/Home')

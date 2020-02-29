@@ -491,6 +491,15 @@ export default {
                             showInTags:false,
                             showInMenus:true,
                             choosed:false
+                        },
+                        {
+                            title:'任务管理',
+                            name:'/taskManage',
+                            href:'taskManage',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
                         }
                     ]
                 },
@@ -570,7 +579,7 @@ export default {
                 {
                     title:'拓展模块',
                     name:'game-platform-manage',
-                    icon:'ios-game-controller-b',
+                    icon:'icon iconfont icon-edit',
                     children:[
                         {
                             title:'历届优秀毕设（论文）',
@@ -994,6 +1003,6 @@ export default {
              this.menus =this.adminMenus
         }
           
-    },  
+    }, 
 }
 </script>

@@ -5,6 +5,9 @@ import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 import store from './store/store'
 import Qs from 'qs'
+import '@/styles/icon/iconfont.css'
+
+
 
 Vue.prototype.$Qs = Qs
 // import PublicFun from './utils/publicFun'    // 公用方法
