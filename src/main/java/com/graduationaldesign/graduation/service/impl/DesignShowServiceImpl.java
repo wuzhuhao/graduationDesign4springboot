@@ -65,4 +65,11 @@ public class DesignShowServiceImpl implements DesignShowService {
         return pageBean;
     }
 
+    @Override
+    public void deleteByPrimaryKeyIn(List<Integer> lstPrimaryKey) throws Exception {
+        DesignShowExample example = new DesignShowExample();
+        DesignShowExample.Criteria criteria = example.createCriteria();
+        criteria.andIdIn(lstPrimaryKey);
+        designShowMapper.deleteByExample(example);
+    }
 }

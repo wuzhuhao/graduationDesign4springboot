@@ -147,4 +147,11 @@ public class StudentServiceImpl implements StudentService {
         return pageBean;
     }
 
+    @Override
+    public void deleteByPrimaryKeyIn(List<String> lstPrimaryKey) throws Exception {
+        StudentExample example = new StudentExample();
+        StudentExample.Criteria criteria = example.createCriteria();
+        criteria.andStuIdIn(lstPrimaryKey);
+        studentMapper.deleteByExample(example);
+    }
 }

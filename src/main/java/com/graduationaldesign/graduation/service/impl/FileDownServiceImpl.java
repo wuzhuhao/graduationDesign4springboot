@@ -28,15 +28,22 @@ public class FileDownServiceImpl implements FileDownService {
     }
 
     @Override
-    public void exportDemo(int type, HttpServletResponse response) {
-        if (type == 1) {
-            FileUtil.exportExcel(new ArrayList<>(), "学生导入模板", "中山大学南方学院", Student.class, "导入模板.xls",
+    public void exportDemo(Integer type, HttpServletResponse response) {
+        if (type == null) {
+            throw new RuntimeException("请选择模板类型");
+        }
+        if (type.equals(1)) {
+            FileUtil.exportExcel(new ArrayList<>(), "学生导入模板", "中山大学南方学院", Student.class,
+                    "学生导入模板.xls",
                     response);
-        } else if (type == 2) {
-            FileUtil.exportExcel(new ArrayList<>(), "教师导入模板", "中山大学南方学院", Teacher.class, "导入模板.xls",
+        } else if (type.equals(2)) {
+            ArrayList<Teacher> teacherArrayList = new ArrayList<>();
+            FileUtil.exportExcel(teacherArrayList, "教师导入模板", "中山大学南方学院", Teacher.class,
+                    "教师导入模板.xls",
                     response);
-        } else if (type == 3) {
-            FileUtil.exportExcel(new ArrayList<>(), "管理员导入模板", "中山大学南方学院", Admin.class, "导入模板.xls",
+        } else if (type.equals(3)) {
+            FileUtil.exportExcel(new ArrayList<>(), "管理员导入模板", "中山大学南方学院", Admin.class,
+                    "管理员导入模板.xls",
                     response);
         } else {
             throw new RuntimeException("请选择模板类型");

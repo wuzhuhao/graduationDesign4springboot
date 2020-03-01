@@ -1,14 +1,17 @@
 package com.graduationaldesign.graduation.controller;
 
 
+import com.graduationaldesign.graduation.JWT.TokenService;
 import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.pojo.Progress;
 import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.Teacher;
 import com.graduationaldesign.graduation.service.ProgressService;
 import com.graduationaldesign.graduation.util.ResponseStatu;
+import java.text.MessageFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,10 +35,11 @@ public class ProgressController {
     HttpServletRequest request;
     @Autowired
     RootPropeties rootPropeties;
+    @Autowired
+    TokenService tokenService;
 
     //    @RequestMapping(value="/temp")
     public ResponseEntity<Object> temp() {
-        request.getSession().removeAttribute(rootPropeties.getUserAttribute());
         return ResponseStatu.success("退出登陆成功");
     }
 
@@ -125,8 +129,13 @@ public class ProgressController {
     public ResponseEntity<Object> listOfStu(@RequestParam HashMap<String, Object> params,
             @RequestParam(required = false, defaultValue = "1") int page, String stuId,
             @RequestParam(required = false, defaultValue = "5") int pageSize) {
-        Student student = (Student) request.getSession()
-                .getAttribute(rootPropeties.getUserAttribute());
+        Student student;
+        try {
+            student = (Student) tokenService.getUserByToken(request);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseStatu.failure("登陆身份不对");
+        }
         student = new Student();
         student.setStuId(stuId);
         try {
@@ -148,8 +157,13 @@ public class ProgressController {
     public ResponseEntity<Object> listOfTea(@RequestParam HashMap<String, Object> params,
             @RequestParam(required = false, defaultValue = "1") int page, String teaId,
             @RequestParam(required = false, defaultValue = "5") int pageSize) {
-        Teacher teacher = (Teacher) request.getSession()
-                .getAttribute(rootPropeties.getUserAttribute());
+        Teacher teacher;
+        try {
+            teacher = (Teacher) tokenService.getUserByToken(request);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseStatu.failure("登陆身份不对");
+        }
         teacher = new Teacher();
         teacher.setTeaId(teaId);
         try {
@@ -159,5 +173,20 @@ public class ProgressController {
         } catch (Exception e) {
             return ResponseStatu.failure("获取列表失败");
         }
+    }
+
+    @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> deleteProgressList(List<Integer> lstprimaryKey) {
+        ResponseEntity<Object> result = null;
+        try {
+            progressService.deleteByPrimaryKeyIn(lstprimaryKey);
+            result = ResponseStatu.success(
+                    MessageFormat.format("批量删除{0}成功", rootPropeties.getAcademy()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = ResponseStatu.failure(
+                    MessageFormat.format("批量删除{0}失败", rootPropeties.getAcademy()));
+        }
+        return result;
     }
 }

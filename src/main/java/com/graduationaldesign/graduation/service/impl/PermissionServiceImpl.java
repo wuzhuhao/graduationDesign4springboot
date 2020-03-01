@@ -64,4 +64,12 @@ public class PermissionServiceImpl implements PermissionService {
         //pageBean.setParams(params);
         return pageBean;
     }
+
+    @Override
+    public void deleteByPrimaryKeyIn(List<Long> lstPrimaryKey) throws Exception {
+        PermissionExample example = new PermissionExample();
+        PermissionExample.Criteria criteria = example.createCriteria();
+        criteria.andIdIn(lstPrimaryKey);
+        permissionMapper.deleteByExample(example);
+    }
 }

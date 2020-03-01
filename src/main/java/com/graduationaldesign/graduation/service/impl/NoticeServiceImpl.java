@@ -64,4 +64,12 @@ public class NoticeServiceImpl implements NoticeService {
         //pageBean.setParams(params);
         return pageBean;
     }
+
+    @Override
+    public void deleteByPrimaryKeyIn(List<Integer> lstPrimaryKey) throws Exception {
+        NoticeExample example = new NoticeExample();
+        NoticeExample.Criteria criteria = example.createCriteria();
+        criteria.andIdIn(lstPrimaryKey);
+        noticeMapper.deleteByExample(example);
+    }
 }

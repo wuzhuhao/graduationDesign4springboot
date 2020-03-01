@@ -65,4 +65,12 @@ public class OperationServiceImpl implements OperationService {
         return pageBean;
     }
 
+    @Override
+    public void deleteByPrimaryKeyIn(List<Integer> lstPrimaryKey) throws Exception {
+        OperationExample example = new OperationExample();
+        OperationExample.Criteria criteria = example.createCriteria();
+        criteria.andIdIn(lstPrimaryKey);
+        operationMapper.deleteByExample(example);
+    }
+
 }

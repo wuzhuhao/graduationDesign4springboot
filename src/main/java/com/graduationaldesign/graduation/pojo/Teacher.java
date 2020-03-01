@@ -1,5 +1,6 @@
 package com.graduationaldesign.graduation.pojo;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -16,66 +17,77 @@ public class Teacher implements Serializable {
      * 表字段 : t_teacher.tea_id
      */
     @MyPrimaryKey
+    @Excel(name = "教师账号*", orderNum = "0")
     private String teaId;
 
     /**
      * 教师密码
      * 表字段 : t_teacher.tea_password
      */
+    @Excel(name = "密码", orderNum = "0")
     private String teaPassword;
 
     /**
      * 教师名称
      * 表字段 : t_teacher.tea_name
      */
+    @Excel(name = "姓名", orderNum = "0")
     private String teaName;
 
     /**
      * 教师性别
      * 表字段 : t_teacher.tea_sex
      */
+    @Excel(name = "性别", orderNum = "0")
     private String teaSex;
 
     /**
      * 教师年龄
      * 表字段 : t_teacher.tea_age
      */
+    @Excel(name = "年龄", orderNum = "0")
     private Integer teaAge;
 
     /**
      * 教师生日
      * 表字段 : t_teacher.tea_birthday
      */
+    @Excel(name = "出生日期", orderNum = "0")
     private String teaBirthday;
 
     /**
      * 教师电话
      * 表字段 : t_teacher.tea_phone
      */
+    @Excel(name = "电话", orderNum = "0")
     private String teaPhone;
 
     /**
      * 教师邮箱
      * 表字段 : t_teacher.tea_mail
      */
+    @Excel(name = "邮箱", orderNum = "0")
     private String teaMail;
 
     /**
      * 教师地址
      * 表字段 : t_teacher.tea_address
      */
+    @Excel(name = "地址", orderNum = "0")
     private String teaAddress;
 
     /**
      * 备注
      * 表字段 : t_teacher.tea_remarks
      */
+    @Excel(name = "备注", orderNum = "0")
     private String teaRemarks;
 
     /**
      * 学院id
      * 表字段 : t_teacher.academy_id
      */
+    @Excel(name = "学院代码*", orderNum = "0")
     private Integer academyId;
 
     private Academy academy;
@@ -306,7 +318,17 @@ public class Teacher implements Serializable {
     }
 
     public Teacher() {
-
+        this.teaId = "";
+        this.teaPassword = "";
+        this.teaName = "";
+        this.teaSex = "";
+        this.teaAge = 0;
+        this.teaBirthday = "";
+        this.teaPhone = "";
+        this.teaMail = "";
+        this.teaAddress = "";
+        this.teaRemarks = "";
+        this.academyId = 1;
     }
 
     public Teacher(String teaPassword) {

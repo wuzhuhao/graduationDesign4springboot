@@ -1,13 +1,16 @@
 package com.graduationaldesign.graduation.controller;
 
 
+import com.graduationaldesign.graduation.JWT.TokenService;
 import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.pojo.Report;
 import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.Teacher;
 import com.graduationaldesign.graduation.service.ReportService;
 import com.graduationaldesign.graduation.util.ResponseStatu;
+import java.text.MessageFormat;
 import java.util.HashMap;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +34,8 @@ public class ReportController {
     HttpServletRequest request;
     @Autowired
     RootPropeties rootPropeties;
+    @Autowired
+    TokenService tokenService;
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<Object> add(Report report) {
@@ -110,8 +115,7 @@ public class ReportController {
             @RequestParam(required = false, defaultValue = "1") int page, int reportType,
             String stuId,
             @RequestParam(required = false, defaultValue = "5") int pageSize) {
-        Student student = (Student) request.getSession()
-                .getAttribute(rootPropeties.getUserAttribute());
+        Student student = (Student) tokenService.getUserByToken(request);
         student = new Student();
         student.setStuId(stuId);
         try {
@@ -135,8 +139,7 @@ public class ReportController {
             @RequestParam(required = false, defaultValue = "1") int page, int reportType,
             String teaId,
             @RequestParam(required = false, defaultValue = "5") int pageSize) {
-        Teacher teacher = (Teacher) request.getSession()
-                .getAttribute(rootPropeties.getUserAttribute());
+        Teacher teacher = (Teacher) tokenService.getUserByToken(request);
         teacher = new Teacher();
         teacher.setTeaId(teaId);
         try {
@@ -148,5 +151,20 @@ public class ReportController {
             e.printStackTrace();
             return ResponseStatu.failure("获取列表失败");
         }
+    }
+
+    @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> deleteReportList(List<Integer> lstprimaryKey) {
+        ResponseEntity<Object> result = null;
+        try {
+            reportService.deleteByPrimaryKeyIn(lstprimaryKey);
+            result = ResponseStatu.success(
+                    MessageFormat.format("批量删除{0}成功", rootPropeties.getAcademy()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = ResponseStatu.failure(
+                    MessageFormat.format("批量删除{0}失败", rootPropeties.getAcademy()));
+        }
+        return result;
     }
 }

@@ -6,6 +6,7 @@ import com.graduationaldesign.graduation.service.PermissionService;
 import com.graduationaldesign.graduation.util.ResponseStatu;
 import java.text.MessageFormat;
 import java.util.HashMap;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -98,5 +99,20 @@ public class PermissionController {
             e.printStackTrace();
             return ResponseStatu.failure("获取列表失败");
         }
+    }
+
+    @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> deletePermissionList(List<Long> lstprimaryKey) {
+        ResponseEntity<Object> result = null;
+        try {
+            permissionService.deleteByPrimaryKeyIn(lstprimaryKey);
+            result = ResponseStatu.success(
+                    MessageFormat.format("批量删除{0}成功", rootPropeties.getAcademy()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = ResponseStatu.failure(
+                    MessageFormat.format("批量删除{0}失败", rootPropeties.getAcademy()));
+        }
+        return result;
     }
 }

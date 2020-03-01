@@ -4,6 +4,7 @@ import com.graduationaldesign.graduation.pojo.Role;
 import com.graduationaldesign.graduation.util.PageBean;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @Author: wuzhuhao
@@ -26,4 +27,5 @@ public interface RoleService {
     PageBean<Role> listByPage(HashMap<String, Object> params, int page, int pageSize)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
+    void deleteByPrimaryKeyIn(List<Long> lstprimaryKey) throws Exception;
 }

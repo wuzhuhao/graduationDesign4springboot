@@ -7,22 +7,24 @@ import com.graduationaldesign.graduation.service.SubjectService;
 import com.graduationaldesign.graduation.service.TaskService;
 import com.graduationaldesign.graduation.util.PageBean;
 import com.graduationaldesign.graduation.util.ResponseStatu;
+import java.text.MessageFormat;
 import java.util.HashMap;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author wuzhuhao
  * @version $Id: TaskController.java, v 0.1 2020-01-21 10:53:19 wuzhuhao Exp $$
  */
-@Controller
+@RestController
 @RequestMapping("/task")
 @Slf4j
 public class TaskController {
@@ -38,7 +40,6 @@ public class TaskController {
 
     //    @RequestMapping(value="/temp")
     public ResponseEntity<Object> temp() {
-        request.getSession().removeAttribute(rootPropeties.getUserAttribute());
         return ResponseStatu.success("退出登陆成功");
     }
 
@@ -118,5 +119,20 @@ public class TaskController {
             e.printStackTrace();
             return ResponseStatu.failure("获取列表失败");
         }
+    }
+
+    @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> deleteTaskList(List<Integer> lstprimaryKey) {
+        ResponseEntity<Object> result = null;
+        try {
+            taskService.deleteByPrimaryKeyIn(lstprimaryKey);
+            result = ResponseStatu.success(
+                    MessageFormat.format("批量删除{0}成功", rootPropeties.getAcademy()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = ResponseStatu.failure(
+                    MessageFormat.format("批量删除{0}失败", rootPropeties.getAcademy()));
+        }
+        return result;
     }
 }

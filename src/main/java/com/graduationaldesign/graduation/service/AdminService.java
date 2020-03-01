@@ -39,4 +39,6 @@ public interface AdminService {
     Admin findById(String number);
 
     void insertListSelective(List<Admin> lstAdmin) throws Exception;
+
+    void deleteByPrimaryKeyIn(List<String> lstPrimaryKey) throws Exception;
 }

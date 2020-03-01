@@ -1,6 +1,7 @@
 package com.graduationaldesign.graduation.controller;
 
 import com.graduationaldesign.graduation.JWT.JWTUtil;
+import com.graduationaldesign.graduation.JWT.TokenService;
 import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.pojo.Admin;
 import com.graduationaldesign.graduation.pojo.Student;
@@ -42,6 +43,8 @@ public class GlobalController {
     private HttpServletResponse response;
     @Autowired
     RootPropeties rootPropeties;
+    @Autowired
+    TokenService tokenService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<Object> login(String number, String password, Integer type)
@@ -87,7 +90,7 @@ public class GlobalController {
     private ResponseEntity<Object> changPassword(String oldPassword, String newPassword,
             Integer type) {
         Object user;
-        user = request.getSession().getAttribute(rootPropeties.getUserAttribute());
+        user = tokenService.getUserByToken(request);
         String userID;
         ResponseEntity<Object> result;
         String message;
@@ -132,7 +135,7 @@ public class GlobalController {
 
     private ResponseEntity<Object> changeInformation(UserModel userModel, Integer type) {
         Object user;
-        user = request.getSession().getAttribute(rootPropeties.getUserAttribute());
+        user = tokenService.getUserByToken(request);
         String userID;
         ResponseEntity<Object> result;
         String message;
@@ -175,8 +178,12 @@ public class GlobalController {
     @RequestMapping(value = "/exit", method = RequestMethod.GET)
 //    @CacheEvict(cacheNames = {"student", "teacher", "admin"}, allEntries = true)
     public ResponseEntity<Object> exit() {
-        System.out.println(rootPropeties.getUserAttribute());
-        request.getSession().removeAttribute(rootPropeties.getUserAttribute());
-        return ResponseStatu.success("退出登陆成功");
+        try {
+            CookieUtil.deleteCookie(request, response, "token");
+            return ResponseStatu.success("退出登陆成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseStatu.failure("退出登陆失败");
+        }
     }
 }

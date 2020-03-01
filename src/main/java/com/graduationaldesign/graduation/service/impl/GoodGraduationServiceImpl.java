@@ -66,4 +66,11 @@ public class GoodGraduationServiceImpl implements GoodGraduationService {
         return pageBean;
     }
 
+    @Override
+    public void deleteByPrimaryKeyIn(List<Integer> lstPrimaryKey) throws Exception {
+        GoodGraduationExample example = new GoodGraduationExample();
+        GoodGraduationExample.Criteria criteria = example.createCriteria();
+        criteria.andIdIn(lstPrimaryKey);
+        goodGraduationMapper.deleteByExample(example);
+    }
 }

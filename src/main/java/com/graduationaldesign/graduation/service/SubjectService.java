@@ -6,6 +6,7 @@ import com.graduationaldesign.graduation.pojo.Teacher;
 import com.graduationaldesign.graduation.util.PageBean;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 
 /**
@@ -44,4 +45,6 @@ public interface SubjectService {
     String ChoiceSubject(String subId, Student login_user);
 
     String cancelChoice(String subId, Student login_user);
+
+    void deleteByPrimaryKeyIn(List<String> lstprimaryKey) throws Exception;
 }

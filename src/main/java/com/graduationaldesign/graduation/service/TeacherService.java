@@ -37,4 +37,6 @@ public interface TeacherService {
     Teacher findById(String number);
 
     void insertListSelective(List<Teacher> lstTeacher) throws Exception;
+
+    void deleteByPrimaryKeyIn(List<String> lstprimaryKey) throws Exception;
 }

@@ -175,4 +175,12 @@ public class ProgressServiceImpl implements ProgressService {
         }
         return orderby;
     }
+
+    @Override
+    public void deleteByPrimaryKeyIn(List<Integer> lstPrimaryKey) throws Exception {
+        ProgressExample example = new ProgressExample();
+        ProgressExample.Criteria criteria = example.createCriteria();
+        criteria.andIdIn(lstPrimaryKey);
+        progressMapper.deleteByExample(example);
+    }
 }

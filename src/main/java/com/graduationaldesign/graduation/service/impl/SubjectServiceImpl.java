@@ -221,4 +221,11 @@ public class SubjectServiceImpl implements SubjectService {
         return pageBean;
     }
 
+    @Override
+    public void deleteByPrimaryKeyIn(List<String> lstPrimaryKey) throws Exception {
+        SubjectExample example = new SubjectExample();
+        SubjectExample.Criteria criteria = example.createCriteria();
+        criteria.andStuIdIn(lstPrimaryKey);
+        subjectMapper.deleteByExample(example);
+    }
 }

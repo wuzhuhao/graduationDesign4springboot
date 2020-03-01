@@ -4,6 +4,8 @@ import com.graduationaldesign.graduation.pojo.Academy;
 import com.graduationaldesign.graduation.util.PageBean;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: wuzhuhao
@@ -13,6 +15,8 @@ public interface AcademyService {
 
 
     int deleteByPrimaryKey(Integer id);
+
+    void deleteByPrimaryKeyIn(List<Integer> lstPrimaryKey) throws Exception;
 
     int insert(Academy record);
 
@@ -27,4 +31,5 @@ public interface AcademyService {
     PageBean<Academy> listByPage(HashMap<String, Object> params, int page, int pageSize)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
+    Map<Integer, String> getItems();
 }

@@ -211,4 +211,12 @@ public class ReportServiceImpl implements ReportService {
         //pageBean.setParams(params);
         return pageBean;
     }
+
+    @Override
+    public void deleteByPrimaryKeyIn(List<Integer> lstPrimaryKey) throws Exception {
+        ReportExample example = new ReportExample();
+        ReportExample.Criteria criteria = example.createCriteria();
+        criteria.andIdIn(lstPrimaryKey);
+        reportMapper.deleteByExample(example);
+    }
 }

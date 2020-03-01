@@ -38,4 +38,5 @@ public interface StudentService {
     PageBean<Student> listByPage(HashMap<String, Object> params, int page, int pageSize)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
+    void deleteByPrimaryKeyIn(List<String> lstprimaryKey) throws Exception;
 }

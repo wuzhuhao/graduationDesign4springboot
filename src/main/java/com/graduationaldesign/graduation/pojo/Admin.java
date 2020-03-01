@@ -1,5 +1,6 @@
 package com.graduationaldesign.graduation.pojo;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.graduationaldesign.graduation.pojo.helper.MyPrimaryKey;
 import java.io.Serializable;
@@ -14,66 +15,77 @@ public class Admin implements Serializable {
      * 表字段 : t_admin.admin_id
      */
     @MyPrimaryKey
+    @Excel(name = "管理员账号*", orderNum = "0")
     private String adminId;
 
     /**
      * 登陆密码
      * 表字段 : t_admin.admin_password
      */
+    @Excel(name = "密码", orderNum = "0")
     private String adminPassword;
 
     /**
      * 管理员名称
      * 表字段 : t_admin.admin_name
      */
+    @Excel(name = "姓名", orderNum = "0")
     private String adminName;
 
     /**
      * 性别
      * 表字段 : t_admin.admin_sex
      */
+    @Excel(name = "性别", orderNum = "0")
     private String adminSex;
 
     /**
      * 年龄
      * 表字段 : t_admin.admin_age
      */
+    @Excel(name = "年龄", orderNum = "0")
     private Integer adminAge;
 
     /**
      * 生日
      * 表字段 : t_admin.admin_birthday
      */
+    @Excel(name = "出生日期", orderNum = "0")
     private String adminBirthday;
 
     /**
      * 电话
      * 表字段 : t_admin.admin_phone
      */
+    @Excel(name = "电话", orderNum = "0")
     private String adminPhone;
 
     /**
      * 邮箱
      * 表字段 : t_admin.admin_mail
      */
+    @Excel(name = "邮箱", orderNum = "0")
     private String adminMail;
 
     /**
      * 地址
      * 表字段 : t_admin.admin_address
      */
+    @Excel(name = "地址", orderNum = "0")
     private String adminAddress;
 
     /**
      * 备注
      * 表字段 : t_admin.admin_remarks
      */
+    @Excel(name = "备注", orderNum = "0")
     private String adminRemarks;
 
     /**
      * 1是小助手，2是超级管理员
      * 表字段 : t_admin.admin_type
      */
+    @Excel(name = "管理角色", orderNum = "0")
     private Integer adminType;
 
     /**
