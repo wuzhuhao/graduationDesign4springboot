@@ -65,4 +65,11 @@ public class RoleServiceImpl implements RoleService {
         return pageBean;
     }
 
+    @Override
+    public void deleteByPrimaryKeyIn(List<Long> lstPrimaryKey) throws Exception {
+        RoleExample example = new RoleExample();
+        RoleExample.Criteria criteria = example.createCriteria();
+        criteria.andIdIn(lstPrimaryKey);
+        roleMapper.deleteByExample(example);
+    }
 }

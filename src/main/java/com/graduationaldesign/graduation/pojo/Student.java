@@ -16,7 +16,7 @@ public class Student implements Serializable {
      * 学生登陆账号
      * 表字段 : t_student.stu_id
      */
-    @Excel(name = "学号", orderNum = "0")
+    @Excel(name = "学号*", orderNum = "0")
     @MyPrimaryKey
     private String stuId;
 
@@ -66,7 +66,7 @@ public class Student implements Serializable {
      * 学生生日
      * 表字段 : t_student.stu_birthday
      */
-    @Excel(name = "生日", orderNum = "2")
+    @Excel(name = "出生日期", orderNum = "2")
     private String stuBirthday;
 
     /**
@@ -100,6 +100,7 @@ public class Student implements Serializable {
     /**
      * 表字段 : t_student.academy_id
      */
+    @Excel(name = "学院代码*", orderNum = "0")
     private Integer academyId;
 
     private Academy academy;

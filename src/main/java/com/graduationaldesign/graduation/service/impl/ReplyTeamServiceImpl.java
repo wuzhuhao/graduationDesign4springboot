@@ -65,4 +65,11 @@ public class ReplyTeamServiceImpl implements ReplyTeamService {
         return pageBean;
     }
 
+    @Override
+    public void deleteByPrimaryKeyIn(List<Integer> lstPrimaryKey) throws Exception {
+        ReplyTeamExample example = new ReplyTeamExample();
+        ReplyTeamExample.Criteria criteria = example.createCriteria();
+        criteria.andIdIn(lstPrimaryKey);
+        replyTeamMapper.deleteByExample(example);
+    }
 }

@@ -4,12 +4,15 @@ import com.graduationaldesign.graduation.pojo.Permission;
 import com.graduationaldesign.graduation.util.PageBean;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @Author: wuzhuhao
  * @Date: 2020/1/20 21:09
  */
 public interface PermissionService {
+
+    void deleteByPrimaryKeyIn(List<Long> lstprimaryKey) throws Exception;
 
     int deleteByPrimaryKey(Long id);
 

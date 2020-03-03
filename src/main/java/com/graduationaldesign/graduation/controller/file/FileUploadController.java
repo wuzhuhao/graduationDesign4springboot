@@ -46,7 +46,6 @@ public class FileUploadController {
     @RequestMapping("/importUserByExcel")
     public ResponseEntity<Object> importStudentByExcel(@RequestParam("file") MultipartFile file,
             Integer type) {
-//        String filePath = "F:\\海贼王.xls";
         try {
             fileUploadService.importUser(file, type);
             return ResponseStatu.success("导入数据成功");
@@ -54,8 +53,5 @@ public class FileUploadController {
             e.printStackTrace();
             return ResponseStatu.failure(e.getMessage());
         }
-
     }
-
-
 }

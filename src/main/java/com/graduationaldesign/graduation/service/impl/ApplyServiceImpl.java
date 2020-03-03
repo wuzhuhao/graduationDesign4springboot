@@ -64,4 +64,12 @@ public class ApplyServiceImpl implements ApplyService {
         //pageBean.setParams(params);
         return pageBean;
     }
+
+    @Override
+    public void deleteByPrimaryKeyIn(List<Integer> lstPrimaryKey) throws Exception {
+        ApplyExample example = new ApplyExample();
+        ApplyExample.Criteria criteria = example.createCriteria();
+        criteria.andIdIn(lstPrimaryKey);
+        applyMapper.deleteByExample(example);
+    }
 }

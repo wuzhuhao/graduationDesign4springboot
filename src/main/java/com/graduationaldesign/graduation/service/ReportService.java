@@ -6,6 +6,7 @@ import com.graduationaldesign.graduation.pojo.Teacher;
 import com.graduationaldesign.graduation.util.PageBean;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @Author: wuzhuhao
@@ -40,4 +41,6 @@ public interface ReportService {
     PageBean<Report> listByPageOfTea(HashMap<String, Object> params, int page, Integer pageSize,
             Teacher teacher, int reportType)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
+
+    void deleteByPrimaryKeyIn(List<Integer> lstprimaryKey) throws Exception;
 }

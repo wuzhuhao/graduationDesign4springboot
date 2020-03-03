@@ -6,10 +6,10 @@ import com.graduationaldesign.graduation.service.ApplyService;
 import com.graduationaldesign.graduation.util.ResponseStatu;
 import java.text.MessageFormat;
 import java.util.HashMap;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @author wuzhuhao
  * @version $Id: ApplyController.java, v 0.1 2020-02-20 00:18:35 wuzhuhao Exp $$
  */
-@Controller
 @RestController
 @RequestMapping("/apply")
 public class ApplyController {
@@ -99,5 +98,20 @@ public class ApplyController {
             return ResponseStatu
                     .failure("列表获取失败");
         }
+    }
+
+    @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> deleteApplyList(List<Integer> lstprimaryKey) {
+        ResponseEntity<Object> result = null;
+        try {
+            applyService.deleteByPrimaryKeyIn(lstprimaryKey);
+            result = ResponseStatu.success(
+                    MessageFormat.format("批量删除{0}成功", rootPropeties.getAcademy()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = ResponseStatu.failure(
+                    MessageFormat.format("批量删除{0}失败", rootPropeties.getAcademy()));
+        }
+        return result;
     }
 }

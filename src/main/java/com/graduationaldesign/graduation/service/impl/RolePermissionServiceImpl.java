@@ -65,4 +65,12 @@ public class RolePermissionServiceImpl implements RolePermissionService {
         //pageBean.setParams(params);
         return pageBean;
     }
+
+    @Override
+    public void deleteByPrimaryKeyIn(List<Long> lstPrimaryKey) throws Exception {
+        RolePermissionExample example = new RolePermissionExample();
+        RolePermissionExample.Criteria criteria = example.createCriteria();
+        criteria.andIdIn(lstPrimaryKey);
+        rolePermissionMapper.deleteByExample(example);
+    }
 }

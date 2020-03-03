@@ -64,4 +64,12 @@ public class UserRoleServiceImpl implements UserRoleService {
 //        pageBean.setParams();
         return pageBean;
     }
+
+    @Override
+    public void deleteByPrimaryKeyIn(List<Long> lstPrimaryKey) throws Exception {
+        UserRoleExample example = new UserRoleExample();
+        UserRoleExample.Criteria criteria = example.createCriteria();
+        criteria.andIdIn(lstPrimaryKey);
+        userRoleMapper.deleteByExample(example);
+    }
 }

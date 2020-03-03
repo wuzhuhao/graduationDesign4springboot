@@ -13,5 +13,5 @@ public interface FileDownService {
 
     String multipleFiles(MultipartFile[] files);
 
-    void exportDemo(int type, HttpServletResponse response);
+    void exportDemo(Integer type, HttpServletResponse response);
 }

@@ -6,10 +6,10 @@ import com.graduationaldesign.graduation.service.NoticeService;
 import com.graduationaldesign.graduation.util.ResponseStatu;
 import java.text.MessageFormat;
 import java.util.HashMap;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @author wuzhuhao
  * @version $Id: NoticeController.java, v 0.1 2020-02-20 00:23:36 wuzhuhao Exp $$
  */
-@Controller
 @RestController
 @RequestMapping("/notice")
 public class NoticeController {
@@ -98,5 +97,20 @@ public class NoticeController {
             e.printStackTrace();
             return ResponseStatu.failure("获取列表失败");
         }
+    }
+
+    @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> deleteNoticeList(List<Integer> lstprimaryKey) {
+        ResponseEntity<Object> result = null;
+        try {
+            noticeService.deleteByPrimaryKeyIn(lstprimaryKey);
+            result = ResponseStatu.success(
+                    MessageFormat.format("批量删除{0}成功", rootPropeties.getAcademy()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = ResponseStatu.failure(
+                    MessageFormat.format("批量删除{0}失败", rootPropeties.getAcademy()));
+        }
+        return result;
     }
 }

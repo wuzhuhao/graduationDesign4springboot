@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -111,8 +112,20 @@ public class FileDownController {
 
     //, int type, int isdemo
     @RequestMapping("/exportDemo")
-    public void exportDemo(HttpServletResponse response, int type) {
-        fileDownService.exportDemo(type, response);
+    @ResponseBody
+    public ResponseEntity<Object> exportDemo(HttpServletResponse response, Integer type) {
+        ResponseEntity<Object> result = null;
+        try {
+            fileDownService.exportDemo(type, response);
+            result = ResponseStatu.success("导出模板成功");
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            result = ResponseStatu.failure(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = ResponseStatu.failure("导出模板成功");
+        }
+        return result;
     }
 
 }

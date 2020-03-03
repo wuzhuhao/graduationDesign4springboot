@@ -141,5 +141,11 @@ public class TeacherServiceImpl implements TeacherService {
         }
     }
 
-
+    @Override
+    public void deleteByPrimaryKeyIn(List<String> lstPrimaryKey) throws Exception {
+        TeacherExample example = new TeacherExample();
+        TeacherExample.Criteria criteria = example.createCriteria();
+        criteria.andTeaIdIn(lstPrimaryKey);
+        teacherMapper.deleteByExample(example);
+    }
 }

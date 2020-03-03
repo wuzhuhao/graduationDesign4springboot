@@ -4,6 +4,7 @@ import com.graduationaldesign.graduation.pojo.Operation;
 import com.graduationaldesign.graduation.util.PageBean;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @Author: wuzhuhao
@@ -26,4 +27,5 @@ public interface OperationService {
     PageBean<Operation> listByPage(HashMap<String, Object> params, int page, int pageSize)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
+    void deleteByPrimaryKeyIn(List<Integer> lstprimaryKey) throws Exception;
 }

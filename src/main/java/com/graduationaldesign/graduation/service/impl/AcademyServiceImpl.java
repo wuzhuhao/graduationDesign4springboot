@@ -9,6 +9,8 @@ import com.graduationaldesign.graduation.util.PageBean;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,14 @@ public class AcademyServiceImpl implements AcademyService {
     @Override
     public int deleteByPrimaryKey(Integer id) {
         return academyMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public void deleteByPrimaryKeyIn(List<Integer> lstPrimaryKey) throws Exception {
+        AcademyExample example = new AcademyExample();
+        AcademyExample.Criteria criteria = example.createCriteria();
+        criteria.andIdIn(lstPrimaryKey);
+        academyMapper.deleteByExample(example);
     }
 
     @Override
@@ -61,7 +71,16 @@ public class AcademyServiceImpl implements AcademyService {
         ExampleHelper.addCondition(Academy.class, criteria, params);
         List<Academy> list = this.academyMapper.selectByExample(example);
         pageBean.setBeanList(list);
-        //pageBean.setParams(params);
         return pageBean;
+    }
+
+    @Override
+    public Map<Integer, String> getItems() {
+        AcademyExample example = new AcademyExample();
+        example.setOrderByClause("id");
+        List<Academy> list = academyMapper.selectByExample(example);
+        Map<Integer, String> map = list.stream()
+                .collect(Collectors.toMap(Academy::getId, Academy::getAcaName));
+        return map;
     }
 }

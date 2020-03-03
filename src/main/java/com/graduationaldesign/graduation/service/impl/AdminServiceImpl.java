@@ -24,6 +24,14 @@ public class AdminServiceImpl implements AdminService {
     AdminMapper adminMapper;
 
     @Override
+    public void deleteByPrimaryKeyIn(List<String> lstPrimaryKey) throws Exception {
+        AdminExample example = new AdminExample();
+        AdminExample.Criteria criteria = example.createCriteria();
+        criteria.andAdminIdIn(lstPrimaryKey);
+        adminMapper.deleteByExample(example);
+    }
+
+    @Override
     public int deleteByPrimaryKey(String adminId) {
         return adminMapper.deleteByPrimaryKey(adminId);
     }

@@ -7,6 +7,7 @@ import com.graduationaldesign.graduation.service.AdminService;
 import com.graduationaldesign.graduation.util.ResponseStatu;
 import java.text.MessageFormat;
 import java.util.HashMap;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,6 @@ public class AdminController {
 
     //    @RequestMapping(value="/temp")
     public ResponseEntity<Object> temp() {
-        request.getSession().removeAttribute(rootPropeties.getUserAttribute());
         return ResponseStatu.success("退出登陆成功");
     }
 
@@ -105,4 +105,18 @@ public class AdminController {
         }
     }
 
+    @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> deleteAdminList(List<String> lstprimaryKey) {
+        ResponseEntity<Object> result = null;
+        try {
+            adminService.deleteByPrimaryKeyIn(lstprimaryKey);
+            result = ResponseStatu.success(
+                    MessageFormat.format("批量删除{0}成功", rootPropeties.getAcademy()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = ResponseStatu.failure(
+                    MessageFormat.format("批量删除{0}失败", rootPropeties.getAcademy()));
+        }
+        return result;
+    }
 }

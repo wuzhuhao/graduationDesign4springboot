@@ -6,21 +6,23 @@ import com.graduationaldesign.graduation.service.AcademyService;
 import com.graduationaldesign.graduation.util.ResponseStatu;
 import java.text.MessageFormat;
 import java.util.HashMap;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 
 /**
  * @author wuzhuhao
  * @version $Id: AcademyController.java, v 0.1 2020-02-19 23:53:21 wuzhuhao Exp $$
  */
-@Controller
+@RestController
+@RequestMapping("/academy")
 public class AcademyController {
 
     @Autowired
@@ -95,6 +97,33 @@ public class AcademyController {
             e.printStackTrace();
             return ResponseStatu
                     .failure("获取列表失败");
+        }
+    }
+
+    @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> deleteSubjectList(List<Integer> lstprimaryKey) {
+        ResponseEntity<Object> result = null;
+        try {
+            academyService.deleteByPrimaryKeyIn(lstprimaryKey);
+            result = ResponseStatu.success(
+                    MessageFormat.format("批量删除{0}成功", rootPropeties.getAcademy()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = ResponseStatu.failure(
+                    MessageFormat.format("批量删除{0}失败", rootPropeties.getAcademy()));
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/getItems", method = RequestMethod.GET)
+    public ResponseEntity<Object> getItems() {
+        try {
+            return ResponseStatu
+                    .success(academyService.getItems());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseStatu
+                    .success(new HashMap<Integer, String>());
         }
     }
 }

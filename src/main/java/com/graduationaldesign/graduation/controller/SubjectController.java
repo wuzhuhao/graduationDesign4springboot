@@ -1,13 +1,16 @@
 package com.graduationaldesign.graduation.controller;
 
 
+import com.graduationaldesign.graduation.JWT.TokenService;
 import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.Subject;
 import com.graduationaldesign.graduation.pojo.Teacher;
 import com.graduationaldesign.graduation.service.SubjectService;
 import com.graduationaldesign.graduation.util.ResponseStatu;
+import java.text.MessageFormat;
 import java.util.HashMap;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,10 +34,11 @@ public class SubjectController {
     HttpServletRequest request;
     @Autowired
     RootPropeties rootPropeties;
+    @Autowired
+    TokenService tokenService;
 
     @RequestMapping(value = "/temp")
     public ResponseEntity<Object> temp() {
-        request.getSession().removeAttribute(rootPropeties.getUserAttribute());
         return ResponseStatu.success("退出登陆成功");
     }
 
@@ -77,7 +81,12 @@ public class SubjectController {
      */
     @RequestMapping(value = "/delete/{sudId}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> deleteSubject(@PathVariable(value = "sudId") String sudId) {
-        return ResponseStatu.success(subjectService.deleteByPrimaryKey(sudId));
+        try {
+            return ResponseStatu.success(subjectService.deleteByPrimaryKey(sudId));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseStatu.failure("请求失败");
+        }
     }
 
     /**
@@ -88,7 +97,12 @@ public class SubjectController {
      */
     @RequestMapping(value = "/getSubject", method = RequestMethod.GET)
     public ResponseEntity<Object> getSubject(String sudId) {
-        return ResponseStatu.success(subjectService.selectByPrimaryKey(sudId));
+        try {
+            return ResponseStatu.success(subjectService.selectByPrimaryKey(sudId));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseStatu.failure("请求失败");
+        }
     }
 
     /**
@@ -122,8 +136,7 @@ public class SubjectController {
         try {
             return ResponseStatu.success(subjectService.listByPageOfChoice(params, page,
                     pageSize,
-                    ((Student) request.getSession()
-                            .getAttribute(rootPropeties.getUserAttribute()))));
+                    ((Student) tokenService.getUserByToken(request))));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseStatu.failure("获取列表失败");
@@ -142,8 +155,7 @@ public class SubjectController {
         try {
             return ResponseStatu.success(subjectService.listByPageOfTea(params, page,
                     pageSize,
-                    ((Teacher) request.getSession()
-                            .getAttribute(rootPropeties.getUserAttribute()))));
+                    ((Teacher) tokenService.getUserByToken(request))));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseStatu.failure("获取列表失败");
@@ -178,7 +190,7 @@ public class SubjectController {
     public ResponseEntity<Object> choiceSubject(String subId) {
         try {
             return ResponseStatu.success(subjectService.ChoiceSubject(subId,
-                    (Student) request.getSession().getAttribute(rootPropeties.getUserAttribute())));
+                    (Student) tokenService.getUserByToken(request)));
         } catch (ClassCastException e) {
             return ResponseStatu.failure("用户异常，请重新登陆");
         }
@@ -194,11 +206,25 @@ public class SubjectController {
     public ResponseEntity<Object> cancelChoice(String subId) {
         try {
             return ResponseStatu.success(subjectService.cancelChoice(subId,
-                    (Student) request.getSession().getAttribute(rootPropeties.getUserAttribute())));
+                    (Student) tokenService.getUserByToken(request)));
         } catch (ClassCastException e) {
             return ResponseStatu.failure("用户异常，请重新登陆");
         }
     }
 
+    @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> deleteSubjectList(List<String> lstprimaryKey) {
+        ResponseEntity<Object> result = null;
+        try {
+            subjectService.deleteByPrimaryKeyIn(lstprimaryKey);
+            result = ResponseStatu.success(
+                    MessageFormat.format("批量删除{0}成功", rootPropeties.getAcademy()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = ResponseStatu.failure(
+                    MessageFormat.format("批量删除{0}失败", rootPropeties.getAcademy()));
+        }
+        return result;
+    }
 
 }

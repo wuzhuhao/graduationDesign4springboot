@@ -123,4 +123,12 @@ public class TaskServiceImpl implements TaskService {
         pageBean.setBeanList(list);
         return pageBean;
     }
+
+    @Override
+    public void deleteByPrimaryKeyIn(List<Integer> lstPrimaryKey) throws Exception {
+        TaskExample example = new TaskExample();
+        TaskExample.Criteria criteria = example.createCriteria();
+        criteria.andIdIn(lstPrimaryKey);
+        taskMapper.deleteByExample(example);
+    }
 }

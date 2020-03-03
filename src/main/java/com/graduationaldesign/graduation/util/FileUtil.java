@@ -18,7 +18,11 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.poi.hssf.usermodel.DVConstraint;
+import org.apache.poi.hssf.usermodel.HSSFDataValidation;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddressList;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -91,6 +95,39 @@ public class FileUtil {
     public static void exportExcel(List<?> list, String title, String sheetName, Class<?> pojoClass,
             String fileName, HttpServletResponse response) {
         defaultExport(list, pojoClass, fileName, response, new ExportParams(title, sheetName));
+    }
+
+    public static void exportExcel1(List<?> list, String title, String sheetName,
+            Class<?> pojoClass,
+            String fileName, HttpServletResponse response) {
+        defaultExport(list, pojoClass, fileName, response, new ExportParams(title, sheetName));
+        Workbook workbook = ExcelExportUtil
+                .exportExcel(new ExportParams(title, sheetName), pojoClass, list);
+//这里是自己加的 带下拉框的代码
+        selectList(workbook, 4, 4, new String[]{"斤", "两", "个", "袋", "份"});
+        selectList(workbook, 0, 0, new String[]{"蔬菜", "水果", "主食", "熟食", "调料"});
+        downLoadExcel(fileName, response, workbook);
+    }
+
+    /**
+     * firstRow 開始行號 根据此项目，默认为2(下标0开始)
+     * lastRow  根据此项目，默认为最大65535
+     * firstCol 区域中第一个单元格的列号 (下标0开始)
+     * lastCol 区域中最后一个单元格的列号
+     * strings 下拉内容
+     */
+    public static void selectList(Workbook workbook, int firstCol, int lastCol, String[] strings) {
+        Sheet sheet = workbook.getSheetAt(0);
+        //  生成下拉列表
+        //  只对(x，x)单元格有效
+        CellRangeAddressList cellRangeAddressList = new CellRangeAddressList(2, 65535, firstCol,
+                lastCol);
+        //  生成下拉框内容
+        DVConstraint dvConstraint = DVConstraint.createExplicitListConstraint(strings);
+        HSSFDataValidation dataValidation = new HSSFDataValidation(cellRangeAddressList,
+                dvConstraint);
+        //  对sheet页生效
+        sheet.addValidationData(dataValidation);
     }
 
     public static void exportExcel(List<Map<String, Object>> list, String fileName,
