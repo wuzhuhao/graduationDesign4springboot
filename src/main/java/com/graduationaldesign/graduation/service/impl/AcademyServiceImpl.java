@@ -69,7 +69,7 @@ public class AcademyServiceImpl implements AcademyService {
         AcademyExample example = new AcademyExample();
         AcademyExample.Criteria criteria = example.createCriteria();
         ExampleHelper.addCondition(Academy.class, criteria, params);
-        List<Academy> list = this.academyMapper.selectByExample(example);
+        List<Academy> list = this.academyMapper.selectByExampleWithBLOBs(example);
         pageBean.setBeanList(list);
         return pageBean;
     }

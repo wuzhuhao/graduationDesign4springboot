@@ -50,7 +50,7 @@ public class StudentServiceImpl implements StudentService {
     //    sync=true 有一个线程正在忙于计算该值，而其他线程则被阻塞，直到缓存中更新该条目为止
     @Override
     @Cacheable(keyGenerator = "keyGenerator", unless = "#result == null")
-    public Student getStuById(String id) {
+    public Student findById(String id) {
         Student student = studentMapper.selectByPrimaryKey(id);
         return student;
     }
@@ -59,7 +59,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public String changeInformation(UserModel userModel) {
         String message;
-        Student student = getStuById(userModel.getId());
+        Student student = findById(userModel.getId());
         if (student == null) {
             throw new RuntimeException("账号不存在,请重新登陆！");
         }

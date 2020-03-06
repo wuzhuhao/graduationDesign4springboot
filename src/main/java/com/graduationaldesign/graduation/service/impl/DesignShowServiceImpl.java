@@ -59,7 +59,7 @@ public class DesignShowServiceImpl implements DesignShowService {
         DesignShowExample example = new DesignShowExample();
         DesignShowExample.Criteria criteria = example.createCriteria();
         ExampleHelper.addCondition(DesignShow.class, criteria, params);
-        List<DesignShow> list = this.designShowMapper.selectByExample(example);
+        List<DesignShow> list = this.designShowMapper.selectByExampleWithBLOBs(example);
         pageBean.setBeanList(list);
         //pageBean.setParams(params);
         return pageBean;

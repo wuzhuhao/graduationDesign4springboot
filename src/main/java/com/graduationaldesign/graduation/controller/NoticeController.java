@@ -100,7 +100,8 @@ public class NoticeController {
     }
 
     @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> deleteNoticeList(List<Integer> lstprimaryKey) {
+    public ResponseEntity<Object> deleteNoticeList(
+            @RequestParam(value = "primaryKey") List<Integer> lstprimaryKey) {
         ResponseEntity<Object> result = null;
         try {
             noticeService.deleteByPrimaryKeyIn(lstprimaryKey);

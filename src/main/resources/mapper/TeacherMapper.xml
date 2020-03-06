@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.graduationaldesign.graduation.mapper.TeacherMapper">
   <resultMap id="BaseResultMap" type="com.graduationaldesign.graduation.pojo.Teacher">
-    <id column="tea_id" jdbcType="VARCHAR" property="teaId" />
-    <result column="tea_password" jdbcType="VARCHAR" property="teaPassword" />
-    <result column="tea_name" jdbcType="VARCHAR" property="teaName" />
-    <result column="tea_sex" jdbcType="VARCHAR" property="teaSex" />
-    <result column="tea_age" jdbcType="INTEGER" property="teaAge" />
-    <result column="tea_birthday" jdbcType="VARCHAR" property="teaBirthday" />
-    <result column="tea_phone" jdbcType="VARCHAR" property="teaPhone" />
-    <result column="tea_mail" jdbcType="VARCHAR" property="teaMail" />
-    <result column="tea_address" jdbcType="VARCHAR" property="teaAddress" />
-    <result column="tea_remarks" jdbcType="VARCHAR" property="teaRemarks" />
-    <result column="academy_id" jdbcType="INTEGER" property="academyId" />
-    <association column="academy_id" property="academy" select="getAcademy" />
+    <id column="tea_id" jdbcType="VARCHAR" property="teaId"/>
+    <result column="tea_password" jdbcType="VARCHAR" property="teaPassword"/>
+    <result column="tea_name" jdbcType="VARCHAR" property="teaName"/>
+    <result column="tea_sex" jdbcType="VARCHAR" property="teaSex"/>
+    <result column="tea_age" jdbcType="INTEGER" property="teaAge"/>
+    <result column="tea_birthday" jdbcType="VARCHAR" property="teaBirthday"/>
+    <result column="tea_phone" jdbcType="VARCHAR" property="teaPhone"/>
+    <result column="tea_mail" jdbcType="VARCHAR" property="teaMail"/>
+    <result column="tea_address" jdbcType="VARCHAR" property="teaAddress"/>
+    <result column="tea_remarks" jdbcType="VARCHAR" property="teaRemarks"/>
+    <result column="academy_id" jdbcType="INTEGER" property="academyId"/>
+    <association column="academy_id" property="academy" select="getAcademy"/>
   </resultMap>
 
-  <resultMap extends="com.graduationaldesign.graduation.mapper.AcademyMapper.BaseResultMap" id="ResultMapWithBLOBs" type="com.graduationaldesign.graduation.pojo.Academy">
-    <result column="aca_introduce" jdbcType="LONGVARCHAR" property="acaIntroduce" />
+  <resultMap extends="com.graduationaldesign.graduation.mapper.AcademyMapper.BaseResultMap"
+    id="ResultMapWithBLOBs" type="com.graduationaldesign.graduation.pojo.Academy">
+    <result column="aca_introduce" jdbcType="LONGVARCHAR" property="acaIntroduce"/>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -37,7 +39,8 @@
                 </when>
                 <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach close=")" collection="criterion.value" item="listItem" open="("
+                    separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -66,7 +69,8 @@
                 </when>
                 <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach close=")" collection="criterion.value" item="listItem" open="("
+                    separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -81,16 +85,20 @@
     tea_id, tea_password, tea_name, tea_sex, tea_age, tea_birthday, tea_phone, tea_mail, 
     tea_address, tea_remarks, academy_id
   </sql>
-  <select id="selectByExample" parameterType="com.graduationaldesign.graduation.pojo.TeacherExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.graduationaldesign.graduation.pojo.TeacherExample"
+    resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     'true' as QUERYID,
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List"/>
     from t_teacher
+    <if test="join != null">
+      ${join}
+    </if>
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
+      <include refid="Example_Where_Clause"/>
     </if>
     <if test="orderByClause != null">
       order by ${orderByClause}
@@ -98,7 +106,7 @@
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 'false' as QUERYID,
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List"/>
     from t_teacher
     where tea_id = #{teaId,jdbcType=VARCHAR}
   </select>
@@ -106,21 +114,22 @@
     delete from t_teacher
     where tea_id = #{teaId,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.graduationaldesign.graduation.pojo.TeacherExample">
+  <delete id="deleteByExample"
+    parameterType="com.graduationaldesign.graduation.pojo.TeacherExample">
     delete from t_teacher
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
+      <include refid="Example_Where_Clause"/>
     </if>
   </delete>
   <insert id="insert" parameterType="com.graduationaldesign.graduation.pojo.Teacher">
-    insert into t_teacher (tea_id, tea_password, tea_name, 
-      tea_sex, tea_age, tea_birthday, 
-      tea_phone, tea_mail, tea_address, 
-      tea_remarks, academy_id)
-    values (#{teaId,jdbcType=VARCHAR}, #{teaPassword,jdbcType=VARCHAR}, #{teaName,jdbcType=VARCHAR}, 
-      #{teaSex,jdbcType=VARCHAR}, #{teaAge,jdbcType=INTEGER}, #{teaBirthday,jdbcType=VARCHAR}, 
-      #{teaPhone,jdbcType=VARCHAR}, #{teaMail,jdbcType=VARCHAR}, #{teaAddress,jdbcType=VARCHAR}, 
-      #{teaRemarks,jdbcType=VARCHAR}, #{academyId,jdbcType=INTEGER})
+    insert into t_teacher (tea_id, tea_password, tea_name,
+    tea_sex, tea_age, tea_birthday,
+    tea_phone, tea_mail, tea_address,
+    tea_remarks, academy_id)
+    values (#{teaId,jdbcType=VARCHAR}, #{teaPassword,jdbcType=VARCHAR}, #{teaName,jdbcType=VARCHAR},
+    #{teaSex,jdbcType=VARCHAR}, #{teaAge,jdbcType=INTEGER}, #{teaBirthday,jdbcType=VARCHAR},
+    #{teaPhone,jdbcType=VARCHAR}, #{teaMail,jdbcType=VARCHAR}, #{teaAddress,jdbcType=VARCHAR},
+    #{teaRemarks,jdbcType=VARCHAR}, #{academyId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.graduationaldesign.graduation.pojo.Teacher">
     insert into t_teacher
@@ -195,10 +204,11 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.graduationaldesign.graduation.pojo.TeacherExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.graduationaldesign.graduation.pojo.TeacherExample"
+    resultType="java.lang.Long">
     select count(*) from t_teacher
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
+      <include refid="Example_Where_Clause"/>
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
@@ -239,27 +249,28 @@
       </if>
     </set>
     <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
+      <include refid="Update_By_Example_Where_Clause"/>
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
     update t_teacher
     set tea_id = #{record.teaId,jdbcType=VARCHAR},
-      tea_password = #{record.teaPassword,jdbcType=VARCHAR},
-      tea_name = #{record.teaName,jdbcType=VARCHAR},
-      tea_sex = #{record.teaSex,jdbcType=VARCHAR},
-      tea_age = #{record.teaAge,jdbcType=INTEGER},
-      tea_birthday = #{record.teaBirthday,jdbcType=VARCHAR},
-      tea_phone = #{record.teaPhone,jdbcType=VARCHAR},
-      tea_mail = #{record.teaMail,jdbcType=VARCHAR},
-      tea_address = #{record.teaAddress,jdbcType=VARCHAR},
-      tea_remarks = #{record.teaRemarks,jdbcType=VARCHAR},
-      academy_id = #{record.academyId,jdbcType=INTEGER}
+    tea_password = #{record.teaPassword,jdbcType=VARCHAR},
+    tea_name = #{record.teaName,jdbcType=VARCHAR},
+    tea_sex = #{record.teaSex,jdbcType=VARCHAR},
+    tea_age = #{record.teaAge,jdbcType=INTEGER},
+    tea_birthday = #{record.teaBirthday,jdbcType=VARCHAR},
+    tea_phone = #{record.teaPhone,jdbcType=VARCHAR},
+    tea_mail = #{record.teaMail,jdbcType=VARCHAR},
+    tea_address = #{record.teaAddress,jdbcType=VARCHAR},
+    tea_remarks = #{record.teaRemarks,jdbcType=VARCHAR},
+    academy_id = #{record.academyId,jdbcType=INTEGER}
     <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
+      <include refid="Update_By_Example_Where_Clause"/>
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.graduationaldesign.graduation.pojo.Teacher">
+  <update id="updateByPrimaryKeySelective"
+    parameterType="com.graduationaldesign.graduation.pojo.Teacher">
     update t_teacher
     <set>
       <if test="teaPassword != null">
@@ -298,15 +309,15 @@
   <update id="updateByPrimaryKey" parameterType="com.graduationaldesign.graduation.pojo.Teacher">
     update t_teacher
     set tea_password = #{teaPassword,jdbcType=VARCHAR},
-      tea_name = #{teaName,jdbcType=VARCHAR},
-      tea_sex = #{teaSex,jdbcType=VARCHAR},
-      tea_age = #{teaAge,jdbcType=INTEGER},
-      tea_birthday = #{teaBirthday,jdbcType=VARCHAR},
-      tea_phone = #{teaPhone,jdbcType=VARCHAR},
-      tea_mail = #{teaMail,jdbcType=VARCHAR},
-      tea_address = #{teaAddress,jdbcType=VARCHAR},
-      tea_remarks = #{teaRemarks,jdbcType=VARCHAR},
-      academy_id = #{academyId,jdbcType=INTEGER}
+    tea_name = #{teaName,jdbcType=VARCHAR},
+    tea_sex = #{teaSex,jdbcType=VARCHAR},
+    tea_age = #{teaAge,jdbcType=INTEGER},
+    tea_birthday = #{teaBirthday,jdbcType=VARCHAR},
+    tea_phone = #{teaPhone,jdbcType=VARCHAR},
+    tea_mail = #{teaMail,jdbcType=VARCHAR},
+    tea_address = #{teaAddress,jdbcType=VARCHAR},
+    tea_remarks = #{teaRemarks,jdbcType=VARCHAR},
+    academy_id = #{academyId,jdbcType=INTEGER}
     where tea_id = #{teaId,jdbcType=VARCHAR}
   </update>
   <select id="getAcademy" resultMap="ResultMapWithBLOBs">
@@ -349,7 +360,7 @@
         academy_id,
       </if>
     </trim>
-     values 
+    values
     <foreach collection="list" index="index" item="item" separator=",">
       <trim prefix=" (" suffix=")" suffixOverrides=",">
         <if test="item.teaId!=null">
@@ -423,7 +434,7 @@
           academy_id=#{item.academyId,jdbcType=INTEGER},
         </if>
       </set>
-      where 
+      where
       tea_id = #{item.teaId,jdbcType=VARCHAR}
     </foreach>
   </update>

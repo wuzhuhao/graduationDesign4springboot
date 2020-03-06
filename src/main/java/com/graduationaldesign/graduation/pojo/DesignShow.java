@@ -1,5 +1,6 @@
 package com.graduationaldesign.graduation.pojo;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import cn.hutool.core.date.DateUtil;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -17,29 +18,34 @@ public class DesignShow implements Serializable {
      * 表字段 : t_designshow.id
      */
     @MyPrimaryKey
+    @Excel(name = "设计展示id", orderNum = "1")
     private Integer id;
 
     /**
      * 表字段 : t_designshow.show_sub_id
      */
+    @Excel(name = "课题id", orderNum = "1")
     private String showSubId;
 
     /**
      * 附件
      * 表字段 : t_designshow.show_file
      */
+    @Excel(name = "附件路径", orderNum = "1")
     private String showFile;
 
     /**
      * 上传时间
      * 表字段 : t_designshow.show_time
      */
+    @Excel(name = "设计展示时间", orderNum = "1")
     private Date showTime;
 
     /**
      * 展示内容
      * 表字段 : t_designshow.show_content
      */
+    @Excel(name = "展示内容", orderNum = "1")
     private String showContent;
 
     private Subject subject;

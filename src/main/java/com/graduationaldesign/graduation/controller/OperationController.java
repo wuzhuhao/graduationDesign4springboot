@@ -100,7 +100,8 @@ public class OperationController {
     }
 
     @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> deleteOperationList(List<Integer> lstprimaryKey) {
+    public ResponseEntity<Object> deleteOperationList(
+            @RequestParam(value = "primaryKey") List<Integer> lstprimaryKey) {
         ResponseEntity<Object> result = null;
         try {
             operationService.deleteByPrimaryKeyIn(lstprimaryKey);

@@ -1,8 +1,10 @@
 package com.graduationaldesign.graduation.controller.file;
 
+import com.graduationaldesign.graduation.pojo.Progress;
 import com.graduationaldesign.graduation.service.FileDownService;
 import com.graduationaldesign.graduation.util.FileUtil;
 import com.graduationaldesign.graduation.util.ResponseStatu;
+import com.graduationaldesign.graduation.util.WordUtils;
 import com.graduationaldesign.graduation.util.ZipUtils;
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,8 +14,10 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,6 +40,10 @@ public class FileDownController {
 
     @Autowired
     FileDownService fileDownService;
+    @Autowired
+    HttpServletRequest request;
+    @Autowired
+    private HttpServletResponse response;
 
     @GetMapping(value = "/downSingleFile")
     public ResponseEntity<Object> download(HttpServletResponse response, String fileName)
@@ -123,7 +131,45 @@ public class FileDownController {
             result = ResponseStatu.failure(e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
-            result = ResponseStatu.failure("导出模板成功");
+            result = ResponseStatu.failure("导出模板失败");
+        }
+        return result;
+    }
+
+    @RequestMapping("/exportDemo1")
+    @ResponseBody
+    public ResponseEntity<Object> exportDemo1(HttpServletResponse response) {
+        ResponseEntity<Object> result = null;
+        try {
+            Map<String, Object> map = new HashMap<>();
+            map.put("stuName", "测试名称");
+            map.put("stuId", "学号");
+            map.put("stuClass", "班级");
+            map.put("stuMajor", "专业");
+            map.put("academyName", "学院名称");
+            map.put("teaName", "教师名称");
+            map.put("subName", "课题名称");
+            List<Progress> list = new ArrayList<>();
+            for (int i = 1; i < 10; i++) {
+                Progress progress = new Progress();
+                progress.setProgReply("回复" + i);
+                progress.setProgContent("内容" + i);
+                progress.setProgContentTime(new Date());
+                map.put("num", i + "");
+                map.put("progressTime", "日期" + i);
+                map.put("progressContent", "指导内容" + i);
+                map.put("replyContent", "回复内容" + i);
+                list.add(progress);
+            }
+            map.put("listInfo", list);
+            WordUtils.exportMillCertificateWord(request, response, map, "测试title", "progress.ftl");
+            result = ResponseStatu.success("导出模板成功");
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            result = ResponseStatu.failure(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = ResponseStatu.failure("导出模板失败");
         }
         return result;
     }

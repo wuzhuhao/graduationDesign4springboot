@@ -29,6 +29,16 @@ public class SubjectExample {
      * @mbg.generated
      */
     protected List<Criteria> oredCriteria;
+    
+    private String join;
+
+    public String getJoin() {
+        return join;
+    }
+
+    public void setJoin(String join) {
+        this.join = join;
+    }
 
     /**
      * 构造查询条件,t_subject

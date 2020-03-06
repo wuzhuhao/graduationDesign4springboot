@@ -163,7 +163,7 @@ public class SubjectServiceImpl implements SubjectService {
 //        diaryExample.setOrderByClause("dTime desc");
         ExampleHelper.addCondition(Subject.class, criteria, params);
         criteria.andSubStuStateEqualTo(1);
-        List<Subject> list = subjectMapper.selectByExample(subjectExample);
+        List<Subject> list = subjectMapper.selectByExampleWithBLOBs(subjectExample);
         pageBean.setBeanList(list);
         //pageBean.setParams(params);
         return pageBean;
@@ -176,7 +176,7 @@ public class SubjectServiceImpl implements SubjectService {
         SubjectExample subjectExample = new SubjectExample();
         SubjectExample.Criteria criteria = subjectExample.createCriteria();
         ExampleHelper.addCondition(Subject.class, criteria, params);
-        List<Subject> list = subjectMapper.selectByExample(subjectExample);
+        List<Subject> list = subjectMapper.selectByExampleWithBLOBs(subjectExample);
         pageBean.setBeanList(list);
 //        pageBean.setParams(params);
         return pageBean;
@@ -199,7 +199,7 @@ public class SubjectServiceImpl implements SubjectService {
         ExampleHelper.addCondition(Subject.class, criteria, params);
         criteria.andStuIdEqualTo(student.getStuId());
         criteria.andSubStuStateNotEqualTo(1);
-        List<Subject> list = subjectMapper.selectByExample(subjectExample);
+        List<Subject> list = subjectMapper.selectByExampleWithBLOBs(subjectExample);
         pageBean.setBeanList(list);
 //        pageBean.setParams();
         return pageBean;
@@ -215,7 +215,7 @@ public class SubjectServiceImpl implements SubjectService {
         ExampleHelper.addCondition(Subject.class, criteria, params);
         criteria.andSubTeaIdEqualTo(teacher.getTeaId());
         criteria.andSubStuStateNotEqualTo(1);
-        List<Subject> list = subjectMapper.selectByExample(subjectExample);
+        List<Subject> list = subjectMapper.selectByExampleWithBLOBs(subjectExample);
         pageBean.setBeanList(list);
 //        pageBean.setParams();
         return pageBean;

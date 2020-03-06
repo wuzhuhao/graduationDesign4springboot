@@ -59,7 +59,7 @@ public class NoticeServiceImpl implements NoticeService {
         NoticeExample example = new NoticeExample();
         NoticeExample.Criteria criteria = example.createCriteria();
         ExampleHelper.addCondition(Notice.class, criteria, params);
-        List<Notice> list = this.noticeMapper.selectByExample(example);
+        List<Notice> list = this.noticeMapper.selectByExampleWithBLOBs(example);
         pageBean.setBeanList(list);
         //pageBean.setParams(params);
         return pageBean;

@@ -120,7 +120,7 @@ public class ReportServiceImpl implements ReportService {
             criteria.andReportTypeEqualTo(reportType);
         }
         ExampleHelper.addCondition(Report.class, criteria, params);
-        List<Report> list = reportMapper.selectByExample(reportExample);
+        List<Report> list = reportMapper.selectByExampleWithBLOBs(reportExample);
         pageBean.setBeanList(list);
         //pageBean.setParams(params);
         return pageBean;

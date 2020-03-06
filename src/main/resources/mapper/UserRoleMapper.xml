@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.graduationaldesign.graduation.mapper.UserRoleMapper">
   <resultMap id="BaseResultMap" type="com.graduationaldesign.graduation.pojo.UserRole">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="admin_id" jdbcType="VARCHAR" property="adminId" />
-    <result column="role_id" jdbcType="BIGINT" property="roleId" />
+    <id column="id" jdbcType="BIGINT" property="id"/>
+    <result column="admin_id" jdbcType="VARCHAR" property="adminId"/>
+    <result column="role_id" jdbcType="BIGINT" property="roleId"/>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -24,7 +25,8 @@
                 </when>
                 <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach close=")" collection="criterion.value" item="listItem" open="("
+                    separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -53,7 +55,8 @@
                 </when>
                 <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach close=")" collection="criterion.value" item="listItem" open="("
+                    separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -67,16 +70,21 @@
   <sql id="Base_Column_List">
     id, admin_id, role_id
   </sql>
-  <select id="selectByExample" parameterType="com.graduationaldesign.graduation.pojo.UserRoleExample" resultMap="BaseResultMap">
+  <select id="selectByExample"
+    parameterType="com.graduationaldesign.graduation.pojo.UserRoleExample"
+    resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     'true' as QUERYID,
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List"/>
     from user_role
+    <if test="join != null">
+      ${join}
+    </if>
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
+      <include refid="Example_Where_Clause"/>
     </if>
     <if test="orderByClause != null">
       order by ${orderByClause}
@@ -84,7 +92,7 @@
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 'false' as QUERYID,
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List"/>
     from user_role
     where id = #{id,jdbcType=BIGINT}
   </select>
@@ -92,10 +100,11 @@
     delete from user_role
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.graduationaldesign.graduation.pojo.UserRoleExample">
+  <delete id="deleteByExample"
+    parameterType="com.graduationaldesign.graduation.pojo.UserRoleExample">
     delete from user_role
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
+      <include refid="Example_Where_Clause"/>
     </if>
   </delete>
   <insert id="insert" parameterType="com.graduationaldesign.graduation.pojo.UserRole">
@@ -127,10 +136,11 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.graduationaldesign.graduation.pojo.UserRoleExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.graduationaldesign.graduation.pojo.UserRoleExample"
+    resultType="java.lang.Long">
     select count(*) from user_role
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
+      <include refid="Example_Where_Clause"/>
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
@@ -147,19 +157,20 @@
       </if>
     </set>
     <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
+      <include refid="Update_By_Example_Where_Clause"/>
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
     update user_role
     set id = #{record.id,jdbcType=BIGINT},
-      admin_id = #{record.adminId,jdbcType=VARCHAR},
-      role_id = #{record.roleId,jdbcType=BIGINT}
+    admin_id = #{record.adminId,jdbcType=VARCHAR},
+    role_id = #{record.roleId,jdbcType=BIGINT}
     <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
+      <include refid="Update_By_Example_Where_Clause"/>
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.graduationaldesign.graduation.pojo.UserRole">
+  <update id="updateByPrimaryKeySelective"
+    parameterType="com.graduationaldesign.graduation.pojo.UserRole">
     update user_role
     <set>
       <if test="adminId != null">
@@ -174,7 +185,7 @@
   <update id="updateByPrimaryKey" parameterType="com.graduationaldesign.graduation.pojo.UserRole">
     update user_role
     set admin_id = #{adminId,jdbcType=VARCHAR},
-      role_id = #{roleId,jdbcType=BIGINT}
+    role_id = #{roleId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <insert id="insertBatchSelective" parameterType="java.util.List">
@@ -190,7 +201,7 @@
         role_id,
       </if>
     </trim>
-     values 
+    values
     <foreach collection="list" index="index" item="item" separator=",">
       <trim prefix=" (" suffix=")" suffixOverrides=",">
         <if test="item.id!=null">
@@ -216,7 +227,7 @@
           role_id=#{item.roleId,jdbcType=BIGINT},
         </if>
       </set>
-      where 
+      where
       id = #{item.id,jdbcType=BIGINT}
     </foreach>
   </update>

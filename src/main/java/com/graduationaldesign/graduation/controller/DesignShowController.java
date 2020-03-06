@@ -100,7 +100,8 @@ public class DesignShowController {
     }
 
     @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> deleteDesignShowList(List<Integer> lstprimaryKey) {
+    public ResponseEntity<Object> deleteDesignShowList(
+            @RequestParam(value = "primaryKey") List<Integer> lstprimaryKey) {
         ResponseEntity<Object> result = null;
         try {
             designShowService.deleteByPrimaryKeyIn(lstprimaryKey);

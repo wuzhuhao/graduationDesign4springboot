@@ -33,7 +33,7 @@ public class StudentController {
 
     @RequestMapping(value = "/getStuById", method = RequestMethod.GET)
     public ResponseEntity<Object> getStuById(String stuId) {
-        Student student = studentService.getStuById(stuId);
+        Student student = studentService.findById(stuId);
         if (student == null) {
             return ResponseStatu.failure("该学生不存在");
         }

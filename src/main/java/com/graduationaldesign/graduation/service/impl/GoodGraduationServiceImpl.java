@@ -60,7 +60,7 @@ public class GoodGraduationServiceImpl implements GoodGraduationService {
         GoodGraduationExample example = new GoodGraduationExample();
         GoodGraduationExample.Criteria criteria = example.createCriteria();
         ExampleHelper.addCondition(GoodGraduation.class, criteria, params);
-        List<GoodGraduation> list = this.goodGraduationMapper.selectByExample(example);
+        List<GoodGraduation> list = this.goodGraduationMapper.selectByExampleWithBLOBs(example);
         pageBean.setBeanList(list);
         //pageBean.setParams(params);
         return pageBean;

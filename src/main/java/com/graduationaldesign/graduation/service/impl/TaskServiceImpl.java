@@ -82,7 +82,7 @@ public class TaskServiceImpl implements TaskService {
         TaskExample taskExample = new TaskExample();
         TaskExample.Criteria criteria = taskExample.createCriteria();
         ExampleHelper.addCondition(Task.class, criteria, params);
-        List<Task> list = taskMapper.selectByExample(taskExample);
+        List<Task> list = taskMapper.selectByExampleWithBLOBs(taskExample);
         pageBean.setBeanList(list);
 //        pageBean.setParams();
         return pageBean;
@@ -98,7 +98,7 @@ public class TaskServiceImpl implements TaskService {
         TaskExample.Criteria criteria = taskExample.createCriteria();
         ExampleHelper.addCondition(Task.class, criteria, params);
         criteria.andJoinTeaIdEqualTo(teaId);
-        List<Task> taskList = taskMapper.selectByExample(taskExample);
+        List<Task> taskList = taskMapper.selectByExampleWithBLOBs(taskExample);
         PageBean<Task> pageBean = new PageBean<>();
         pageBean.setBeanList(taskList);
         return pageBean;

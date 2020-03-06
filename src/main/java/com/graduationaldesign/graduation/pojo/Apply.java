@@ -1,5 +1,6 @@
 package com.graduationaldesign.graduation.pojo;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import cn.hutool.core.date.DateUtil;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -17,60 +18,70 @@ public class Apply implements Serializable {
      * 表字段 : t_apply.id
      */
     @MyPrimaryKey
+    @Excel(name = "申请ID*", orderNum = "1")
     private Integer id;
 
     /**
      * 申请导师id，外键
      * 表字段 : t_apply.apply_tea_id
      */
+    @Excel(name = "申请导师id", orderNum = "1")
     private String applyTeaId;
 
     /**
      * 处理状态，1是待处理，2是已处理
      * 表字段 : t_apply.apply_state
      */
+    @Excel(name = "处理状态(默认是1)", orderNum = "1")
     private Integer applyState;
 
     /**
      * 关联学生id
      * 表字段 : t_apply.apply_stu_id
      */
+    @Excel(name = "关联学生id", orderNum = "1")
     private String applyStuId;
 
     /**
      * 关联课题
      * 表字段 : t_apply.apply_sub_id
      */
+    @Excel(name = "关联课题id", orderNum = "1")
     private String applySubId;
 
     /**
      * 申请时间
      * 表字段 : t_apply.apply_time
      */
+    @Excel(name = "申请时间", orderNum = "1")
     private Date applyTime;
 
     /**
      * 处理时间
      * 表字段 : t_apply.apply_reply_time
      */
+    @Excel(name = "处理时间", orderNum = "1")
     private Date applyReplyTime;
 
     /**
      * 申请内容
      * 表字段 : t_apply.apply_content
      */
+    @Excel(name = "申请内容", orderNum = "1")
     private String applyContent;
 
     /**
      * 申请理由
      * 表字段 : t_apply.apply_reason
      */
+    @Excel(name = "申请理由", orderNum = "1")
     private String applyReason;
 
     /**
      * 处理反馈
      * 表字段 : t_apply.apply_reply
      */
+    @Excel(name = "处理反馈", orderNum = "1")
     private String applyReply;
 
     private Student student;
