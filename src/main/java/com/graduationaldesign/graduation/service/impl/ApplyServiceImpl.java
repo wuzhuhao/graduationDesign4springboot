@@ -59,7 +59,7 @@ public class ApplyServiceImpl implements ApplyService {
         ApplyExample example = new ApplyExample();
         ApplyExample.Criteria criteria = example.createCriteria();
         ExampleHelper.addCondition(Apply.class, criteria, params);
-        List<Apply> list = this.applyMapper.selectByExample(example);
+        List<Apply> list = this.applyMapper.selectByExampleWithBLOBs(example);
         pageBean.setBeanList(list);
         //pageBean.setParams(params);
         return pageBean;

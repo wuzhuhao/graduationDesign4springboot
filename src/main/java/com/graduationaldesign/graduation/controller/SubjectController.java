@@ -213,7 +213,8 @@ public class SubjectController {
     }
 
     @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> deleteSubjectList(List<String> lstprimaryKey) {
+    public ResponseEntity<Object> deleteSubjectList(
+            @RequestParam(value = "primaryKey") List<String> lstprimaryKey) {
         ResponseEntity<Object> result = null;
         try {
             subjectService.deleteByPrimaryKeyIn(lstprimaryKey);

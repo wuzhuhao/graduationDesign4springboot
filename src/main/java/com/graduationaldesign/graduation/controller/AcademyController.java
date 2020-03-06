@@ -101,7 +101,8 @@ public class AcademyController {
     }
 
     @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> deleteSubjectList(List<Integer> lstprimaryKey) {
+    public ResponseEntity<Object> deleteSubjectList(
+            @RequestParam(value = "primaryKey") List<Integer> lstprimaryKey) {
         ResponseEntity<Object> result = null;
         try {
             academyService.deleteByPrimaryKeyIn(lstprimaryKey);

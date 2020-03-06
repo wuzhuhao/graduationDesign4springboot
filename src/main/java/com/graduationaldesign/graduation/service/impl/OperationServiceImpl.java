@@ -59,7 +59,7 @@ public class OperationServiceImpl implements OperationService {
         OperationExample example = new OperationExample();
         OperationExample.Criteria criteria = example.createCriteria();
         ExampleHelper.addCondition(Operation.class, criteria, params);
-        List<Operation> list = this.operationMapper.selectByExample(example);
+        List<Operation> list = this.operationMapper.selectByExampleWithBLOBs(example);
         pageBean.setBeanList(list);
         //pageBean.setParams(params);
         return pageBean;

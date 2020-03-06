@@ -1,5 +1,6 @@
 package com.graduationaldesign.graduation.pojo;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import cn.hutool.core.date.DateUtil;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -17,24 +18,28 @@ public class GoodGraduation implements Serializable {
      * 表字段 : t_goodgraduation.id
      */
     @MyPrimaryKey
+    @Excel(name = "展示内容", orderNum = "1")
     private Integer id;
 
     /**
      * 外键课题id
      * 表字段 : t_goodgraduation.good_sub_id
      */
+    @Excel(name = "展示内容", orderNum = "1")
     private String goodSubId;
 
     /**
      * 评定时间
      * 表字段 : t_goodgraduation.good_time
      */
+    @Excel(name = "展示内容", orderNum = "1")
     private Date goodTime;
 
     /**
      * 评定理由
      * 表字段 : t_goodgraduation.good_reason
      */
+    @Excel(name = "展示内容", orderNum = "1")
     private String goodReason;
 
     private Subject subject;

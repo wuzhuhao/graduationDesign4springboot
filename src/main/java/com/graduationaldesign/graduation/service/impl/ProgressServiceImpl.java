@@ -88,7 +88,7 @@ public class ProgressServiceImpl implements ProgressService {
         }
         ProgressExample.Criteria criteria = example.createCriteria();
         ExampleHelper.addCondition(Progress.class, criteria, params);
-        List<Progress> list = progressMapper.selectByExample(example);
+        List<Progress> list = progressMapper.selectByExampleWithBLOBs(example);
         pageBean.setBeanList(list);
         //pageBean.setParams(params);
         return pageBean;
@@ -108,7 +108,7 @@ public class ProgressServiceImpl implements ProgressService {
         ProgressExample.Criteria criteria = example.createCriteria();
         criteria.andJoinStuIdEqualTo(student.getStuId());
         ExampleHelper.addCondition(Progress.class, criteria, params);
-        List<Progress> list = progressMapper.selectByExample(example);
+        List<Progress> list = progressMapper.selectByExampleWithBLOBs(example);
         pageBean.setBeanList(list);
         //pageBean.setParams(params);
         return pageBean;
@@ -128,7 +128,7 @@ public class ProgressServiceImpl implements ProgressService {
         ProgressExample.Criteria criteria = example.createCriteria();
         criteria.andJoinTeaIdEqualTo(teacher.getTeaId());
         ExampleHelper.addCondition(Progress.class, criteria, params);
-        List<Progress> list = progressMapper.selectByExample(example);
+        List<Progress> list = progressMapper.selectByExampleWithBLOBs(example);
         pageBean.setBeanList(list);
         //pageBean.setParams(params);
         return pageBean;

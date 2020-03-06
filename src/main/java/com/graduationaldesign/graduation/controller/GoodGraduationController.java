@@ -101,7 +101,8 @@ public class GoodGraduationController {
     }
 
     @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> deleteGoodGraduationList(List<Integer> lstprimaryKey) {
+    public ResponseEntity<Object> deleteGoodGraduationList(
+            @RequestParam(value = "primaryKey") List<Integer> lstprimaryKey) {
         ResponseEntity<Object> result = null;
         try {
             goodGraduationService.deleteByPrimaryKeyIn(lstprimaryKey);

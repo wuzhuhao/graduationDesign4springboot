@@ -122,7 +122,8 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> deleteTaskList(List<Integer> lstprimaryKey) {
+    public ResponseEntity<Object> deleteTaskList(
+            @RequestParam(value = "primaryKey") List<Integer> lstprimaryKey) {
         ResponseEntity<Object> result = null;
         try {
             taskService.deleteByPrimaryKeyIn(lstprimaryKey);

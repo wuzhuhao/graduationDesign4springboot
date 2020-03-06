@@ -154,7 +154,8 @@ public class ReportController {
     }
 
     @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> deleteReportList(List<Integer> lstprimaryKey) {
+    public ResponseEntity<Object> deleteReportList(
+            @RequestParam(value = "primaryKey") List<Integer> lstprimaryKey) {
         ResponseEntity<Object> result = null;
         try {
             reportService.deleteByPrimaryKeyIn(lstprimaryKey);

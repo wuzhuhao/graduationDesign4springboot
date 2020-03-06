@@ -96,6 +96,9 @@
     ,
     <include refid="Blob_Column_List"/>
     from t_progress
+    <if test="join != null">
+      ${join}
+    </if>
     <if test="_parameter != null">
       <include refid="Example_Where_Clause"/>
     </if>

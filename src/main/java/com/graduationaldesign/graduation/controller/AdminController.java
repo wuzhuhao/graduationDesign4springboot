@@ -106,7 +106,8 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> deleteAdminList(List<String> lstprimaryKey) {
+    public ResponseEntity<Object> deleteAdminList(
+            @RequestParam(value = "primaryKey") List<String> lstprimaryKey) {
         ResponseEntity<Object> result = null;
         try {
             adminService.deleteByPrimaryKeyIn(lstprimaryKey);

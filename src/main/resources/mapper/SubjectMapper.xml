@@ -107,6 +107,9 @@
     ,
     <include refid="Blob_Column_List"/>
     from t_subject
+    <if test="join != null">
+      ${join}
+    </if>
     <if test="_parameter != null">
       <include refid="Example_Where_Clause"/>
     </if>
@@ -123,6 +126,9 @@
     'true' as QUERYID,
     <include refid="Base_Column_List"/>
     from t_subject
+    <if test="join != null">
+      ${join}
+    </if>
     <if test="_parameter != null">
       <include refid="Example_Where_Clause"/>
     </if>

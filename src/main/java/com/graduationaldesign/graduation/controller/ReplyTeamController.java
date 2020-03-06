@@ -100,7 +100,8 @@ public class ReplyTeamController {
     }
 
     @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> deleteReplyTeamList(List<Integer> lstprimaryKey) {
+    public ResponseEntity<Object> deleteReplyTeamList(
+            @RequestParam(value = "primaryKey") List<Integer> lstprimaryKey) {
         ResponseEntity<Object> result = null;
         try {
             replyTeamService.deleteByPrimaryKeyIn(lstprimaryKey);

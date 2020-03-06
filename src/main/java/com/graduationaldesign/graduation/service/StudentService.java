@@ -19,7 +19,7 @@ public interface StudentService {
 
     String changeInformation(UserModel userModel);
 
-    Student getStuById(String id);
+    Student findById(String id);
 
     int deleteByPrimaryKey(String stuId);
 

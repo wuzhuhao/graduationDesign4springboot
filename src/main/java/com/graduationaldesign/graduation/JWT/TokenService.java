@@ -31,7 +31,7 @@ public class TokenService {
         boolean flag = false;
         try {
             if (type.equals(1)) {
-                Optional.of(studentService.getStuById(number));
+                Optional.of(studentService.findById(number));
             } else if (type.equals(2)) {
                 Optional.of(teacherService.findById(number));
             } else if (type.equals(3)) {
@@ -53,7 +53,7 @@ public class TokenService {
         String number = (String) tokenMap.get("number");
         Object user = null;
         if (type.equals(1)) {
-            user = studentService.getStuById(number);
+            user = studentService.findById(number);
         } else if (type.equals(2)) {
             user = teacherService.findById(number);
         } else if (type.equals(3)) {

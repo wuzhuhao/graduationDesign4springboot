@@ -11,7 +11,7 @@ public class Academy implements Serializable {
     /**
      * 表字段 : t_academy.id
      */
-    @Excel(name = "学院代码", orderNum = "0")
+    @Excel(name = "学院代码*", orderNum = "0")
     @MyPrimaryKey
     private Integer id;
 
@@ -26,6 +26,7 @@ public class Academy implements Serializable {
      * 学院介绍
      * 表字段 : t_academy.aca_introduce
      */
+    @Excel(name = "学院介绍", orderNum = "1")
     private String acaIntroduce;
 
     /**

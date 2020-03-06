@@ -99,7 +99,7 @@ public class FileUploadServiceImpl implements FileUploadService {
 
 
     public void importUser(MultipartFile file, Integer type) throws Exception {
-        if (type == null || type >= 3 || type <= 0) {
+        if (type == null || type > 3 || type <= 0) {
             throw new Exception("请选择上传用户类型");
         }
         if (type.equals(1)) {

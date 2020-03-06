@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.graduationaldesign.graduation.mapper.ReplyTeamMapper">
   <resultMap id="BaseResultMap" type="com.graduationaldesign.graduation.pojo.ReplyTeam">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="team_name" jdbcType="VARCHAR" property="teamName" />
-    <result column="team_address" jdbcType="VARCHAR" property="teamAddress" />
-    <result column="reply_time" jdbcType="TIMESTAMP" property="replyTime" />
-    <result column="team_leader_id" jdbcType="VARCHAR" property="teamLeaderId" />
-    <association column="team_leader_id" property="teacher" select="getTeacher" />
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="team_name" jdbcType="VARCHAR" property="teamName"/>
+    <result column="team_address" jdbcType="VARCHAR" property="teamAddress"/>
+    <result column="reply_time" jdbcType="TIMESTAMP" property="replyTime"/>
+    <result column="team_leader_id" jdbcType="VARCHAR" property="teamLeaderId"/>
+    <association column="team_leader_id" property="teacher" select="getTeacher"/>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -27,7 +28,8 @@
                 </when>
                 <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach close=")" collection="criterion.value" item="listItem" open="("
+                    separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -56,7 +58,8 @@
                 </when>
                 <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach close=")" collection="criterion.value" item="listItem" open="("
+                    separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -70,16 +73,21 @@
   <sql id="Base_Column_List">
     id, team_name, team_address, reply_time, team_leader_id
   </sql>
-  <select id="selectByExample" parameterType="com.graduationaldesign.graduation.pojo.ReplyTeamExample" resultMap="BaseResultMap">
+  <select id="selectByExample"
+    parameterType="com.graduationaldesign.graduation.pojo.ReplyTeamExample"
+    resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     'true' as QUERYID,
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List"/>
     from reply_team
+    <if test="join != null">
+      ${join}
+    </if>
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
+      <include refid="Example_Where_Clause"/>
     </if>
     <if test="orderByClause != null">
       order by ${orderByClause}
@@ -87,7 +95,7 @@
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 'false' as QUERYID,
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List"/>
     from reply_team
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -95,20 +103,22 @@
     delete from reply_team
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.graduationaldesign.graduation.pojo.ReplyTeamExample">
+  <delete id="deleteByExample"
+    parameterType="com.graduationaldesign.graduation.pojo.ReplyTeamExample">
     delete from reply_team
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
+      <include refid="Example_Where_Clause"/>
     </if>
   </delete>
   <insert id="insert" parameterType="com.graduationaldesign.graduation.pojo.ReplyTeam">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into reply_team (team_name, team_address, reply_time, 
-      team_leader_id)
-    values (#{teamName,jdbcType=VARCHAR}, #{teamAddress,jdbcType=VARCHAR}, #{replyTime,jdbcType=TIMESTAMP}, 
-      #{teamLeaderId,jdbcType=VARCHAR})
+    insert into reply_team (team_name, team_address, reply_time,
+    team_leader_id)
+    values (#{teamName,jdbcType=VARCHAR}, #{teamAddress,jdbcType=VARCHAR},
+    #{replyTime,jdbcType=TIMESTAMP},
+    #{teamLeaderId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.graduationaldesign.graduation.pojo.ReplyTeam">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -144,10 +154,12 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.graduationaldesign.graduation.pojo.ReplyTeamExample" resultType="java.lang.Long">
+  <select id="countByExample"
+    parameterType="com.graduationaldesign.graduation.pojo.ReplyTeamExample"
+    resultType="java.lang.Long">
     select count(*) from reply_team
     <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
+      <include refid="Example_Where_Clause"/>
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
@@ -170,21 +182,22 @@
       </if>
     </set>
     <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
+      <include refid="Update_By_Example_Where_Clause"/>
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
     update reply_team
     set id = #{record.id,jdbcType=INTEGER},
-      team_name = #{record.teamName,jdbcType=VARCHAR},
-      team_address = #{record.teamAddress,jdbcType=VARCHAR},
-      reply_time = #{record.replyTime,jdbcType=TIMESTAMP},
-      team_leader_id = #{record.teamLeaderId,jdbcType=VARCHAR}
+    team_name = #{record.teamName,jdbcType=VARCHAR},
+    team_address = #{record.teamAddress,jdbcType=VARCHAR},
+    reply_time = #{record.replyTime,jdbcType=TIMESTAMP},
+    team_leader_id = #{record.teamLeaderId,jdbcType=VARCHAR}
     <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
+      <include refid="Update_By_Example_Where_Clause"/>
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.graduationaldesign.graduation.pojo.ReplyTeam">
+  <update id="updateByPrimaryKeySelective"
+    parameterType="com.graduationaldesign.graduation.pojo.ReplyTeam">
     update reply_team
     <set>
       <if test="teamName != null">
@@ -205,13 +218,16 @@
   <update id="updateByPrimaryKey" parameterType="com.graduationaldesign.graduation.pojo.ReplyTeam">
     update reply_team
     set team_name = #{teamName,jdbcType=VARCHAR},
-      team_address = #{teamAddress,jdbcType=VARCHAR},
-      reply_time = #{replyTime,jdbcType=TIMESTAMP},
-      team_leader_id = #{teamLeaderId,jdbcType=VARCHAR}
+    team_address = #{teamAddress,jdbcType=VARCHAR},
+    reply_time = #{replyTime,jdbcType=TIMESTAMP},
+    team_leader_id = #{teamLeaderId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="getTeacher" resultMap="com.graduationaldesign.graduation.mapper.TeacherMapper.BaseResultMap">
-    select tea_id,tea_password,tea_name,tea_sex,tea_age,tea_birthday,tea_phone,tea_mail,tea_address,tea_remarks,academy_id from t_teacher where tea_id=#{teamLeaderId}
+  <select id="getTeacher"
+    resultMap="com.graduationaldesign.graduation.mapper.TeacherMapper.BaseResultMap">
+    select
+    tea_id,tea_password,tea_name,tea_sex,tea_age,tea_birthday,tea_phone,tea_mail,tea_address,tea_remarks,academy_id
+    from t_teacher where tea_id=#{teamLeaderId}
   </select>
   <insert id="insertBatchSelective" parameterType="java.util.List">
     insert into reply_team
@@ -232,7 +248,7 @@
         team_leader_id,
       </if>
     </trim>
-     values 
+    values
     <foreach collection="list" index="index" item="item" separator=",">
       <trim prefix=" (" suffix=")" suffixOverrides=",">
         <if test="item.id!=null">
@@ -270,7 +286,7 @@
           team_leader_id=#{item.teamLeaderId,jdbcType=VARCHAR},
         </if>
       </set>
-      where 
+      where
       id = #{item.id,jdbcType=INTEGER}
     </foreach>
   </update>
