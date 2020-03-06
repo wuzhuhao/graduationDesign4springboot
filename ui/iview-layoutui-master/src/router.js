@@ -8,7 +8,6 @@ Router.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
 }
 
-
 const router = new Router({
   // mode: 'history',
   routes: [
@@ -30,9 +29,25 @@ const router = new Router({
           component: () => import('@/views/Home')
         },
         {
-          path: '/adminManage',
-          name: 'adminManage',
-          component: () => import('@/views/admin/adminManage')
+          path: '/studentSelection',
+          name: 'studentSelection',
+          component: () => import('@/views/student/studentSelection')
+        },{
+          path: '/studentSelectionInfo',
+          name: 'studentSelectionInfo',
+          component: () => import('@/views/student/studentSelectionInfo')
+        },{
+          path: '/noAcceptedAssignment',
+          name: 'noAcceptedAssignment',
+          component: () => import('@/views/student/noAcceptedAssignment')
+        },{
+          path: '/acceptedAssignment',
+          name: 'acceptedAssignment',
+          component: () => import('@/views/student/acceptedAssignment')
+        },{
+          path: '/acceptedAssignmentInfo',
+          name: 'acceptedAssignmentInfo',
+          component: () => import('@/views/student/acceptedAssignmentInfo')
         },
         {
           path: '/home',
@@ -43,6 +58,11 @@ const router = new Router({
           path: '/admin/notice',
           name: 'adminNotice',
           component: () => import('@/views/Home')
+        },
+        {
+          path: '/userInfo',
+          name: 'userInfo',
+          component: () => import('@/views/student/userInfo')
         }
       ]
     },
@@ -81,8 +101,59 @@ const router = new Router({
         {
           path: '/taskManage',
           name: 'taskManage',
-          component: () => import('@/views/admin/taskManage2')
+          component: () => import('@/views/admin/taskManage')
         },
+        {
+          path: '/subjectManage',
+          name: 'subjectManage',
+          component: () => import('@/views/admin/subjectManage')
+        },
+        {
+          path: '/logOperationManage',
+          name: 'logOperationManage',
+          component: () => import('@/views/admin/logOperationManage')
+        },
+        {
+          path: '/replyTeamManage',
+          name: 'replyTeamManage',
+          component: () => import('@/views/admin/replyTeamManage')
+        },
+        {
+          path: '/academyManage',
+          name: 'academyManage',
+          component: () => import('@/views/admin/academyManage')
+        },
+        {
+          path: '/applyManage',
+          name: 'applyManage',
+          component: () => import('@/views/admin/applyManage')
+        },
+        {
+          path: '/designShowManage',
+          name: 'designShowManage',
+          component: () => import('@/views/admin/designShowManage')
+        },
+        {
+          path: '/goodGraduationManage',
+          name: 'goodGraduationManage',
+          component: () => import('@/views/admin/goodGraduationManage')
+        },
+        {
+          path: '/noticeManage',
+          name: 'noticeManage',
+          component: () => import('@/views/admin/noticeManage')
+        },
+        {
+          path: '/progressManage',
+          name: 'progressManage',
+          component: () => import('@/views/admin/progressManage')
+        },
+        {
+          path: '/reportManage',
+          name: 'reportManage',
+          component: () => import('@/views/admin/reportManage')
+        },
+        
         {
           path: '/admin/notice',
           name: 'adminNotice',

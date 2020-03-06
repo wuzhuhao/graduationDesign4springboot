@@ -468,7 +468,7 @@ export default {
                          {
                             title:'学生管理',
                             name:'studentManage',
-                            href:'/studentManage',
+                            href:'studentManage',
                             closable:true,
                             showInTags:false,
                             showInMenus:true,
@@ -477,7 +477,7 @@ export default {
                         {
                             title:'教师管理',
                             name:'teacherManage',
-                            href:'/teacherManage',
+                            href:'teacherManage',
                             closable:true,
                             showInTags:false,
                             showInMenus:true,
@@ -485,7 +485,7 @@ export default {
                         },
                         {
                             title:'管理员管理',
-                            name:'/adminManage',
+                            name:'adminManage',
                             href:'adminManage',
                             closable:true,
                             showInTags:false,
@@ -494,8 +494,98 @@ export default {
                         },
                         {
                             title:'任务管理',
-                            name:'/taskManage',
+                            name:'taskManage',
                             href:'taskManage',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        },
+                        {
+                            title:'选题管理',
+                            name:'subjectManage',
+                            href:'subjectManage',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        },
+                        {
+                            title:'操作日志管理',
+                            name:'logOperationManage',
+                            href:'logOperationManage',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        },
+                        {
+                            title:'答辩小组管理',
+                            name:'replyTeamManage',
+                            href:'replyTeamManage',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        },
+                        {
+                            title:'学院管理',
+                            name:'academyManage',
+                            href:'academyManage',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        },
+                        {
+                            title:'申请管理',
+                            name:'applyManage',
+                            href:'applyManage',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        },
+                        {
+                            title:'设计展示管理',
+                            name:'designShowManage',
+                            href:'designShowManage',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        },
+                        {
+                            title:'优秀毕业生管理',
+                            name:'goodGraduationManage',
+                            href:'goodGraduationManage',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        },
+                        {
+                            title:'公告管理',
+                            name:'noticeManage',
+                            href:'noticeManage',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        },
+                        {
+                            title:'进展管理',
+                            name:'progressManage',
+                            href:'progressManage',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        },
+                        {
+                            title:'报告管理',
+                            name:'reportManage',
+                            href:'reportManage',
                             closable:true,
                             showInTags:false,
                             showInMenus:true,
@@ -615,8 +705,8 @@ export default {
                     children:[
                         {
                             title:'学生选题',
-                            name:'memberManage',
-                            href:'/notice',
+                            name:'studentSelection',
+                            href:'/studentSelection',
                             closable:true,
                             showInTags:false,
                             showInMenus:true,
@@ -631,8 +721,8 @@ export default {
                     children:[
                         {
                             title:'待接收任务书',
-                            name:'backwater-setting',
-                            href:'/home',
+                            name:'noAcceptedAssignment',
+                            href:'/noAcceptedAssignment',
                             closable:true,
                             showInTags:false,
                             showInMenus:true,
@@ -640,8 +730,8 @@ export default {
                         },
                         {
                             title:'已接收任务书',
-                            name:'commissionSetting',
-                            href:'/home',
+                            name:'acceptedAssignment',
+                            href:'/acceptedAssignment',
                             closable:true,
                             showInTags:false,
                             showInMenus:true,
@@ -736,8 +826,8 @@ export default {
                     children:[
                         {
                             title:'个人信息',
-                            name:'system-notice',
-                            href:'/home',
+                            name:'userInfo',
+                            href:'/userInfo',
                             closable:true,
                             showInTags:false,
                             showInMenus:true,
@@ -992,6 +1082,7 @@ export default {
         }
         // ------------------------------  菜单操作结束  --------------------------------
     },
+    
     created() { 
         let type = localStorage.getItem("type") 
         //选择菜单

@@ -62,7 +62,7 @@
             width: 100%;
             justify-content: flex-end;
         }
-        & .export{
+        & .Drawer {
            
         }
     }
@@ -103,6 +103,10 @@
         <div class="page-wrapper">
             <slot name="pager"/>
         </div>
+        <div class="Drawer">
+            <slot name="drawer"/>
+        </div>
+        
         
     </div>
 </section>
