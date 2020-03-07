@@ -154,6 +154,7 @@ public class SubjectServiceImpl implements SubjectService {
         PageBean<Subject> pageBean = new PageBean<>();
         SubjectExample subjectExample = new SubjectExample();
         SubjectExample.Criteria criteria = subjectExample.createCriteria();
+
 //        if (uid!=0){
 //            criteria.andDidEqualTo(uid);
 //            Map<String,Object> param = new HashMap<String, Object>();
@@ -163,6 +164,7 @@ public class SubjectServiceImpl implements SubjectService {
 //        diaryExample.setOrderByClause("dTime desc");
         ExampleHelper.addCondition(Subject.class, criteria, params);
         criteria.andSubStuStateEqualTo(1);
+    criteria.andJoinStuIdEqualTo((String)params.get("stuId"));
         List<Subject> list = subjectMapper.selectByExampleWithBLOBs(subjectExample);
         pageBean.setBeanList(list);
         //pageBean.setParams(params);
@@ -177,7 +179,12 @@ public class SubjectServiceImpl implements SubjectService {
         SubjectExample.Criteria criteria = subjectExample.createCriteria();
         ExampleHelper.addCondition(Subject.class, criteria, params);
         List<Subject> list = subjectMapper.selectByExampleWithBLOBs(subjectExample);
+        for(Subject sub :list){
+            sub.getTeacher();
+            sub.getStudent();
+        }
         pageBean.setBeanList(list);
+
 //        pageBean.setParams(params);
         return pageBean;
     }
@@ -200,6 +207,10 @@ public class SubjectServiceImpl implements SubjectService {
         criteria.andStuIdEqualTo(student.getStuId());
         criteria.andSubStuStateNotEqualTo(1);
         List<Subject> list = subjectMapper.selectByExampleWithBLOBs(subjectExample);
+        for(Subject sub :list){
+            sub.getTeacher();
+            sub.getStudent();
+        }
         pageBean.setBeanList(list);
 //        pageBean.setParams();
         return pageBean;

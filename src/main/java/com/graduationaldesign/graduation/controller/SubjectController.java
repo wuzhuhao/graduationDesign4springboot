@@ -130,7 +130,8 @@ public class SubjectController {
      * @return
      */
     @RequestMapping(value = "/listOfChoice", method = RequestMethod.GET)
-    public ResponseEntity<Object> getSubjectOfChoice(@RequestParam HashMap<String, Object> params,
+    public ResponseEntity<Object> getSubjectOfChoice(
+            @RequestParam HashMap<String, Object> params,
             @RequestParam(required = false, defaultValue = "1") int page,
             @RequestParam(required = false, defaultValue = "5") int pageSize) {
         try {

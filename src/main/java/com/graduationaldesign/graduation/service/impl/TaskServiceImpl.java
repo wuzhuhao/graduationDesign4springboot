@@ -120,6 +120,10 @@ public class TaskServiceImpl implements TaskService {
         criteria.andJoinStuIdEqualTo(stuId);
         criteria.andTaskStateEqualTo(type);
         List<Task> list = taskMapper.selectByExampleWithBLOBs(taskExample);
+        for(Task task:list){
+            task.getSubject().getStudent();
+            task.getSubject().getTeacher();
+        }
         pageBean.setBeanList(list);
         return pageBean;
     }

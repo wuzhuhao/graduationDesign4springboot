@@ -47,6 +47,7 @@ router.beforeEach((to, from, next) => {
 // 配置公共url
 axios.defaults.baseURL = "http://localhost:8080/graManagement/"
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+axios.defaults.withCredentials = true; //配置为true
 //添加请求拦截器
 // axios.interceptors.request.use(
 //   config =>{

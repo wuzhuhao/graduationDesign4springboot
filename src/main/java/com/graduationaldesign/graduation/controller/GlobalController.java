@@ -12,19 +12,22 @@ import com.graduationaldesign.graduation.service.StudentService;
 import com.graduationaldesign.graduation.service.TeacherService;
 import com.graduationaldesign.graduation.util.CookieUtil;
 import com.graduationaldesign.graduation.util.ResponseStatu;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import lombok.extern.slf4j.Slf4j;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * @Author: wuzhuhao
  * @Date: 2020/1/9 18:28
  */
+@Slf4j
 @RestController
 public class GlobalController {
 
@@ -67,6 +70,7 @@ public class GlobalController {
             return ResponseStatu.failure(e.getMessage());
         }
 //        session.setAttribute(rootPropeties.getUserAttribute(), result);
+        log.info(request.toString()   +  "  999" + response  +  "777");
         CookieUtil.setCookie(request, response, "token", JWTUtil.createToken(number, type),
                 5 * 60 * 1000);
         return ResponseStatu.success(result);

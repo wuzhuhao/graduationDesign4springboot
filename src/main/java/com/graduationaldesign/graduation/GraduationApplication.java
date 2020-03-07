@@ -11,7 +11,6 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @MapperScan(basePackages = "com.graduationaldesign.graduation.mapper")
 public class GraduationApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(GraduationApplication.class, args);
     }

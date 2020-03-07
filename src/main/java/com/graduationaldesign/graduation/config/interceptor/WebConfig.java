@@ -98,7 +98,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loggerInterceptor())
-//                .addPathPatterns("/sub/list")
+                .addPathPatterns("/sub/list")
                 .addPathPatterns("/**/changPassword")
                 .addPathPatterns("/**/changeInformation")
                 .addPathPatterns("/sub/choice")
