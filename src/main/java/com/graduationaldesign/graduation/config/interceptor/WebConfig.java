@@ -98,14 +98,16 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loggerInterceptor())
-//                .addPathPatterns("/sub/list")
-                .addPathPatterns("/**/changPassword")
-                .addPathPatterns("/**/changeInformation")
-                .addPathPatterns("/sub/choice")
-                .addPathPatterns("/sub/listOfChoice")
-                .addPathPatterns("/sub/delete/**")
-                .addPathPatterns("/sub/update")
-                .addPathPatterns("/sub/add");
+                .addPathPatterns("/**")
+                .excludePathPatterns("/exit")
+                .excludePathPatterns("/login");
+//                .addPathPatterns("/**/changPassword")
+//                .addPathPatterns("/**/changeInformation")
+//                .addPathPatterns("/sub/choice")
+//                .addPathPatterns("/sub/listOfChoice")
+//                .addPathPatterns("/sub/delete/**")
+//                .addPathPatterns("/sub/update")
+//                .addPathPatterns("/sub/add");
 //                .addPathPatterns("/stu/getStuById");
     }
 

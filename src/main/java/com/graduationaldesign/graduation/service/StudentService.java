@@ -15,7 +15,7 @@ public interface StudentService {
 
     Student login(Student student);
 
-    String changPassword(String id, String oldPassword, String newPassword);
+    Student changPassword(String id, String oldPassword, String newPassword);
 
     String changeInformation(UserModel userModel);
 

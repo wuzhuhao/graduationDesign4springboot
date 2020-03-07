@@ -32,7 +32,7 @@ public class RedisSpringCache {
             Class<?> targetClass = AopProxyUtils.ultimateTargetClass(target);
             StringBuilder sb = new StringBuilder();
             sb.append(targetClass.getSimpleName()).append(":");
-            sb.append(method.getName()).append(":");
+//            sb.append(method.getName()).append(":");
             //调用SimpleKey的逻辑
             Object key = SimpleKeyGenerator.generateKey(params);
             return sb.append(key);

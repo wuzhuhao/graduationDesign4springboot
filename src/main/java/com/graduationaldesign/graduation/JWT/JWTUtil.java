@@ -15,7 +15,7 @@ public class JWTUtil {
 
     public static final String SECRET = "JKKLJOoasdlfj";
 
-    public static final Long EXPIRE = 5 * 60 * 1000L;
+    public static final Long EXPIRE = 10 * 60 * 1000L;
 
     public static String createToken(String number, int type) throws Exception {
         // header Map
@@ -40,6 +40,9 @@ public class JWTUtil {
         try {
             JWTVerifier verifier = JWT.require(Algorithm.HMAC256(SECRET)).build();
             jwt = verifier.verify(token);
+            if(jwt==null){
+                new RuntimeException("token不存在");
+            }
         } catch (Exception e) {
             //token 校验失败, 抛出Token验证非法异常
             e.printStackTrace();

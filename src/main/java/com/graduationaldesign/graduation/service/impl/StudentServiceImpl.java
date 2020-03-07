@@ -7,11 +7,15 @@ import com.graduationaldesign.graduation.pojo.UserModel;
 import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.StudentService;
 import com.graduationaldesign.graduation.util.PageBean;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -49,13 +53,15 @@ public class StudentServiceImpl implements StudentService {
     //    @Cacheable(key = "#p0", unless = "#result == null")
     //    sync=true 有一个线程正在忙于计算该值，而其他线程则被阻塞，直到缓存中更新该条目为止
     @Override
-    @Cacheable(keyGenerator = "keyGenerator", unless = "#result == null")
+//    @Cacheable(keyGenerator = "keyGenerator", unless = "#result == null")
+    @Cacheable(value = "student", key = "#id", unless = "#result == null")
     public Student findById(String id) {
         Student student = studentMapper.selectByPrimaryKey(id);
         return student;
     }
 
-    //    @CachePut(keyGenerator = "keyGenerator")
+    @CacheEvict(value = "student", key = "#id")
+    //    @CachePut(value = "student", key = "#id")
     @Override
     public String changeInformation(UserModel userModel) {
         String message;
@@ -82,18 +88,21 @@ public class StudentServiceImpl implements StudentService {
         return flag;
     }
 
+    @CacheEvict(value = "student", key = "#id")
     @Override
-    public String changPassword(String id, String oldPassword, String newPassword) {
+    public Student changPassword(String id, String oldPassword, String newPassword) {
         if (!checkPassword(id, oldPassword)) {
             throw new RuntimeException("原密码不正确!");
         }
         StudentExample studentExample = new StudentExample();
         StudentExample.Criteria criteria = studentExample.createCriteria();
         criteria.andStuIdEqualTo(id);
-        if (studentMapper.updateByExampleSelective(new Student(newPassword), studentExample) > 0) {
-            return "修改成功！";
+        Student student = findById(id);
+        student.setStuPassword(newPassword);
+        if (studentMapper.updateByExampleSelective(student, studentExample) > 0) {
+            return student;
         }
-        return "修改失败！";
+        return null;
     }
 
     @Override
