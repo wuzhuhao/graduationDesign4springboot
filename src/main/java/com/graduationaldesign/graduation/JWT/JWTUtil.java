@@ -15,7 +15,7 @@ public class JWTUtil {
 
     public static final String SECRET = "JKKLJOoasdlfj";
 
-    public static final Long EXPIRE = 60 * 60 * 1000L;
+    public static final Long EXPIRE = 5 * 60 * 1000L;
 
     public static String createToken(String number, int type) throws Exception {
         // header Map

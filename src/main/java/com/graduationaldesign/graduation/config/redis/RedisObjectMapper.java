@@ -13,6 +13,10 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Redis配置了objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);属性，在序列化时记录类/属性的类型，以便在反序列化时得到POJO对象。
+ *
+ */
 public class RedisObjectMapper {
 
     public static ObjectMapper redisConfigurationObjectMapper() {

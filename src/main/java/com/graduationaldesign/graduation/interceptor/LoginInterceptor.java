@@ -43,6 +43,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         //String uri = request.getRequestURI(); // 获取登录的uri，这个是不进行拦截的
         //if(session.getAttribute("LOGIN_USER")!=null || uri.indexOf("system/login")!=-1) {// 说明登录成功 或者 执行登录功能
         //获取cookie中的token
+        boolean flag = false;
         String token = CookieUtil.getCookieValue(request, "token");
         if (null == token || StringUtils.isEmpty(token)) {
             log.error("token为空");
@@ -50,7 +51,12 @@ public class LoginInterceptor implements HandlerInterceptor {
             response.sendRedirect(request.getContextPath() + "/index.html");
             return false;
         }
-        if (tokenService.checkUser(token)) {
+        try {
+            flag = tokenService.checkUser(token);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (flag) {
             // 登录成功不拦截
             return true;
         } else {

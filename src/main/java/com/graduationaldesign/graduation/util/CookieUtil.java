@@ -14,6 +14,7 @@ import java.net.URLEncoder;
  */
 public final class CookieUtil {
 
+    public static final int COOKIEMAXTIME = 10 * 60 * 1000;
     /**
      * 得到Cookie的值, 不编码
      * 

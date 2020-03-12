@@ -13,6 +13,7 @@ import com.graduationaldesign.graduation.service.TeacherService;
 import com.graduationaldesign.graduation.util.CookieUtil;
 import com.graduationaldesign.graduation.util.ResponseStatu;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -72,7 +73,7 @@ public class GlobalController {
 //        session.setAttribute(rootPropeties.getUserAttribute(), result);
         log.info(request.toString()   +  "  999" + response  +  "777");
         CookieUtil.setCookie(request, response, "token", JWTUtil.createToken(number, type),
-                5 * 60 * 1000);
+                CookieUtil.COOKIEMAXTIME);
         return ResponseStatu.success(result);
     }
 
@@ -102,7 +103,7 @@ public class GlobalController {
             if (type.equals(1)) {
                 /*学生修改密码*/
                 userID = ((Student) user).getStuId();
-                message = studentService.changPassword(userID, oldPassword, newPassword);
+                message = studentService.changPassword(userID, oldPassword, newPassword)==null?"修改失败":"修改成功";
             } else if (type.equals(2)) {
                 /*教师修改密码*/
                 userID = ((Teacher) user).getTeaId();
@@ -180,7 +181,7 @@ public class GlobalController {
      * @return
      */
     @RequestMapping(value = "/exit", method = RequestMethod.GET)
-//    @CacheEvict(cacheNames = {"student", "teacher", "admin"}, allEntries = true)
+    @CacheEvict(cacheNames = {"student", "teacher", "admin"}, allEntries = true)
     public ResponseEntity<Object> exit() {
         try {
             CookieUtil.deleteCookie(request, response, "token");

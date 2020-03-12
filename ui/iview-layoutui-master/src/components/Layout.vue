@@ -295,7 +295,7 @@
                     ref="side_menu"
                     :active-name="activeMenuName"
                     :open-names="openMenuName"
-                    theme="light"
+                    :theme="theme1"
                     width="230px"
                     :class="menuitemClasses"
                     @on-select="choosedMenu"
@@ -377,6 +377,17 @@
                                     <DropdownItem>炸酱面</DropdownItem>
                                 </DropdownMenu>
                             </Dropdown> -->
+                            <Dropdown style="margin-left: 20px" @on-click="changeTopic">
+                                <Button type="text" class="btn-blue" size="large">
+                                    选择主题
+                                    <Icon type="ios-arrow-down"></Icon>
+                                </Button>
+                                <DropdownMenu slot="list">
+                                    <DropdownItem name = 'light'>light</DropdownItem>
+                                    <DropdownItem name = 'dark'>dark</DropdownItem>
+                                    <DropdownItem name = 'primary'>primary </DropdownItem>
+                                </DropdownMenu>
+                            </Dropdown>
                             <Button type="text" icon="md-exit" class="btn-blue" size="large" @click="quit">退出系统</Button>
                         </div>
                     </div>
@@ -434,6 +445,7 @@
 export default {
     data(){
         return{
+            theme1:'dark',
             isCollapsed: false,
             // ------------------------------  菜单操作开始  --------------------------------
             title:'首页',
@@ -464,6 +476,43 @@ export default {
                     title:'系统模块',
                     name:'ios-flask',
                     icon:'ios-people',
+                    children:[   
+                       
+                        {
+                            title:'答辩小组管理',
+                            name:'replyTeamManage',
+                            href:'replyTeamManage',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        },
+                        {
+                            title:'学院管理',
+                            name:'academyManage',
+                            href:'academyManage',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        },
+                        
+                        {
+                            title:'公告管理',
+                            name:'noticeManage',
+                            href:'noticeManage',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        },
+                        
+                    ]
+                },
+                  {
+                    title:'用户管理',
+                    name:'userManage',
+                    icon:'ios-people',
                     children:[
                          {
                             title:'学生管理',
@@ -492,15 +541,13 @@ export default {
                             showInMenus:true,
                             choosed:false
                         },
-                        {
-                            title:'任务管理',
-                            name:'taskManage',
-                            href:'taskManage',
-                            closable:true,
-                            showInTags:false,
-                            showInMenus:true,
-                            choosed:false
-                        },
+                    ]
+                  },
+                  {
+                    title:'报告管理',
+                    name:'reportManage',
+                    icon:'ios-people',
+                    children:[
                         {
                             title:'选题管理',
                             name:'subjectManage',
@@ -511,63 +558,18 @@ export default {
                             choosed:false
                         },
                         {
-                            title:'操作日志管理',
-                            name:'logOperationManage',
-                            href:'logOperationManage',
+                            title:'任务管理',
+                            name:'taskManage',
+                            href:'taskManage',
                             closable:true,
                             showInTags:false,
                             showInMenus:true,
                             choosed:false
                         },
                         {
-                            title:'答辩小组管理',
-                            name:'replyTeamManage',
-                            href:'replyTeamManage',
-                            closable:true,
-                            showInTags:false,
-                            showInMenus:true,
-                            choosed:false
-                        },
-                        {
-                            title:'学院管理',
-                            name:'academyManage',
-                            href:'academyManage',
-                            closable:true,
-                            showInTags:false,
-                            showInMenus:true,
-                            choosed:false
-                        },
-                        {
-                            title:'申请管理',
-                            name:'applyManage',
-                            href:'applyManage',
-                            closable:true,
-                            showInTags:false,
-                            showInMenus:true,
-                            choosed:false
-                        },
-                        {
-                            title:'设计展示管理',
-                            name:'designShowManage',
-                            href:'designShowManage',
-                            closable:true,
-                            showInTags:false,
-                            showInMenus:true,
-                            choosed:false
-                        },
-                        {
-                            title:'优秀毕业生管理',
-                            name:'goodGraduationManage',
-                            href:'goodGraduationManage',
-                            closable:true,
-                            showInTags:false,
-                            showInMenus:true,
-                            choosed:false
-                        },
-                        {
-                            title:'公告管理',
-                            name:'noticeManage',
-                            href:'noticeManage',
+                            title:'开题报告管理',
+                            name:'reportManage',
+                            href:'reportManage',
                             closable:true,
                             showInTags:false,
                             showInMenus:true,
@@ -581,41 +583,33 @@ export default {
                             showInTags:false,
                             showInMenus:true,
                             choosed:false
-                        },
-                        {
-                            title:'报告管理',
-                            name:'reportManage',
-                            href:'reportManage',
+                        }, {
+                            title:'选优申请管理',
+                            name:'applyManage',
+                            href:'applyManage',
                             closable:true,
                             showInTags:false,
                             showInMenus:true,
                             choosed:false
-                        }
+                        },
+                        
                     ]
-                },
+                  },
+
                 {
                     title:'操作日志',
                     name:'system-manage',
                     icon:'ios-book',
                     children:[
-                        {
-                            title:'待接收任务书',
-                            name:'backwater-setting',
-                            href:'/home',
+                       {
+                            title:'操作日志管理',
+                            name:'logOperationManage',
+                            href:'logOperationManage',
                             closable:true,
                             showInTags:false,
                             showInMenus:true,
                             choosed:false
                         },
-                        {
-                            title:'已接收任务书',
-                            name:'commissionSetting',
-                            href:'/home',
-                            closable:true,
-                            showInTags:false,
-                            showInMenus:true,
-                            choosed:false
-                        }
                     ]
                 },
                 {
@@ -623,10 +617,10 @@ export default {
                     name:'accounting-manage',
                     icon:'md-flask',
                     children:[
-                        {
-                            title:'查看开题报告（学生）',
-                            name:'companyPayment',
-                            href:'/home',
+                       {
+                            title:'设计展示管理',
+                            name:'designShowManage',
+                            href:'designShowManage',
                             closable:true,
                             showInTags:false,
                             showInMenus:true,
@@ -639,15 +633,15 @@ export default {
                     name:'report-manage',
                     icon:'ios-stats',
                     children:[
-                        {
-                            title:'周进展情况',
-                            name:'about22',
-                            href:'/home',
+                       {
+                            title:'优秀毕业生管理',
+                            name:'goodGraduationManage',
+                            href:'goodGraduationManage',
                             closable:true,
                             showInTags:false,
                             showInMenus:true,
                             choosed:false
-                        }
+                        },
                     ]
                 },
                 {
@@ -685,7 +679,246 @@ export default {
                
             ],
 
-            //默认树为学生
+
+            teacherMenus:[
+                // {
+                //     title:'信息管理',
+                //     num:1,
+                //     name:'admin',
+                //     icon:'ios-home',
+                //     href:'/notice',
+                //     closable:false,
+                //     showInTags:true,
+                //     showInMenus:true,
+                //     choosed:true,
+                //     children:[
+                //         {
+                //             title:'站内邮件',
+                //             name:'studentSelection',
+                //             href:'/studentSelection',
+                //             closable:true,
+                //             showInTags:false,
+                //             showInMenus:true,
+                //             choosed:false
+                //         }
+                //     ]
+                // },        
+                {
+                    title:'数据查询',
+                    name:'ios-flask',
+                    icon:'ios-people',
+                    children:[
+                        {
+                            title:'学生进度查询',
+                            name:'studentSelection',
+                            href:'/studentSelection',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        },
+                         {
+                            title:'文件下载',
+                            name:'studentSelection',
+                            href:'/studentSelection',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        }
+                    ]
+                },
+                {
+                    title:'特殊处理',
+                    name:'system-manage',
+                    icon:'ios-book',
+                    children:[
+                        {
+                            title:'课题信息',
+                            name:'subjectMessage',
+                            href:'/subjectMessage',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        },
+                        {
+                            title:'任务书',
+                            name:'submitAssignment',
+                            href:'/submitAssignment',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        },
+                         {
+                            title:'开题报告',
+                            name:'teacherReport',
+                            href:'/teacherReport',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        },
+                        {
+                            title:'中期检查',
+                            name:'acceptedAssignment',
+                            href:'/acceptedAssignment',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        }
+                    ]
+                },
+                {
+                    title:'申报课题管理',
+                    name:'accountin',
+                    icon:'md-flask',
+                    children:[
+                        {
+                            title:'我申报的课题',
+                            name:'noDesignatedTopic',
+                            href:'/noDesignatedTopic',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        },
+                         {
+                            title:'指定学生的课题',
+                            name:'designatedTopic',
+                            href:'/designatedTopic',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        }
+                    ]
+                },
+                 {
+                    title:'任务书管理',
+                    name:'teacherTask',
+                    icon:'ios-book',
+                    children:[
+                        {
+                            title:'待接收任务书',
+                            name:'teacherNoAcceptedAssignment',
+                            href:'/teacherNoAcceptedAssignment',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        },
+                        {
+                            title:'已接收任务书',
+                            name:'taacherAcceptedAssignment',
+                            href:'/taacherAcceptedAssignment',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        }
+                    ]
+                },
+                {
+                    title:'开题报告',
+                    name:'report',
+                    icon:'md-flask',
+                    children:[
+                        {
+                            title:'查看开题报告（教师）',
+                            name:'teacherCheckReport',
+                            href:'/teacherCheckReport',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        }
+                    ]
+                },
+                {
+                    title:'周进展情况',
+                    name:'report-manage',
+                    icon:'ios-stats',
+                    children:[
+                        {
+                            title:'周进展情况',
+                            name:'teacherWeeklyProgress',
+                            href:'/teacherWeeklyProgress',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        }
+                    ]
+                },
+                {
+                    title:'论文（设计）定稿',
+                    name:'frontend-setting',
+                    icon:'ios-document',
+                    children:[
+                        {
+                            title:'学生论文定稿',
+                            name:'teacherFinalThesis',
+                            href:'/teacherFinalThesis',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        }
+                    ]
+                },
+                {
+                    title:'答辩管理',
+                    name:'game-platform-manage',
+                    icon:'ios-game-controller-b',
+                    children:[
+                        {
+                            title:'我的答辩组',
+                            name:'replyTeam-manage',
+                            href:'/replyTeam',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        }                     
+                    ]
+                },
+                {
+                    title:'总评',
+                    name:'activity-center',
+                    icon:'ios-cafe',
+                    children:[
+                        {
+                            title:'成绩总评学生',
+                            name:'about29',
+                            href:'/home',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        }
+                    ]
+                },
+                {
+                    title:'个人信息',
+                    name:'notic1',
+                    icon:'ios-person',
+                    children:[
+                        {
+                            title:'个人信息',
+                            name:'teacherInfo',
+                            href:'/teacherInfo',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        }
+                    ]
+                },
+            ],
+             //默认树为学生
             studentMenus:[
                 {
                     title:'首页',
@@ -746,8 +979,8 @@ export default {
                     children:[
                         {
                             title:'查看开题报告（学生）',
-                            name:'companyPayment',
-                            href:'/home',
+                            name:'checkReport',
+                            href:'/checkReport',
                             closable:true,
                             showInTags:false,
                             showInMenus:true,
@@ -762,8 +995,8 @@ export default {
                     children:[
                         {
                             title:'周进展情况',
-                            name:'about22',
-                            href:'/home',
+                            name:'weeklyProgress',
+                            href:'/weeklyProgress',
                             closable:true,
                             showInTags:false,
                             showInMenus:true,
@@ -778,8 +1011,8 @@ export default {
                     children:[
                         {
                             title:'学生论文定稿',
-                            name:'about26',
-                            href:'/home',
+                            name:'finalThesis',
+                            href:'/finalThesis',
                             closable:true,
                             showInTags:false,
                             showInMenus:true,
@@ -794,8 +1027,8 @@ export default {
                     children:[
                         {
                             title:'我的答辩组',
-                            name:'platform-manage',
-                            href:'/home',
+                            name:'replyTeam-manage',
+                            href:'/replyTeam',
                             closable:true,
                             showInTags:false,
                             showInMenus:true,
@@ -826,8 +1059,8 @@ export default {
                     children:[
                         {
                             title:'个人信息',
-                            name:'userInfo',
-                            href:'/userInfo',
+                            name:'studentInfo',
+                            href:'/studentInfo',
                             closable:true,
                             showInTags:false,
                             showInMenus:true,
@@ -950,6 +1183,11 @@ export default {
     },
     // ------------------------------  菜单操作结束  --------------------------------
     methods: {
+       changeTopic(name){
+           console.log(name)
+           this.theme1=name
+           this.$store.commit('theme1',name)
+        },
         /*tags 滚动事件 */
         handlescroll (e) {
             var type = e.type
@@ -1085,15 +1323,19 @@ export default {
     
     created() { 
         let type = localStorage.getItem("type") 
+        let theme1 = localStorage.getItem("theme1") 
+        this.theme1 = theme1
         //选择菜单
         if(type==1){   
             this.activeMenuName='student'        
              this.menus =this.studentMenus
+        }else if(type==2){  
+            this.activeMenuName='teacher'         
+             this.menus =this.teacherMenus
         }else if(type==3){  
             this.activeMenuName='admin'         
              this.menus =this.adminMenus
         }
-          
     }, 
 }
 </script>

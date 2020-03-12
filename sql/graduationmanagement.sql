@@ -228,7 +228,7 @@ CREATE TABLE `t_report` (
   `report_file` varchar(255) DEFAULT NULL COMMENT '报告附件',
   `report_temp` varchar(255) DEFAULT NULL COMMENT '报告模板',
   PRIMARY KEY (`report_sub_id`,`report_type`),
-  KEY `report_index_id` (`id`) USING BTREE,
+  KEY `report_index_id`  USING BTREE(`id`),
   CONSTRAINT `report_sub_id` FOREIGN KEY (`report_sub_id`) REFERENCES `t_subject` (`sub_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 

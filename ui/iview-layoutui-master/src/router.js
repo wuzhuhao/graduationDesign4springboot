@@ -33,10 +33,6 @@ const router = new Router({
           name: 'studentSelection',
           component: () => import('@/views/student/studentSelection')
         },{
-          path: '/studentSelectionInfo',
-          name: 'studentSelectionInfo',
-          component: () => import('@/views/student/studentSelectionInfo')
-        },{
           path: '/noAcceptedAssignment',
           name: 'noAcceptedAssignment',
           component: () => import('@/views/student/noAcceptedAssignment')
@@ -45,9 +41,25 @@ const router = new Router({
           name: 'acceptedAssignment',
           component: () => import('@/views/student/acceptedAssignment')
         },{
-          path: '/acceptedAssignmentInfo',
-          name: 'acceptedAssignmentInfo',
-          component: () => import('@/views/student/acceptedAssignmentInfo')
+          path: '/checkReport',
+          name: 'checkReport',
+          component: () => import('@/views/student/checkReport')
+        },{
+          path: '/weeklyProgress',
+          name: 'weeklyProgress',
+          component: () => import('@/views/student/weeklyProgress')
+        },{
+          path: '/designshow',
+          name: 'designshow',
+          component: () => import('@/views/student/designshow')
+        },{
+          path: '/finalThesis',
+          name: 'finalThesis',
+          component: () => import('@/views/student/finalThesis')
+        },{
+          path: '/replyTeam',
+          name: 'replyTeam',
+          component: () => import('@/views/student/replyTeam')
         },
         {
           path: '/home',
@@ -60,12 +72,116 @@ const router = new Router({
           component: () => import('@/views/Home')
         },
         {
-          path: '/userInfo',
-          name: 'userInfo',
-          component: () => import('@/views/student/userInfo')
+          path: '/studentInfo',
+          name: 'studentInfo',
+          component: () => import('@/views/student/studentInfo')
         }
       ]
     },
+
+
+//教师的树
+  {
+    path: '/teacher',
+    // name: 'student',
+    component: () => import('@/components/Layout'),
+    children:[
+      {
+        path: '',
+        redirect: {
+            name: 'studentHome'
+        },
+      },
+      // {
+      //   path: '/notice',
+      //   name: 'studentHome',
+      //   component: () => import('@/views/Home')
+      // },
+      // {
+    
+
+      //   path: '/studentSelection',
+      //   name: 'studentSelection',
+      //   component: () => import('@/views/student/studentSelection')
+      // },
+      {
+        path: '/teacherReport',
+        name: 'teacherReport',
+        component: () => import('@/views/teacher/teacherReport')
+      },
+      {
+        path: '/submitAssignment',
+        name: 'submitAssignment',
+        component: () => import('@/views/teacher/submitAssignment')
+      },
+      {
+        path: '/subjectMessage',
+        name: 'subjectMessage',
+        component: () => import('@/views/teacher/subjectMessage')
+      },
+      {
+        path: '/noDesignatedTopic',
+        name: 'noDesignatedTopic',
+        component: () => import('@/views/teacher/noDesignatedTopic')
+      },
+      {
+        path: '/designatedTopic',
+        name: 'designatedTopic',
+        component: () => import('@/views/teacher/designatedTopic')
+      },
+      {
+        path: '/teacherNoAcceptedAssignment',
+        name: 'teacherNoAcceptedAssignment',
+        component: () => import('@/views/teacher/teacherNoAcceptedAssignment')
+      },
+      {
+        path: '/taacherAcceptedAssignment',
+        name: 'taacherAcceptedAssignment',
+        component: () => import('@/views/teacher/taacherAcceptedAssignment')
+      },
+      {
+        path: '/teacherCheckReport',
+        name: 'teacherCheckReport',
+        component: () => import('@/views/teacher/teacherCheckReport')
+      },
+      {
+        path: '/teacherWeeklyProgress',
+        name: 'teacherWeeklyProgress',
+        component: () => import('@/views/teacher/teacherWeeklyProgress')
+      },
+      // {
+      //   path: '/designshow',
+      //   name: 'designshow',
+      //   component: () => import('@/views/student/designshow')
+      //},
+      {
+        path: '/teacherFinalThesis',
+        name: 'teacherFinalThesis',
+        component: () => import('@/views/teacher/teacherFinalThesis')
+      },
+      //{
+      //   path: '/replyTeam',
+      //   name: 'replyTeam',
+      //   component: () => import('@/views/student/replyTeam')
+      // },
+      // {
+      //   path: '/home',
+      //   name: 'adminTest2',
+      //   component: () => import('@/views/Home')
+      // },
+      // {
+      //   path: '/admin/notice',
+      //   name: 'adminNotice',
+      //   component: () => import('@/views/Home')
+      // },
+      {
+        path: '/teacherInfo',
+        name: 'teacherInfo',
+        component: () => import('@/views/teacher/teacherInfo')
+      }
+    ]
+  },
+
 
     //管理员用户的树
     {
