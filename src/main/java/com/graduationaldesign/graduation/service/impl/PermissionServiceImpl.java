@@ -1,16 +1,22 @@
 package com.graduationaldesign.graduation.service.impl;
 
+import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.mapper.PermissionMapper;
 import com.graduationaldesign.graduation.pojo.Permission;
 import com.graduationaldesign.graduation.pojo.PermissionExample;
 import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.PermissionService;
 import com.graduationaldesign.graduation.util.PageBean;
+import com.graduationaldesign.graduation.util.ResponseStatu;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 import java.lang.reflect.InvocationTargetException;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
-import javax.annotation.Resource;
-import org.springframework.stereotype.Service;
 
 /**
  * @Author: wuzhuhao
@@ -21,6 +27,8 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Resource
     private PermissionMapper permissionMapper;
+    @Autowired
+    RootPropeties rootPropeties;
 
     @Override
     public int deleteByPrimaryKey(Long id) {
@@ -71,5 +79,17 @@ public class PermissionServiceImpl implements PermissionService {
         PermissionExample.Criteria criteria = example.createCriteria();
         criteria.andIdIn(lstPrimaryKey);
         permissionMapper.deleteByExample(example);
+    }
+
+    @Override
+    public ResponseEntity<Object> updateListByPrimaryKeySelective(List<Permission> lstRecord) {
+        String message = MessageFormat.format("批量修改{0}成功", rootPropeties.getPermission());
+        try {
+            permissionMapper.updateBatchByPrimaryKeySelective(lstRecord);
+        } catch (Exception e) {
+            e.printStackTrace();
+            message = MessageFormat.format("批量修改{0}失败", rootPropeties.getPermission());
+        }
+        return ResponseStatu.success(message);
     }
 }

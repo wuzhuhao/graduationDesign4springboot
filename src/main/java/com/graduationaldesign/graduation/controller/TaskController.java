@@ -7,18 +7,15 @@ import com.graduationaldesign.graduation.service.SubjectService;
 import com.graduationaldesign.graduation.service.TaskService;
 import com.graduationaldesign.graduation.util.PageBean;
 import com.graduationaldesign.graduation.util.ResponseStatu;
-import java.text.MessageFormat;
-import java.util.HashMap;
-import java.util.List;
-import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.text.MessageFormat;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author wuzhuhao
@@ -45,8 +42,8 @@ public class TaskController {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ResponseEntity<Object> listByPage(@RequestParam HashMap<String, Object> param,
-            @RequestParam(required = false, defaultValue = "1") int page,
-            @RequestParam(required = false, defaultValue = "5") int pageSize) {
+                                             @RequestParam(required = false, defaultValue = "1") int page,
+                                             @RequestParam(required = false, defaultValue = "5") int pageSize) {
         try {
             return ResponseStatu
                     .success(taskService.listByPage(param, page, pageSize));
@@ -58,9 +55,9 @@ public class TaskController {
 
     @RequestMapping(value = "/listBytea/{teaId}", method = RequestMethod.GET)
     public ResponseEntity<Object> listBytea(@RequestParam HashMap<String, Object> param,
-            @RequestParam(required = false, defaultValue = "1") int page,
-            @PathVariable(value = "teaId") String teaId,
-            @RequestParam(required = false, defaultValue = "5") int pageSize) {
+                                            @RequestParam(required = false, defaultValue = "1") int page,
+                                            @PathVariable(value = "teaId") String teaId,
+                                            @RequestParam(required = false, defaultValue = "5") int pageSize) {
         request.getSession().getAttribute("");
         PageBean<Task> object = null;
         try {
@@ -110,7 +107,7 @@ public class TaskController {
             , @RequestParam(required = false, defaultValue = "1") int page
             , @PathVariable(value = "stuId") String stuId
             , @PathVariable(value = "type") String type,
-            @RequestParam(required = false, defaultValue = "5") int pageSize) {
+                                            @RequestParam(required = false, defaultValue = "5") int pageSize) {
         try {
             PageBean<Task> object = taskService
                     .listByPageOfStu(param, page, pageSize, stuId, type);
@@ -136,4 +133,14 @@ public class TaskController {
         }
         return result;
     }
+
+    @RequestMapping(value = "/listUpdate", method = RequestMethod.PUT)
+    public ResponseEntity<Object> updateTask(List<Task> lstTask) {
+        try {
+            return taskService.updateListByPrimaryKeySelective(lstTask);
+        } catch (RuntimeException e) {
+            return ResponseStatu.failure(e.getMessage());
+        }
+    }
+
 }

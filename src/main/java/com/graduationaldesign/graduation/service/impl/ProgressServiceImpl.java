@@ -1,5 +1,6 @@
 package com.graduationaldesign.graduation.service.impl;
 
+import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.mapper.ProgressMapper;
 import com.graduationaldesign.graduation.pojo.Progress;
 import com.graduationaldesign.graduation.pojo.ProgressExample;
@@ -8,12 +9,17 @@ import com.graduationaldesign.graduation.pojo.Teacher;
 import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.ProgressService;
 import com.graduationaldesign.graduation.util.PageBean;
+import com.graduationaldesign.graduation.util.ResponseStatu;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 import java.lang.reflect.InvocationTargetException;
+import java.text.MessageFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import javax.annotation.Resource;
-import org.springframework.stereotype.Service;
 
 /**
  * @Author: wuzhuhao
@@ -24,6 +30,8 @@ public class ProgressServiceImpl implements ProgressService {
 
     @Resource
     private ProgressMapper progressMapper;
+    @Autowired
+    RootPropeties rootPropeties;
 
     @Override
     public String deleteByPrimaryKey(Integer id) {
@@ -78,7 +86,7 @@ public class ProgressServiceImpl implements ProgressService {
 
     @Override
     public PageBean<Progress> listByPage(HashMap<String, Object> params, int page,
-            Integer pageSize)
+                                         Integer pageSize)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<Progress> pageBean = new PageBean<>();
         ProgressExample example = new ProgressExample();
@@ -89,6 +97,7 @@ public class ProgressServiceImpl implements ProgressService {
         ProgressExample.Criteria criteria = example.createCriteria();
         ExampleHelper.addCondition(Progress.class, criteria, params);
         List<Progress> list = progressMapper.selectByExampleWithBLOBs(example);
+        list.stream().forEach(item -> item.getSubject());
         pageBean.setBeanList(list);
         //pageBean.setParams(params);
         return pageBean;
@@ -96,7 +105,7 @@ public class ProgressServiceImpl implements ProgressService {
 
     @Override
     public PageBean<Progress> listByPageOfStu(HashMap<String, Object> params, int page,
-            Integer pageSize, Student student)
+                                              Integer pageSize, Student student)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<Progress> pageBean = new PageBean<>();
         ProgressExample example = new ProgressExample();
@@ -109,6 +118,11 @@ public class ProgressServiceImpl implements ProgressService {
         criteria.andJoinStuIdEqualTo(student.getStuId());
         ExampleHelper.addCondition(Progress.class, criteria, params);
         List<Progress> list = progressMapper.selectByExampleWithBLOBs(example);
+        list.stream().forEach(item -> {
+            item.getSubject();
+            item.getSubject().getStudent();
+            item.getSubject().getTeacher();
+        });
         pageBean.setBeanList(list);
         //pageBean.setParams(params);
         return pageBean;
@@ -116,7 +130,7 @@ public class ProgressServiceImpl implements ProgressService {
 
     @Override
     public PageBean<Progress> listByPageOfTea(HashMap<String, Object> params, int page,
-            Integer pageSize, Teacher teacher)
+                                              Integer pageSize, Teacher teacher)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<Progress> pageBean = new PageBean<>();
         ProgressExample example = new ProgressExample();
@@ -129,6 +143,7 @@ public class ProgressServiceImpl implements ProgressService {
         criteria.andJoinTeaIdEqualTo(teacher.getTeaId());
         ExampleHelper.addCondition(Progress.class, criteria, params);
         List<Progress> list = progressMapper.selectByExampleWithBLOBs(example);
+        list.stream().forEach(item -> item.getSubject());
         pageBean.setBeanList(list);
         //pageBean.setParams(params);
         return pageBean;
@@ -182,5 +197,17 @@ public class ProgressServiceImpl implements ProgressService {
         ProgressExample.Criteria criteria = example.createCriteria();
         criteria.andIdIn(lstPrimaryKey);
         progressMapper.deleteByExample(example);
+    }
+
+    @Override
+    public ResponseEntity<Object> updateListByPrimaryKeySelective(List<Progress> lstRecord) {
+        String message = MessageFormat.format("批量修改{0}成功", rootPropeties.getProgress());
+        try {
+            progressMapper.updateBatchByPrimaryKeySelective(lstRecord);
+        } catch (Exception e) {
+            e.printStackTrace();
+            message = MessageFormat.format("批量修改{0}失败", rootPropeties.getProgress());
+        }
+        return ResponseStatu.success(message);
     }
 }

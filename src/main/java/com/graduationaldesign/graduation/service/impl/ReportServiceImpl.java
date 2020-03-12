@@ -1,5 +1,6 @@
 package com.graduationaldesign.graduation.service.impl;
 
+import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.mapper.ReportMapper;
 import com.graduationaldesign.graduation.pojo.Report;
 import com.graduationaldesign.graduation.pojo.ReportExample;
@@ -8,11 +9,16 @@ import com.graduationaldesign.graduation.pojo.Teacher;
 import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.ReportService;
 import com.graduationaldesign.graduation.util.PageBean;
+import com.graduationaldesign.graduation.util.ResponseStatu;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 import java.lang.reflect.InvocationTargetException;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
-import javax.annotation.Resource;
-import org.springframework.stereotype.Service;
 
 /**
  * @Author: wuzhuhao
@@ -23,6 +29,8 @@ public class ReportServiceImpl implements ReportService {
 
     @Resource
     private ReportMapper reportMapper;
+    @Autowired
+    RootPropeties rootPropeties;
 
     @Override
     public int deleteByPrimaryKey(String subId, Integer reportType) {
@@ -90,7 +98,7 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public PageBean<Report> listByPage(HashMap<String, Object> params, int page, Integer pageSize,
-            int reportType)
+                                       int reportType)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<Report> pageBean = new PageBean<>();
         ReportExample reportExample = new ReportExample();
@@ -139,8 +147,8 @@ public class ReportServiceImpl implements ReportService {
      */
     @Override
     public PageBean<Report> listByPageOfStu(HashMap<String, Object> params, int page,
-            Integer pageSize,
-            Student student, int reportType)
+                                            Integer pageSize,
+                                            Student student, int reportType)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<Report> pageBean = new PageBean<>();
         ReportExample example = new ReportExample();
@@ -169,7 +177,7 @@ public class ReportServiceImpl implements ReportService {
         if (reportType == 1 || reportType == 2) {
             criteria.andReportTypeEqualTo(reportType);
         }
-        List<Report> list = reportMapper.selectByExample(example);
+        List<Report> list = reportMapper.selectByExampleWithBLOBs(example);
         pageBean.setBeanList(list);
         //pageBean.setParams(params);
         return pageBean;
@@ -177,7 +185,7 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public PageBean<Report> listByPageOfTea(HashMap<String, Object> params, int page,
-            Integer pageSize, Teacher teacher, int reportType)
+                                            Integer pageSize, Teacher teacher, int reportType)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<Report> pageBean = new PageBean<>();
         ReportExample example = new ReportExample();
@@ -206,7 +214,7 @@ public class ReportServiceImpl implements ReportService {
         if (reportType == 1 || reportType == 2) {
             criteria.andReportTypeEqualTo(reportType);
         }
-        List<Report> list = reportMapper.selectByExample(example);
+        List<Report> list = reportMapper.selectByExampleWithBLOBs(example);
         pageBean.setBeanList(list);
         //pageBean.setParams(params);
         return pageBean;
@@ -218,5 +226,17 @@ public class ReportServiceImpl implements ReportService {
         ReportExample.Criteria criteria = example.createCriteria();
         criteria.andIdIn(lstPrimaryKey);
         reportMapper.deleteByExample(example);
+    }
+
+    @Override
+    public ResponseEntity<Object> updateListByPrimaryKeySelective(List<Report> lstRecord) {
+        String message = MessageFormat.format("批量修改{0}成功", rootPropeties.getReport());
+        try {
+            reportMapper.updateBatchByPrimaryKeySelective(lstRecord);
+        } catch (Exception e) {
+            e.printStackTrace();
+            message = MessageFormat.format("批量修改{0}失败", rootPropeties.getReport());
+        }
+        return ResponseStatu.success(message);
     }
 }

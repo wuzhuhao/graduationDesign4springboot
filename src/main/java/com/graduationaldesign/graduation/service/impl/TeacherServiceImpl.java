@@ -1,5 +1,6 @@
 package com.graduationaldesign.graduation.service.impl;
 
+import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.mapper.TeacherMapper;
 import com.graduationaldesign.graduation.pojo.Teacher;
 import com.graduationaldesign.graduation.pojo.TeacherExample;
@@ -7,11 +8,15 @@ import com.graduationaldesign.graduation.pojo.UserModel;
 import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.TeacherService;
 import com.graduationaldesign.graduation.util.PageBean;
+import com.graduationaldesign.graduation.util.ResponseStatu;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
 import java.lang.reflect.InvocationTargetException;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  * @Author: wuzhuhao
@@ -22,6 +27,8 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Autowired
     TeacherMapper teacherMapper;
+    @Autowired
+    RootPropeties rootPropeties;
 
     @Override
     public int deleteByPrimaryKey(String teaId) {
@@ -147,5 +154,17 @@ public class TeacherServiceImpl implements TeacherService {
         TeacherExample.Criteria criteria = example.createCriteria();
         criteria.andTeaIdIn(lstPrimaryKey);
         teacherMapper.deleteByExample(example);
+    }
+
+    @Override
+    public ResponseEntity<Object> updateListByPrimaryKeySelective(List<Teacher> lstRecord) {
+        String message = MessageFormat.format("批量修改{0}成功", rootPropeties.getTeacher());
+        try {
+            teacherMapper.updateBatchByPrimaryKeySelective(lstRecord);
+        } catch (Exception e) {
+            e.printStackTrace();
+            message = MessageFormat.format("批量修改{0}失败", rootPropeties.getTeacher());
+        }
+        return ResponseStatu.success(message);
     }
 }

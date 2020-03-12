@@ -1,9 +1,14 @@
 package com.graduationaldesign.graduation.service;
 
+import com.graduationaldesign.graduation.mapper.AdminMapper;
 import com.graduationaldesign.graduation.pojo.Admin;
 import com.graduationaldesign.graduation.pojo.UserModel;
 import com.graduationaldesign.graduation.util.PageBean;
+import com.graduationaldesign.graduation.util.ResponseStatu;
+import org.springframework.http.ResponseEntity;
+
 import java.lang.reflect.InvocationTargetException;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
 
@@ -41,4 +46,6 @@ public interface AdminService {
     void insertListSelective(List<Admin> lstAdmin) throws Exception;
 
     void deleteByPrimaryKeyIn(List<String> lstPrimaryKey) throws Exception;
+    public ResponseEntity<Object> updateListByPrimaryKeySelective(List<Admin> lstRecord);
+
 }

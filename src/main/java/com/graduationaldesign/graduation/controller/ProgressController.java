@@ -8,18 +8,15 @@ import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.Teacher;
 import com.graduationaldesign.graduation.service.ProgressService;
 import com.graduationaldesign.graduation.util.ResponseStatu;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 import java.text.MessageFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author wuzhuhao
@@ -109,8 +106,8 @@ public class ProgressController {
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ResponseEntity<Object> list(@RequestParam HashMap<String, Object> params,
-            @RequestParam(required = false, defaultValue = "1") int page,
-            @RequestParam(required = false, defaultValue = "5") int pageSize) {
+                                       @RequestParam(required = false, defaultValue = "1") int page,
+                                       @RequestParam(required = false, defaultValue = "5") int pageSize) {
         try {
             return ResponseStatu
                     .success(progressService
@@ -127,8 +124,8 @@ public class ProgressController {
      */
     @RequestMapping(value = "/listOfStu", method = RequestMethod.GET)
     public ResponseEntity<Object> listOfStu(@RequestParam HashMap<String, Object> params,
-            @RequestParam(required = false, defaultValue = "1") int page, String stuId,
-            @RequestParam(required = false, defaultValue = "5") int pageSize) {
+                                            @RequestParam(required = false, defaultValue = "1") int page, String stuId,
+                                            @RequestParam(required = false, defaultValue = "5") int pageSize) {
         Student student;
         try {
             student = (Student) tokenService.getUserByToken(request);
@@ -155,8 +152,8 @@ public class ProgressController {
      */
     @RequestMapping(value = "/listOfTea", method = RequestMethod.GET)
     public ResponseEntity<Object> listOfTea(@RequestParam HashMap<String, Object> params,
-            @RequestParam(required = false, defaultValue = "1") int page, String teaId,
-            @RequestParam(required = false, defaultValue = "5") int pageSize) {
+                                            @RequestParam(required = false, defaultValue = "1") int page, String teaId,
+                                            @RequestParam(required = false, defaultValue = "5") int pageSize) {
         Teacher teacher;
         try {
             teacher = (Teacher) tokenService.getUserByToken(request);
@@ -190,4 +187,14 @@ public class ProgressController {
         }
         return result;
     }
+
+    @RequestMapping(value = "/listUpdate", method = RequestMethod.PUT)
+    public ResponseEntity<Object> updateProgress(List<Progress> lstProgress) {
+        try {
+            return progressService.updateListByPrimaryKeySelective(lstProgress);
+        } catch (RuntimeException e) {
+            return ResponseStatu.failure(e.getMessage());
+        }
+    }
+
 }

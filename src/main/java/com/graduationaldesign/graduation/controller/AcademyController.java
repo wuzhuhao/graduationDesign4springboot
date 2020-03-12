@@ -1,7 +1,9 @@
 package com.graduationaldesign.graduation.controller;
 
 import com.graduationaldesign.graduation.aop.RootPropeties;
+import com.graduationaldesign.graduation.mapper.AcademyMapper;
 import com.graduationaldesign.graduation.pojo.Academy;
+import com.graduationaldesign.graduation.pojo.Subject;
 import com.graduationaldesign.graduation.service.AcademyService;
 import com.graduationaldesign.graduation.util.ResponseStatu;
 import java.text.MessageFormat;
@@ -125,6 +127,14 @@ public class AcademyController {
             e.printStackTrace();
             return ResponseStatu
                     .success(new HashMap<Integer, String>());
+        }
+    }
+    @RequestMapping(value = "/listUpdate", method = RequestMethod.PUT)
+    public ResponseEntity<Object> updateAcademy(List<Academy> lstAcademy) {
+        try {
+            return academyService.updateListByPrimaryKeySelective(lstAcademy);
+        } catch (RuntimeException e) {
+            return ResponseStatu.failure(e.getMessage());
         }
     }
 }

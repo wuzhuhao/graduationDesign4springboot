@@ -1,16 +1,22 @@
 package com.graduationaldesign.graduation.service.impl;
 
+import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.mapper.RoleMapper;
 import com.graduationaldesign.graduation.pojo.Role;
 import com.graduationaldesign.graduation.pojo.RoleExample;
 import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.RoleService;
 import com.graduationaldesign.graduation.util.PageBean;
+import com.graduationaldesign.graduation.util.ResponseStatu;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 import java.lang.reflect.InvocationTargetException;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
-import javax.annotation.Resource;
-import org.springframework.stereotype.Service;
 
 /**
  * @Author: wuzhuhao
@@ -21,6 +27,8 @@ public class RoleServiceImpl implements RoleService {
 
     @Resource
     private RoleMapper roleMapper;
+    @Autowired
+    RootPropeties rootPropeties;
 
     @Override
     public int deleteByPrimaryKey(Long id) {
@@ -71,5 +79,17 @@ public class RoleServiceImpl implements RoleService {
         RoleExample.Criteria criteria = example.createCriteria();
         criteria.andIdIn(lstPrimaryKey);
         roleMapper.deleteByExample(example);
+    }
+
+    @Override
+    public ResponseEntity<Object> updateListByPrimaryKeySelective(List<Role> lstRecord) {
+        String message = MessageFormat.format("批量修改{0}成功", rootPropeties.getRole());
+        try {
+            roleMapper.updateBatchByPrimaryKeySelective(lstRecord);
+        } catch (Exception e) {
+            e.printStackTrace();
+            message = MessageFormat.format("批量修改{0}失败", rootPropeties.getRole());
+        }
+        return ResponseStatu.success(message);
     }
 }

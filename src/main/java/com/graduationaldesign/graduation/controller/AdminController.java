@@ -2,6 +2,7 @@ package com.graduationaldesign.graduation.controller;
 
 
 import com.graduationaldesign.graduation.aop.RootPropeties;
+import com.graduationaldesign.graduation.mapper.AdminMapper;
 import com.graduationaldesign.graduation.pojo.Admin;
 import com.graduationaldesign.graduation.service.AdminService;
 import com.graduationaldesign.graduation.util.ResponseStatu;
@@ -120,4 +121,13 @@ public class AdminController {
         }
         return result;
     }
+    @RequestMapping(value = "/listUpdate", method = RequestMethod.PUT)
+    public ResponseEntity<Object> updateAdmin(List<Admin> lstAdmin) {
+        try {
+            return adminService.updateListByPrimaryKeySelective(lstAdmin);
+        } catch (RuntimeException e) {
+            return ResponseStatu.failure(e.getMessage());
+        }
+    }
+
 }

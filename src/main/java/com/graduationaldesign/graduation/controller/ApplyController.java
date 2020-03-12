@@ -1,6 +1,7 @@
 package com.graduationaldesign.graduation.controller;
 
 import com.graduationaldesign.graduation.aop.RootPropeties;
+import com.graduationaldesign.graduation.mapper.ApplyMapper;
 import com.graduationaldesign.graduation.pojo.Apply;
 import com.graduationaldesign.graduation.service.ApplyService;
 import com.graduationaldesign.graduation.util.ResponseStatu;
@@ -115,4 +116,13 @@ public class ApplyController {
         }
         return result;
     }
+    @RequestMapping(value = "/listUpdate", method = RequestMethod.PUT)
+    public ResponseEntity<Object> updateApply(List<Apply> lstApply) {
+        try {
+            return applyService.updateListByPrimaryKeySelective(lstApply);
+        } catch (RuntimeException e) {
+            return ResponseStatu.failure(e.getMessage());
+        }
+    }
+
 }

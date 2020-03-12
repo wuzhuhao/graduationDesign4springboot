@@ -3,6 +3,8 @@ package com.graduationaldesign.graduation.service;
 import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.UserModel;
 import com.graduationaldesign.graduation.util.PageBean;
+import org.springframework.http.ResponseEntity;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
@@ -39,4 +41,7 @@ public interface StudentService {
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
     void deleteByPrimaryKeyIn(List<String> lstprimaryKey) throws Exception;
+
+    public ResponseEntity<Object> updateListByPrimaryKeySelective(List<Student> lstRecord);
+
 }

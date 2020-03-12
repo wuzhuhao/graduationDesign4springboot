@@ -70,7 +70,15 @@ public class SubjectController {
         } catch (RuntimeException e) {
             return ResponseStatu.failure(e.getMessage());
         }
+    }
 
+    @RequestMapping(value = "/listUpdate", method = RequestMethod.PUT)
+    public ResponseEntity<Object> updateSubject(List<Subject> lstSubject) {
+        try {
+            return subjectService.updateListByPrimaryKeySelective(lstSubject);
+        } catch (RuntimeException e) {
+            return ResponseStatu.failure(e.getMessage());
+        }
     }
 
     /**
@@ -191,6 +199,22 @@ public class SubjectController {
         try {
             return ResponseStatu.success(subjectService.ChoiceSubject(subId,
                     (Student) tokenService.getUserByToken(request)));
+        } catch (ClassCastException e) {
+            return ResponseStatu.failure("用户异常，请重新登陆");
+        }
+    }
+
+    /**
+     * 教师指定选题
+     *
+     * @param subId
+     * @return
+     */
+    @RequestMapping(value = "/appointChoice", method = RequestMethod.POST)
+    public ResponseEntity<Object> appointChoice(String subId,String stuId) {
+        try {
+            return ResponseStatu.success(subjectService.ChoiceSubject(subId,
+                    new Student(stuId,"")));
         } catch (ClassCastException e) {
             return ResponseStatu.failure("用户异常，请重新登陆");
         }

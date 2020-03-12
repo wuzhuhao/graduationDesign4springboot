@@ -2,6 +2,8 @@ package com.graduationaldesign.graduation.service;
 
 import com.graduationaldesign.graduation.pojo.Task;
 import com.graduationaldesign.graduation.util.PageBean;
+import org.springframework.http.ResponseEntity;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
@@ -25,16 +27,19 @@ public interface TaskService {
     int updateByPrimaryKey(Task record);
 
     PageBean<Task> listByPageOfTea(HashMap<String, Object> params, int page, int pageSize,
-            String teaId)
+                                   String teaId)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
     PageBean<Task> listByPageOfStu(HashMap<String, Object> params, int page, int pageSize,
-            String stuId,
-            String type)
+                                   String stuId,
+                                   String type)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
     public PageBean<Task> listByPage(HashMap<String, Object> param, int page, int pageSize)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
     void deleteByPrimaryKeyIn(List<Integer> lstprimaryKey) throws Exception;
+
+    public ResponseEntity<Object> updateListByPrimaryKeySelective(List<Task> lstRecord);
+
 }

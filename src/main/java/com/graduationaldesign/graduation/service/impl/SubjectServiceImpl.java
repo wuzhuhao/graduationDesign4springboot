@@ -1,25 +1,25 @@
 package com.graduationaldesign.graduation.service.impl;
 
+import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.mapper.ReportMapper;
 import com.graduationaldesign.graduation.mapper.SubjectMapper;
-import com.graduationaldesign.graduation.pojo.Report;
-import com.graduationaldesign.graduation.pojo.Student;
-import com.graduationaldesign.graduation.pojo.Subject;
-import com.graduationaldesign.graduation.pojo.SubjectExample;
-import com.graduationaldesign.graduation.pojo.Teacher;
+import com.graduationaldesign.graduation.pojo.*;
 import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.SubjectService;
 import com.graduationaldesign.graduation.util.IDUtil;
 import com.graduationaldesign.graduation.util.PageBean;
 import com.graduationaldesign.graduation.util.ResponseStatu;
-import java.io.File;
-import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.List;
-import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.text.MessageFormat;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * 课题服务实现类
@@ -35,6 +35,8 @@ public class SubjectServiceImpl implements SubjectService {
     private SubjectMapper subjectMapper;
     @Resource
     private ReportMapper reportMapper;
+    @Autowired
+    private RootPropeties rootPropeties;
 
     /*==============私有接口=====================*/
 
@@ -149,7 +151,7 @@ public class SubjectServiceImpl implements SubjectService {
      */
     @Override
     public PageBean<Subject> listByPageOfNotChoice(HashMap<String, Object> params, int page,
-            int pageSize)
+                                                   int pageSize)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<Subject> pageBean = new PageBean<>();
         SubjectExample subjectExample = new SubjectExample();
@@ -191,7 +193,7 @@ public class SubjectServiceImpl implements SubjectService {
      */
     @Override
     public PageBean<Subject> listByPageOfChoice(HashMap<String, Object> params, int page,
-            int pageSize, Student student)
+                                                int pageSize, Student student)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<Subject> pageBean = new PageBean<>();
         SubjectExample subjectExample = new SubjectExample();
@@ -207,7 +209,7 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public PageBean<Subject> listByPageOfTea(HashMap<String, Object> params, int page,
-            int pageSize, Teacher teacher)
+                                             int pageSize, Teacher teacher)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<Subject> pageBean = new PageBean<>();
         SubjectExample subjectExample = new SubjectExample();
@@ -227,5 +229,17 @@ public class SubjectServiceImpl implements SubjectService {
         SubjectExample.Criteria criteria = example.createCriteria();
         criteria.andStuIdIn(lstPrimaryKey);
         subjectMapper.deleteByExample(example);
+    }
+
+    @Override
+    public ResponseEntity<Object> updateListByPrimaryKeySelective(List<Subject> lstRecord) {
+        String message = MessageFormat.format("批量修改{0}成功", rootPropeties.getSubject());
+        try {
+            subjectMapper.updateBatchByPrimaryKeySelective(lstRecord);
+        } catch (Exception e) {
+            e.printStackTrace();
+            message = MessageFormat.format("批量修改{0}失败", rootPropeties.getSubject());
+        }
+        return ResponseStatu.success(message);
     }
 }

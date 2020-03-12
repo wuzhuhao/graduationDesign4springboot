@@ -26,6 +26,8 @@ public interface SubjectService {
 
     ResponseEntity<Object> updateByPrimaryKeySelective(Subject record);
 
+    ResponseEntity<Object> updateListByPrimaryKeySelective(List<Subject> lstRecord);
+
     int updateByPrimaryKey(Subject record);
 
     PageBean<Subject> listByPageOfNotChoice(HashMap<String, Object> params, int page, int pageSize)

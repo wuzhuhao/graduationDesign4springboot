@@ -1,16 +1,22 @@
 package com.graduationaldesign.graduation.service.impl;
 
+import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.mapper.GoodGraduationMapper;
 import com.graduationaldesign.graduation.pojo.GoodGraduation;
 import com.graduationaldesign.graduation.pojo.GoodGraduationExample;
 import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.GoodGraduationService;
 import com.graduationaldesign.graduation.util.PageBean;
+import com.graduationaldesign.graduation.util.ResponseStatu;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 import java.lang.reflect.InvocationTargetException;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
-import javax.annotation.Resource;
-import org.springframework.stereotype.Service;
 
 /**
  * @Author: wuzhuhao
@@ -21,6 +27,8 @@ public class GoodGraduationServiceImpl implements GoodGraduationService {
 
     @Resource
     private GoodGraduationMapper goodGraduationMapper;
+    @Autowired
+    RootPropeties rootPropeties;
 
     @Override
     public int deleteByPrimaryKey(Integer id) {
@@ -54,7 +62,7 @@ public class GoodGraduationServiceImpl implements GoodGraduationService {
 
     @Override
     public PageBean<GoodGraduation> listByPage(HashMap<String, Object> params, int page,
-            int pageSize)
+                                               int pageSize)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<GoodGraduation> pageBean = new PageBean<>();
         GoodGraduationExample example = new GoodGraduationExample();
@@ -72,5 +80,17 @@ public class GoodGraduationServiceImpl implements GoodGraduationService {
         GoodGraduationExample.Criteria criteria = example.createCriteria();
         criteria.andIdIn(lstPrimaryKey);
         goodGraduationMapper.deleteByExample(example);
+    }
+
+    @Override
+    public ResponseEntity<Object> updateListByPrimaryKeySelective(List<GoodGraduation> lstRecord) {
+        String message = MessageFormat.format("批量修改{0}成功", rootPropeties.getGoodGraduation());
+        try {
+            goodGraduationMapper.updateBatchByPrimaryKeySelective(lstRecord);
+        } catch (Exception e) {
+            e.printStackTrace();
+            message = MessageFormat.format("批量修改{0}失败", rootPropeties.getGoodGraduation());
+        }
+        return ResponseStatu.success(message);
     }
 }

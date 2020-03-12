@@ -1,6 +1,7 @@
 package com.graduationaldesign.graduation.controller;
 
 import com.graduationaldesign.graduation.aop.RootPropeties;
+import com.graduationaldesign.graduation.mapper.GoodGraduationMapper;
 import com.graduationaldesign.graduation.pojo.GoodGraduation;
 import com.graduationaldesign.graduation.service.GoodGraduationService;
 import com.graduationaldesign.graduation.util.ResponseStatu;
@@ -115,4 +116,13 @@ public class GoodGraduationController {
         }
         return result;
     }
+    @RequestMapping(value = "/listUpdate", method = RequestMethod.PUT)
+    public ResponseEntity<Object> updateGoodGraduation(List<GoodGraduation> lstGoodGraduation) {
+        try {
+            return goodGraduationService.updateListByPrimaryKeySelective(lstGoodGraduation);
+        } catch (RuntimeException e) {
+            return ResponseStatu.failure(e.getMessage());
+        }
+    }
+
 }

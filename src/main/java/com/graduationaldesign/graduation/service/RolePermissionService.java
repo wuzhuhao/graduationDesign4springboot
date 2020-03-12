@@ -2,6 +2,8 @@ package com.graduationaldesign.graduation.service;
 
 import com.graduationaldesign.graduation.pojo.RolePermission;
 import com.graduationaldesign.graduation.util.PageBean;
+import org.springframework.http.ResponseEntity;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
@@ -28,4 +30,7 @@ public interface RolePermissionService {
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
     void deleteByPrimaryKeyIn(List<Long> lstprimaryKey) throws Exception;
+
+    public ResponseEntity<Object> updateListByPrimaryKeySelective(List<RolePermission> lstRecord);
+
 }

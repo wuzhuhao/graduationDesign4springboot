@@ -1,13 +1,16 @@
 package com.graduationaldesign.graduation.controller;
 
 import com.graduationaldesign.graduation.aop.RootPropeties;
+import com.graduationaldesign.graduation.mapper.NoticeMapper;
 import com.graduationaldesign.graduation.pojo.Notice;
 import com.graduationaldesign.graduation.service.NoticeService;
 import com.graduationaldesign.graduation.util.ResponseStatu;
+
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -88,8 +91,8 @@ public class NoticeController {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ResponseEntity<Object> list(@RequestParam HashMap<String, Object> params,
-            @RequestParam(required = false, defaultValue = "1") int page,
-            @RequestParam(required = false, defaultValue = "5") int pageSize) {
+                                       @RequestParam(required = false, defaultValue = "1") int page,
+                                       @RequestParam(required = false, defaultValue = "5") int pageSize) {
         try {
             return ResponseStatu
                     .success(noticeService.listByPage(params, page, pageSize));
@@ -114,4 +117,14 @@ public class NoticeController {
         }
         return result;
     }
+
+    @RequestMapping(value = "/listUpdate", method = RequestMethod.PUT)
+    public ResponseEntity<Object> updateNotice(List<Notice> lstNotice) {
+        try {
+            return noticeService.updateListByPrimaryKeySelective(lstNotice);
+        } catch (RuntimeException e) {
+            return ResponseStatu.failure(e.getMessage());
+        }
+    }
+
 }

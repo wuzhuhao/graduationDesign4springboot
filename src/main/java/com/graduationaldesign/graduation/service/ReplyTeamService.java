@@ -2,6 +2,8 @@ package com.graduationaldesign.graduation.service;
 
 import com.graduationaldesign.graduation.pojo.ReplyTeam;
 import com.graduationaldesign.graduation.util.PageBean;
+import org.springframework.http.ResponseEntity;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
@@ -28,4 +30,7 @@ public interface ReplyTeamService {
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
     void deleteByPrimaryKeyIn(List<Integer> lstprimaryKey) throws Exception;
+
+    ResponseEntity<Object> updateListByPrimaryKeySelective(List<ReplyTeam> lstRecord);
+
 }

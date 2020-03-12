@@ -1,5 +1,6 @@
 package com.graduationaldesign.graduation.service.impl;
 
+import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.mapper.StudentMapper;
 import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.StudentExample;
@@ -7,17 +8,18 @@ import com.graduationaldesign.graduation.pojo.UserModel;
 import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.StudentService;
 import com.graduationaldesign.graduation.util.PageBean;
-
-import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.List;
-
+import com.graduationaldesign.graduation.util.ResponseStatu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.lang.reflect.InvocationTargetException;
+import java.text.MessageFormat;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @Author: wuzhuhao
@@ -29,6 +31,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Autowired
     private StudentMapper studentMapper;
+    @Autowired
+    RootPropeties rootPropeties;
 
     @Override
     public Student login(Student student) {
@@ -162,5 +166,17 @@ public class StudentServiceImpl implements StudentService {
         StudentExample.Criteria criteria = example.createCriteria();
         criteria.andStuIdIn(lstPrimaryKey);
         studentMapper.deleteByExample(example);
+    }
+
+    @Override
+    public ResponseEntity<Object> updateListByPrimaryKeySelective(List<Student> lstRecord) {
+        String message = MessageFormat.format("批量修改{0}成功", rootPropeties.getStudent());
+        try {
+            studentMapper.updateBatchByPrimaryKeySelective(lstRecord);
+        } catch (Exception e) {
+            e.printStackTrace();
+            message = MessageFormat.format("批量修改{0}失败", rootPropeties.getStudent());
+        }
+        return ResponseStatu.success(message);
     }
 }

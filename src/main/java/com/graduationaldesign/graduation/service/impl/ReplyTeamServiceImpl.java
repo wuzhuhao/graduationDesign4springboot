@@ -1,16 +1,22 @@
 package com.graduationaldesign.graduation.service.impl;
 
+import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.mapper.ReplyTeamMapper;
 import com.graduationaldesign.graduation.pojo.ReplyTeam;
 import com.graduationaldesign.graduation.pojo.ReplyTeamExample;
 import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.ReplyTeamService;
 import com.graduationaldesign.graduation.util.PageBean;
+import com.graduationaldesign.graduation.util.ResponseStatu;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 import java.lang.reflect.InvocationTargetException;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
-import javax.annotation.Resource;
-import org.springframework.stereotype.Service;
 
 /**
  * @Author: wuzhuhao
@@ -21,6 +27,8 @@ public class ReplyTeamServiceImpl implements ReplyTeamService {
 
     @Resource
     private ReplyTeamMapper replyTeamMapper;
+    @Autowired
+    RootPropeties rootPropeties;
 
     @Override
     public int deleteByPrimaryKey(Integer id) {
@@ -71,5 +79,17 @@ public class ReplyTeamServiceImpl implements ReplyTeamService {
         ReplyTeamExample.Criteria criteria = example.createCriteria();
         criteria.andIdIn(lstPrimaryKey);
         replyTeamMapper.deleteByExample(example);
+    }
+
+    @Override
+    public ResponseEntity<Object> updateListByPrimaryKeySelective(List<ReplyTeam> lstRecord) {
+        String message = MessageFormat.format("批量修改{0}成功", rootPropeties.getReplyTeam());
+        try {
+            replyTeamMapper.updateBatchByPrimaryKeySelective(lstRecord);
+        } catch (Exception e) {
+            e.printStackTrace();
+            message = MessageFormat.format("批量修改{0}失败", rootPropeties.getReplyTeam());
+        }
+        return ResponseStatu.success(message);
     }
 }

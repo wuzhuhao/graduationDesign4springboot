@@ -1,16 +1,22 @@
 package com.graduationaldesign.graduation.service.impl;
 
+import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.mapper.RolePermissionMapper;
 import com.graduationaldesign.graduation.pojo.RolePermission;
 import com.graduationaldesign.graduation.pojo.RolePermissionExample;
 import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.RolePermissionService;
 import com.graduationaldesign.graduation.util.PageBean;
+import com.graduationaldesign.graduation.util.ResponseStatu;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 import java.lang.reflect.InvocationTargetException;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
-import javax.annotation.Resource;
-import org.springframework.stereotype.Service;
 
 /**
  * @Author: wuzhuhao
@@ -21,6 +27,8 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 
     @Resource
     private RolePermissionMapper rolePermissionMapper;
+    @Autowired
+    RootPropeties rootPropeties;
 
     @Override
     public int deleteByPrimaryKey(Long id) {
@@ -54,7 +62,7 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 
     @Override
     public PageBean<RolePermission> listByPage(HashMap<String, Object> params, int page,
-            int pageSize)
+                                               int pageSize)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<RolePermission> pageBean = new PageBean<>();
         RolePermissionExample example = new RolePermissionExample();
@@ -72,5 +80,17 @@ public class RolePermissionServiceImpl implements RolePermissionService {
         RolePermissionExample.Criteria criteria = example.createCriteria();
         criteria.andIdIn(lstPrimaryKey);
         rolePermissionMapper.deleteByExample(example);
+    }
+
+    @Override
+    public ResponseEntity<Object> updateListByPrimaryKeySelective(List<RolePermission> lstRecord) {
+        String message = MessageFormat.format("批量修改{0}成功", rootPropeties.getRolePermission());
+        try {
+            rolePermissionMapper.updateBatchByPrimaryKeySelective(lstRecord);
+        } catch (Exception e) {
+            e.printStackTrace();
+            message = MessageFormat.format("批量修改{0}失败", rootPropeties.getRolePermission());
+        }
+        return ResponseStatu.success(message);
     }
 }

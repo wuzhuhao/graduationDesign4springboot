@@ -1,5 +1,6 @@
 package com.graduationaldesign.graduation.service.impl;
 
+import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.mapper.AdminMapper;
 import com.graduationaldesign.graduation.pojo.Admin;
 import com.graduationaldesign.graduation.pojo.AdminExample;
@@ -7,11 +8,15 @@ import com.graduationaldesign.graduation.pojo.UserModel;
 import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.AdminService;
 import com.graduationaldesign.graduation.util.PageBean;
+import com.graduationaldesign.graduation.util.ResponseStatu;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
 import java.lang.reflect.InvocationTargetException;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  * @Author: wuzhuhao
@@ -22,6 +27,8 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     AdminMapper adminMapper;
+    @Autowired
+    RootPropeties rootPropeties;
 
     @Override
     public void deleteByPrimaryKeyIn(List<String> lstPrimaryKey) throws Exception {
@@ -188,5 +195,17 @@ public class AdminServiceImpl implements AdminService {
         for (Admin admin : lstAdmin) {
             adminMapper.insertSelective(admin);
         }
+    }
+
+    @Override
+    public ResponseEntity<Object> updateListByPrimaryKeySelective(List<Admin> lstRecord) {
+        String message = MessageFormat.format("批量修改{0}成功", rootPropeties.getAdmin());
+        try {
+            adminMapper.updateBatchByPrimaryKeySelective(lstRecord);
+        } catch (Exception e) {
+            e.printStackTrace();
+            message = MessageFormat.format("批量修改{0}失败", rootPropeties.getAdmin());
+        }
+        return ResponseStatu.success(message);
     }
 }

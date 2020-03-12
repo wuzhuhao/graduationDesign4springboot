@@ -1,18 +1,24 @@
 package com.graduationaldesign.graduation.service.impl;
 
+import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.mapper.AcademyMapper;
 import com.graduationaldesign.graduation.pojo.Academy;
 import com.graduationaldesign.graduation.pojo.AcademyExample;
 import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.AcademyService;
 import com.graduationaldesign.graduation.util.PageBean;
+import com.graduationaldesign.graduation.util.ResponseStatu;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 import java.lang.reflect.InvocationTargetException;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import javax.annotation.Resource;
-import org.springframework.stereotype.Service;
 
 /**
  * @Author: wuzhuhao
@@ -23,6 +29,8 @@ public class AcademyServiceImpl implements AcademyService {
 
     @Resource
     private AcademyMapper academyMapper;
+    @Autowired
+    RootPropeties rootPropeties;
 
     @Override
     public int deleteByPrimaryKey(Integer id) {
@@ -82,5 +90,17 @@ public class AcademyServiceImpl implements AcademyService {
         Map<Integer, String> map = list.stream()
                 .collect(Collectors.toMap(Academy::getId, Academy::getAcaName));
         return map;
+    }
+
+    @Override
+    public ResponseEntity<Object> updateListByPrimaryKeySelective(List<Academy> lstRecord) {
+        String message = MessageFormat.format("批量修改{0}成功", rootPropeties.getAcademy());
+        try {
+            academyMapper.updateBatchByPrimaryKeySelective(lstRecord);
+        } catch (Exception e) {
+            e.printStackTrace();
+            message = MessageFormat.format("批量修改{0}失败", rootPropeties.getAcademy());
+        }
+        return ResponseStatu.success(message);
     }
 }

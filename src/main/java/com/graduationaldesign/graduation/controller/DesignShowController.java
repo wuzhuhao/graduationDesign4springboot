@@ -1,6 +1,7 @@
 package com.graduationaldesign.graduation.controller;
 
 import com.graduationaldesign.graduation.aop.RootPropeties;
+import com.graduationaldesign.graduation.mapper.DesignShowMapper;
 import com.graduationaldesign.graduation.pojo.DesignShow;
 import com.graduationaldesign.graduation.service.DesignShowService;
 import com.graduationaldesign.graduation.util.ResponseStatu;
@@ -114,4 +115,13 @@ public class DesignShowController {
         }
         return result;
     }
+    @RequestMapping(value = "/listUpdate", method = RequestMethod.PUT)
+    public ResponseEntity<Object> updateDesignShow(List<DesignShow> lstDesignShow) {
+        try {
+            return designShowService.updateListByPrimaryKeySelective(lstDesignShow);
+        } catch (RuntimeException e) {
+            return ResponseStatu.failure(e.getMessage());
+        }
+    }
+
 }

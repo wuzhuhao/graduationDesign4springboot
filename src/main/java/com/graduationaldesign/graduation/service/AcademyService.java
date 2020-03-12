@@ -1,8 +1,13 @@
 package com.graduationaldesign.graduation.service;
 
+import com.graduationaldesign.graduation.mapper.AcademyMapper;
 import com.graduationaldesign.graduation.pojo.Academy;
 import com.graduationaldesign.graduation.util.PageBean;
+import com.graduationaldesign.graduation.util.ResponseStatu;
+import org.springframework.http.ResponseEntity;
+
 import java.lang.reflect.InvocationTargetException;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,4 +37,7 @@ public interface AcademyService {
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
     Map<Integer, String> getItems();
+
+    public ResponseEntity<Object> updateListByPrimaryKeySelective(List<Academy> lstRecord);
+
 }

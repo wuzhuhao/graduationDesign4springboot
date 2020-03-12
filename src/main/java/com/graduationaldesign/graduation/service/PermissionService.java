@@ -2,6 +2,8 @@ package com.graduationaldesign.graduation.service;
 
 import com.graduationaldesign.graduation.pojo.Permission;
 import com.graduationaldesign.graduation.util.PageBean;
+import org.springframework.http.ResponseEntity;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
@@ -28,5 +30,8 @@ public interface PermissionService {
 
     PageBean<Permission> listByPage(HashMap<String, Object> params, int page, int pageSize)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
+
+    public ResponseEntity<Object> updateListByPrimaryKeySelective(List<Permission> lstRecord);
+
 
 }

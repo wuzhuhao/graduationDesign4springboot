@@ -7,14 +7,18 @@ import com.graduationaldesign.graduation.pojo.TaskExample;
 import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.TaskService;
 import com.graduationaldesign.graduation.util.PageBean;
+import com.graduationaldesign.graduation.util.ResponseStatu;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 import java.lang.reflect.InvocationTargetException;
+import java.text.MessageFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import javax.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  * @Author: wuzhuhao
@@ -91,7 +95,7 @@ public class TaskServiceImpl implements TaskService {
     //listByTeaWithPage listByPageOfTea
     @Override
     public PageBean<Task> listByPageOfTea(HashMap<String, Object> params, int page, int pageSize,
-            String teaId)
+                                          String teaId)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         TaskExample taskExample = new TaskExample();
         taskExample.setJoin("left join t_subject on t_task.task_sub_id = t_subject.sub_id");
@@ -106,8 +110,8 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public PageBean<Task> listByPageOfStu(HashMap<String, Object> params, int page, int pageSize,
-            String stuId,
-            String type)
+                                          String stuId,
+                                          String type)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         if (!(type.equals("1") || type.equals("2"))) {
             throw new RuntimeException("type参数错误");
@@ -130,5 +134,17 @@ public class TaskServiceImpl implements TaskService {
         TaskExample.Criteria criteria = example.createCriteria();
         criteria.andIdIn(lstPrimaryKey);
         taskMapper.deleteByExample(example);
+    }
+
+    @Override
+    public ResponseEntity<Object> updateListByPrimaryKeySelective(List<Task> lstRecord) {
+        String message = MessageFormat.format("批量修改{0}成功", rootPropeties.getTask());
+        try {
+            taskMapper.updateBatchByPrimaryKeySelective(lstRecord);
+        } catch (Exception e) {
+            e.printStackTrace();
+            message = MessageFormat.format("批量修改{0}失败", rootPropeties.getTask());
+        }
+        return ResponseStatu.success(message);
     }
 }
