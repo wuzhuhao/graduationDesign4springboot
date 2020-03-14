@@ -1,0 +1,30 @@
+{
+  "id": "1663139",
+  "name": "graduationDesign4springboot",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "9667238",
+      "name": "删除",
+      "font_class": "shanchu",
+      "unicode": "e682",
+      "unicode_decimal": 59010
+    },
+    {
+      "icon_id": "8156558",
+      "name": "学生",
+      "font_class": "xuesheng",
+      "unicode": "e63a",
+      "unicode_decimal": 58938
+    },
+    {
+      "icon_id": "10496958",
+      "name": "edit",
+      "font_class": "edit",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    }
+  ]
+}

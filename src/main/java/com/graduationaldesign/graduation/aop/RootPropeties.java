@@ -37,6 +37,7 @@ public class RootPropeties {
     private String task;
     private String teacher;
     private String userRole;
+    private String scoreRecord;
 
     public String getAcademy() {
         return academy;
@@ -196,5 +197,13 @@ public class RootPropeties {
 
     public void setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
+    }
+
+    public String getScoreRecord() {
+        return scoreRecord;
+    }
+
+    public void setScoreRecord(String scoreRecord) {
+        this.scoreRecord = scoreRecord;
     }
 }

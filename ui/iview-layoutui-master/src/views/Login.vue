@@ -1,3 +1,5 @@
+
+
 <style lang="postcss" scoped>
 .login-container{
     display:flex;
@@ -34,8 +36,8 @@
                 欢迎登录
             </p>
             <Form ref="userForm" :model="userForm" :rules="ruleCustom">
-                <FormItem prop="username">
-                    <Input v-model.trim="userForm.username" placeholder="请输入" size="large">
+                <FormItem prop="number">
+                    <Input v-model.trim="userForm.number" placeholder="请输入" size="large">
                         <Icon type="ios-person-outline" slot="prepend" class="icon-cls"></Icon>
                     </Input>
                 </FormItem>
@@ -44,8 +46,18 @@
                         <Icon type="ios-lock-outline" slot="prepend"  class="icon-cls"></Icon>
                     </Input>
                 </FormItem>
+                <FormItem prop="type">
+                    <RadioGroup v-model="userForm.type"  >
+                        <Radio  v-for="item in status" :label="item.value"  size = 'large' border >
+                            <span>{{item.label}}</span>
+                        </Radio>
+                        <!-- <Radio label='学生' value= '1' size = 'large' border></Radio>
+                        <Radio label='教师' value= '2' size = 'large' border></Radio>
+                        <Radio label='管理员' value= '3' size = 'large' border></Radio> -->
+                    </RadioGroup>
+                 </FormItem>
                 <FormItem>
-                    <Button type="primary" @click="btn_login()" long :loading="login_loading">登录</Button>
+                    <Button type="primary" @click="handleSubmit('userForm')" long :loading="login_loading">登录</Button>
                 </FormItem>
             </Form>
         </Card>
@@ -58,11 +70,24 @@
 export default {
     data(){
         return {
+            status:[
+          {
+            label:'学生',
+            value:'1'
+          },{
+            label:'教师',
+            value:'2'
+          },{
+            label:'管理员',
+            value:'3'
+          }
+        ],
             login_loading:false,
             login_img:require("@/assets/login-bg.jpg"),
             userForm:{
-                username:'',
-                password:''
+                number:'',
+                password:'',
+                type:''
             },
             ruleCustom: {
                 username: [
@@ -77,8 +102,87 @@ export default {
     methods:{
         btn_login(){
             this.$router.push('/')
-        }
+        },
+   
+    //   loginAction(userForm) {
+    //     this.$axios.post('http://localhost:18256/graManagement/login', {
+    //       number: 'admin',
+    //       password: '1231231',
+    //       type:'3'
+    //     })
+    //       .then(function(response){
+    //            console.log(this); //这里 this = undefined
+    //       })
+    //       .catch((error)=> {
+    //           console.log(this); //箭头函数"=>"使this指向vue
+    //       });
+
+    //     },
+      
+
+    handleSubmit(name) {
+                this.$refs[name].validate((valid) => {
+                    if (valid) {
+                        this.$axios({
+                            // headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                            url: 'login',//请求的地址
+                            method: 'post',//请求的方式
+                            data: this.$Qs.stringify(this.userForm),//请求的表单数据
+                        }).then(res => {
+                            // this.$store.commit('$_setToken', userInfo.token);
+                            if(res.data.message=='success'){
+                                  this.$store.commit('type',this.userForm.type);
+                                  console.log(this.userForm.number)
+                                  this.$store.commit('userId',this.userForm.number);
+                                if(this.userForm.type==3){
+                                    // this.$router.push('/admin')
+                                     this.$router.push({
+                                        name:'adminHome',
+                                        // query:{
+                                        // type :this.userForm.type
+                                        // }
+                                        
+                                    })
+                              
+                                    
+                                }else  if(this.userForm.type==2){
+                                    this.$router.push('/home')
+                                }else if(this.userForm.type==1){
+
+                                  // this.$router.push('/admin')
+                                     this.$router.push({
+                                        name:'studentHome',
+                                        // query:{
+                                        // type :this.userForm.type
+                                        // }
+                                    })
+                                }else{       
+                                        this.$Message.info({
+                                            content: '未选择身份',
+                                            duration: 10,
+                                            closable: true
+                                        });     
+                                }
+                            }else{       
+                                        this.$Message.info({
+                                            content: res.data.message,
+                                            duration: 5,
+                                            closable: true
+                                        });     
+                                }
+                        
+
+                        }).catch(err => {
+                            console.info('报错的信息',err);
+                            
+                        });
+                    } else {
+                        console.info(this.$Message.error('表单校验失败!'));
+                        
+                    }
+                })
     }
+    },
 }
 </script>
 

@@ -39,6 +39,7 @@
             & .bar-search{
                 &.input-search{
                     width:350px;
+                   display:inline
                 }
             }
             & .bar-group{
@@ -60,6 +61,9 @@
             display: flex;
             width: 100%;
             justify-content: flex-end;
+        }
+        & .Drawer {
+           
         }
     }
 }
@@ -99,6 +103,11 @@
         <div class="page-wrapper">
             <slot name="pager"/>
         </div>
+        <div class="Drawer">
+            <slot name="drawer"/>
+        </div>
+        
+        
     </div>
 </section>
 </template>
@@ -115,7 +124,7 @@ export default {
         }
     },
     mounted(){
-        console.log('paddingContent=',this.$slots)
+        // console.log('paddingContent=',this.$slots)
     },
     methods:{
 

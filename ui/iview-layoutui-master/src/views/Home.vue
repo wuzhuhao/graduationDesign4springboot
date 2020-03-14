@@ -68,6 +68,20 @@ export default {
     },
     data(){
       return{
+        id:'',
+        formItem1: {
+          adminId:'',
+          adminPassword:'',
+          adminName:'',
+          adminSex:'',
+          adminAge:'',
+          adminBirthday:'',
+          adminPhone:'',
+          adminMail:'',
+          adminAddress:'',
+          adminRemarks:'',
+          adminType:''
+        },
         formItem: {
             input: '',
             select: '',
@@ -79,6 +93,20 @@ export default {
             slider: [20, 50],
             textarea: ''
         },
+         columns1: [
+            {
+                title: 'Name',
+                key: 'name'
+            },
+            {
+                title: 'Age',
+                key: 'age'
+            },
+            {
+                title: 'Address',
+                key: 'address'
+            }
+        ],
         columns1: [
             {
                 title: 'Name',
@@ -121,7 +149,37 @@ export default {
         ]
       }
     },
+     created(){
+       this.getParams()
+     },
     methods:{
+      getParams () {
+        // 取到路由带过来的参数 
+        var routerParams = this.$route.params.id
+        // 将数据放在当前组件的数据内
+        this.id = routerParams
+      },
+      // watch: {
+      //   // 监测路由变化,只要变化了就调用获取路由参数方法将数据存储本组件即可
+      //     '$route': 'getParams'
+      // },
+      getUser(){
+         this.$axios({
+                            // headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                            url: 'login',//请求的地址
+                            method: 'post',//请求的方式
+                            data: this.$Qs.stringify(this.userForm),//请求的表单数据
+                        }).then(res => {
+                            // this.$store.commit('$_setToken', userInfo.token);
+                           
+                            })
+
+                        // }).catch(err => {
+                        //     console.info('报错的信息',err);
+                            
+                        // });
+      }
+
     }
 }
 </script>

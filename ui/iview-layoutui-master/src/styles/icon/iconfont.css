@@ -1,0 +1,29 @@
+@font-face {font-family: "iconfont";
+  src: url('./iconfont.eot?t=1582951210485'); /* IE9 */
+  src: url('./iconfont.eot?t=1582951210485#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAARwAAsAAAAACMAAAAQhAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDHAqFAIQUATYCJAMQCwoABCAFhG0HQxuBB8iemjwJAhawAEAVROAE8QB/LN+Pi1VSJqU2jUajUYUN5AY08YmMB5pYpT30nv6lGMBMdJo+qLhLszlNB/uB/gP9RTcBAiIKUNjnuZzefH5g8wPlONa0Ma24dxhgvDWgMQa2RdICltgbxi4u4zgB1bp4wpaTMwmgJtPGBYQjmhIBtZhbLuGCsq2YszRbYMOgoBx7OJdw6n4/PJtMDYgKCWgnre4kSUHsndmbVm6zstl66gAn/QXBrCJhApAJe7nhDVw/O4GrWurNMwsoK4v01Rb+plWpRNq1mMv6Xx5JFAhFoJlrETudS9yZmerQEg6dIrS0Qu0JmLO9pIwqXAC+aPaOfi6Icp22p4+lpRGfX7RhC4iVrX3bMW7LNmFkiiV3cptEy3L2VO8JoDbnrZq3amryVl4P0j5805bfsq13ixGvedxIa3IS4+v2bW/ZVuc+iWGb58g7d0iTC7dCb90ibq1Mu/087eDdiMN3hVMbgYqR6/iMcdxEn2nC1Bxx61bouTPBd+6kT24AsWJ89Lbg7t2IKVPu5Ka63uH3qOdr9+3epaHVe8KMt/JkkO7m0zN78WJyW6+rdNyIGJ+Z2GgqnDKltrdICSElEBKkUDDPANT4Vh/aQ/23euggiN3ADoK3ukijMlZVIyA4wNIsFgj6SH3PSjXU/KKZVHPVQ7SrrqvqdO6LFdOqla364HdBkPR5K4VUr5tTJtksdvq6PA9vQ6lq+/NsHi9Y4pBgZvVX5qslMyiNxyqiV0Wujl2fpRWuTtYIMbQe6iu+IIMj4elW2+KetX17mmS8MfbA+iitCu1NLvfJWd4w7/qa6aSWXDMKBI30BHryJ09GTJKSTEbstus+cQZuPx6zk+sJunYVEIpotHlToBP9Oy3gfcDYHzo/ENyTinp/ejQqasTNrYCoro6LJ4i4OKIAlAP4n7Zw45T/lU28Um4HzcsgnfwN53kj311frhv5TU2TB+CyWcvdLauveaUaSfPunRmVED/1sk7z5CyalFp59XOyFZ2nI6r1OP8o3uxJH9Y2qZigrC1EVNKJpGyAzOwECmpMo6hsDtXGpayu0YLBFbI6YEwHQNBoN6J650gaXSYz+xgF7d6hqDEuqq0Fwy1rDEVrJDBQxEIpLq7BaUlZKTJ8rIZXmg8pRbGIiepcnoSMnE7gft6+yUIKLIVMHzPklZQ/yyIcMWUleDI4DRYXl+HlTFkhlLDeMpYtD/fxQXlP8paUlQANSxiQCAuSwonVwNEkypRCdnWWRurz+SCKQjERpkRRUiVBDDm6c5wfb741yBRzaS3FufSWq0Txx2IhPAphlCmBS4ZBqFjPlsGV5w8qBEmwvMlapMuF80GVUF2z9/jWkitcA9W0LXPgYFyMh/FB6VgmKpXIFGrVChj0gaUUD0ppFgAAAAA=') format('woff2'),
+  url('./iconfont.woff?t=1582951210485') format('woff'),
+  url('./iconfont.ttf?t=1582951210485') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+  url('./iconfont.svg?t=1582951210485#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-shanchu:before {
+  content: "\e682";
+}
+
+.icon-xuesheng:before {
+  content: "\e63a";
+}
+
+.icon-edit:before {
+  content: "\e618";
+}
+
