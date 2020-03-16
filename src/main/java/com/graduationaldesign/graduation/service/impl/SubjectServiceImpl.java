@@ -9,10 +9,12 @@ import com.graduationaldesign.graduation.service.SubjectService;
 import com.graduationaldesign.graduation.util.IDUtil;
 import com.graduationaldesign.graduation.util.PageBean;
 import com.graduationaldesign.graduation.util.ResponseStatu;
+import com.graduationaldesign.graduation.util.SqlUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.File;
@@ -20,6 +22,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 课题服务实现类
@@ -37,6 +40,9 @@ public class SubjectServiceImpl implements SubjectService {
     private ReportMapper reportMapper;
     @Autowired
     private RootPropeties rootPropeties;
+    @Autowired
+    FileUploadServiceImpl fileUploadService;
+    final String FILE_PATH = System.getProperty("user.dir") + "/upload/" + this.getClass().getName().substring(0, this.getClass().getName().indexOf("ServiceImpl")) + "/";
 
     /*==============私有接口=====================*/
 
@@ -216,10 +222,9 @@ public class SubjectServiceImpl implements SubjectService {
         SubjectExample.Criteria criteria = subjectExample.createCriteria();
         ExampleHelper.addCondition(Subject.class, criteria, params);
         criteria.andSubTeaIdEqualTo(teacher.getTeaId());
-        criteria.andSubStuStateNotEqualTo(1);
+//        criteria.andSubStuStateNotEqualTo(1);
         List<Subject> list = subjectMapper.selectByExampleWithBLOBs(subjectExample);
         pageBean.setBeanList(list);
-//        pageBean.setParams();
         return pageBean;
     }
 
@@ -241,5 +246,46 @@ public class SubjectServiceImpl implements SubjectService {
             message = MessageFormat.format("批量修改{0}失败", rootPropeties.getSubject());
         }
         return ResponseStatu.success(message);
+    }
+
+    /**
+     * 查询teacher已被选课题列表
+     *
+     * @param params
+     * @param page
+     * @param pageSize
+     * @param teacher
+     * @return
+     * @throws NoSuchMethodException
+     * @throws IllegalAccessException
+     * @throws InvocationTargetException
+     */
+    @Override
+    public PageBean<Map<String, Object>> listChoosedByPageOfTea(HashMap<String, Object> params, int page,
+                                                                int pageSize, Teacher teacher)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+        PageBean<Map<String, Object>> pageBean = new PageBean<>();
+        SubjectExample subjectExample = new SubjectExample();
+        Map<String, String> ma = new HashMap<>();
+        ma.put("t_subject.sub_name", "subName");
+        ma.put("t_subject.sub_id ", "subId");
+        ma.put("t_teacher.tea_name", "teaName");
+        String s = SqlUtil.spliceResultStringByMap(ma);
+        subjectExample.setResultString(" t_subject.sub_name subName,t_subject.sub_id subId,t_teacher.tea_name teaName,t_teacher.tea_id teaId,t_student.stu_name stuName,t_student.stu_id stuId,t_student.stu_major stuMajor,t_task.id taskId,t_task.task_state taskState,t_report.id reportId,t_report.report_type reportType,t_report.report_state reportState,t_scorerecord.reply_score_ replyScore ");
+        subjectExample.setJoin(" left join t_student on t_student.stu_id = t_subject.stu_id left join t_teacher on t_teacher.tea_id = t_subject.sub_tea_id left join t_task on t_task.task_sub_id = t_subject.sub_id left join t_report on t_report.report_sub_id = t_subject.sub_id left join t_scorerecord on t_scorerecord.score_sub_id = t_subject.sub_id");
+        SubjectExample.Criteria criteria = subjectExample.createCriteria();
+        ExampleHelper.addCondition(Subject.class, criteria, params);
+        criteria.andSubTeaIdEqualTo(teacher.getTeaId());
+        criteria.andSubStuStateNotEqualTo(1);
+        List<Map<String, Object>> list = subjectMapper.selectByExampleWithMap(subjectExample);
+        pageBean.setBeanList(list);
+        return pageBean;
+    }
+
+    @Override
+    public void uploadSubjectFile(MultipartFile file, String subId) {
+        Subject subject = new Subject(subId);
+        subject.setSubFile(fileUploadService.singleFile(file, FILE_PATH));
+        subjectMapper.updateByPrimaryKeySelective(subject);
     }
 }

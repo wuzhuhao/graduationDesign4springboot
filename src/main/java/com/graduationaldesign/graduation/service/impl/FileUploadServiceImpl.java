@@ -9,14 +9,15 @@ import com.graduationaldesign.graduation.service.FileUploadService;
 import com.graduationaldesign.graduation.service.StudentService;
 import com.graduationaldesign.graduation.service.TeacherService;
 import com.graduationaldesign.graduation.util.FileUtil;
-import java.io.File;
-import java.io.IOException;
-import java.text.MessageFormat;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.MessageFormat;
+import java.util.List;
 
 /**
  * @Author: wuzhuhao
@@ -36,7 +37,7 @@ public class FileUploadServiceImpl implements FileUploadService {
     RootPropeties rootPropeties;
 
     @Override
-    public String singleFile(MultipartFile file) throws RuntimeException {
+    public String singleFile(MultipartFile file, String path) throws RuntimeException {
         //判断非空
         if (file.isEmpty()) {
             throw new RuntimeException("上传的文件不能为空");
@@ -47,8 +48,6 @@ public class FileUploadServiceImpl implements FileUploadService {
             log.info("[文件组件名称Name] - [{}]", file.getName());
             log.info("[文件原名称OriginalFileName] - [{}]", file.getOriginalFilename());
             log.info("[文件大小] - [{}]", file.getSize());
-            //文件路径
-            String path = System.getProperty("user.dir") + "/upload/";
             log.info(this.getClass().getName() + "图片路径：" + path);
             File f = new File(path);
             //如果不存在该路径就创建
@@ -141,6 +140,12 @@ public class FileUploadServiceImpl implements FileUploadService {
                         MessageFormat.format("批量插入{0}失败", rootPropeties.getAdmin()));
             }
         }
+    }
 
+    public void deleteFile(String path, String name) {
+        File file = new File(path + name);
+        if (file.exists()) {
+            file.delete();
+        }
     }
 }

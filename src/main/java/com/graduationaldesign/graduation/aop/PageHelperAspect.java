@@ -5,9 +5,6 @@ import com.github.pagehelper.PageInfo;
 import com.graduationaldesign.graduation.JWT.JWTUtil;
 import com.graduationaldesign.graduation.util.CookieUtil;
 import com.graduationaldesign.graduation.util.PageBean;
-
-import java.util.Map;
-
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -21,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 /**
  * @Author: wuzhuhao
@@ -107,7 +105,7 @@ public class PageHelperAspect {
         log.info("方法[{}]执行结束.", signature.getName());
         if (object instanceof ResponseEntity && (!("login".equals(signature.getName()) || "exit".equals(signature.getName())))) {
             String token = CookieUtil.getCookieValue(request, "token");
-            if (token==null||token.length()==0){
+            if (token == null || token.length() == 0) {
                 return object;
             }
             Map<String, Object> userMap = JWTUtil.getUserId(token);

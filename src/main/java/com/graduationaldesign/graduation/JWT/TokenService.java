@@ -4,11 +4,12 @@ import com.graduationaldesign.graduation.service.AdminService;
 import com.graduationaldesign.graduation.service.StudentService;
 import com.graduationaldesign.graduation.service.TeacherService;
 import com.graduationaldesign.graduation.util.CookieUtil;
-import java.util.Map;
-import java.util.Optional;
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * @Author: wuzhuhao
@@ -24,7 +25,7 @@ public class TokenService {
     @Autowired
     AdminService adminService;
 
-    public boolean checkUser(String token) {
+    public boolean checkUser(String token) throws Exception {
         Map<String, Object> tokenMap = JWTUtil.getUserId(token);
         Integer type = (Integer) tokenMap.get("type");
         String number = (String) tokenMap.get("number");

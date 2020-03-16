@@ -1,5 +1,7 @@
 package com.graduationaldesign.graduation.service.impl;
 
+import cn.hutool.core.date.DateUnit;
+import cn.hutool.core.date.DateUtil;
 import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.mapper.ReportMapper;
 import com.graduationaldesign.graduation.pojo.Report;
@@ -8,17 +10,24 @@ import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.Teacher;
 import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.ReportService;
+import com.graduationaldesign.graduation.util.BeanUtil;
+import com.graduationaldesign.graduation.util.FileUtil;
 import com.graduationaldesign.graduation.util.PageBean;
 import com.graduationaldesign.graduation.util.ResponseStatu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: wuzhuhao
@@ -31,6 +40,9 @@ public class ReportServiceImpl implements ReportService {
     private ReportMapper reportMapper;
     @Autowired
     RootPropeties rootPropeties;
+    @Autowired
+    FileUploadServiceImpl fileUploadService;
+    final String FILE_PATH = System.getProperty("user.dir") + "/upload/" + this.getClass().getName().substring(0, this.getClass().getName().indexOf("ServiceImpl")) + "/";
 
     @Override
     public int deleteByPrimaryKey(String subId, Integer reportType) {
@@ -52,6 +64,8 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public String insert(Report record) {
+        record.setReportSubtime(new Date());
+        record.setReportVersion(1F);
         if (reportMapper.insert(record) <= 0) {
             throw new RuntimeException("增加报告失败");
         }
@@ -77,6 +91,14 @@ public class ReportServiceImpl implements ReportService {
             throw new RuntimeException("修改失败");
         }
         return message;
+    }
+
+    @Override
+    public String updateByPrimaryKeySelectiveWithStudent(Report record) throws Exception {
+        record.setReportVersion(record.getReportVersion() + 1);
+        record.setReportSubtime(new Date());
+        record.setReportState(updateState(selectById(record.getId())));
+        return updateByPrimaryKeySelective(record);
     }
 
     @Override
@@ -238,5 +260,53 @@ public class ReportServiceImpl implements ReportService {
             message = MessageFormat.format("批量修改{0}失败", rootPropeties.getReport());
         }
         return ResponseStatu.success(message);
+    }
+
+    @Override
+    public void uploadFile(MultipartFile file, String subId, Integer type, boolean isTemp) {
+        Report report = new Report(subId, type);
+        if (isTemp) {
+            report.setReportFile(fileUploadService.singleFile(file, FILE_PATH));
+        } else {
+            report.setReportTemp(fileUploadService.singleFile(file, FILE_PATH));
+        }
+        try {
+            reportMapper.updateByPrimaryKeySelective(report);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fileUploadService.deleteFile(FILE_PATH, report.getReportFile());
+            throw new RuntimeException("上传失败");
+        }
+    }
+
+    @Override
+    public void export(HttpServletRequest request, HttpServletResponse response, String subId, Integer type) {
+        Map<String, Object> params;
+        Report report = reportMapper.selectByPrimaryKey(subId, type);
+        params = BeanUtil.beanToMap(report);
+        String fileString = "word/firstReport.docx";
+        if (type != null && type.equals(2)) {
+            fileString = "word/finalReport.docx";
+        }
+        //这里是我说的一行代码
+        FileUtil.exportWord(fileString, "F:/test", "开题报告.docx", params, request, response);
+    }
+
+    public Integer updateState(Report report) {
+        Integer currentState = report.getReportState();
+        if (currentState.equals(1)) {
+            Date deadline = report.getSubject().getFirstReportDeadline();
+            if (report.getReportType().equals(2)) {
+                deadline = report.getSubject().getLastReportDeadline();
+            }
+            if (DateUtil.between(new Date(), deadline, DateUnit.MS) > 0) {
+                currentState = 2;
+            } else {
+                currentState = 3;
+            }
+        } else if (currentState.equals(5)) {
+            currentState = 6;
+        }
+        return currentState;
     }
 }

@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface FileUploadService {
 
-    String singleFile(MultipartFile file);
+    String singleFile(MultipartFile file, String path);
 
     String multipleFiles(MultipartFile[] files);
 }

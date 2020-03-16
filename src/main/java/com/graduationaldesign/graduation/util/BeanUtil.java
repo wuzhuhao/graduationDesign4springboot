@@ -1,29 +1,33 @@
 package com.graduationaldesign.graduation.util;
 
+import org.springframework.cglib.beans.BeanMap;
+
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 
 /**
- *
  * 逆向工具类
  * 处理符合javabean规范的对象
- * */
+ */
 public class BeanUtil {
-    private BeanUtil() {}
+    private BeanUtil() {
+    }
 
     /**
      * 将一个对象转换为另一个对象，只转换相同字段名
+     *
      * @param source 需要转换的源对象
      * @param target 转换到的目标对象
-     * */
+     */
     public static void convert(Object source, Object target) {
-        if(source == null || target == null) {
+        if (source == null || target == null) {
             return;
         }
 
@@ -39,18 +43,18 @@ public class BeanUtil {
             // 将源对象的属性描述转换为map
             Map<String, PropertyDescriptor> sourcePdMap = toMap(sourcePds);
 
-            for(PropertyDescriptor targetPd : targetPds) {
+            for (PropertyDescriptor targetPd : targetPds) {
                 String name = targetPd.getName();
 
                 // 如果是class属性或者在源对象中没有这个属性
-                if("class".equals(name) || !sourcePdMap.containsKey(name)) {
+                if ("class".equals(name) || !sourcePdMap.containsKey(name)) {
                     continue;
                 }
 
                 // 获取源对象中目标字段的值
                 Object value = sourcePdMap.get(name).getReadMethod().invoke(source);
 
-                if(value == null) {
+                if (value == null) {
                     continue;
                 }
 
@@ -63,11 +67,11 @@ public class BeanUtil {
 
     /**
      * 将PropertyDescriptor数组转换为以属性名为键，PropertyDescriptor为值的map
-     * */
+     */
     private static Map<String, PropertyDescriptor> toMap(PropertyDescriptor[] pds) {
         Map<String, PropertyDescriptor> result = new HashMap<String, PropertyDescriptor>();
 
-        for(PropertyDescriptor pd : pds) {
+        for (PropertyDescriptor pd : pds) {
             result.put(pd.getName(), pd);
         }
 
@@ -76,30 +80,30 @@ public class BeanUtil {
 
     /**
      * 为对象进行set操作
-     * */
+     */
     private static void setValue(Object entity, Method writeMethod, Object value)
             throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         Class<?>[] paramTypes = writeMethod.getParameterTypes();
-        if(paramTypes.length != 1)	// 如果参数不为1个，则不执行
+        if (paramTypes.length != 1)        // 如果参数不为1个，则不执行
             return;
 
         Class<?> paramType = paramTypes[0];
 
-        if(int.class.equals(paramType))
+        if (int.class.equals(paramType))
             value = Integer.parseInt(value.toString());
-        else if(byte.class.equals(paramType))
+        else if (byte.class.equals(paramType))
             value = Byte.parseByte(value.toString());
-        else if(short.class.equals(paramType))
+        else if (short.class.equals(paramType))
             value = Short.parseShort(value.toString());
-        else if(long.class.equals(paramType))
+        else if (long.class.equals(paramType))
             value = Long.parseLong(value.toString());
-        else if(float.class.equals(paramType))
+        else if (float.class.equals(paramType))
             value = Float.parseFloat(value.toString());
-        else if(double.class.equals(paramType))
+        else if (double.class.equals(paramType))
             value = Double.parseDouble(value.toString());
-        else if(char.class.equals(paramType))
+        else if (char.class.equals(paramType))
             value = value.toString().charAt(0);
-        else if(boolean.class.equals(paramType))
+        else if (boolean.class.equals(paramType))
             value = Boolean.parseBoolean(value.toString());
 
         writeMethod.invoke(entity, value); // 将properties中的值写入entity对象中
@@ -107,9 +111,9 @@ public class BeanUtil {
 
     /**
      * 将对象的boolean类型的值进行取反
-     * */
+     */
     public static <T> void negateValue(T obj, String booleanProperty) {
-        if(obj == null)
+        if (obj == null)
             return;
 
         try {
@@ -119,5 +123,20 @@ public class BeanUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static <T> Map<String, Object> beanToMap(T bean) {
+        Map<String, Object> map = new HashMap();
+        if (bean != null) {
+            BeanMap beanMap = BeanMap.create(bean);
+            Iterator var3 = beanMap.keySet().iterator();
+
+            while (var3.hasNext()) {
+                Object key = var3.next();
+                map.put(key + "", beanMap.get(key));
+            }
+        }
+
+        return map;
     }
 }

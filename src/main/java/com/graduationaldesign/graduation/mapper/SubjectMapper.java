@@ -2,9 +2,11 @@ package com.graduationaldesign.graduation.mapper;
 
 import com.graduationaldesign.graduation.pojo.Subject;
 import com.graduationaldesign.graduation.pojo.SubjectExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Map;
 
 @Component
 public interface SubjectMapper {
@@ -74,7 +76,7 @@ public interface SubjectMapper {
      * @param example
      */
     int updateByExampleSelective(@Param("record") Subject record,
-            @Param("example") SubjectExample example);
+                                 @Param("example") SubjectExample example);
 
     /**
      * ,t_subject
@@ -83,7 +85,7 @@ public interface SubjectMapper {
      * @param example
      */
     int updateByExampleWithBLOBs(@Param("record") Subject record,
-            @Param("example") SubjectExample example);
+                                 @Param("example") SubjectExample example);
 
     /**
      * 根据指定的条件来更新符合条件的数据库记录,t_subject
@@ -117,4 +119,6 @@ public interface SubjectMapper {
     int insertBatchSelective(List<Subject> records);
 
     int updateBatchByPrimaryKeySelective(List<Subject> records);
+
+    List<Map<String, Object>> selectByExampleWithMap(SubjectExample example);
 }

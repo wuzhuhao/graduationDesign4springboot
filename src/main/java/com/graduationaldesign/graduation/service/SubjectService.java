@@ -4,10 +4,13 @@ import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.Subject;
 import com.graduationaldesign.graduation.pojo.Teacher;
 import com.graduationaldesign.graduation.util.PageBean;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
-import org.springframework.http.ResponseEntity;
+import java.util.Map;
 
 /**
  * @Author: wuzhuhao
@@ -34,11 +37,11 @@ public interface SubjectService {
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
     PageBean<Subject> listByPageOfChoice(HashMap<String, Object> params, int page,
-            int pageSize, Student student)
+                                         int pageSize, Student student)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
     PageBean<Subject> listByPageOfTea(HashMap<String, Object> params, int page, int pageSize,
-            Teacher teacher)
+                                      Teacher teacher)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
     PageBean<Subject> listByPage(HashMap<String, Object> params, int page, int pageSize)
@@ -49,4 +52,10 @@ public interface SubjectService {
     String cancelChoice(String subId, Student login_user);
 
     void deleteByPrimaryKeyIn(List<String> lstprimaryKey) throws Exception;
+
+    PageBean<Map<String, Object>> listChoosedByPageOfTea(HashMap<String, Object> params, int page,
+                                                         int pageSize, Teacher teacher)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
+
+    void uploadSubjectFile(MultipartFile file, String subId);
 }

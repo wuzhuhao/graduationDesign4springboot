@@ -6,19 +6,18 @@ import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.Subject;
 import com.graduationaldesign.graduation.pojo.Teacher;
+import com.graduationaldesign.graduation.service.FileDownService;
 import com.graduationaldesign.graduation.service.SubjectService;
 import com.graduationaldesign.graduation.util.ResponseStatu;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author wuzhuhao
@@ -36,6 +35,8 @@ public class SubjectController {
     RootPropeties rootPropeties;
     @Autowired
     TokenService tokenService;
+    @Autowired
+    FileDownService fileDownService;
 
     @RequestMapping(value = "/temp")
     public ResponseEntity<Object> temp() {
@@ -139,8 +140,8 @@ public class SubjectController {
      */
     @RequestMapping(value = "/listOfChoice", method = RequestMethod.GET)
     public ResponseEntity<Object> getSubjectOfChoice(@RequestParam HashMap<String, Object> params,
-            @RequestParam(required = false, defaultValue = "1") int page,
-            @RequestParam(required = false, defaultValue = "5") int pageSize) {
+                                                     @RequestParam(required = false, defaultValue = "1") int page,
+                                                     @RequestParam(required = false, defaultValue = "5") int pageSize) {
         try {
             return ResponseStatu.success(subjectService.listByPageOfChoice(params, page,
                     pageSize,
@@ -158,10 +159,29 @@ public class SubjectController {
      */
     @RequestMapping(value = "/listOfTea", method = RequestMethod.GET)
     public ResponseEntity<Object> getSubjectOfTea(@RequestParam HashMap<String, Object> params,
-            @RequestParam(required = false, defaultValue = "1") int page,
-            @RequestParam(required = false, defaultValue = "5") int pageSize) {
+                                                  @RequestParam(required = false, defaultValue = "1") int page,
+                                                  @RequestParam(required = false, defaultValue = "5") int pageSize) {
         try {
             return ResponseStatu.success(subjectService.listByPageOfTea(params, page,
+                    pageSize,
+                    ((Teacher) tokenService.getUserByToken(request))));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseStatu.failure("获取列表失败");
+        }
+    }
+
+    /**
+     * 获取老师的选题进度
+     *
+     * @return
+     */
+    @RequestMapping(value = "/listScheduleOfTea", method = RequestMethod.GET)
+    public ResponseEntity<Object> listChoosedByPageOfTea(@RequestParam HashMap<String, Object> params,
+                                                         @RequestParam(required = false, defaultValue = "1") int page,
+                                                         @RequestParam(required = false, defaultValue = "5") int pageSize) {
+        try {
+            return ResponseStatu.success(subjectService.listChoosedByPageOfTea(params, page,
                     pageSize,
                     ((Teacher) tokenService.getUserByToken(request))));
         } catch (Exception e) {
@@ -177,8 +197,8 @@ public class SubjectController {
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ResponseEntity<Object> list(@RequestParam HashMap<String, Object> params,
-            @RequestParam(required = false, defaultValue = "1") int page,
-            @RequestParam(required = false, defaultValue = "5") int pageSize) {
+                                       @RequestParam(required = false, defaultValue = "1") int page,
+                                       @RequestParam(required = false, defaultValue = "5") int pageSize) {
         try {
             return ResponseStatu
                     .success(subjectService.listByPage(params, page, pageSize));
@@ -211,10 +231,10 @@ public class SubjectController {
      * @return
      */
     @RequestMapping(value = "/appointChoice", method = RequestMethod.POST)
-    public ResponseEntity<Object> appointChoice(String subId,String stuId) {
+    public ResponseEntity<Object> appointChoice(String subId, String stuId) {
         try {
             return ResponseStatu.success(subjectService.ChoiceSubject(subId,
-                    new Student(stuId,"")));
+                    new Student(stuId, "")));
         } catch (ClassCastException e) {
             return ResponseStatu.failure("用户异常，请重新登陆");
         }
@@ -252,4 +272,14 @@ public class SubjectController {
         return result;
     }
 
+    @RequestMapping(value = "/uploadSubjectFile", method = RequestMethod.POST)
+    public ResponseEntity<Object> uploadSubjectFile(@RequestParam("file") MultipartFile file, String subId) {
+        try {
+            subjectService.uploadSubjectFile(file, subId);
+            return ResponseStatu.success("上传附件成功");
+//            return ResponseStatu.success();
+        } catch (RuntimeException e) {
+            return ResponseStatu.failure(e.getMessage());
+        }
+    }
 }

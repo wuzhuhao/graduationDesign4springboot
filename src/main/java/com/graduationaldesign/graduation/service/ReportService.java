@@ -5,7 +5,10 @@ import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.Teacher;
 import com.graduationaldesign.graduation.util.PageBean;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +33,8 @@ public interface ReportService {
 
     String updateByPrimaryKeySelective(Report record);
 
+    String updateByPrimaryKeySelectiveWithStudent(Report record) throws Exception;
+
     int updateByPrimaryKey(Report record);
 
     PageBean<Report> listByPage(HashMap<String, Object> params, int page, Integer pageSize,
@@ -48,4 +53,7 @@ public interface ReportService {
 
     public ResponseEntity<Object> updateListByPrimaryKeySelective(List<Report> lstRecord);
 
+    public void uploadFile(MultipartFile file, String subId, Integer type, boolean isTemp);
+
+    public void export(HttpServletRequest request, HttpServletResponse response, String subId, Integer type);
 }

@@ -2,14 +2,18 @@ package com.graduationaldesign.graduation.util;
 
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+import java.util.stream.Collectors;
+
 /**
- *  逆向工具类
+ * 逆向工具类
  * 处理sql语句相关
  */
 @Component
 public class SqlUtil {
 
-    private SqlUtil() {}
+    private SqlUtil() {
+    }
 
     /**
      * 格式化字段
@@ -18,7 +22,7 @@ public class SqlUtil {
      * @return 格式化结果
      */
     public static String formatParameters(String... parameters) {
-        if(parameters == null || parameters.length == 0) {
+        if (parameters == null || parameters.length == 0) {
             return null;
         }
         StringBuilder stringBuilder = new StringBuilder();
@@ -38,7 +42,7 @@ public class SqlUtil {
      * @return 格式化结果
      */
     public static String formatParametersForAlias(String[]... parameters) {
-        if(parameters == null || parameters.length == 0) {
+        if (parameters == null || parameters.length == 0) {
             return null;
         }
         StringBuilder stringBuilder = new StringBuilder();
@@ -56,18 +60,18 @@ public class SqlUtil {
      * 格式化字段
      *
      * @param parametersStr 拼接sql字段
-     * @param parameter 每个参数都是一个长度为2的数组，如new String[]{"数据库字段名", "别名"}
+     * @param parameter     每个参数都是一个长度为2的数组，如new String[]{"数据库字段名", "别名"}
      * @return 格式化结果
-     * */
+     */
     private static void formatParameter(StringBuilder parametersStr, String[] parameter) {
-        if(StringUtil.isNullOrEmpty(parameter[0])) {
+        if (StringUtil.isNullOrEmpty(parameter[0])) {
             return;
         }
 
         parametersStr.append(parameter[0]);
 
         // 添加别名
-        if(parameter.length > 1 && !StringUtil.isNullOrEmpty(parameter[1])) {
+        if (parameter.length > 1 && !StringUtil.isNullOrEmpty(parameter[1])) {
             parametersStr.append(" as ");
             parametersStr.append(parameter[1]);
         }
@@ -76,8 +80,9 @@ public class SqlUtil {
 
     /**
      * 条件SQL参数填充
+     *
      * @param condition 条件
-     * @param values 参数
+     * @param values    参数
      * @return 条件SQL
      */
     @SuppressWarnings("deprecation")
@@ -109,5 +114,14 @@ public class SqlUtil {
 
     public static int getOffset(int curPage, int limit) {
         return (curPage - 1) * limit;
+    }
+
+    /**
+     * @param map 拼接resultString key为table.name value为别名
+     * @return
+     */
+    public static String spliceResultStringByMap(Map<String, String> map) {
+        String resultString = "";
+        return map.keySet().stream().map(key -> (key + " " + map.get(key))).collect(Collectors.joining(","));
     }
 }

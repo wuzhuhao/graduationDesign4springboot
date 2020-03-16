@@ -11,8 +11,10 @@ import com.graduationaldesign.graduation.util.ResponseStatu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -33,6 +35,8 @@ public class ReportController {
     RootPropeties rootPropeties;
     @Autowired
     TokenService tokenService;
+    @Autowired
+    HttpServletResponse response;
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<Object> add(Report report) {
@@ -53,7 +57,7 @@ public class ReportController {
     }
 
     /**
-     * 修改报告
+     * 管理员修改报告
      *
      * @param report
      * @return
@@ -61,8 +65,15 @@ public class ReportController {
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public ResponseEntity<Object> update(Report report) {
         try {
-            return ResponseStatu.success(reportService.updateByPrimaryKeySelective(report));
-        } catch (RuntimeException e) {
+            String message = "";
+            Object user = tokenService.getUserByToken(request);
+            if (user instanceof Student) {
+                message = reportService.updateByPrimaryKeySelectiveWithStudent(report);
+            } else {
+                message = reportService.updateByPrimaryKeySelective(report);
+            }
+            return ResponseStatu.success(message);
+        } catch (Exception e) {
             return ResponseStatu.failure(e.getMessage());
         }
     }
@@ -175,4 +186,33 @@ public class ReportController {
         }
     }
 
+    @RequestMapping("/export")
+    public ResponseEntity<Object> export(String subId, Integer type) {
+        try {
+            reportService.export(request, response, subId, type);
+            return ResponseStatu.success("下载成功");
+        } catch (RuntimeException e) {
+            return ResponseStatu.failure(e.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+    public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file, String subId, Integer type) {
+        try {
+            reportService.uploadFile(file, subId, type, false);
+            return ResponseStatu.success("上传文件成功");
+        } catch (RuntimeException e) {
+            return ResponseStatu.failure(e.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "/uploadTemp", method = RequestMethod.POST)
+    public ResponseEntity<Object> uploadTemp(@RequestParam("file") MultipartFile file, String subId, Integer type) {
+        try {
+            reportService.uploadFile(file, subId, type, true);
+            return ResponseStatu.success("上传模板成功");
+        } catch (RuntimeException e) {
+            return ResponseStatu.failure(e.getMessage());
+        }
+    }
 }

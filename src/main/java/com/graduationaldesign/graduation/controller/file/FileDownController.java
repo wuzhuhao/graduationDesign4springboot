@@ -1,26 +1,10 @@
 package com.graduationaldesign.graduation.controller.file;
 
 import com.graduationaldesign.graduation.pojo.Progress;
+import com.graduationaldesign.graduation.pojo.Task;
 import com.graduationaldesign.graduation.service.FileDownService;
-import com.graduationaldesign.graduation.util.FileUtil;
-import com.graduationaldesign.graduation.util.ResponseStatu;
-import com.graduationaldesign.graduation.util.WordUtils;
-import com.graduationaldesign.graduation.util.ZipUtils;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.graduationaldesign.graduation.service.TaskService;
+import com.graduationaldesign.graduation.util.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +12,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @author wuzhuhao
@@ -44,6 +35,8 @@ public class FileDownController {
     HttpServletRequest request;
     @Autowired
     private HttpServletResponse response;
+    @Autowired
+    TaskService taskService;
 
     @GetMapping(value = "/downSingleFile")
     public ResponseEntity<Object> download(HttpServletResponse response, String fileName)
@@ -111,11 +104,11 @@ public class FileDownController {
 
     @RequestMapping("/export")
     public void export(HttpServletRequest request, HttpServletResponse response) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("title", "这是标题");
-        params.put("name", "李四");
+        Map<String, Object> params;
+        Task task = taskService.selectByPrimaryKey(1);
+        params = BeanUtil.beanToMap(task);
         //这里是我说的一行代码
-        FileUtil.exportWord("word/test.docx", "F:/test", "aaa.docx", params, request, response);
+        FileUtil.exportWord("word/firstReport.docx", "F:/test", "开题报告.docx", params, request, response);
     }
 
     //, int type, int isdemo

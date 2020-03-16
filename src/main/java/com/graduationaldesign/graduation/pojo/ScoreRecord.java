@@ -1,5 +1,7 @@
 package com.graduationaldesign.graduation.pojo;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+
 import java.io.Serializable;
 
 public class ScoreRecord implements Serializable {
@@ -203,11 +205,21 @@ public class ScoreRecord implements Serializable {
         return subject;
     }
 
+    @JsonGetter(value = "subject")
+    public Subject getSubjectDetail() {//自定的方法
+        return subject;
+    }
+
     public void setSubject(Subject subject) {
         this.subject = subject;
     }
 
     public ReplyTeam getReplyTeam() {
+        return replyTeam;
+    }
+
+    @JsonGetter(value = "replyTeam")
+    public ReplyTeam getReplyTeamDetail() {//自定的方法
         return replyTeam;
     }
 

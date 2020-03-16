@@ -11,6 +11,7 @@ import com.graduationaldesign.graduation.util.ResponseStatu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.lang.reflect.InvocationTargetException;
@@ -29,6 +30,10 @@ public class DesignShowServiceImpl implements DesignShowService {
     private DesignShowMapper designShowMapper;
     @Autowired
     RootPropeties rootPropeties;
+    @Autowired
+    FileUploadServiceImpl fileUploadService;
+    final String FILE_PATH = System.getProperty("user.dir") + "/upload/" + this.getClass().getName().substring(0, this.getClass().getName().indexOf("ServiceImpl")) + "/";
+
 
     @Override
     public int deleteByPrimaryKey(Integer id) {
@@ -91,5 +96,18 @@ public class DesignShowServiceImpl implements DesignShowService {
             message = MessageFormat.format("批量修改{0}失败", rootPropeties.getDesignShow());
         }
         return ResponseStatu.success(message);
+    }
+
+    @Override
+    public void uploadFile(MultipartFile file, Integer showId) {
+        DesignShow designShow = new DesignShow(showId);
+        designShow.setShowFile(fileUploadService.singleFile(file, FILE_PATH));
+        try {
+            designShowMapper.updateByPrimaryKeySelective(designShow);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fileUploadService.deleteFile(FILE_PATH, designShow.getShowFile());
+            throw new RuntimeException("上传失败");
+        }
     }
 }

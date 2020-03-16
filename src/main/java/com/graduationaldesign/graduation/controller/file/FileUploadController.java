@@ -27,7 +27,7 @@ public class FileUploadController {
     @PostMapping("/singleFile")
     public ResponseEntity<Object> singleFile(@RequestParam("file") MultipartFile file) {
         try {
-            return ResponseStatu.success(fileUploadService.singleFile(file));
+            return ResponseStatu.success(fileUploadService.singleFile(file, "/"));
         } catch (RuntimeException e) {
             return ResponseStatu.failure(e.getMessage());
         }
@@ -45,7 +45,7 @@ public class FileUploadController {
 
     @RequestMapping("/importUserByExcel")
     public ResponseEntity<Object> importStudentByExcel(@RequestParam("file") MultipartFile file,
-            Integer type) {
+                                                       Integer type) {
         try {
             fileUploadService.importUser(file, type);
             return ResponseStatu.success("导入数据成功");

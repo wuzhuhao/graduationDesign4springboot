@@ -4,9 +4,10 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.graduationaldesign.graduation.pojo.helper.MyPrimaryKey;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(value = {"handler"})
@@ -95,6 +96,11 @@ public class Report implements Serializable {
     }
 
     public Report() {
+    }
+
+    public Report(String subId, Integer reportType) {
+        this.reportSubId = subId;
+        this.reportType = reportType;
     }
 
     /**

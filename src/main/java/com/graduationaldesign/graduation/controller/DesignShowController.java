@@ -1,21 +1,18 @@
 package com.graduationaldesign.graduation.controller;
 
 import com.graduationaldesign.graduation.aop.RootPropeties;
-import com.graduationaldesign.graduation.mapper.DesignShowMapper;
 import com.graduationaldesign.graduation.pojo.DesignShow;
 import com.graduationaldesign.graduation.service.DesignShowService;
 import com.graduationaldesign.graduation.util.ResponseStatu;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 
 /**
@@ -89,8 +86,8 @@ public class DesignShowController {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ResponseEntity<Object> list(@RequestParam HashMap<String, Object> params,
-            @RequestParam(required = false, defaultValue = "1") int page,
-            @RequestParam(required = false, defaultValue = "5") int pageSize) {
+                                       @RequestParam(required = false, defaultValue = "1") int page,
+                                       @RequestParam(required = false, defaultValue = "5") int pageSize) {
         try {
             return ResponseStatu
                     .success(designShowService.listByPage(params, page, pageSize));
@@ -115,6 +112,7 @@ public class DesignShowController {
         }
         return result;
     }
+
     @RequestMapping(value = "/listUpdate", method = RequestMethod.PUT)
     public ResponseEntity<Object> updateDesignShow(List<DesignShow> lstDesignShow) {
         try {
@@ -124,4 +122,13 @@ public class DesignShowController {
         }
     }
 
+    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+    public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file, Integer showId) {
+        try {
+            designShowService.uploadFile(file, showId);
+            return ResponseStatu.success("上传文件成功");
+        } catch (RuntimeException e) {
+            return ResponseStatu.failure(e.getMessage());
+        }
+    }
 }

@@ -5,6 +5,8 @@ import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.pojo.Task;
 import com.graduationaldesign.graduation.service.SubjectService;
 import com.graduationaldesign.graduation.service.TaskService;
+import com.graduationaldesign.graduation.util.BeanUtil;
+import com.graduationaldesign.graduation.util.FileUtil;
 import com.graduationaldesign.graduation.util.PageBean;
 import com.graduationaldesign.graduation.util.ResponseStatu;
 import lombok.extern.slf4j.Slf4j;
@@ -13,9 +15,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author wuzhuhao
@@ -34,6 +38,8 @@ public class TaskController {
     HttpServletRequest request;
     @Autowired
     RootPropeties rootPropeties;
+    @Autowired
+    HttpServletResponse response;
 
     //    @RequestMapping(value="/temp")
     public ResponseEntity<Object> temp() {
@@ -143,4 +149,12 @@ public class TaskController {
         }
     }
 
+    @RequestMapping("/export")
+    public void export(Integer primaryKey) {
+        Map<String, Object> params;
+        Task task = taskService.selectByPrimaryKey(primaryKey);
+        params = BeanUtil.beanToMap(task);
+        //这里是我说的一行代码
+        FileUtil.exportWord("word/task.docx", "F:/test", "任务书.docx", params, request, response);
+    }
 }

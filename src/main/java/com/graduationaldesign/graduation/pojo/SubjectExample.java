@@ -29,8 +29,18 @@ public class SubjectExample {
      * @mbg.generated
      */
     protected List<Criteria> oredCriteria;
-    
+
     private String join;
+
+    private String resultString;
+
+    public String getResultString() {
+        return resultString;
+    }
+
+    public void setResultString(String resultString) {
+        this.resultString = resultString;
+    }
 
     public String getJoin() {
         return join;
@@ -173,7 +183,7 @@ public class SubjectExample {
         }
 
         protected void addCriterion(String condition, Object value1, Object value2,
-                String property) {
+                                    String property) {
             if (value1 == null || value2 == null) {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
@@ -1043,7 +1053,7 @@ public class SubjectExample {
         }
 
         protected Criterion(String condition, Object value, Object secondValue,
-                String typeHandler) {
+                            String typeHandler) {
             super();
             this.condition = condition;
             this.value = value;
