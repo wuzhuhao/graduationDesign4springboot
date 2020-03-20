@@ -92,24 +92,25 @@ export default {
             {
                 title: '课题名称',
                 key: 'subName',
-               
+                 minWidth: 220,
                 sortable: true
             },
             {
                 title: '所属专业',
                 key: 'stuMajor',
-               
+                minWidth: 100,
                 sortable: true
             },
             {
                 title: '指导老师',
                 key: 'teaName',
-               
+                 minWidth: 100,
                 sortable: true
             },
             {
                 title: '学生',
                 key: 'stuName',
+                  minWidth: 100,
                
             },
             {
@@ -124,6 +125,7 @@ export default {
             }, {
                 title: '创建时间',
                 key: 'reportSubtime',
+                 minWidth: 220,
                
             },{
                         title: '操作',

@@ -9,9 +9,7 @@
         <div slot="title-icon">
             <Icon type="ios-game-controller-b" />
         </div>
-        <div slot="title-toolbar">
-            <Button type="primary" icon="md-add"  @click="handleCreate">新增</Button>
-        </div>
+      
 
         <!-- 条件搜索 -->
         <div slot="searchContent" class="search-content-slot">
@@ -43,17 +41,7 @@
         <div slot="search">
             
           <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doSearch">查询</Button>  &nbsp; &nbsp; &nbsp; &nbsp;
-           <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doReset">重置</Button>  &nbsp;
-          <Button type="info"  style="float:left;margin:0 8px"  @click="exportData(1)"><Icon type="ios-download-outline"></Icon>导出数据</Button>&nbsp;
-          <Button type="info" icon="ios-search;margin:0 8px"  style="float:left" @click="delAll">批量删除</Button>  &nbsp;
-        <Upload action="http://localhost:8080/graManagement/uploadFile/importUserByExcel?type=2"    style="float:left;margin:0 8px">
-            <Button  type="info" icon="ios-cloud-upload-outline">批量注册</Button>
-        </Upload>
-         <Button type="info"  style="float:left;margin:0 8px"  @click="exportDataDemo(2)"><Icon type="ios-download-outline"></Icon>导出注册模板</Button>&nbsp;
-        </div>
-        <div slot="btns">
-          <Button type="primary" icon="md-add" @click="handleCreate">添加</Button>
-        </div>
+            </div>
         <div slot="paddingContent">
           <Table border  show-summary :columns="columns2" :data="tableData"  @on-selection-change="changeSelect" ref="table"></Table>
         </div>
@@ -129,7 +117,6 @@ export default {
               fixed: 'left',
               align: 'center'
             }, 
-            
              {
                 title: '课题名称',
                 key: 'taskSubName',
@@ -189,7 +176,8 @@ export default {
      },
     methods:{
         select(row){
-       this.modal11 = true;
+           this.$store.commit('taskId',row.id);
+            this.modal11 = true;
       },
        exportData (type) {
                 if (type === 1) {

@@ -59,7 +59,7 @@ public class TaskController {
         }
     }
 
-    @RequestMapping(value = "/listBytea/{teaId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/listByTea/{teaId}", method = RequestMethod.GET)
     public ResponseEntity<Object> listBytea(@RequestParam HashMap<String, Object> param,
                                             @RequestParam(required = false, defaultValue = "1") int page,
                                             @PathVariable(value = "teaId") String teaId,

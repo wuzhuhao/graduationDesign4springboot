@@ -11,14 +11,16 @@
                     <Icon type="md-albums"></Icon>
                     学校公告
                 </p>
-                <a href="#" slot="extra" @click.prevent="changeLimit">
+                <a href="#" slot="extra" @click.prevent="showNotice(1)">
                     <Icon type="ios-loop-strong"></Icon>
                     更多
                 </a>
                 <ul>
-                    <li v-for="item in randomMovieList">
-                        <a :href="item.url" target="_blank"style="width:75%;float:left;">学生选题注意事项</a>
-                        <a style="width:22%;float:right; ">2019-10-30 16:31</a>
+                   
+                    <li v-for="item in schooleBulletin">
+                        
+                       <a href="#"  @click.prevent="showNoticeInfo(item.id)"   >{{item.noticeContent}}</a>
+                        <a @click.prevent="showNoticeInfo(item.id)" style="width:25%;float:right; ">{{item.noticeTime}}</a>
                     </li>
                    
                 </ul>
@@ -30,14 +32,14 @@
                         <Icon type="md-albums"></Icon>
                         学院公告
                     </p>
-                    <a href="#" slot="extra" @click.prevent="changeLimit">
+                    <a href="#" slot="extra" @click.prevent="showNotice(0)">
                         <Icon type="ios-loop-strong"></Icon>
                         更多
                     </a>
                     <ul>
-                         <li v-for="item in randomMovieList">
-                        <a :href="item.url" target="_blank">广东东软学院2020届本科毕业设计（论文）工作手册</a>
-                        <a style="width:22%;float:right; ">2019-10-30 16:31</a>
+                         <li v-for="item in collegeBulletin">
+                        <a @click.prevent="showNoticeInfo(item.id)" target="_blank"  style="width:5%">{{item.noticeContent}}</a>
+                        <a @click.prevent="showNoticeInfo(item.id)" style="width:25%;float:right; ">{{item.noticeTime}}</a>
                         
                     </li>
                     </ul>
@@ -51,86 +53,95 @@ import MasterPage from '@/components/Master'
     export default {
         data () {
             return {
-                movieList: [
-                    {
-                        name: 'The Shawshank Redemption',
-                        url: 'https://movie.douban.com/subject/1292052/',
-                        rate: 9.6
-                    },
-                    {
-                        name: 'Leon:The Professional',
-                        url: 'https://movie.douban.com/subject/1295644/',
-                        rate: 9.4
-                    },
-                    {
-                        name: 'Farewell to My Concubine',
-                        url: 'https://movie.douban.com/subject/1291546/',
-                        rate: 9.5
-                    },
-                    {
-                        name: 'Forrest Gump',
-                        url: 'https://movie.douban.com/subject/1292720/',
-                        rate: 9.4
-                    },
-                    {
-                        name: 'Life Is Beautiful',
-                        url: 'https://movie.douban.com/subject/1292063/',
-                        rate: 9.5
-                    },
-                    {
-                        name: 'Spirited Away',
-                        url: 'https://movie.douban.com/subject/1291561/',
-                        rate: 9.2
-                    },
-                    {
-                        name: 'Schindler',
-                        url: 'https://movie.douban.com/subject/1295124/',
-                        rate: 9.4
-                    },
-                    {
-                        name: 'The Legend of 1900',
-                        url: 'https://movie.douban.com/subject/1292001/',
-                        rate: 9.2
-                    },
-                    {
-                        name: 'WALL·E',
-                        url: 'https://movie.douban.com/subject/2131459/',
-                        rate: 9.3
-                    },
-                    {
-                        name: 'Inception',
-                        url: 'https://movie.douban.com/subject/3541415/',
-                        rate: 9.2
-                    }
-                ],
+                num:0,
+                 formItem: {
+                id: '',
+                noticeTime:  '',
+                noticePublisher:  '',
+                acaId: '',
+                noticeContent:  '',
+                academy:  '',
+                
+        },
+                collegeBulletin:{},
+                schooleBulletin:{},
                 randomMovieList: []
             }
         },
+        created(){
+             this.getData(1,5);
+      },
         methods: {
-            changeLimit () {
-                function getArrayItems(arr, num) {
-                    const temp_array = [];
-                    for (let index in arr) {
-                        temp_array.push(arr[index]);
-                    }
-                    const return_array = [];
-                    for (let i = 0; i<num; i++) {
-                        if (temp_array.length>0) {
-                            const arrIndex = Math.floor(Math.random()*temp_array.length);
-                            return_array[i] = temp_array[arrIndex];
-                            temp_array.splice(arrIndex, 1);
-                        } else {
-                            break;
-                        }
-                    }
-                    return return_array;
-                }
-                this.randomMovieList = getArrayItems(this.movieList, 5);
-            }
-        },
+             
+            showNotice (isSchoole) {
+             
+                  // this.$router.push('/admin')
+                                     this.$router.push({
+                                        name:'showNotice',
+                                         query:{
+                                         isSchoole :isSchoole
+                                         }
+                                        
+                                    })
+                                  
+             
+            },
+            showNoticeInfo (id) {
+                this.$router.push({
+                                        name:'noticeInfo',
+                                         query:{
+                                         id :id
+                                         }
+                                        
+                                    })
+            },
+        
+          getData(page,pageSize){
+            
+            let params = this.formItem
+            let  token = localStorage.getItem('token')
+             let  acaId = localStorage.getItem('acaId')
+             
+              console.log(this.formItem.acaId + '22')
+            this.$axios({
+                                
+                                url: 'notice/list?page=' + page  + '&pageSize=' + pageSize,
+                                method: 'get',//请求的方式
+                                params:{
+                                    acaId:acaId
+                                },
+                                // token:localStorage.getItem('token')
+                            }).then(res => {
+                            console.log(res.data)
+
+                            this.collegeBulletin = res.data.data.beanList        
+                            }).catch(err => {
+                                console.info('报错的信息',err);
+                                
+                            });
+
+            this.$axios({
+                                
+                                url: 'notice/list?page=' + page  + '&pageSize=' + pageSize,
+                                method: 'get',//请求的方式
+                                params:{
+                                    acaId:4
+                                },
+                                // token:localStorage.getItem('token')
+                            }).then(res => {
+                            console.log(res.data)
+                            this.schooleBulletin = res.data.data.beanList        
+                            }).catch(err => {
+                                console.info('报错的信息',err);
+                                
+                            });                           
+          }
+      },
         mounted () {
-            this.changeLimit();
+           
+           
         },
+      
          components: {
              name
          }

@@ -13,47 +13,6 @@
             <Button type="primary" icon="md-add"  @click="handleCreate">新增</Button>
         </div>
 
-        <!-- 条件搜索 -->
-        <div slot="searchContent" class="search-content-slot">
-            <Form :model="formItem" :label-width="80">
-              <Row>
-                <Col span="8">
-                  <FormItem label="任务编号：">
-                    <Input v-model="formItem.id" placeholder="..."></Input>
-                </FormItem>
-                </Col>
-                <Col span="8">
-                  <FormItem label="任务内容">
-                    <Input v-model="formItem.taskContent" placeholder="Enter something..."></Input>
-                </FormItem>
-                </Col>
-                <Col span="8">
-                  <FormItem label="课程id：">
-                    <Select v-model="formItem.select">
-                        <Option value="beijing">New York</Option>
-                        <Option value="shanghai">London</Option>
-                        <Option value="shenzhen">Sydney</Option>
-                    </Select>
-                </FormItem>
-                </Col>
-                 
-              </Row>
-          </Form>
-        </div>
-        <div slot="search">
-            
-          <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doSearch">查询</Button>  &nbsp; &nbsp; &nbsp; &nbsp;
-           <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doReset">重置</Button>  &nbsp;
-          <Button type="info"  style="float:left;margin:0 8px"  @click="exportData(1)"><Icon type="ios-download-outline"></Icon>导出数据</Button>&nbsp;
-          <Button type="info" icon="ios-search;margin:0 8px"  style="float:left" @click="delAll">批量删除</Button>  &nbsp;
-        <Upload action="http://localhost:8080/graManagement/uploadFile/importUserByExcel?type=2"    style="float:left;margin:0 8px">
-            <Button  type="info" icon="ios-cloud-upload-outline">批量注册</Button>
-        </Upload>
-         <Button type="info"  style="float:left;margin:0 8px"  @click="exportDataDemo(2)"><Icon type="ios-download-outline"></Icon>导出注册模板</Button>&nbsp;
-        </div>
-        <div slot="btns">
-          <Button type="primary" icon="md-add" @click="handleCreate">添加</Button>
-        </div>
         <div slot="paddingContent">
           <Table border  show-summary :columns="columns2" :data="tableData"  @on-selection-change="changeSelect" ref="table"></Table>
         </div>

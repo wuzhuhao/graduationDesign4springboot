@@ -22,62 +22,9 @@
 
     </MasterPage>
 
-
-    <!--  添加和编辑弹出抽屉  +++++++++++++++++++++++++++++++++++++++++++++++++++++     -->
-        <!--  :title 加:为绑定数据 即实现自定义标题  -->
-       <Drawer
-            :title='this.dialogStatus'
-            v-model="value3"
-            width="720"
-            :mask-closable="false"
-            :styles="styles"
-        >
-            <Form :model="formData">
-                <Row :gutter="32">
-                    <Col span="12">
-                        <FormItem label="id" label-position="top">
-                            <Input v-model="formData.id" placeholder="please enter user name" />
-                        </FormItem>
-                    </Col>
-                    <Col span="12">
-                        <FormItem label="内容" label-position="top">
-                            <Input v-model="formData.progContent" placeholder="please enter url">
-                            </Input>
-                        </FormItem>
-                    </Col>
-                </Row>
-                <Row :gutter="32">
-                    <Col span="12">
-                        <FormItem label="创建时间" label-position="top">
-                            <Input v-model="formData.progContentTime" placeholder="please enter user name" />
-                        </FormItem>
-                    </Col>
-                    <Col span="12">
-                        <FormItem label="回复内容" label-position="top">
-                            <Input v-model="formData.progReply" placeholder="please enter url">
-                            </Input>
-                        </FormItem>
-                    </Col>
-                </Row>
-                <Row :gutter="32">
-                    <Col span="12">
-                        <FormItem label="回复时间" label-position="top">
-                            <Input v-model="formData.progReplyTime" placeholder="please enter user name" />
-                        </FormItem>
-                    </Col>
-                    <Col span="12">
-                        <FormItem label="课题id" label-position="top">
-                            <Input v-model="formData.progressSubId" placeholder="please enter url">
-                            </Input>
-                        </FormItem>
-                    </Col>
-                </Row>
-            </Form>
-            <div class="demo-drawer-footer">
-                <Button style="margin-right: 8px" @click="value3 = false">Cancel</Button>
-                <Button type="primary" @click="update()">Submit</Button>
-            </div>
-        </Drawer>    
+<Modal v-model="modal11"   closable  :styles="{top: '10px'}":width='1000' >
+        <info></info>
+    </Modal>
   
 </section>
 
@@ -87,14 +34,16 @@
 </template>
 <script>
 import MasterPage from '@/components/Master'
-
+import info from './weeklyProgressInfo'
 export default {
     components:{
-        MasterPage
+        MasterPage,
+        info
     },
     data(){
       
       return{
+             modal11: false,
             dialogStatus: '',//title自定义标题
           value3: false,
                 styles: {
@@ -177,34 +126,19 @@ export default {
                             return h('div', [
                                 h('Button', {
                                     props: {
-                                        type: 'text',
+                                        type: 'primary',
                                         size: 'small',
-                                        icon: "icon iconfont icon-shanchu"
+                                     
                                     },
                                      attrs:{
-                                        title:'删除'
+                                        title:'修改'
                                     },
                                       on: {
                                         click: () => {
-                                        this.delById(params.row)             //编辑方法
+                                        this.select(params.row)             //编辑方法
                                         }
                                       }
-                                }),
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small',
-                                        icon:'icon iconfont icon-edit'
-                                    },
-                                     attrs:{
-                                        title:'编辑'
-                                    },
-                                      on: {
-                                        click: () => {
-                                        this.edit(params.row)             //编辑方法
-                                        }
-                                      }
-                                })
+                                },'修改')
                             ]);
                         }
                     }
@@ -216,6 +150,11 @@ export default {
         this.getData(1,10);
      },
     methods:{
+         select(row){
+            this.$store.commit('weeklyProgressId',row.id);
+            this.modal11 = true;
+       
+      },
        exportData (type) {
                 if (type === 1) {
                     this.$refs.table.exportCsv({
@@ -306,12 +245,14 @@ export default {
    
       },
       getData(page,pageSize){
+        let userId = localStorage.getItem("userId") 
         let params = this.formItem
+        
        let  token = localStorage.getItem('token')
          this.$axios({
                             
-                            url: 'progress/list?page=' + page  + '&pageSize=' + pageSize,
-                            method: 'get',//请求的方式
+                           url: 'progress/listOfStu?stuId=' + userId + '&page=' + page + '&pageSize=' + pageSize,
+                           method: 'get',//请求的方式
                             params:params,
                             // token:localStorage.getItem('token')
                         }).then(res => {

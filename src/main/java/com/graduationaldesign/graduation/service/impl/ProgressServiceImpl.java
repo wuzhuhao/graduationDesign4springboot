@@ -97,7 +97,12 @@ public class ProgressServiceImpl implements ProgressService {
         ProgressExample.Criteria criteria = example.createCriteria();
         ExampleHelper.addCondition(Progress.class, criteria, params);
         List<Progress> list = progressMapper.selectByExampleWithBLOBs(example);
-        list.stream().forEach(item -> item.getSubject());
+        list.stream().forEach(item -> {
+            item.getSubject();
+            item.getSubject().getStudent();
+            item.getSubject().getTeacher();
+        });
+
         pageBean.setBeanList(list);
         //pageBean.setParams(params);
         return pageBean;

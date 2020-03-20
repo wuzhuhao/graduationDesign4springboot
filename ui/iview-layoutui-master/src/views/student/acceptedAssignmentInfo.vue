@@ -143,14 +143,15 @@ export default {
     methods:{
      
        getData(){
+         let userId = localStorage.getItem("userId") 
+        let  token = localStorage.getItem('token')
+         this.formItem.id =  localStorage.getItem('taskId')
         let params = this.formItem
-        let userId = localStorage.getItem("userId") 
-       let  token = localStorage.getItem('token')
          this.$axios({
                             
-                            url: 'task/listByStu/' + userId + '/2',
+                            url: 'task/list',
                             method: 'get',//请求的方式
-                            // params:params,
+                            params:params,
                             // token:localStorage.getItem('token')
                         }).then(res => {
                           console.log(res.data)

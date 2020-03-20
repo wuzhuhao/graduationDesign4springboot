@@ -4,10 +4,7 @@ import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
 import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.mapper.ReportMapper;
-import com.graduationaldesign.graduation.pojo.Report;
-import com.graduationaldesign.graduation.pojo.ReportExample;
-import com.graduationaldesign.graduation.pojo.Student;
-import com.graduationaldesign.graduation.pojo.Teacher;
+import com.graduationaldesign.graduation.pojo.*;
 import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.ReportService;
 import com.graduationaldesign.graduation.util.BeanUtil;
@@ -151,6 +148,11 @@ public class ReportServiceImpl implements ReportService {
         }
         ExampleHelper.addCondition(Report.class, criteria, params);
         List<Report> list = reportMapper.selectByExampleWithBLOBs(reportExample);
+        for(Report report :list){
+            report.getSubject();
+            report.getSubject().getStudent();
+            report.getSubject().getTeacher();
+        }
         pageBean.setBeanList(list);
         //pageBean.setParams(params);
         return pageBean;
@@ -201,6 +203,11 @@ public class ReportServiceImpl implements ReportService {
         }
         List<Report> list = reportMapper.selectByExampleWithBLOBs(example);
         pageBean.setBeanList(list);
+        for(Report report :list){
+            report.getSubject();
+            report.getSubject().getStudent();
+            report.getSubject().getTeacher();
+        }
         //pageBean.setParams(params);
         return pageBean;
     }
@@ -237,6 +244,11 @@ public class ReportServiceImpl implements ReportService {
             criteria.andReportTypeEqualTo(reportType);
         }
         List<Report> list = reportMapper.selectByExampleWithBLOBs(example);
+        for(Report report :list){
+            report.getSubject();
+            report.getSubject().getStudent();
+            report.getSubject().getTeacher();
+        }
         pageBean.setBeanList(list);
         //pageBean.setParams(params);
         return pageBean;

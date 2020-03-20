@@ -132,7 +132,12 @@ export default {
                             // this.$store.commit('$_setToken', userInfo.token);
                             if(res.data.message=='success'){
                                   this.$store.commit('type',this.userForm.type);
-                                  console.log(this.userForm.number)
+                                  this.$store.commit('token',this.$cookies.get('token'));
+
+                                  
+                                  console.log(res.data)
+                                  this.$store.commit('acaId',res.data.data.academyId);
+                                    console.log(this.$cookies.get('token') )
                                   this.$store.commit('userId',this.userForm.number);
                                 if(this.userForm.type==3){
                                     // this.$router.push('/admin')

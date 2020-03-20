@@ -682,7 +682,7 @@ export default {
 
             teacherMenus:[
                 // {
-                //     title:'信息管理',
+                //     title:'邮箱',
                 //     num:1,
                 //     name:'admin',
                 //     icon:'ios-home',
@@ -703,10 +703,16 @@ export default {
                 //         }
                 //     ]
                 // },        
-                {
+               {
                     title:'数据查询',
-                    name:'ios-flask',
-                    icon:'ios-people',
+                    num:1,
+                    name:'admin',
+                    icon:'ios-home',
+                    href:'/notice',
+                    closable:false,
+                    showInTags:true,
+                    showInMenus:true,
+                    choosed:true,
                     children:[
                         {
                             title:'学生进度查询',
@@ -923,9 +929,9 @@ export default {
                 {
                     title:'首页',
                     num:1,
-                    name:'student',
+                    name:'studentNotice',
                     icon:'ios-home',
-                    href:'/notice',
+                    href:'/studentNotice',
                     closable:false,
                     showInTags:true,
                     showInMenus:true,
@@ -1216,7 +1222,18 @@ export default {
             }
         },
         quit(){
-            localStorage.removeItem('token');
+             this.$axios({     
+                            url: 'exit' ,
+                            // token:localStorage.getItem('token')
+                        }).then(res => {
+                          localStorage.removeItem('token');
+                        console.log(localStorage.getItem("token")  + 9999) 
+                           this.getData(1,10);
+                        }).catch(err => {
+                           
+                            
+                        });
+           
             this.$router.push('/')
         },
         clickNotice(){

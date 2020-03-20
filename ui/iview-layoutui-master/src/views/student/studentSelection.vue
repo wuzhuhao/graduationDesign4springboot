@@ -158,7 +158,7 @@ export default {
          let userId = localStorage.getItem("userId") 
          this.$axios({
                             // headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                            url: 'sub/list',//请求的地址
+                            url: 'sub/listOfChoice',//请求的地址
                             method: 'get',//请求的方式
                             params: {stuId:userId},//请求的数据
                         }).then(res => {

@@ -26,11 +26,12 @@
               <Row>
                 <Col span="12">
                   <FormItem label="性别:  "  :label-width="200"  class="label">
-                     <Select v-model="formItem.teaSex" >
+                    <Select v-model="formItem.teaSex" >
                         <Option value="男" >男</Option>
                         <Option value="女">女</Option>
                     </Select>
                 </FormItem>
+                
                 </Col>
               </Row>
              <Row>

@@ -24,9 +24,19 @@ const router = new Router({
           },
         },
         {
-          path: '/notice',
-          name: 'studentHome',
-          component: () => import('@/views/Home')
+          path: '/noticeInfo',
+          name: 'noticeInfo',
+          component: () => import('@/views/notice/noticeInfo')
+        },
+        {
+          path: '/studentNotice',
+          name: 'studentNotice',
+          component: () => import('@/views/notice/notice')
+        },
+        {
+          path: '/showNotice',
+          name: 'showNotice',
+          component: () => import('@/views/notice/showNotice')
         },
         {
           path: '/studentSelection',
@@ -67,9 +77,9 @@ const router = new Router({
           component: () => import('@/views/Home')
         },
         {
-          path: '/admin/notice',
-          name: 'adminNotice',
-          component: () => import('@/views/Home')
+          path: '/notice',
+          name: 'notice',
+          component: () => import('@/views/notice/notice')
         },
         {
           path: '/studentInfo',
@@ -92,11 +102,11 @@ const router = new Router({
             name: 'studentHome'
         },
       },
-      // {
-      //   path: '/notice',
-      //   name: 'studentHome',
-      //   component: () => import('@/views/Home')
-      // },
+      {
+        path: '/notice',
+        name: 'studentHome',
+        component: () => import('@/views/notice/notice')
+      },
       // {
     
 
@@ -294,13 +304,13 @@ const router = new Router({
 // 导航守卫
 // 使用 router.beforeEach 注册一个全局前置守卫，判断用户是否登陆
 router.beforeEach((to, from, next) => {
-  if (to.path === '/') {
+  if (to.path === '/' ) {
     next();
   } else {
-    let token = localStorage.getItem('token')
-    if (token === 'null' || token === '') {
+    let token = localStorage.getItem('token');
+    if (token === null || token === '') {
+      this.$Message.warning('请登录');
       next('/');
-      
     } else {
       next();
     }

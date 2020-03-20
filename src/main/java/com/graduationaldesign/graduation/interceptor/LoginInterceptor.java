@@ -52,7 +52,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (null == token || StringUtils.isEmpty(token)) {
             log.error("token为空");
             // 拦截后进入登录页面
-            response.sendRedirect(request.getContextPath() + "/index.html");
+            response.sendRedirect(request.getContextPath() + "http://localhost:8082/iview-layoutui/");
             return false;
         }
         try {

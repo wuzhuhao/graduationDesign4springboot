@@ -19,11 +19,11 @@
               <Row>
                 <Col span="8">
                   <FormItem label="id：">
-                    <Input v-model="formItem.teaId" placeholder="..."></Input>
+                    <Input v-model="formItem.id" placeholder="..."></Input>
                 </FormItem>
                 </Col>
                 <Col span="8">
-                  <FormItem label="姓名：">
+                  <FormItem label="发布者">
                     <Input v-model="formItem.teaName" placeholder="Enter something..."></Input>
                 </FormItem>
                 </Col>
@@ -82,7 +82,7 @@
                         </FormItem>
                     </Col>
                     <Col span="12">
-                        <FormItem label="密码" label-position="top">
+                        <FormItem label="内容" label-position="top">
                             <Input v-model="formData.teaPassword" placeholder="please enter url">
                             </Input>
                         </FormItem>
@@ -90,19 +90,19 @@
                 </Row>
                 <Row :gutter="32">
                     <Col span="12">
-                        <FormItem label="名称" label-position="top">
+                        <FormItem label="时间" label-position="top">
                             <Input v-model="formData.teaName" placeholder="please enter user name" />
                         </FormItem>
                     </Col>
                     <Col span="12">
-                        <FormItem label="性别" label-position="top">
+                        <FormItem label="发布者" label-position="top">
                             <Input v-model="formData.teaSex" placeholder="please enter url">
                             </Input>
                         </FormItem>
                     </Col>
                 </Row><Row :gutter="32">
                     <Col span="12">
-                        <FormItem label="年龄" label-position="top">
+                        <FormItem label="" label-position="top">
                             <Input v-model="formData.teaAge" placeholder="please enter user name" />
                         </FormItem>
                     </Col>
@@ -176,17 +176,12 @@ export default {
                     position: 'static'
                 },
                 formData: {
-                    teaId: '',
-                    teaPassword: '',
-                    teaName: '',
-                    teaSex: '',
-                    teaAge: '',
-                    teaBirthday: '',
-                    teaPhone: '',
-                    teaMail: '',
-                    teaAddress: '',
-                    teaRemarks: '',
-                    academyId: '',
+                    id: '',
+                    noticeTime:  '',
+                    noticePublisher:  '',
+                    acaId: '',
+                    noticeContent:  '',
+                    academy:  '',
                 },
             
         pagination: {
@@ -200,17 +195,12 @@ export default {
          selectCount: 0, // 多选计数
         tableData:[],
         formItem: {
-            teaId: '',
-            teaPassword: '',
-            teaName: '',
-            teaSex: '',
-            teaAge: '',
-            teaBirthday: '',
-            teaPhone: '',
-            teaMail: '',
-            teaAddress: '',
-            teaRemarks: '',
-            academyId: '',
+            id: '',
+            noticeTime:  '',
+            noticePublisher:  '',
+            acaId: '',
+            noticeContent:  '',
+            academy:  '',
         },
         columns2: [
             {
@@ -222,58 +212,27 @@ export default {
             
             {
                 title: 'id',
-                key: 'teaId',
+                key: 'id',
                 width: 100,
                 fixed: 'left',
                 sortable: true
             },
             {
-                title: '教师密码',
-                key: 'teaPassword',
+                title: '内容',
+                key: 'noticeContent',
                 minWidth: 100,
             },
             {
-                title: '教师名称',
-                key: 'teaName',
-                minWidth: 100,
-            }, {
-                title: '教师性别',
-                key: 'teaSex',
+                title: '发布时间',
+                key: 'noticeTime',
                 minWidth: 100,
             },
             {
-                title: '教师年龄',
-                key: 'teaAge',
+                title: 'acaId',
+                key: '学院',
                 minWidth: 100,
             },
             {
-                title: '教师生日',
-                key: 'teaBirthday',
-                minWidth: 100,
-            } ,
-            {
-                title: '教师电话',
-                key: 'teaPhone',
-                minWidth: 100,
-            },
-            {
-                title: '教师邮箱',
-                key: 'teaMail',
-                minWidth: 100,
-            },
-            {
-                title: '教师地址',
-                key: 'teaAddress',
-                minWidth: 100,
-            }, {
-                title: '备注',
-                key: 'teaRemarks',
-                minWidth: 100,
-            },{
-                title: '学院id',
-                key: 'academyId',
-                minWidth: 100,
-            },{
                         title: '操作',
                         key: 'action',
                         fixed: 'right',
@@ -347,17 +306,12 @@ export default {
       //编辑
         edit(row){
             this.dialogStatus = '编辑';//对应标题
-            this.formData.teaId = row.teaId
-            this.formData.teaPassword = row.teaPassword
-            this.formData.teaName =  row.teaName
-            this.formData.teaSex =  row.teaSex
-            this.formData.teaAge =  row.teaAge
-            this.formData.teaBirthday =  row.teaBirthday
-            this.formData.teaPhone = row.teaPhone
-            this.formData.teaMail =  row.teaMail
-            this.formData.teaAddress =  row.teaAddress
-            this.formData.teaRemarks =  row.teaRemarks
-            this.formData.academyId =  row.academyId
+            this.formData.id = row.id
+            this.formData.noticeTime = row.noticeTime
+            this.formData.noticePublisher =  row.noticePublisher
+            this.formData.acaId =  row.acaId
+            this.formData.noticeContent =  row.noticeContent
+            this.formData.academy =  row.academy
             this.value3 = true
         },
         delById(row) {
@@ -367,7 +321,7 @@ export default {
                 onOk: () => {
                     console.log(row)
                  this.$axios({     
-                            url: 'notice/delete/' + row.teaId,
+                            url: 'notice/delete/' + row.id,
                             method: 'delete',//请求的方式
                             data:this.$Qs.stringify(this.formData),
                             // token:localStorage.getItem('token')
@@ -430,17 +384,12 @@ export default {
                           let list = res.data.data.beanList;
                           list.forEach((item, index) => {
                            this.tableData.push({
-                              teaId: item.teaId,
-                              teaPassword: item.teaPassword,
-                              teaName:item.teaName,
-                              teaSex: item.teaSex,
-                              teaAge: item.teaAge,
-                              teaBirthday:item.teaBirthday,
-                              teaPhone:item.teaPhone,
-                              teaMail:item.teaMail,
-                              teaAddress:item.teaAddress,
-                              teaRemarks: item.teaRemarks,
-                              academyId: item.academyId,
+                               id:item.id,
+                                noticeTime: item.noticeTime,
+                                noticePublisher: item.noticePublisher,
+                                acaId:item.acaId,
+                                noticeContent: item.noticeContent,
+                                academy: item.academy
                            })
                           })
                   
@@ -465,16 +414,12 @@ export default {
      
    
        handleCreate () {
-        this.formData.teaId = ''
-        this.formData.teaPassword = ''
-        this.formData.teaName = ''
-        this.formData.teaSex = ''
-        this.formData.teaAge = ''
-        this.formData.teaBirthday = ''
-        this.formData.teaPhone = ''
-        this.formData.teaMail = ''
-        this.formData.teaAddress = ''
-        this.formData.teaRemarks = ''
+        this.formData.id = row.id
+        this.formData.noticeTime = row.noticeTime
+        this.formData.noticePublisher =  row.noticePublisher
+        this.formData.acaId =  row.acaId
+        this.formData.noticeContent =  row.noticeContent
+        this.formData.academy =  row.academy
         this.formData.academyId = ''
         this.dialogStatus = '新增';//对应标题
         this.value3 = true
@@ -496,7 +441,7 @@ export default {
     console.log(this.selectList)
     var lstprimaryKey = []
     for(var i = 0;i<this.selectCount;i++){
-		lstprimaryKey.push(this.selectList[i].teaId)
+		lstprimaryKey.push(this.selectList[i].id)
 	}
      console.log(lstprimaryKey)
       this.$Modal.confirm({
@@ -574,18 +519,12 @@ export default {
         this.drawer = false;
       },
       doReset(){
-        this.formItem.teaId = ''
-        this.formItem.teaPassword = ''
-        this.formItem.teaName = ''
-        this.formItem.teaSex = ''
-        this.formItem.teaAge = ''
-        this.formItem.teaBirthday = ''
-        this.formItem.teaPhone = ''
-        this.formItem.teaMail = ''
-        this.formItem.teaAddress = ''
-        this.formItem.teaRemarks = ''
-        this.formItem.academyId = ''
-        this.formItem.academy = ''
+        this.formItem.id ="",
+        this.formItem.noticeTime = "",
+        this.formItem.noticePublisher = "",
+        this.formItem.acaId = "",
+        this.formItem.noticeContent = "",
+        this.formItem.academy = "",
         this.getData(1,10);
     },
     exportDataDemo(type){

@@ -88,6 +88,11 @@ public class TaskServiceImpl implements TaskService {
         ExampleHelper.addCondition(Task.class, criteria, params);
         List<Task> list = taskMapper.selectByExampleWithBLOBs(taskExample);
         pageBean.setBeanList(list);
+        for(Task task :list){
+            task.getSubject();
+            task.getSubject().getStudent();
+            task.getSubject().getTeacher();
+        }
 //        pageBean.setParams();
         return pageBean;
     }
@@ -104,6 +109,11 @@ public class TaskServiceImpl implements TaskService {
         criteria.andJoinTeaIdEqualTo(teaId);
         List<Task> taskList = taskMapper.selectByExampleWithBLOBs(taskExample);
         PageBean<Task> pageBean = new PageBean<>();
+        for(Task task :taskList){
+            task.getSubject();
+            task.getSubject().getStudent();
+            task.getSubject().getTeacher();
+        }
         pageBean.setBeanList(taskList);
         return pageBean;
     }
@@ -124,6 +134,11 @@ public class TaskServiceImpl implements TaskService {
         criteria.andJoinStuIdEqualTo(stuId);
         criteria.andTaskStateEqualTo(type);
         List<Task> list = taskMapper.selectByExampleWithBLOBs(taskExample);
+        for(Task task :list){
+            task.getSubject();
+            task.getSubject().getStudent();
+            task.getSubject().getTeacher();
+        }
         pageBean.setBeanList(list);
         return pageBean;
     }

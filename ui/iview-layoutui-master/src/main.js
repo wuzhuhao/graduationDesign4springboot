@@ -6,6 +6,8 @@ import 'iview/dist/styles/iview.css';
 import store from './store/store'
 import Qs from 'qs'
 import '@/styles/icon/iconfont.css'
+import VueCookies from 'vue-cookies'
+Vue.use(VueCookies)
 
 
 

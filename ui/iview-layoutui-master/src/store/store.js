@@ -17,7 +17,10 @@ export default new Vuex.Store({
 		userId: '' || localStorage.getItem('userId'),
 		// 存储token
 		token: localStorage.getItem('token') ? localStorage.getItem('token') : '',
-		theme1: localStorage.getItem('theme1') ? localStorage.getItem('theme1') : ''
+		theme1: localStorage.getItem('theme1') ? localStorage.getItem('theme1') : '',
+		taskId: localStorage.getItem('taskId') ? localStorage.getItem('taskId') : '',
+		theweeklyProgressIdme1: localStorage.getItem('weeklyProgressId') ? localStorage.getItem('weeklyProgressId') : '',
+		acaId: localStorage.getItem('acaId') ? localStorage.getItem('acaId') : '',
 	},
 
 	getters:{    // 监听数据变化的
@@ -38,7 +41,23 @@ export default new Vuex.Store({
 		theme1(state) {
 			return state.theme1
 			
-		}
+		},
+		token(state) {
+			return state.token
+			
+		},	
+		taskId(state) {
+			return state.taskId
+			
+		},
+		weeklyProgressId(state) {
+			return state.weeklyProgressId
+			
+		},
+		acaId(state) {
+			return state.acaId
+			
+		},
 	},
 	setters:{    // 监听数据变化的
 		
@@ -69,11 +88,23 @@ export default new Vuex.Store({
 			window.localStorage.setItem("menus",JSON.stringify(s.menus))
 		  },
 		
-		$_setToken(state, value) { // 设置存储token
-	        state.token = value;
-	        localStorage.setItem('token', value);
+		token(state, token) { // 设置存储token
+	        state.token = token;
+	        localStorage.setItem('token', token);
+		},
+		taskId(state, taskId) { // 设置存储token
+	        state.taskId = taskId;
+	        localStorage.setItem('taskId', taskId);
+		},
+		weeklyProgressId(state, weeklyProgressId) { // 设置存储token
+	        state.weeklyProgressId = weeklyProgressId;
+	        localStorage.setItem('weeklyProgressId', weeklyProgressId);
+		},
+		acaId(state, acaId) { // 设置存储token
+	        state.acaId = acaId;
+	        localStorage.setItem('acaId', acaId);
 	    },
-	    $_removeStorage(state, value){  // 删除token
+	    removeStorage(state, value){  // 删除token
 		      localStorage.removeItem('token');
 		}
 	}
