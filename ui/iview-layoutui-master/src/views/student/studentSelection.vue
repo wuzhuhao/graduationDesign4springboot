@@ -13,10 +13,7 @@
         <div slot="paddingContent">
           <Table :columns="columns1"  stripe   border  :data="tableData"></Table>
         </div>
-        <div slot="pager">
-            <Page :total="this.pagination.total"  :page-size="this.pagination.pageSize"  :page-size-opts="this.pagination.pageSizeOpts" 
-            :current="this.pagination.currentPage"  @on-change="pageChange" @on-page-size-change="pageSizeChange"  show-elevator show-total show-sizer />
-        </div> 
+       
     </MasterPage>
  <Modal v-model="modal11"   closable  :styles="{top: '10px'}":width='1000' >
         <info></info>

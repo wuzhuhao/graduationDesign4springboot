@@ -9,26 +9,23 @@
         <div slot="title-icon">
             <Icon type="ios-game-controller-b" />
         </div>
-      
 
         <!-- 条件搜索 -->
         <div slot="searchContent" class="search-content-slot">
             <Form :model="formItem" :label-width="80">
               <Row>
                 <Col span="8">
-                  <FormItem label="课题标题">
-                    <Input v-model="formItem.id" placeholder="..."></Input>
+                  <FormItem label="内容">
+                    <Input v-model="formItem.noticeContent" placeholder="..."></Input>
                 </FormItem>
                 </Col>
-               
-                 
               </Row>
           </Form>
         </div>
         <div slot="search">
             
           <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doSearch">查询</Button>  &nbsp; &nbsp; &nbsp; &nbsp;
-         
+           
         </div>
         <div slot="paddingContent">
           <Table border  show-summary :columns="columns2" :data="tableData"  @on-selection-change="changeSelect" ref="table"></Table>
@@ -40,9 +37,6 @@
 
     </MasterPage>
 
- <Modal v-model="modal11"   closable  :styles="{top: '10px'}":width='1000' >
-        <info></info>
-    </Modal>
   
 </section>
 
@@ -52,23 +46,30 @@
 </template>
 <script>
 import MasterPage from '@/components/Master'
-import info from './acceptedAssignmentInfo'
+
 export default {
     components:{
-        MasterPage,
-        info
+        MasterPage
     },
     data(){
       
       return{
-                modal11: false,
+            dialogStatus: '',//title自定义标题
+          value3: false,
                 styles: {
                     height: 'calc(100% - 55px)',
                     overflow: 'auto',
                     paddingBottom: '53px',
                     position: 'static'
                 },
-            
+                formData: {
+                    id: '',
+                    noticeTime:  '',
+                    noticePublisher:  '',
+                    acaId: '',
+                    noticeContent:  '',
+                    academy:  '',
+                },
             
         pagination: {
                 pageSize:10,
@@ -81,64 +82,45 @@ export default {
          selectCount: 0, // 多选计数
         tableData:[],
         formItem: {
-          id: '',
-          taskFile: '',
-          taskState: '',
-          taskNumber:'',
-          taskSubId:'',
-          replyFile:'',
-          taskTime: '',
-          replyTime: '',
-          taskContent:'',
-          taskRequire: '',
-          taskSchedule: '',
-          taskLiterature:'',
-          replyContent:'',
-          subject:'',
-          taskSubName:'',
-          teaName:'',
-          stuName:'',
-          stuClass:'',
+            id: '',
+            noticeTime:  '',
+            noticePublisher:  '',
+            acaId: '',
+            noticeContent:  '',
+            academy:  '',
         },
         columns2: [
             {
-              title: '序号',
-              type: 'index',
-              width: 150,
-              fixed: 'left',
-              align: 'center'
-            }, 
+               type: 'selection',
+               width: 60,
+               align: 'center',
+              fixed: 'left'
+             },
             
-             {
-                title: '课题名称',
-                key: 'taskSubName',
-                 width: 300,
+            {
+                title: 'id',
+                key: 'id',
+                width: 100,
                 fixed: 'left',
                 sortable: true
             },
             {
-                title: '指导老师',
-                key: 'teaName',
+                title: '内容',
+                key: 'noticeContent',
+                ellipsis:'true',
                 minWidth: 100,
+                
             },
             {
-                title: '学生',
-                key: 'stuName',
-                minWidth: 100,
-            }, {
-                title: '专业',
-                key: 'stuClass',
+                title: '发布时间',
+                key: 'noticeTime',
                 minWidth: 100,
             },
-            {
-                title: '任务状态,',
-                key: 'taskState',
-                minWidth: 100,
-            },{
+          {
                         title: '操作',
                         key: 'action',
                         fixed: 'right',
-                        minWidth: 120,
+                        width:120,
                         render: (h, params) => {
                             return h('div', [
                                 h('Button', {
@@ -148,17 +130,18 @@ export default {
                                        
                                     },
                                      attrs:{
-                                        title:'查看'
+                                        title:'详情'
                                     },
                                       on: {
                                         click: () => {
-                                        this.select(params.row)            //编辑方法
+                                        this.showNoticeInfo(params.row.id)           //编辑方法
                                         }
                                       }
-                                },'查看')
+                                },'详情')
                             ]);
                         }
                     }
+           
         ]
       }
     },
@@ -167,10 +150,15 @@ export default {
         this.getData(1,10);
      },
     methods:{
-        select(row){
-          this.$store.commit('taskId',row.id);
-       this.modal11 = true;
-      },
+        showNoticeInfo (id) {
+                this.$router.push({
+                                        name:'noticeInfo',
+                                         query:{
+                                         id :id
+                                         }
+                                        
+                                    })
+            },
        exportData (type) {
                 if (type === 1) {
                     this.$refs.table.exportCsv({
@@ -197,20 +185,12 @@ export default {
       //编辑
         edit(row){
             this.dialogStatus = '编辑';//对应标题
-            this.formItem.id = row.id
-            this.formItem.taskFile = row.taskFile
-            this.formItem.taskState =  row.taskState
-            this.formItem.taskNumber =  row.taskNumber
-            this.formItem.taskSubId =  row.taskSubId
-            this.formItem.replyFile = row.replyFile
-            this.formItem.taskTime =  row.taskTime
-            this.formItem.replyTime =  row.replyTime
-            this.formItem.taskContent =  row.taskContent
-            this.formItem.taskRequire = row.taskRequire
-            this.formItem.taskSchedule =  row.taskSchedule
-            this.formItem.taskLiterature =  row.taskLiterature
-            this.formItem.replyContent =  row.replyContent
-            this.formItem.subject =  row.subject
+            this.formData.id = row.id
+            this.formData.noticeTime = row.noticeTime
+            this.formData.noticePublisher =  row.noticePublisher
+            this.formData.acaId =  row.acaId
+            this.formData.noticeContent =  row.noticeContent
+            this.formData.academy =  row.academy
             this.value3 = true
         },
         delById(row) {
@@ -220,9 +200,9 @@ export default {
                 onOk: () => {
                     console.log(row)
                  this.$axios({     
-                            url: 'task/delete/' + row.teaId,
+                            url: 'notice/delete/' + row.id,
                             method: 'delete',//请求的方式
-                            data:this.$Qs.stringify(this.formItem),
+                            data:this.$Qs.stringify(this.formData),
                             // token:localStorage.getItem('token')
                         }).then(res => {
                           console.log(res.data)
@@ -236,12 +216,12 @@ export default {
            
     },
       update(){
-          console.log(this.formItem)
+          console.log(this.formData)
         if(this.dialogStatus == '新增'){
             this.$axios({     
-                            url: 'task/add',
+                            url: 'notice/add',
                             method: 'post',//请求的方式
-                            data:this.$Qs.stringify(this.formItem),
+                            data:this.$Qs.stringify(this.formData),
                             // token:localStorage.getItem('token')
                         }).then(res => {
                         console.log(res.data)
@@ -253,9 +233,9 @@ export default {
                         this.value3 = false
         }else if(this.dialogStatus == '编辑'){
              this.$axios({     
-                            url: 'task/update',
+                            url: 'notice/update',
                             method: 'put',//请求的方式
-                            data:this.$Qs.stringify(this.formItem),
+                            data:this.$Qs.stringify(this.formData),
                             // token:localStorage.getItem('token')
                         }).then(res => {
                         console.log(res.data)
@@ -270,13 +250,12 @@ export default {
       },
       getData(page,pageSize){
         let params = this.formItem
-        let userId = localStorage.getItem("userId") 
        let  token = localStorage.getItem('token')
          this.$axios({
                             
-                            url: 'task/listByStu/' + userId + '/1?page=' + page + '&pageSize=' + pageSize,
+                            url: 'notice/list?page=' + page  + '&pageSize=' + pageSize,
                             method: 'get',//请求的方式
-                            // params:params,
+                            params:params,
                             // token:localStorage.getItem('token')
                         }).then(res => {
                           console.log(res.data)
@@ -284,23 +263,12 @@ export default {
                           let list = res.data.data.beanList;
                           list.forEach((item, index) => {
                            this.tableData.push({
-                              id : item.id,
-                              taskFile :item.taskFile,
-                              taskState : item.taskState,
-                              taskNumber : item.taskNumber,
-                              taskSubName : item.subject.subName,
-                              teaName: item.subject.teacher.teaName,
-                              stuName: item.subject.student.stuName,
-                              stuClass: item.subject.student.stuClass,
-                              replyFile : item.replyFile,
-                              taskTime : item.taskTime,
-                              replyTime : item.replyTime,
-                              taskContent : item.taskContent,
-                              taskRequire : item.taskRequire,
-                              taskSchedule : item.taskSchedule,
-                              taskLiterature : item.taskLiterature,
-                              replyContent : item.replyContent,
-                              subject : item.subject,
+                               id:item.id,
+                                noticeTime: item.noticeTime,
+                                noticePublisher: item.noticePublisher,
+                                acaId:item.acaId,
+                                noticeContent: item.noticeContent,
+                                academy: item.academy
                            })
                           })
                   
@@ -325,21 +293,13 @@ export default {
      
    
        handleCreate () {
-            this.formItem.id = '',
-            this.formItem.taskFile  = '',
-            this.formItem.taskState =  '',
-            this.formItem.taskNumber =  '',
-            this.formItem.taskSubId =  '',
-            this.formItem.replyFile = '',
-            this.formItem.taskTime =  '',
-            this.formItem.replyTime =  '',
-            this.formItem.taskContent =  '',
-            this.formItem.taskRequire = '',
-            this.formItem.taskSchedule =  '',
-            this.formItem.taskLiterature =  '',
-            this.formItem.replyContent =  '',
-            this.formItem.subject = '',
-            this.value3 = true
+        this.formData.id = row.id
+        this.formData.noticeTime = row.noticeTime
+        this.formData.noticePublisher =  row.noticePublisher
+        this.formData.acaId =  row.acaId
+        this.formData.noticeContent =  row.noticeContent
+        this.formData.academy =  row.academy
+        this.formData.academyId = ''
         this.dialogStatus = '新增';//对应标题
         this.value3 = true
         
@@ -368,7 +328,7 @@ export default {
         content: "您确认要删除所选的 " + this.selectCount + " 条数据?",
         onOk: () => {
            this.$axios({     
-                            url: 'task/deleteAll',
+                            url: 'notice/deleteAll',
                             method: 'delete',//请求的方式
                             params: {lstprimaryKey:lstprimaryKey},
                             paramsSerializer: params => {
@@ -408,9 +368,9 @@ export default {
                 })
        },
        ok () {
-        this.$refs.zq_formItem.validate(valid => {
+        this.$refs.zq_formData.validate(valid => {
           if (valid) {
-            saveOrUpdateDemo(this.zq_formItem)
+            saveOrUpdateDemo(this.zq_formData)
               .then(response => {
                 if (response.data.status == 1) {
                   this.getListPage();
@@ -438,20 +398,12 @@ export default {
         this.drawer = false;
       },
       doReset(){
-            this.formItem.id = '',
-            this.formItem.taskFile  = '',
-            this.formItem.taskState =  '',
-            this.formItem.taskNumber =  '',
-            this.formItem.taskSubId =  '',
-            this.formItem.replyFile = '',
-            this.formItem.taskTime =  '',
-            this.formItem.replyTime =  '',
-            this.formItem.taskContent =  '',
-            this.formItem.taskRequire = '',
-            this.formItem.taskSchedule =  '',
-            this.formItem.taskLiterature =  '',
-            this.formItem.replyContent =  '',
-            this.formItem.subject = '',
+        this.formItem.id ="",
+        this.formItem.noticeTime = "",
+        this.formItem.noticePublisher = "",
+        this.formItem.acaId = "",
+        this.formItem.noticeContent = "",
+        this.formItem.academy = "",
         this.getData(1,10);
     },
     exportDataDemo(type){

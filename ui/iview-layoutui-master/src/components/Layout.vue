@@ -681,38 +681,21 @@ export default {
 
 
             teacherMenus:[
-                // {
-                //     title:'邮箱',
-                //     num:1,
-                //     name:'admin',
-                //     icon:'ios-home',
-                //     href:'/notice',
-                //     closable:false,
-                //     showInTags:true,
-                //     showInMenus:true,
-                //     choosed:true,
-                //     children:[
-                //         {
-                //             title:'站内邮件',
-                //             name:'studentSelection',
-                //             href:'/studentSelection',
-                //             closable:true,
-                //             showInTags:false,
-                //             showInMenus:true,
-                //             choosed:false
-                //         }
-                //     ]
-                // },        
-               {
-                    title:'数据查询',
+                {
+                    title:'首页',
                     num:1,
-                    name:'admin',
+                    name:'studentNotice',
                     icon:'ios-home',
-                    href:'/notice',
+                    href:'/studentNotice',
                     closable:false,
                     showInTags:true,
                     showInMenus:true,
-                    choosed:true,
+                    choosed:true
+                },    
+               {
+                    title:'数据查询',
+                    name:'admin',
+                    icon:'ios-home',
                     children:[
                         {
                             title:'学生进度查询',

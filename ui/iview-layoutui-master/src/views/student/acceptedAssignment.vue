@@ -16,24 +16,11 @@
             <Form :model="formItem" :label-width="80">
               <Row>
                 <Col span="8">
-                  <FormItem label="任务编号：">
+                  <FormItem label="课题标题">
                     <Input v-model="formItem.id" placeholder="..."></Input>
                 </FormItem>
                 </Col>
-                <Col span="8">
-                  <FormItem label="任务内容">
-                    <Input v-model="formItem.taskContent" placeholder="Enter something..."></Input>
-                </FormItem>
-                </Col>
-                <Col span="8">
-                  <FormItem label="课程id：">
-                    <Select v-model="formItem.select">
-                        <Option value="beijing">New York</Option>
-                        <Option value="shanghai">London</Option>
-                        <Option value="shenzhen">Sydney</Option>
-                    </Select>
-                </FormItem>
-                </Col>
+               
                  
               </Row>
           </Form>

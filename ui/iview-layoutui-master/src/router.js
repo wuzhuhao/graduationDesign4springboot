@@ -20,19 +20,20 @@ const router = new Router({
         {
           path: '',
           redirect: {
-              name: 'studentHome'
+              name: 'studentNotice'
           },
-        },
-        {
-          path: '/noticeInfo',
-          name: 'noticeInfo',
-          component: () => import('@/views/notice/noticeInfo')
         },
         {
           path: '/studentNotice',
           name: 'studentNotice',
           component: () => import('@/views/notice/notice')
         },
+        {
+          path: '/noticeInfo',
+          name: 'noticeInfo',
+          component: () => import('@/views/notice/noticeInfo')
+        },
+       
         {
           path: '/showNotice',
           name: 'showNotice',
@@ -74,7 +75,7 @@ const router = new Router({
         {
           path: '/home',
           name: 'adminTest2',
-          component: () => import('@/views/Home')
+          component: () => import('@/views/notice/notice')
         },
         {
           path: '/notice',
@@ -99,7 +100,7 @@ const router = new Router({
       {
         path: '',
         redirect: {
-            name: 'studentHome'
+            name: 'studentNotice'
         },
       },
       {
