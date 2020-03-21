@@ -172,7 +172,7 @@ public class SubjectServiceImpl implements SubjectService {
         ExampleHelper.addCondition(Subject.class, criteria, params);
         criteria.andSubStuStateEqualTo(1);
         List<Subject> list = subjectMapper.selectByExampleWithBLOBs(subjectExample);
-        for(Subject sub :list){
+        for (Subject sub : list) {
             sub.getTeacher();
             sub.getStudent();
         }
@@ -212,7 +212,7 @@ public class SubjectServiceImpl implements SubjectService {
         criteria.andStuIdEqualTo(student.getStuId());
         criteria.andSubStuStateNotEqualTo(1);
         List<Subject> list = subjectMapper.selectByExampleWithBLOBs(subjectExample);
-        for(Subject sub :list){
+        for (Subject sub : list) {
             sub.getTeacher();
             sub.getStudent();
         }
@@ -232,7 +232,7 @@ public class SubjectServiceImpl implements SubjectService {
         criteria.andSubTeaIdEqualTo(teacher.getTeaId());
 //        criteria.andSubStuStateNotEqualTo(1);
         List<Subject> list = subjectMapper.selectByExampleWithBLOBs(subjectExample);
-        for(Subject sub :list){
+        for (Subject sub : list) {
             sub.getTeacher();
             sub.getStudent();
         }
@@ -290,6 +290,7 @@ public class SubjectServiceImpl implements SubjectService {
         criteria.andSubTeaIdEqualTo(teacher.getTeaId());
         criteria.andSubStuStateNotEqualTo(1);
         List<Map<String, Object>> list = subjectMapper.selectByExampleWithMap(subjectExample);
+        list.stream().forEach(e -> e.put("replyState", e.get("replyScore") == null || e.get("replyScore").equals("-1") ? "未开始" : "已完成"));
         pageBean.setBeanList(list);
         return pageBean;
     }
