@@ -287,7 +287,7 @@
                     </div>
                     <div v-if="!isCollapsed" class="logo-saiqu">    
                         <Avatar icon="ios-person" size="large"/>    
-                        <span class="user-name">Admin</span>
+                        <span class="user-name">sa</span>
                     </div>
                     <Avatar icon="ios-person" size="large" v-else/>
                 </div>
@@ -362,7 +362,7 @@
                     <div class="header-wapper">
                         <div class="header-left">
                             <Icon @click.native="collapsedSider" :class="rotateIcon" type="md-menu" size="28"></Icon>
-                            <span class="header-title">iView后台管理系统</span>
+                            <span class="header-title">毕业设计资料管控平台</span>
                         </div>
                         <div class="header-right">
                             <!-- <Button type="text" icon="person" size="large">个人中心</Button>

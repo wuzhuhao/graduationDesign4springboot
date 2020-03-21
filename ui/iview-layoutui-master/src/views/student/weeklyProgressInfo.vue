@@ -21,7 +21,7 @@
            <Row>
                 <Col span="24">
                   <FormItem label="课题名称:  "   class="label">
-                    <Input v-model="formItem.subName" readonly  size="large"  placeholder="Enter something..."></Input>
+                    <Input v-model="formItem.subName" readonly  size="large"  placeholder="请输入课题名称"></Input>
                 </FormItem>
                 </Col>
               </Row>

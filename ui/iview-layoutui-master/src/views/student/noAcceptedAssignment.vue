@@ -131,7 +131,7 @@ export default {
                 minWidth: 100,
             },
             {
-                title: '任务状态,',
+                title: '任务状态',
                 key: 'taskState',
                 minWidth: 100,
             },{
