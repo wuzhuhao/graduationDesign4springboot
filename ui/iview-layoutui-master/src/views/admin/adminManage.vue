@@ -287,6 +287,9 @@ export default {
                                         size: 'small',
                                         icon: "icon iconfont icon-shanchu"
                                     },
+                                    style: {
+                                        marginRight: '5px'
+                                        },
                                      attrs:{
                                         title:'删除'
                                     },

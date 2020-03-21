@@ -8,7 +8,7 @@ module.exports = {
         // 设置代理
         proxy: {
                    '/graManagement': {
-            target: 'http://192.168.100.4:18256',//设置你调用的接口域名和端口号 别忘了加http
+            target: 'http://localhost:8080/graManagement/task/delete',//设置你调用的接口域名和端口号 别忘了加http
             changeOrigin: true,
             pathRewrite: {
                 '^/graManagement': '/graManagement'
