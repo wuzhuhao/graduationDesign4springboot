@@ -80,6 +80,26 @@ export default {
          selectList: [], // 多选数据
          selectCount: 0, // 多选计数
         tableData:[],
+          formData: {
+            id: '',
+            taskFile: '',
+            taskState: '',
+            taskNumber:'',
+            taskSubId:'',
+            replyFile:'',
+            taskTime: '',
+            replyTime: '',
+            taskContent:'',
+            taskRequire: '',
+            taskSchedule: '',
+            taskLiterature:'',
+            replyContent:'',
+            subject:'',
+            taskSubName:'',
+            teaName:'',
+            stuName:'',
+            stuClass:'',
+        },
         formItem: {
           id: '',
           taskFile: '',
@@ -138,7 +158,8 @@ export default {
                         title: '操作',
                         key: 'action',
                         fixed: 'right',
-                        minWidth: 120,
+                        width:140,
+                        minWidth: 140,
                         render: (h, params) => {
                             return h('div', [
                                 h('Button', {
@@ -147,6 +168,9 @@ export default {
                                         size: 'small',
                                        
                                     },
+                                    style: {
+                                        marginRight: '5px'
+                                        },
                                      attrs:{
                                         title:'查看'
                                     },
@@ -155,9 +179,25 @@ export default {
                                         this.select(params.row)            //编辑方法
                                         }
                                       }
-                                },'查看')
+                                },'查看'),
+                                  h('Button', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small',
+                                       
+                                    },
+                                     attrs:{
+                                        title:'接收'
+                                    },
+                                      on: {
+                                        click: () => {
+                                        this.receive(params.row)            //编辑方法
+                                        }
+                                      }
+                                },'接收')
                             ]);
                         }
+                      
                     }
         ]
       }
@@ -171,47 +211,42 @@ export default {
           this.$store.commit('taskId',row.id);
        this.modal11 = true;
       },
-       exportData (type) {
-                if (type === 1) {
-                    this.$refs.table.exportCsv({
-                        filename: 'The original data'
-                    });
-                } else if (type === 2) {
-                    this.$refs.table.exportCsv({
-                        filename: 'Sorting and filtering data',
-                        original: false
-                    });
-                } else if (type === 3) {
-                    this.$refs.table.exportCsv({
-                        filename: 'Custom data',
-                        columns: this.columns8.filter((col, index) => index < 4),
-                        data: this.data7.filter((data, index) => index < 4)
-                    });
-                }
-            } ,
+    
       
       // watch: {
       //   // 监测路由变化,只要变化了就调用获取路由参数方法将数据存储本组件即可
       //     '$route': 'getParams'
       // },
       //编辑
-        edit(row){
-            this.dialogStatus = '编辑';//对应标题
-            this.formItem.id = row.id
-            this.formItem.taskFile = row.taskFile
-            this.formItem.taskState =  row.taskState
-            this.formItem.taskNumber =  row.taskNumber
-            this.formItem.taskSubId =  row.taskSubId
-            this.formItem.replyFile = row.replyFile
-            this.formItem.taskTime =  row.taskTime
-            this.formItem.replyTime =  row.replyTime
-            this.formItem.taskContent =  row.taskContent
-            this.formItem.taskRequire = row.taskRequire
-            this.formItem.taskSchedule =  row.taskSchedule
-            this.formItem.taskLiterature =  row.taskLiterature
-            this.formItem.replyContent =  row.replyContent
-            this.formItem.subject =  row.subject
-            this.value3 = true
+        receive(row){
+            this.formData.id = row.id
+            this.formData.taskFile = row.taskFile
+            this.formData.taskState =  2               //修改成待接受
+            this.formData.taskNumber =  row.taskNumber
+            this.formData.taskSubId =  row.taskSubId
+            this.formData.replyFile = row.replyFile
+            this.formData.taskTime =  row.taskTime
+            this.formData.replyTime =  row.replyTime
+            this.formData.taskContent =  row.taskContent
+            this.formData.taskRequire = row.taskRequire
+            this.formData.taskSchedule =  row.taskSchedule
+            this.formData.taskLiterature =  row.taskLiterature
+            this.formData.replyContent =  row.replyContent
+            this.formData.subject =  row.subject
+              this.$axios({     
+                            url: 'task/update',
+                            method: 'put',//请求的方式
+                            data:this.$Qs.stringify(this.formData),
+                            // token:localStorage.getItem('token')
+                        }).then(res => {
+                        console.log(res.data)
+                        this.getData(1,10)
+                        }).catch(err => {
+                            console.info('报错的信息',err);
+                            
+                        });
+
+
         },
         delById(row) {
             this.$Modal.confirm({
@@ -220,6 +255,7 @@ export default {
                 onOk: () => {
                     console.log(row)
                  this.$axios({     
+                            withCredentials:true,
                             url: 'task/delete/' + row.teaId,
                             method: 'delete',//请求的方式
                             data:this.$Qs.stringify(this.formItem),
