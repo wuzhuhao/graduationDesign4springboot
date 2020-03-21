@@ -19,16 +19,16 @@
               <Row>
                 <Col span="8">
                   <FormItem label="id：">
-                    <Input v-model="formItem.id" placeholder="..."></Input>
+                    <Input v-model="formItem.id" placeholder="请输入id"></Input>
                 </FormItem>
                 </Col>
                 <Col span="8">
-                  <FormItem label="内容">
-                    <Input v-model="formItem.progContent" placeholder="Enter something..."></Input>
+                  <FormItem label="内容：">
+                    <Input v-model="formItem.progContent" placeholder="请输入内容"></Input>
                 </FormItem>
                 </Col>
                 <Col span="8">
-                  <FormItem label="课题id">
+                  <FormItem label="课题id：">
                     <Select v-model="formItem.progressSubId">
                         <Option value="beijing">New York</Option>
                         <Option value="shanghai">London</Option>
@@ -78,12 +78,12 @@
                 <Row :gutter="32">
                     <Col span="12">
                         <FormItem label="id" label-position="top">
-                            <Input v-model="formData.id" placeholder="please enter user name" />
+                            <Input v-model="formData.id" placeholder="请输入id" />
                         </FormItem>
                     </Col>
                     <Col span="12">
                         <FormItem label="内容" label-position="top">
-                            <Input v-model="formData.progContent" placeholder="please enter url">
+                            <Input v-model="formData.progContent" placeholder="请输入内容">
                             </Input>
                         </FormItem>
                     </Col>
@@ -91,12 +91,12 @@
                 <Row :gutter="32">
                     <Col span="12">
                         <FormItem label="创建时间" label-position="top">
-                            <Input v-model="formData.progContentTime" placeholder="please enter user name" />
+                            <Input v-model="formData.progContentTime" placeholder="请输入创建时间" />
                         </FormItem>
                     </Col>
                     <Col span="12">
                         <FormItem label="回复内容" label-position="top">
-                            <Input v-model="formData.progReply" placeholder="please enter url">
+                            <Input v-model="formData.progReply" placeholder="请输入回复内容">
                             </Input>
                         </FormItem>
                     </Col>
@@ -104,12 +104,12 @@
                 <Row :gutter="32">
                     <Col span="12">
                         <FormItem label="回复时间" label-position="top">
-                            <Input v-model="formData.progReplyTime" placeholder="please enter user name" />
+                            <Input v-model="formData.progReplyTime" placeholder="请输入回复时间" />
                         </FormItem>
                     </Col>
                     <Col span="12">
                         <FormItem label="课题id" label-position="top">
-                            <Input v-model="formData.progressSubId" placeholder="please enter url">
+                            <Input v-model="formData.progressSubId" placeholder="请输入课题id">
                             </Input>
                         </FormItem>
                     </Col>

@@ -92,7 +92,7 @@ public class TaskController {
         }
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ResponseEntity<Object> updateTask(Task task) {
         try {
             return ResponseStatu.success(taskService.updateByPrimaryKeySelective(task));
@@ -140,7 +140,7 @@ public class TaskController {
         return result;
     }
 
-    @RequestMapping(value = "/listUpdate", method = RequestMethod.PUT)
+    @RequestMapping(value = "/listUpdate", method = RequestMethod.POST)
     public ResponseEntity<Object> updateTask(List<Task> lstTask) {
         try {
             return taskService.updateListByPrimaryKeySelective(lstTask);

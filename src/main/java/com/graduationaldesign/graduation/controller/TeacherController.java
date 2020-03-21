@@ -42,7 +42,7 @@ public class TeacherController {
         return result;
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ResponseEntity<Object> update(Teacher record) {
         ResponseEntity<Object> result = null;
         if (teacherService.updateByPrimaryKeySelective(record) <= 0) {
@@ -113,7 +113,7 @@ public class TeacherController {
         return result;
     }
 
-    @RequestMapping(value = "/listUpdate", method = RequestMethod.PUT)
+    @RequestMapping(value = "/listUpdate", method = RequestMethod.POST)
     public ResponseEntity<Object> updateTeacher(List<Teacher> lstTeacher) {
         try {
             return teacherService.updateListByPrimaryKeySelective(lstTeacher);

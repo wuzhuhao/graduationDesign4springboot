@@ -44,7 +44,7 @@ public class PermissionController {
         return result;
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ResponseEntity<Object> update(Permission record) {
         ResponseEntity<Object> result = null;
         if (permissionService.updateByPrimaryKeySelective(record) <= 0) {
@@ -113,7 +113,7 @@ public class PermissionController {
         return result;
     }
 
-    @RequestMapping(value = "/listUpdate", method = RequestMethod.PUT)
+    @RequestMapping(value = "/listUpdate", method = RequestMethod.POST)
     public ResponseEntity<Object> updatePermission(List<Permission> lstPermission) {
         try {
             return permissionService.updateListByPrimaryKeySelective(lstPermission);

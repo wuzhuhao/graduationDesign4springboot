@@ -29,14 +29,14 @@
                <Row>
                 <Col span="24">
                   <FormItem label="指导教师:  "   class="label">
-                    <Input v-model="formItem.teaName"  readonly size="large"  placeholder="Enter something..."></Input>
+                    <Input v-model="formItem.teaName"  readonly size="large"  placeholder="请输入指导教师"></Input>
                 </FormItem>
                 </Col>
               </Row>
                <Row>
                 <Col span="24">
-                  <FormItem label="内容指导:  "   class="label">
-                    <Input v-model="formItem.zhidao"  readonly size="large"  placeholder="Enter something..."></Input>
+                  <FormItem label="指导内容:  "   class="label">
+                    <Input v-model="formItem.zhidao"  readonly size="large"  placeholder="请输入内容指导"></Input>
                 </FormItem>
                 </Col>
               </Row>
@@ -44,7 +44,7 @@
              <Row>
                 <Col span="24">
                   <FormItem label="指导内容:  "    class="label">
-                    <Input v-model="formItem.progContent" readonly type="textarea" :autosize="{minRows: 10,maxRows: 20}" size="large"  placeholder="Enter something..."></Input>
+                    <Input v-model="formItem.progContent" readonly type="textarea" :autosize="{minRows: 10,maxRows: 20}" size="large"  placeholder="请输入内容指导"></Input>
                 </FormItem>
                 </Col>
               </Row>

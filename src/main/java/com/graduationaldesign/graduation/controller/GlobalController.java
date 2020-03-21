@@ -12,15 +12,16 @@ import com.graduationaldesign.graduation.service.StudentService;
 import com.graduationaldesign.graduation.service.TeacherService;
 import com.graduationaldesign.graduation.util.CookieUtil;
 import com.graduationaldesign.graduation.util.ResponseStatu;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * @Author: wuzhuhao
@@ -73,23 +74,23 @@ public class GlobalController {
         return ResponseStatu.success(result);
     }
 
-    @RequestMapping(value = "/stu/changPassword", method = RequestMethod.PUT)
+    @RequestMapping(value = "/stu/changPassword", method = RequestMethod.POST)
     public ResponseEntity<Object> stuChangPassword(String oldPassword, String newPassword) {
         return changPassword(oldPassword, newPassword, STU);
     }
 
-    @RequestMapping(value = "/tea/changPassword", method = RequestMethod.PUT)
+    @RequestMapping(value = "/tea/changPassword", method = RequestMethod.POST)
     public ResponseEntity<Object> teaChangPassword(String oldPassword, String newPassword) {
         return changPassword(oldPassword, newPassword, TEA);
     }
 
-    @RequestMapping(value = "/admin/changPassword", method = RequestMethod.PUT)
+    @RequestMapping(value = "/admin/changPassword", method = RequestMethod.POST)
     public ResponseEntity<Object> adminChangPassword(String oldPassword, String newPassword) {
         return changPassword(oldPassword, newPassword, ADMIN);
     }
 
     private ResponseEntity<Object> changPassword(String oldPassword, String newPassword,
-            Integer type) {
+                                                 Integer type) {
         Object user;
         user = tokenService.getUserByToken(request);
         String userID;
@@ -99,7 +100,7 @@ public class GlobalController {
             if (type.equals(1)) {
                 /*学生修改密码*/
                 userID = ((Student) user).getStuId();
-                message = studentService.changPassword(userID, oldPassword, newPassword)==null?"修改失败":"修改成功";
+                message = studentService.changPassword(userID, oldPassword, newPassword) == null ? "修改失败" : "修改成功";
             } else if (type.equals(2)) {
                 /*教师修改密码*/
                 userID = ((Teacher) user).getTeaId();
@@ -119,17 +120,17 @@ public class GlobalController {
         return result;
     }
 
-    @RequestMapping(value = "/stu/changeInformation", method = RequestMethod.PUT)
+    @RequestMapping(value = "/stu/changeInformation", method = RequestMethod.POST)
     public ResponseEntity<Object> stuChangeInformation(UserModel userModel) {
         return changeInformation(userModel, STU);
     }
 
-    @RequestMapping(value = "/tea/changeInformation", method = RequestMethod.PUT)
+    @RequestMapping(value = "/tea/changeInformation", method = RequestMethod.POST)
     public ResponseEntity<Object> teaChangeInformation(UserModel userModel) {
         return changeInformation(userModel, TEA);
     }
 
-    @RequestMapping(value = "/admin/changeInformation", method = RequestMethod.PUT)
+    @RequestMapping(value = "/admin/changeInformation", method = RequestMethod.POST)
     public ResponseEntity<Object> adminChangeInformation(UserModel userModel) {
         return changeInformation(userModel, ADMIN);
     }

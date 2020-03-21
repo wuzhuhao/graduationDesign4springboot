@@ -44,7 +44,7 @@ public class UserRoleController {
         return result;
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ResponseEntity<Object> update(UserRole record) {
         ResponseEntity<Object> result = null;
         if (userRoleService.updateByPrimaryKeySelective(record) <= 0) {
@@ -113,7 +113,7 @@ public class UserRoleController {
         return result;
     }
 
-    @RequestMapping(value = "/listUpdate", method = RequestMethod.PUT)
+    @RequestMapping(value = "/listUpdate", method = RequestMethod.POST)
     public ResponseEntity<Object> updateUserRole(List<UserRole> lstUserRole) {
         try {
             return userRoleService.updateListByPrimaryKeySelective(lstUserRole);

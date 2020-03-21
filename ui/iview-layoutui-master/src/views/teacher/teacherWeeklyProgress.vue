@@ -38,7 +38,7 @@
                     </Col>
                     <Col span="12">
                         <FormItem label="内容" label-position="top">
-                            <Input v-model="formData.progContent" placeholder="please enter url">
+                            <Input v-model="formData.progContent" placeholder="请输入内容">
                             </Input>
                         </FormItem>
                     </Col>
@@ -51,7 +51,7 @@
                     </Col>
                     <Col span="12">
                         <FormItem label="回复内容" label-position="top">
-                            <Input v-model="formData.progReply" placeholder="please enter url">
+                            <Input v-model="formData.progReply" placeholder="请输入回复内容">
                             </Input>
                         </FormItem>
                     </Col>

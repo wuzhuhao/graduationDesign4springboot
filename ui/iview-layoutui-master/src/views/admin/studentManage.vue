@@ -19,12 +19,12 @@
               <Row>
                 <Col span="8">
                   <FormItem label="id：">
-                    <Input v-model="formItem.stuId" placeholder="..."></Input>
+                    <Input v-model="formItem.stuId" placeholder="请输入id"></Input>
                 </FormItem>
                 </Col>
                 <Col span="8">
                   <FormItem label="姓名：">
-                    <Input v-model="formItem.stuName" placeholder="Enter something..."></Input>
+                    <Input v-model="formItem.stuName" placeholder="请输入姓名"></Input>
                 </FormItem>
                 </Col>
                 <Col span="8">
@@ -78,12 +78,12 @@
                 <Row :gutter="32">
                     <Col span="12">
                         <FormItem label="账号" label-position="top">
-                            <Input v-model="formData.stuId" placeholder="please enter user name" />
+                            <Input v-model="formData.stuId" placeholder="请输入账号" />
                         </FormItem>
                     </Col>
                     <Col span="12">
                         <FormItem label="密码" label-position="top">
-                            <Input v-model="formData.stuPassword" placeholder="please enter url">
+                            <Input v-model="formData.stuPassword" placeholder="请输入密码">
                             </Input>
                         </FormItem>
                     </Col>
@@ -91,48 +91,48 @@
                 <Row :gutter="32">
                     <Col span="12">
                         <FormItem label="名称" label-position="top">
-                            <Input v-model="formData.stuName" placeholder="please enter user name" />
+                            <Input v-model="formData.stuName" placeholder="请输入名称" />
                         </FormItem>
                     </Col>
                     <Col span="12">
                         <FormItem label="专业" label-position="top">
-                            <Input v-model="formData.stuMajor" placeholder="please enter url">
+                            <Input v-model="formData.stuMajor" placeholder="请输入专业">
                             </Input>
                         </FormItem>
                     </Col>
                 </Row><Row :gutter="32">
                     <Col span="12">
                         <FormItem label="班级" label-position="top">
-                            <Input v-model="formData.stuClass" placeholder="please enter user name" />
+                            <Input v-model="formData.stuClass" placeholder="请输入班级" />
                         </FormItem>
                     </Col>
                     <Col span="12">
                         <FormItem label="性别" label-position="top">
-                            <Input v-model="formData.stuSex" placeholder="please enter url">
+                            <Input v-model="formData.stuSex" placeholder="请输入性别">
                             </Input>
                         </FormItem>
                     </Col>
                 </Row><Row :gutter="32">
                     <Col span="12">
                         <FormItem label="年龄" label-position="top">
-                            <Input v-model="formData.stuAge" placeholder="please enter user name" />
+                            <Input v-model="formData.stuAge" placeholder="请输入年龄" />
                         </FormItem>
                     </Col>
                     <Col span="12">
                         <FormItem label="生日" label-position="top">
-                            <Input v-model="formData.stuBirthday" placeholder="please enter url">
+                            <Input v-model="formData.stuBirthday" placeholder="请输入生日">
                             </Input>
                         </FormItem>
                     </Col>
                 </Row><Row :gutter="32">
                     <Col span="12">
                         <FormItem label="电话" label-position="top">
-                            <Input v-model="formData.stuPhone" placeholder="please enter user name" />
+                            <Input v-model="formData.stuPhone" placeholder="请输入电话" />
                         </FormItem>
                     </Col>
                     <Col span="12">
                         <FormItem label="邮箱" label-position="top">
-                            <Input v-model="formData.stuMail" placeholder="please enter url">
+                            <Input v-model="formData.stuMail" placeholder="请输入邮箱">
                             </Input>
                         </FormItem>
                     </Col>
@@ -140,24 +140,24 @@
                 </Row><Row :gutter="32">
                     <Col span="12">
                         <FormItem label="地址" label-position="top">
-                            <Input v-model="formData.stuAddress" placeholder="please enter user name" />
+                            <Input v-model="formData.stuAddress" placeholder="请输入地址" />
                         </FormItem>
                     </Col>
                     <Col span="12">
                         <FormItem label="备注" label-position="top">
-                            <Input v-model="formData.stuRemarks" placeholder="please enter url">
+                            <Input v-model="formData.stuRemarks" placeholder="请输入备注">
                             </Input>
                         </FormItem>
                     </Col>
                 </Row></Row><Row :gutter="32">
                     <Col span="12">
                         <FormItem label="学院" label-position="top">
-                            <Input v-model="formData.academyId" placeholder="please enter user name" />
+                            <Input v-model="formData.academyId" placeholder="请输入学院" />
                         </FormItem>
                     </Col>
                     <Col span="12">
                         <FormItem label="邮箱" label-position="top">
-                            <Input v-model="formData.stuMail" placeholder="please enter url">
+                            <Input v-model="formData.stuMail" placeholder="请输入邮箱">
                             </Input>
                         </FormItem>
                     </Col>
@@ -165,7 +165,7 @@
                 </Row><Row :gutter="32">
                     <Col span="12">
                         <FormItem label="学院id" label-position="top">
-                            <Input v-model="formData.academyId" placeholder="please enter user name" />
+                            <Input v-model="formData.academyId" placeholder="请输入学院id" />
                         </FormItem>
                     </Col>
                 </Row>

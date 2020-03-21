@@ -16,8 +16,8 @@
             <Form :model="formItem" :label-width="80">
               <Row>
                 <Col span="12">
-                  <FormItem label="输入框：">
-                    <Input v-model="formItem.input" placeholder="Enter something..."></Input>
+                  <FormItem label="输入框">
+                    <Input v-model="formItem.input" placeholder="请输入输入框"></Input>
                 </FormItem>
                 </Col>
                 <Col span="12">
@@ -33,12 +33,12 @@
               <Row>
                 <Col span="12">
                   <FormItem label="日期插件：">
-                    <DatePicker type="date" placeholder="请选择" v-model="formItem.date" style="width:100%"></DatePicker>                      
+                    <DatePicker type="date" placeholder="请选择日期" v-model="formItem.date" style="width:100%"></DatePicker>
                   </FormItem>                  
                 </Col>
                 <Col span="12">
-                  <FormItem label="时间插件：">                  
-                    <TimePicker type="time" placeholder="请选择" v-model="formItem.time" style="width:100%"></TimePicker>
+                  <FormItem label="时间">
+                    <TimePicker type="time" placeholder="请输入时间"></TimePicker>
                   </FormItem>
                 </Col>
               </Row>

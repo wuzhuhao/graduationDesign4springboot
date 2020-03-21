@@ -19,35 +19,35 @@
              <Row>
                 <Col span="12">
                   <FormItem label="答辩组名:  "  :label-width="200"  class="label">
-                    <Input v-model="formItem.stuName"   size="large"    placeholder="Enter something..."></Input>
+                    <Input v-model="formItem.stuName"   size="large"    placeholder="请输入答辩组名"></Input>
                 </FormItem>
                 </Col>
               </Row>
              <Row>
                 <Col span="12">
                   <FormItem label="答辩地址:  "  :label-width="200"  class="label">
-                    <Input v-model="formItem.stuMajor"   size="large"    placeholder="Enter something..."></Input>
+                    <Input v-model="formItem.stuMajor"   size="large"    placeholder="请输入答辩地址"></Input>
                 </FormItem>
                 </Col>
               </Row>
              <Row>
                 <Col span="12">
                   <FormItem label="答辩时间:  "  :label-width="200"  class="label">
-                    <Input v-model="formItem.stuClass"   size="large"  placeholder="Enter something..."></Input>
+                    <Input v-model="formItem.stuClass"   size="large"  placeholder="请输入答辩时间"></Input>
                 </FormItem>
                 </Col>
               </Row>
              <Row>
                 <Col span="12">
                   <FormItem label="答辩组长:  "  :label-width="200"   class="label">
-                    <InputNumber  v-model="formItem.stuAge"   size="large"  style="width:620px"  placeholder="Enter something..."></InputNumber>
+                    <InputNumber  v-model="formItem.stuAge"   size="large"  style="width:620px"  placeholder="请输入答辩组长"></InputNumber>
                 </FormItem>
                 </Col>
               </Row>
                <Row>
                 <Col span="12">
                   <FormItem label="答辩秘书:  "  :label-width="200"  class="label">
-                    <InputNumber v-model="formItem.stuPhone"   size="large"  style="width:620px"   placeholder="Enter something..."></InputNumber>
+                    <InputNumber v-model="formItem.stuPhone"   size="large"  style="width:620px"   placeholder="请输入答辩秘书"></InputNumber>
                 </FormItem>
                 </Col>
               </Row>

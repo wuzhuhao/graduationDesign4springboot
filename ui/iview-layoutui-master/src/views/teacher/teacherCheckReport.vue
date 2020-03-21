@@ -21,7 +21,7 @@
                 </Col>
                 <Col span="8">
                   <FormItem label="任务内容">
-                    <Input v-model="formItem.taskContent" placeholder="Enter something..."></Input>
+                    <Input v-model="formItem.taskContent" placeholder="请输入任务内容"></Input>
                 </FormItem>
                 </Col>
                 <Col span="8">

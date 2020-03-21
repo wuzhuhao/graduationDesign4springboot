@@ -43,7 +43,7 @@ public class DesignShowController {
         return result;
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ResponseEntity<Object> update(DesignShow record) {
         ResponseEntity<Object> result = null;
         if (designShowService.updateByPrimaryKeySelective(record) <= 0) {
@@ -113,7 +113,7 @@ public class DesignShowController {
         return result;
     }
 
-    @RequestMapping(value = "/listUpdate", method = RequestMethod.PUT)
+    @RequestMapping(value = "/listUpdate", method = RequestMethod.POST)
     public ResponseEntity<Object> updateDesignShow(List<DesignShow> lstDesignShow) {
         try {
             return designShowService.updateListByPrimaryKeySelective(lstDesignShow);

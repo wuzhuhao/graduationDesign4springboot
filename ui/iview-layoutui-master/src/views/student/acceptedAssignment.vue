@@ -17,7 +17,7 @@
               <Row>
                 <Col span="8">
                   <FormItem label="课题标题">
-                    <Input v-model="formItem.id" placeholder="..."></Input>
+                    <Input v-model="formItem.id" placeholder="请输入课题标题"></Input>
                 </FormItem>
                 </Col>
                

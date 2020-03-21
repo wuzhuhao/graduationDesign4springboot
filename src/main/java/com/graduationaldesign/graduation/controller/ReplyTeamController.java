@@ -42,7 +42,7 @@ public class ReplyTeamController {
         return result;
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ResponseEntity<Object> update(ReplyTeam record) {
         ResponseEntity<Object> result = null;
         if (replyTeamService.updateByPrimaryKeySelective(record) <= 0) {
@@ -112,7 +112,7 @@ public class ReplyTeamController {
         return result;
     }
 
-    @RequestMapping(value = "/listUpdate", method = RequestMethod.PUT)
+    @RequestMapping(value = "/listUpdate", method = RequestMethod.POST)
     public ResponseEntity<Object> updateReplyTeam(List<ReplyTeam> lstReplyTeam) {
         try {
             return replyTeamService.updateListByPrimaryKeySelective(lstReplyTeam);

@@ -2,21 +2,17 @@ package com.graduationaldesign.graduation.controller;
 
 
 import com.graduationaldesign.graduation.aop.RootPropeties;
-import com.graduationaldesign.graduation.mapper.AdminMapper;
 import com.graduationaldesign.graduation.pojo.Admin;
 import com.graduationaldesign.graduation.service.AdminService;
 import com.graduationaldesign.graduation.util.ResponseStatu;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author wuzhuhao
@@ -51,7 +47,7 @@ public class AdminController {
         return result;
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ResponseEntity<Object> update(Admin admin) {
         ResponseEntity<Object> result = null;
         if (adminService.updateByPrimaryKeySelective(admin) <= 0) {
@@ -94,8 +90,8 @@ public class AdminController {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ResponseEntity<Object> list(@RequestParam HashMap<String, Object> params,
-            @RequestParam(required = false, defaultValue = "1") int page,
-            @RequestParam(required = false, defaultValue = "5") int pageSize) {
+                                       @RequestParam(required = false, defaultValue = "1") int page,
+                                       @RequestParam(required = false, defaultValue = "5") int pageSize) {
         try {
             return ResponseStatu
                     .success(adminService.listByPage(params, page, pageSize));
@@ -121,7 +117,8 @@ public class AdminController {
         }
         return result;
     }
-    @RequestMapping(value = "/listUpdate", method = RequestMethod.PUT)
+
+    @RequestMapping(value = "/listUpdate", method = RequestMethod.POST)
     public ResponseEntity<Object> updateAdmin(List<Admin> lstAdmin) {
         try {
             return adminService.updateListByPrimaryKeySelective(lstAdmin);

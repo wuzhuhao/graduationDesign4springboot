@@ -71,7 +71,7 @@ public class ProgressController {
      * @param progress
      * @return
      */
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ResponseEntity<Object> update(Progress progress) {
 
         try {
@@ -81,7 +81,7 @@ public class ProgressController {
         }
     }
 
-    @RequestMapping(value = "/reply", method = RequestMethod.PUT)
+    @RequestMapping(value = "/reply", method = RequestMethod.POST)
     public ResponseEntity<Object> reply(Progress progress) {
         try {
             return ResponseStatu.success(progressService.reply(progress));
@@ -188,7 +188,7 @@ public class ProgressController {
         return result;
     }
 
-    @RequestMapping(value = "/listUpdate", method = RequestMethod.PUT)
+    @RequestMapping(value = "/listUpdate", method = RequestMethod.POST)
     public ResponseEntity<Object> updateProgress(List<Progress> lstProgress) {
         try {
             return progressService.updateListByPrimaryKeySelective(lstProgress);

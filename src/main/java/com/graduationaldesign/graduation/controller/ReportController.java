@@ -62,7 +62,7 @@ public class ReportController {
      * @param report
      * @return
      */
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ResponseEntity<Object> update(Report report) {
         try {
             String message = "";
@@ -177,7 +177,7 @@ public class ReportController {
         return result;
     }
 
-    @RequestMapping(value = "/listUpdate", method = RequestMethod.PUT)
+    @RequestMapping(value = "/listUpdate", method = RequestMethod.POST)
     public ResponseEntity<Object> updateReport(List<Report> lstReport) {
         try {
             return reportService.updateListByPrimaryKeySelective(lstReport);

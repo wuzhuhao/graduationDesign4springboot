@@ -18,13 +18,13 @@
             <Form :model="formItem" :label-width="80">
               <Row>
                 <Col span="8">
-                  <FormItem label="任务编号：">
-                    <Input v-model="formItem.id" placeholder="..."></Input>
+                  <FormItem label="任务编号">
+                    <Input v-model="formItem.id" placeholder="请输入任务编号"></Input>
                 </FormItem>
                 </Col>
                 <Col span="8">
                   <FormItem label="任务内容">
-                    <Input v-model="formItem.taskContent" placeholder="Enter something..."></Input>
+                    <Input v-model="formItem.taskContent" placeholder="请输入任务内容"></Input>
                 </FormItem>
                 </Col>
                 <Col span="8">
@@ -78,12 +78,12 @@
                 <Row :gutter="32">
                     <Col span="12">
                         <FormItem label="任务编号" label-position="top">
-                            <Input v-model="formItem.id" placeholder="please enter user name" />
+                            <Input v-model="formItem.id" placeholder="请输入任务编号" />
                         </FormItem>
                     </Col>
                     <Col span="12">
                         <FormItem label="主要内容" label-position="top">
-                            <Input v-model="formItem.task_content" placeholder="please enter url">
+                            <Input v-model="formItem.task_content" placeholder="请输入主要内容">
                             </Input>
                         </FormItem>
                     </Col>
@@ -91,48 +91,48 @@
                 <Row :gutter="32">
                     <Col span="12">
                         <FormItem label="基本要求" label-position="top">
-                            <Input v-model="formItem.task_require" placeholder="please enter user name" />
+                            <Input v-model="formItem.task_require" placeholder="请输入基本要求" />
                         </FormItem>
                     </Col>
                     <Col span="12">
                         <FormItem label="任务调度" label-position="top">
-                            <Input v-model="formItem.task_schedule" placeholder="please enter url">
+                            <Input v-model="formItem.task_schedule" placeholder="请输入任务调度">
                             </Input>
                         </FormItem>
                     </Col>
                 </Row><Row :gutter="32">
                     <Col span="12">
                         <FormItem label="应收集的资料及主要参考文献" label-position="top">
-                            <Input v-model="formItem.task_literature" placeholder="please enter user name" />
+                            <Input v-model="formItem.task_literature" placeholder="请输入应收集的资料及主要参考文献" />
                         </FormItem>
                     </Col>
                     <Col span="12">
                         <FormItem label="任务附件" label-position="top">
-                            <Input v-model="formItem.task_file" placeholder="please enter url">
+                            <Input v-model="formItem.task_file" placeholder="请输入任务附件">
                             </Input>
                         </FormItem>
                     </Col>
                 </Row><Row :gutter="32">
                     <Col span="12">
                         <FormItem label="任务状态" label-position="top">
-                            <Input v-model="formItem.task_state" placeholder="please enter user name" />
+                            <Input v-model="formItem.task_state" placeholder="请输入任务状态" />
                         </FormItem>
                     </Col>
                     <Col span="12">
                         <FormItem label="点击次数" label-position="top">
-                            <Input v-model="formItem.task_number" placeholder="please enter url">
+                            <Input v-model="formItem.task_number" placeholder="请输入点击次数">
                             </Input>
                         </FormItem>
                     </Col>
                 </Row><Row :gutter="32">
                     <Col span="12">
                         <FormItem label="课题id" label-position="top">
-                            <Input v-model="formItem.task_sub_id" placeholder="please enter user name" />
+                            <Input v-model="formItem.task_sub_id" placeholder="请输入课题id" />
                         </FormItem>
                     </Col>
                     <Col span="12">
                         <FormItem label="回复内容" label-position="top">
-                            <Input v-model="formItem.reply_content" placeholder="please enter url">
+                            <Input v-model="formItem.reply_content" placeholder="请输入回复内容">
                             </Input>
                         </FormItem>
                     </Col>
@@ -140,12 +140,12 @@
                 </Row><Row :gutter="32">
                     <Col span="12">
                         <FormItem label="回复附件" label-position="top">
-                            <Input v-model="formItem.task_sub_id" placeholder="please enter user name" />
+                            <Input v-model="formItem.task_sub_id" placeholder="请输入回复附件" />
                         </FormItem>
                     </Col>
                     <Col span="12">
                         <FormItem label="任务发布时间" label-position="top">
-                            <Input v-model="formItem.reply_content" placeholder="please enter url">
+                            <Input v-model="formItem.reply_content" placeholder="请输入任务发布时间">
                             </Input>
                         </FormItem>
                     </Col>
@@ -153,21 +153,21 @@
                 </Row><Row :gutter="32">
                     <Col span="12">
                         <FormItem label="回复时间" label-position="top">
-                            <Input v-model="formItem.task_sub_id" placeholder="please enter user name" />
+                            <Input v-model="formItem.task_sub_id" placeholder="请输入回复时间" />
                         </FormItem>
                     </Col>
                 </Row>
                 </Row><Row :gutter="32">
                     <Col span="12">
                         <FormItem label="任务发布时间" label-position="top">
-                            <Input v-model="formItem.taskSchedule" placeholder="please enter user name" />
+                            <Input v-model="formItem.taskSchedule" placeholder="请输入任务发布时间" />
                         </FormItem>
                     </Col>
                 </Row>
                  </Row><Row :gutter="32">
                     <Col span="12">
                         <FormItem label="回复时间" label-position="top">
-                            <Input v-model="formItem.taskLiterature" placeholder="please enter user name" />
+                            <Input v-model="formItem.taskLiterature" placeholder="请输入回复时间" />
                         </FormItem>
                     </Col>     
                 </Row>

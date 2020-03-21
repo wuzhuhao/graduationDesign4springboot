@@ -30,28 +30,28 @@
                 <Col span="24">
                   <FormItem  span="24" label="一、主要内容:  "    class="label">
                     
-                    <Input v-model="formItem.taskContent" readonly type="textarea" :autosize="{minRows: 4,maxRows: 10}" size="large"  placeholder="Enter something..."></Input>
+                    <Input v-model="formItem.taskContent" readonly type="textarea" :autosize="{minRows: 4,maxRows: 10}" size="large"  placeholder="请输入主要内容"></Input>
                 </FormItem>
                 </Col>
               </Row>
               <Row>
                 <Col span="24">
                   <FormItem label="二、基本要求:  "    class="label">
-                    <Input v-model="formItem.taskRequire" readonly type="textarea" :autosize="{minRows: 4,maxRows: 10}" size="large"  placeholder="Enter something..."></Input>
+                    <Input v-model="formItem.taskRequire" readonly type="textarea" :autosize="{minRows: 4,maxRows: 10}" size="large"  placeholder="请输入基本要求 "></Input>
                 </FormItem>
                 </Col>
               </Row>
                 <Row>
                 <Col span="24">
                   <FormItem label="三、工作进度安排:  "    class="label">
-                    <Input v-model="formItem.taskSchedule" readonly type="textarea" :autosize="{minRows: 4,maxRows: 10}" size="large"  placeholder="Enter something..."></Input>
+                    <Input v-model="formItem.taskSchedule" readonly type="textarea" :autosize="{minRows: 4,maxRows: 10}" size="large"  placeholder="请输入工作进度安排"></Input>
                 </FormItem>
                 </Col>
               </Row>
                <Row>
                 <Col span="24">
                   <FormItem label="四、应收集资料及主要参考文献:  "    class="label">
-                    <Input v-model="formItem.taskLiterature" readonly type="textarea" :autosize="{minRows: 4,maxRows: 10}" size="large"  placeholder="Enter something..."></Input>
+                    <Input v-model="formItem.taskLiterature" readonly type="textarea" :autosize="{minRows: 4,maxRows: 10}" size="large"  placeholder="请输入应收集资料及主要参考文献"></Input>
                 </FormItem>
                 </Col>
               </Row>

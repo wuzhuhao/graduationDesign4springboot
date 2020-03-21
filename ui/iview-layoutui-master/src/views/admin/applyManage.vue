@@ -19,12 +19,12 @@
               <Row>
                 <Col span="8">
                   <FormItem label="id：">
-                    <Input v-model="formItem.teaId" placeholder="..."></Input>
+                    <Input v-model="formItem.teaId" placeholder="请输入id"></Input>
                 </FormItem>
                 </Col>
                 <Col span="8">
                   <FormItem label="姓名：">
-                    <Input v-model="formItem.teaName" placeholder="Enter something..."></Input>
+                    <Input v-model="formItem.teaName" placeholder="请输入姓名"></Input>
                 </FormItem>
                 </Col>
                 <Col span="8">
@@ -77,70 +77,70 @@
             <Form :model="formData">
                 <Row :gutter="32">
                     <Col span="12">
-                        <FormItem label="id" label-position="top">
-                            <Input v-model="formData.teaId" placeholder="please enter user name" />
+                        <FormItem label="id：" label-position="top">
+                            <Input v-model="formData.teaId" placeholder="请输入id" />
                         </FormItem>
                     </Col>
                     <Col span="12">
-                        <FormItem label="密码" label-position="top">
-                            <Input v-model="formData.teaPassword" placeholder="please enter url">
+                        <FormItem label="密码：" label-position="top">
+                            <Input v-model="formData.teaPassword" placeholder="请输入密码">
                             </Input>
                         </FormItem>
                     </Col>
                 </Row>
                 <Row :gutter="32">
                     <Col span="12">
-                        <FormItem label="名称" label-position="top">
-                            <Input v-model="formData.teaName" placeholder="please enter user name" />
+                        <FormItem label="名称：" label-position="top">
+                            <Input v-model="formData.teaName" placeholder="请输入名称" />
                         </FormItem>
                     </Col>
                     <Col span="12">
-                        <FormItem label="性别" label-position="top">
-                            <Input v-model="formData.teaSex" placeholder="please enter url">
+                        <FormItem label="性别：" label-position="top">
+                            <Input v-model="formData.teaSex" placeholder="请输入性别">
                             </Input>
                         </FormItem>
                     </Col>
                 </Row><Row :gutter="32">
                     <Col span="12">
-                        <FormItem label="年龄" label-position="top">
-                            <Input v-model="formData.teaAge" placeholder="please enter user name" />
+                        <FormItem label="年龄：" label-position="top">
+                            <Input v-model="formData.teaAge" placeholder="请输入年龄" />
                         </FormItem>
                     </Col>
                     <Col span="12">
-                        <FormItem label="生日" label-position="top">
-                            <Input v-model="formData.teaBirthday" placeholder="please enter url">
+                        <FormItem label="生日：" label-position="top">
+                            <Input v-model="formData.teaBirthday" placeholder="请输入生日">
                             </Input>
                         </FormItem>
                     </Col>
                 </Row><Row :gutter="32">
                     <Col span="12">
-                        <FormItem label="电话" label-position="top">
-                            <Input v-model="formData.teaPhone" placeholder="please enter user name" />
+                        <FormItem label="电话：" label-position="top">
+                            <Input v-model="formData.teaPhone" placeholder="请输入电话" />
                         </FormItem>
                     </Col>
                     <Col span="12">
-                        <FormItem label="邮箱" label-position="top">
-                            <Input v-model="formData.teaMail" placeholder="please enter url">
+                        <FormItem label="邮箱：" label-position="top">
+                            <Input v-model="formData.teaMail" placeholder="请输入邮箱">
                             </Input>
                         </FormItem>
                     </Col>
                 </Row><Row :gutter="32">
                     <Col span="12">
-                        <FormItem label="地址" label-position="top">
-                            <Input v-model="formData.teaAddress" placeholder="please enter user name" />
+                        <FormItem label="地址：" label-position="top">
+                            <Input v-model="formData.teaAddress" placeholder="请输入地址" />
                         </FormItem>
                     </Col>
                     <Col span="12">
-                        <FormItem label="备注" label-position="top">
-                            <Input v-model="formData.teaRemarks" placeholder="please enter url">
+                        <FormItem label="备注：" label-position="top">
+                            <Input v-model="formData.teaRemarks" placeholder="请输入备注">
                             </Input>
                         </FormItem>
                     </Col>
                 </Row>
                 </Row><Row :gutter="32">
                     <Col span="12">
-                        <FormItem label="学院id" label-position="top">
-                            <Input v-model="formData.academyId" placeholder="please enter user name" />
+                        <FormItem label="学院id：" label-position="top">
+                            <Input v-model="formData.academyId" placeholder="请输入学院id" />
                         </FormItem>
                     </Col>
                 </Row>

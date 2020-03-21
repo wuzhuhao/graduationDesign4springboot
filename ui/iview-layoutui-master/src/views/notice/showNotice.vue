@@ -16,7 +16,7 @@
               <Row>
                 <Col span="8">
                   <FormItem label="内容">
-                    <Input v-model="formItem.noticeContent" placeholder="..."></Input>
+                    <Input v-model="formItem.noticeContent" placeholder="请输入内容"></Input>
                 </FormItem>
                 </Col>
               </Row>

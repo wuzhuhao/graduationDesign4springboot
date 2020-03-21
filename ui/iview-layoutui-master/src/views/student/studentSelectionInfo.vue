@@ -21,7 +21,7 @@
            <Row>
                 <Col span="24">
                   <FormItem label="选题学生:  "   class="label">
-                    <Input v-model="formItem.student" readonly  size="large"  placeholder="Enter something..."></Input>
+                    <Input v-model="formItem.student" readonly  size="large"  placeholder="请输入选题学生"></Input>
                 </FormItem>
                 </Col>
               </Row>
@@ -29,7 +29,7 @@
                <Row>
                 <Col span="24">
                   <FormItem label="课题名称:  "   class="label">
-                    <Input v-model="formItem.subName"  readonly size="large"  placeholder="Enter something..."></Input>
+                    <Input v-model="formItem.subName"  readonly size="large"  placeholder="请输入课题名称"></Input>
                 </FormItem>
                 </Col>
               </Row>
@@ -59,7 +59,7 @@
              <Row>
                 <Col span="24">
                   <FormItem label="课题介绍:  "    class="label">
-                    <Input v-model="formItem.subIntroduce" readonly type="textarea" :autosize="{minRows: 5,maxRows: 10}" size="large"  placeholder="Enter something..."></Input>
+                    <Input v-model="formItem.subIntroduce" readonly type="textarea" :autosize="{minRows: 5,maxRows: 10}" size="large"  placeholder="请输入课题介绍"></Input>
                 </FormItem>
                 </Col>
               </Row>
@@ -82,14 +82,14 @@
                <Row>
                 <Col span="24">
                   <FormItem label="课题申请人:  "   class="label">
-                    <Input v-model="formItem.teacher"  readonly size="large"  placeholder="Enter something..."></Input>
+                    <Input v-model="formItem.teacher"  readonly size="large"  placeholder="请输入课题申请人"></Input>
                 </FormItem>
                 </Col>
               </Row>
                <Row>
                 <Col span="24">
                   <FormItem label="指导老师:  "   class="label">
-                    <Input v-model="formItem.teacher"  readonly size="large"  placeholder="Enter something..."></Input>
+                    <Input v-model="formItem.teacher"  readonly size="large"  placeholder="请输入指导老师"></Input>
                 </FormItem>
                 </Col>
               </Row>

@@ -19,12 +19,12 @@
               <Row>
                 <Col span="8">
                   <FormItem label="id：">
-                    <Input v-model="formItem.subId" placeholder="..."></Input>
+                    <Input v-model="formItem.subId" placeholder="请输入id"></Input>
                 </FormItem>
                 </Col>
                 <Col span="8">
                   <FormItem label="课题名称">
-                    <Input v-model="formItem.subName" placeholder="Enter something..."></Input>
+                    <Input v-model="formItem.subName" placeholder="请输入课题名称"></Input>
                 </FormItem>
                 </Col>
                 <Col span="8">
@@ -78,12 +78,12 @@
                 <Row :gutter="32">
                     <Col span="12">
                         <FormItem label="id" label-position="top">
-                            <Input v-model="formData.subId" placeholder="please enter user name" />
+                            <Input v-model="formData.subId" placeholder="请输入id" />
                         </FormItem>
                     </Col>
                     <Col span="12">
                         <FormItem label="课题名称" label-position="top">
-                            <Input v-model="formData.subName" placeholder="please enter url">
+                            <Input v-model="formData.subName" placeholder="请输入课题名称">
                             </Input>
                         </FormItem>
                     </Col>
@@ -91,43 +91,43 @@
                 <Row :gutter="32">
                     <Col span="12">
                         <FormItem label="课题性质" label-position="top">
-                            <Input v-model="formData.subNature" placeholder="please enter user name" />
+                            <Input v-model="formData.subNature" placeholder="请输入课题性质" />
                         </FormItem>
                     </Col>
                     <Col span="12">
                         <FormItem label="课题来源" label-position="top">
-                            <Input v-model="formData.subSource" placeholder="please enter url">
+                            <Input v-model="formData.subSource" placeholder="请输入课题来源">
                             </Input>
                         </FormItem>
                     </Col>
                 </Row><Row :gutter="32">
                     <Col span="12">
                         <FormItem label="开题报告截止期限" label-position="top">
-                            <Input v-model="formData.firstReportDeadline" placeholder="please enter user name" />
+                            <Input v-model="formData.firstReportDeadline" placeholder="请输入开题报告截止期限" />
                         </FormItem>
                     </Col>
                     <Col span="12">
                         <FormItem label="论文定稿截止期限" label-position="top">
-                            <Input v-model="formData.lastReportDeadline" placeholder="please enter url">
+                            <Input v-model="formData.lastReportDeadline" placeholder="请输入论文定稿截止期限">
                             </Input>
                         </FormItem>
                     </Col>
                 </Row><Row :gutter="32">
                     <Col span="12">
                         <FormItem label="学生id" label-position="top">
-                            <Input v-model="formData.stuId" placeholder="please enter user name" />
+                            <Input v-model="formData.stuId" placeholder="请输入学生id" />
                         </FormItem>
                     </Col>
                     <Col span="12">
                         <FormItem label="提交状态" label-position="top">
-                            <Input v-model="formData.subStuState" placeholder="please enter url">
+                            <Input v-model="formData.subStuState" placeholder="请输入提交状态">
                             </Input>
                         </FormItem>
                     </Col>
                 </Row><Row :gutter="32">
                     <Col span="12">
-                        <FormItem label="总评" label-position="top">
-                            <Input v-model="formData.subLastScore" placeholder="please enter user name" />
+                        <FormItem label="总评分数" label-position="top">
+                            <Input v-model="formData.subLastScore" placeholder="请输入总评分数" />
                         </FormItem>
                     </Col>
                     <Col span="12">

@@ -19,21 +19,21 @@
              <Row>
                 <Col span="12">
                   <FormItem label="真实姓名:  "  :label-width="200"  class="label">
-                    <Input v-model="formItem.stuName"   size="large"    placeholder="Enter something..."></Input>
+                    <Input v-model="formItem.stuName"   size="large"    placeholder="请输入真实姓名"></Input>
                 </FormItem>
                 </Col>
               </Row>
              <Row>
                 <Col span="12">
                   <FormItem label="专业:  "  :label-width="200"  class="label">
-                    <Input v-model="formItem.stuMajor"   size="large"    placeholder="Enter something..."></Input>
+                    <Input v-model="formItem.stuMajor"   size="large"    placeholder="请输入专业"></Input>
                 </FormItem>
                 </Col>
               </Row>
              <Row>
                 <Col span="12">
                   <FormItem label="班级:  "  :label-width="200"  class="label">
-                    <Input v-model="formItem.stuClass"   size="large"  placeholder="Enter something..."></Input>
+                    <Input v-model="formItem.stuClass"   size="large"  placeholder="请输入班级"></Input>
                 </FormItem>
                 </Col>
               </Row>
@@ -50,42 +50,42 @@
              <Row>
                 <Col span="12">
                   <FormItem label="年龄:  "  :label-width="200"   class="label">
-                    <InputNumber  v-model="formItem.stuAge"   size="large"  style="width:620px"  placeholder="Enter something..."></InputNumber>
+                    <InputNumber  v-model="formItem.stuAge"   size="large"  style="width:620px"  placeholder="请输入年龄"></InputNumber>
                 </FormItem>
                 </Col>
               </Row>
              <Row>
                 <Col span="12">
-                  <FormItem label="出生日期："  :label-width="200"   class="label">
-                    <DatePicker type="date" placeholder="请选择"   size="large" v-model="formItem.stuBirthday" style="width:100%"></DatePicker>                      
+                  <FormItem label="出生日期"  :label-width="200"   class="label">
+                    <DatePicker type="date" placeholder="请输入出生日期"></DatePicker>
                   </FormItem>  
                 </Col>
               </Row>
                <Row>
                 <Col span="12">
                   <FormItem label="电话:  "  :label-width="200"  class="label">
-                    <InputNumber v-model="formItem.stuPhone"   size="large"  style="width:620px"   placeholder="Enter something..."></InputNumber>
+                    <InputNumber v-model="formItem.stuPhone"   size="large"  style="width:620px"   placeholder="请输入电话"></InputNumber>
                 </FormItem>
                 </Col>
               </Row>
              <Row>
                 <Col span="12">
                   <FormItem label="邮箱:  "  :label-width="200"  class="label">
-                    <Input v-model="formItem.stuMail"   size="large"    placeholder="Enter something..."></Input>
+                    <Input v-model="formItem.stuMail"   size="large"    placeholder="请输入邮箱"></Input>
                 </FormItem>
                 </Col>
               </Row>
              <Row>
                 <Col span="12">
                   <FormItem label="地址:  "  :label-width="200"  class="label">
-                    <Input v-model="formItem.stuAddress"   size="large"    placeholder="Enter something..."></Input>
+                    <Input v-model="formItem.stuAddress"   size="large"    placeholder="请输入地址"></Input>
                 </FormItem>
                 </Col>
               </Row>
               <Row>
                 <Col span="12">
                   <FormItem label="备注:  "  :label-width="200"  class="label">
-                    <Input v-model="formItem.stuRemarks"   size="large"    placeholder="Enter something..."></Input>
+                    <Input v-model="formItem.stuRemarks"   size="large"    placeholder="请输入备注"></Input>
                 </FormItem>
                 </Col>
               </Row>

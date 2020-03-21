@@ -64,7 +64,7 @@ public class SubjectController {
      * @param subject
      * @return
      */
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ResponseEntity<Object> updateSubject(Subject subject) {
         try {
             return subjectService.updateByPrimaryKeySelective(subject);
@@ -73,7 +73,7 @@ public class SubjectController {
         }
     }
 
-    @RequestMapping(value = "/listUpdate", method = RequestMethod.PUT)
+    @RequestMapping(value = "/listUpdate", method = RequestMethod.POST)
     public ResponseEntity<Object> updateSubject(List<Subject> lstSubject) {
         try {
             return subjectService.updateListByPrimaryKeySelective(lstSubject);
