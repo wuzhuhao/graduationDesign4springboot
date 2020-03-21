@@ -10,7 +10,7 @@
             <Icon type="ios-game-controller-b" />
         </div>
         <div slot="title-toolbar">
-            <Button type="primary" icon="md-add"  @click="handleCreate">新增</Button>
+            <Button type="primary" icon="md-add"  @click="modal12=true">新增</Button>
         </div>
         <div slot="paddingContent">
           <Table border  show-summary :columns="columns2" :data="tableData"  @on-selection-change="changeSelect" ref="table"></Table>
@@ -22,9 +22,105 @@
 
     </MasterPage>
 
-<Modal v-model="modal11"   closable  :styles="{top: '10px'}":width='1000' >
-        <info></info>
+<Modal v-model="modal11"   closable @on-ok='edit' :styles="{top: '10px'}":width='1000' >
+          <MasterPage :title="dialogStatus">
+        <div slot="title-icon">
+            <Icon type="ios-game-controller-b" />
+        </div>
+        <div slot="title-toolbar">
+            <Button type="info"  style="float:left;margin:0 8px"  @click="exportDataDemo(2)"><Icon type="ios-download-outline"></Icon>导出模板</Button>&nbsp;
+        </div>
+        
+        <div slot="searchContent" class="search-content-slot">
+            <Form :model="formItem" :label-width="100">
+           <Row>
+                <Col span="24">
+                  <FormItem label="课题名称:  "   class="label">
+                    <Input v-model="formItem1.subName" readonly  size="large"  placeholder="请输入课题名称"></Input>
+                </FormItem>
+                </Col>
+              </Row>
+              
+               <Row>
+                <Col span="24">
+                  <FormItem label="指导教师:  "   class="label">
+                    <Input v-model="formItem1.teaName"  readonly size="large"  placeholder="请输入指导教师"></Input>
+                </FormItem>
+                </Col>
+              </Row>
+               <Row>
+                <Col span="24">
+                  <FormItem label="指导内容:  "   class="label">
+                    <Input v-model="zhidao"  readonly size="large"  placeholder="请输入内容指导"></Input>
+                </FormItem>
+                </Col>
+              </Row>
+              
+             <Row>
+                <Col span="24">
+                  <FormItem label="指导内容:  "    class="label">
+                    <Input v-model="formItem1.progContent"  type="textarea" :autosize="{minRows: 10,maxRows: 20}" size="large"  placeholder="请输入内容指导"></Input>
+                </FormItem>
+                </Col>
+              </Row>
+          </Form>
+        </div>
+       </div>
+         
+        </MasterPage>
     </Modal>
+    <Modal v-model="modal12"   closable @on-ok='add' :styles="{top: '10px'}":width='1000' >
+       <MasterPage :title="dialogStatus">
+        <div slot="title-icon">
+            <Icon type="ios-game-controller-b" />
+        </div>
+        <div slot="title-toolbar">
+            <Button type="info"  style="float:left;margin:0 8px"  @click="exportDataDemo(2)"><Icon type="ios-download-outline"></Icon>导出模板</Button>&nbsp;
+        </div>
+        
+        <div slot="searchContent" class="search-content-slot">
+            <Form :model="formItem" :label-width="100">
+           <Row>
+                <Col span="24">
+                  <FormItem label="课题名称:  "   class="label">
+                    <Input v-model="formItem1.subName" readonly  size="large"  placeholder="请输入课题名称"></Input>
+                </FormItem>
+                </Col>
+              </Row>
+              
+               <Row>
+                <Col span="24">
+                  <FormItem label="指导教师:  "   class="label">
+                    <Input v-model="formItem1.teaName"  readonly size="large"  placeholder="请输入指导教师"></Input>
+                </FormItem>
+                </Col>
+              </Row>
+               <Row>
+                <Col span="24">
+                  <FormItem label="指导内容:  "   class="label">
+                    <Input v-model="zhidao"  readonly size="large"  placeholder="请输入内容指导"></Input>
+                </FormItem>
+                </Col>
+              </Row>
+              
+             <Row>
+                <Col span="24">
+                  <FormItem label="指导内容:  "    class="label">
+                    <Input v-model="formItem1.progContent"  type="textarea" :autosize="{minRows: 10,maxRows: 20}" size="large"  placeholder="请输入内容指导"></Input>
+                </FormItem>
+                </Col>
+              </Row>
+          </Form>
+        </div>
+       </div>
+         
+        </MasterPage>
+    </Modal>
+    
+    
+    
+     
+  
   
 </section>
 
@@ -34,16 +130,16 @@
 </template>
 <script>
 import MasterPage from '@/components/Master'
-import info from './weeklyProgressInfo'
 export default {
     components:{
         MasterPage,
-        info
     },
     data(){
       
       return{
+          zhidao:'面授',
              modal11: false,
+              modal12: false,
             dialogStatus: '',//title自定义标题
           value3: false,
                 styles: {
@@ -52,6 +148,7 @@ export default {
                     paddingBottom: '53px',
                     position: 'static'
                 },
+                progContent:'',
                 formData: {
                     id: '',
                     progContent: '',
@@ -60,6 +157,13 @@ export default {
                     progReplyTime: '',
                     progressSubId: '',
                 },
+                formItem1: {   
+                    id:'',
+                    progContent: '',
+                    subName:'',
+                    teaName:'',  
+                    progressSubId:'',
+        },
             
         pagination: {
                 pageSize:10,
@@ -80,16 +184,11 @@ export default {
             progressSubId: '',
         },
         columns2: [
-            {
-               type: 'selection',
-               width: 60,
-               align: 'center',
-              fixed: 'left'
-             },
+           
             
             {
-                title: 'id',
-                key: 'id',
+                 title: '序号',
+                type: 'index',
                 width: 100,
                 fixed: 'left',
                 sortable: true
@@ -148,13 +247,61 @@ export default {
   
      created(){
         this.getData(1,10);
+         this.getSubject()
      },
     methods:{
+         getSubject(){
+           let subId = localStorage.getItem("subId") 
+           console.log(subId)
+            this.$axios({     
+                          url: 'sub/listOfChoice',
+                            method: 'get',//请求的方式
+                            params:{
+                                stuId:localStorage.getItem("userId") 
+                            },
+                            // token:localStorage.getItem('token')
+                        }).then(res => {
+                        console.log(res.data)
+                         let list = res.data.data.beanList[0];
+                         this.formItem1.subName=list.subName
+                         this.formItem1.teaName=list.teacher.teaName
+                         this.formItem1.progressSubId = list.subId
+                        }).catch(err => {
+                            console.info('报错的信息',err);
+                            
+                        });
+                        this.getUser()
+                      
+        },
+        add(){
+            
+            this.$axios({     
+                            url: 'progress/add',
+                            method: 'post',//请求的方式
+                            data:this.$Qs.stringify(this.formItem1),
+                            // token:localStorage.getItem('token')
+                        }).then(res => {
+                        console.log(res.data)
+                        this.getData(1,10)
+                        }).catch(err => {
+                            console.info('报错的信息',err);
+                            
+                        });
+                        this.$Modal.remove()
+        },
+        doReset(){
+          this.formItem.progContent=''
+           this.$Modal.remove()
+        },
          select(row){
-            this.$store.commit('weeklyProgressId',row.id);
+
+           this.formItem1.progContent = row.progContent
+             this.formItem1.id = row.id
+
             this.modal11 = true;
        
       },
+    
        exportData (type) {
                 if (type === 1) {
                     this.$refs.table.exportCsv({
@@ -181,13 +328,22 @@ export default {
       //编辑
         edit(row){
             this.dialogStatus = '编辑';//对应标题
-            this.formData.id = row.id
-            this.formData.progContent = row.progContent
-            this.formData.progContentTime =  row.progContentTime
-            this.formData.progReply =  row.progReply
-            this.formData.progReplyTime =  row.progReplyTime
-            this.formData.progressSubId =  row.progressSubId
-            this.value3 = true
+            console.log
+         
+            this.$axios({     
+                            url: 'progress/update',
+                            method: 'post',//请求的方式
+                            data:this.$Qs.stringify(this.formItem1),
+                            // token:localStorage.getItem('token')
+                        }).then(res => {
+                        console.log(res.data)
+                        this.getData(1,10)
+                        }).catch(err => {
+                            console.info('报错的信息',err);
+                            
+                        });
+                       this.formItem1.progContent =''
+        
         },
         delById(row) {
             this.$Modal.confirm({
@@ -303,6 +459,24 @@ export default {
         // this.getData();
         // this.resetFormColumns();//重置
       },
+      handleRender1 () {
+                this.$Modal.confirm({
+                    render: (h) => {
+                        return h('Input', {
+                            props: {
+                                value: this.value,
+                                autofocus: true,
+                                placeholder: 'Please enter your name...'
+                            },
+                            on: {
+                                input: (val) => {
+                                    this.value = val;
+                                }
+                            }
+                        })
+                    }
+                })
+            },
        //多选
     changeSelect(e) {
       this.selectList = e;

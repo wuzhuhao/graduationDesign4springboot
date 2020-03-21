@@ -9,17 +9,11 @@
         <div slot="title-icon">
             <Icon type="ios-game-controller-b" />
         </div>
-        <div slot="title-toolbar">
-            <Button type="primary" icon="md-add"  @click="handleCreate">新增</Button>
-        </div>
 
         <div slot="paddingContent">
           <Table border  show-summary :columns="columns2" :data="tableData"  @on-selection-change="changeSelect" ref="table"></Table>
         </div>
-        <div slot="pager">
-            <Page :total="this.pagination.total"  :page-size="this.pagination.pageSize"  :page-size-opts="this.pagination.pageSizeOpts" 
-            :current="this.pagination.currentPage"  @on-change="pageChange" @on-page-size-change="pageSizeChange"  show-elevator show-total show-sizer />
-        </div>    
+        
 
     </MasterPage>
 

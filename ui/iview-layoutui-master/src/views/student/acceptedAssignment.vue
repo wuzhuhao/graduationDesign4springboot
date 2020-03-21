@@ -17,7 +17,7 @@
               <Row>
                 <Col span="8">
                   <FormItem label="课题标题">
-                    <Input v-model="formItem.id" placeholder="请输入课题标题"></Input>
+                    <Input v-model="formItem.subName" placeholder="请输入课题标题"></Input>
                 </FormItem>
                 </Col>
                
@@ -133,7 +133,7 @@ export default {
                         title: '操作',
                         key: 'action',
                         fixed: 'right',
-                        minWidth: 120,
+                          width: 120,
                         render: (h, params) => {
                             return h('div', [
                                 h('Button', {

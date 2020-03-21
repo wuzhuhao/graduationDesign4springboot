@@ -9,9 +9,7 @@
         <div slot="title-icon">
             <Icon type="ios-game-controller-b" />
         </div>
-        <div slot="title-toolbar">
-            <Button type="primary" icon="md-add"  @click="handleCreate">新增</Button>
-        </div>
+    
 
         
         <div slot="paddingContent">

@@ -287,7 +287,7 @@
                     </div>
                     <div v-if="!isCollapsed" class="logo-saiqu">    
                         <Avatar icon="ios-person" size="large"/>    
-                        <span class="user-name">sa</span>
+                        <span class="user-name">{{this.userName}}</span>
                     </div>
                     <Avatar icon="ios-person" size="large" v-else/>
                 </div>
@@ -385,7 +385,6 @@
                                 <DropdownMenu slot="list">
                                     <DropdownItem name = 'light'>light</DropdownItem>
                                     <DropdownItem name = 'dark'>dark</DropdownItem>
-                                    <DropdownItem name = 'primary'>primary </DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
                             <Button type="text" icon="md-exit" class="btn-blue" size="large" @click="quit">退出系统</Button>
@@ -445,6 +444,7 @@
 export default {
     data(){
         return{
+            userName:'',
             theme1:'dark',
             isCollapsed: false,
             // ------------------------------  菜单操作开始  --------------------------------
@@ -1322,6 +1322,10 @@ export default {
     },
     
     created() { 
+        
+        
+         this.userName = localStorage.getItem("userName")  
+         console.log(localStorage.getItem("userName")   + '123')
         let type = localStorage.getItem("type") 
         let theme1 = localStorage.getItem("theme1") 
         this.theme1 = theme1
@@ -1336,6 +1340,8 @@ export default {
             this.activeMenuName='admin'         
              this.menus =this.adminMenus
         }
+          
+
     }, 
 }
 </script>

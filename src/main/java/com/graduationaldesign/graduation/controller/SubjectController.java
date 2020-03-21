@@ -105,9 +105,9 @@ public class SubjectController {
      * @return
      */
     @RequestMapping(value = "/getSubject", method = RequestMethod.GET)
-    public ResponseEntity<Object> getSubject(String sudId) {
+    public ResponseEntity<Object> getSubject(String subId) {
         try {
-            return ResponseStatu.success(subjectService.selectByPrimaryKey(sudId));
+            return ResponseStatu.success(subjectService.selectByPrimaryKey(subId));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseStatu.failure("请求失败");
