@@ -17,7 +17,7 @@
               <Row>
                 <Col span="8">
                   <FormItem label="课题标题">
-                    <Input v-model="formItem.id" placeholder="请输入课题标题"></Input>
+                    <Input v-model="formItem.subName" placeholder="请输入课题标题"></Input>
                 </FormItem>
                 </Col>
                
@@ -99,6 +99,7 @@ export default {
             teaName:'',
             stuName:'',
             stuClass:'',
+            subName:''
         },
         formItem: {
           id: '',
@@ -219,24 +220,13 @@ export default {
       // },
       //编辑
         receive(row){
-            this.formData.id = row.id
-            this.formData.taskFile = row.taskFile
-            this.formData.taskState =  2               //修改成待接受
-            this.formData.taskNumber =  row.taskNumber
-            this.formData.taskSubId =  row.taskSubId
-            this.formData.replyFile = row.replyFile
-            this.formData.taskTime =  row.taskTime
-            this.formData.replyTime =  row.replyTime
-            this.formData.taskContent =  row.taskContent
-            this.formData.taskRequire = row.taskRequire
-            this.formData.taskSchedule =  row.taskSchedule
-            this.formData.taskLiterature =  row.taskLiterature
-            this.formData.replyContent =  row.replyContent
-            this.formData.subject =  row.subject
               this.$axios({     
                             url: 'task/update',
-                            method: 'put',//请求的方式
-                            data:this.$Qs.stringify(this.formData),
+                            method: 'post',//请求的方式
+                            data:this.$Qs.stringify({
+                              id:row.id,  //修改成待接受
+                              taskState:2
+                            }),
                             // token:localStorage.getItem('token')
                         }).then(res => {
                         console.log(res.data)
@@ -248,62 +238,8 @@ export default {
 
 
         },
-        delById(row) {
-            this.$Modal.confirm({
-                title: "确认删除",
-                content: "您确认要删除?",
-                onOk: () => {
-                    console.log(row)
-                 this.$axios({     
-                            withCredentials:true,
-                            url: 'task/delete/' + row.teaId,
-                            method: 'delete',//请求的方式
-                            data:this.$Qs.stringify(this.formItem),
-                            // token:localStorage.getItem('token')
-                        }).then(res => {
-                          console.log(res.data)
-                           this.getData(1,10);
-                        }).catch(err => {
-                            console.info('报错的信息',err);
-                            
-                        });
-                }
-            });
-           
-    },
-      update(){
-          console.log(this.formItem)
-        if(this.dialogStatus == '新增'){
-            this.$axios({     
-                            url: 'task/add',
-                            method: 'post',//请求的方式
-                            data:this.$Qs.stringify(this.formItem),
-                            // token:localStorage.getItem('token')
-                        }).then(res => {
-                        console.log(res.data)
-                        this.getData(1,10)
-                        }).catch(err => {
-                            console.info('报错的信息',err);
-                            
-                        });
-                        this.value3 = false
-        }else if(this.dialogStatus == '编辑'){
-             this.$axios({     
-                            url: 'task/update',
-                            method: 'put',//请求的方式
-                            data:this.$Qs.stringify(this.formItem),
-                            // token:localStorage.getItem('token')
-                        }).then(res => {
-                        console.log(res.data)
-                        this.getData(1,10)
-                        }).catch(err => {
-                            console.info('报错的信息',err);
-                            
-                        });
-                        this.value3 = false
-        }
-   
-      },
+      
+     
       getData(page,pageSize){
         let params = this.formItem
         let userId = localStorage.getItem("userId") 
@@ -312,7 +248,7 @@ export default {
                             
                             url: 'task/listByStu/' + userId + '/1?page=' + page + '&pageSize=' + pageSize,
                             method: 'get',//请求的方式
-                            // params:params,
+                             params:params,
                             // token:localStorage.getItem('token')
                         }).then(res => {
                           console.log(res.data)

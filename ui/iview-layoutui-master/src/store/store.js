@@ -21,6 +21,8 @@ export default new Vuex.Store({
 		taskId: localStorage.getItem('taskId') ? localStorage.getItem('taskId') : '',
 		theweeklyProgressIdme1: localStorage.getItem('weeklyProgressId') ? localStorage.getItem('weeklyProgressId') : '',
 		acaId: localStorage.getItem('acaId') ? localStorage.getItem('acaId') : '',
+		subId:localStorage.getItem('subId') ? localStorage.getItem('subId') : '',
+		userName:localStorage.getItem('userName') ? localStorage.getItem('userName') : '',
 	},
 
 	getters:{    // 监听数据变化的
@@ -54,8 +56,16 @@ export default new Vuex.Store({
 			return state.weeklyProgressId
 			
 		},
+		subId(state) {
+			return state.subId
+			
+		},
 		acaId(state) {
 			return state.acaId
+			
+		},
+		userName(state) {
+			return state.userName
 			
 		},
 	},
@@ -100,9 +110,17 @@ export default new Vuex.Store({
 	        state.weeklyProgressId = weeklyProgressId;
 	        localStorage.setItem('weeklyProgressId', weeklyProgressId);
 		},
+		subId(state, subId) { // 设置存储token
+	        state.subId = subId;
+	        localStorage.setItem('subId', subId);
+		},
 		acaId(state, acaId) { // 设置存储token
 	        state.acaId = acaId;
 	        localStorage.setItem('acaId', acaId);
+		},
+		userName(state, userName) { // 设置存储token
+	        state.userName = userName;
+	        localStorage.setItem('userName', userName);
 	    },
 	    removeStorage(state, value){  // 删除token
 		      localStorage.removeItem('token');

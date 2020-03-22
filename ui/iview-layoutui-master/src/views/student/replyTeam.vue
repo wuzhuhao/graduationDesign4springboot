@@ -53,12 +53,7 @@
               </Row>
           </Form>
         </div>
-         <div slot="search">
-            
-          <Button type="info" icon="ios-search"  style="float:left;margin:0 8px;margin-left:4cm" @click="update">修改</Button>  &nbsp; &nbsp; &nbsp; &nbsp;
-           <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doReset">重置</Button>  &nbsp;
-        </div>
-        
+       
     </MasterPage>
 </section>
 </template>

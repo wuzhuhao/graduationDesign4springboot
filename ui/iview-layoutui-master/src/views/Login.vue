@@ -140,7 +140,9 @@ export default {
                                     console.log(this.$cookies.get('token') )
                                   this.$store.commit('userId',this.userForm.number);
                                 if(this.userForm.type==3){
+
                                     // this.$router.push('/admin')
+                                     this.$store.commit('userName',res.data.data.adminName);  
                                      this.$router.push({
                                         name:'adminHome',
                                         // query:{
@@ -152,8 +154,12 @@ export default {
                                     
                                 }else  if(this.userForm.type==2){
                                     this.$router.push('/home')
+                                    this.$store.commit('userName',res.data.data.teaName);  
                                 }else if(this.userForm.type==1){
-
+                                    
+                                    this.$store.commit('userName',res.data.data.stuName);  
+                                      console.log( localStorage.getItem("userName")  + '12' )
+                                      console.log( res.data.data.stuName  + '12' )
                                   // this.$router.push('/admin')
                                      this.$router.push({
                                         name:'studentHome',
@@ -168,6 +174,7 @@ export default {
                                             closable: true
                                         });     
                                 }
+                              
                             }else{       
                                         this.$Message.info({
                                             content: res.data.message,

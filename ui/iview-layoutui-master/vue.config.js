@@ -6,16 +6,21 @@ module.exports = {
         // 设置默认端口
         port: 8081,
         // 设置代理
-        proxy: {
-                   '/graManagement': {
-            target: 'http://localhost:8080/graManagement/task/delete',//设置你调用的接口域名和端口号 别忘了加http
-            changeOrigin: true,
-            pathRewrite: {
-                '^/graManagement': '/graManagement'
+    
+	 proxy: {//配置跨域
+            '/api': {
+                target: 'http://localhost:8080/graManagement/',//这里后台的地址模拟的;应该填写你们真实的后台接口
+                ws: true,
+                changOrigin: true,//允许跨域
+                pathRewrite: {
+                    '^/api': ''//请求的时候使用这个api就可以
+                }
             }
+            
         }
-    }
+
+	
 
 
-}
+	}
 }
