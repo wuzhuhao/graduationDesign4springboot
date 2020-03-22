@@ -132,7 +132,7 @@
                     </Col>
                     <Col span="12">
                         <FormItem label="展示id" label-position="top">
-                            <Input v-model="formData.showId" placeholder="please enter url">
+                            <Input v-model="formData.showId" placeholder="请输入展示id">
                             </Input>
                         </FormItem>
                     </Col>

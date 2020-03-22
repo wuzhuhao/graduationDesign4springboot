@@ -53,6 +53,12 @@ public class Notice implements Serializable {
     @Column(columnName = "notice_content")
     private String noticeContent;
 
+    /**
+     * 表字段 : t_notice.notice_title
+     */
+    @Column(columnName = "notice_title")
+    private String noticeTitle;
+
     private Academy academy;
 
     /**
@@ -151,6 +157,24 @@ public class Notice implements Serializable {
      */
     public void setNoticeContent(String noticeContent) {
         this.noticeContent = noticeContent == null ? null : noticeContent.trim();
+    }
+
+    /**
+     * 获取  字段:t_notice.notice_title
+     *
+     * @return t_notice.notice_title,
+     */
+    public String getNoticeTitle() {
+        return noticeTitle;
+    }
+
+    /**
+     * 设置  字段:t_notice.notice_title
+     *
+     * @param noticeTitle the value for t_notice.notice_title,
+     */
+    public void setNoticeTitle(String noticeTitle) {
+        this.noticeTitle = noticeTitle == null ? null : noticeTitle.trim();
     }
 
     @JsonIgnore
