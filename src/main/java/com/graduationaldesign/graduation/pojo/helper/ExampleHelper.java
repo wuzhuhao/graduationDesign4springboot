@@ -181,4 +181,17 @@ public class ExampleHelper {
     public static boolean isDate(String type, String value) {
         return type.equals("class java.util.Date") && StrUtil.isNotEmpty(value);
     }
+
+//    public static List<String> getLstFieldName(Class pojo) {
+//        Field[] fieldList = pojo.getDeclaredFields();
+//        List<String> lstFieldName = new ArrayList<>();
+//        for (Field field : fieldList) {
+//            //获取属性的名字
+//            String name = field.getName();
+//            if (field.isAnnotationPresent(Dict.class)) {
+//                lstFieldName.add(name);
+//            }
+//        }
+//        return lstFieldName;
+//    }
 }

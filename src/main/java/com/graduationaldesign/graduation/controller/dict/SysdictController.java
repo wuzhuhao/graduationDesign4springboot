@@ -1,8 +1,8 @@
-package com.graduationaldesign.graduation.controller;
+package com.graduationaldesign.graduation.controller.dict;
 
 import com.graduationaldesign.graduation.aop.RootPropeties;
-import com.graduationaldesign.graduation.pojo.ScoreRecord;
-import com.graduationaldesign.graduation.service.ScoreRecordService;
+import com.graduationaldesign.graduation.pojo.Sysdict;
+import com.graduationaldesign.graduation.service.SysdictService;
 import com.graduationaldesign.graduation.util.ResponseStatu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,40 +16,40 @@ import java.util.List;
 
 /**
  * @author wuzhuhao
- * @version $Id: ScoreRecordController.java, v 0.1 2020-03-14 14:37:57 Administrator Exp $$
+ * @version $Id: SysdictController.java, v 0.1 2020-03-22 15:49:12 Administrator Exp $$
  */
 @RestController
-@RequestMapping("/scoreRecord")
-public class ScoreRecordController {
+@RequestMapping("/sysdict")
+public class SysdictController {
     @Autowired
-    ScoreRecordService scoreRecordService;
+    SysdictService sysdictService;
     @Autowired
     HttpServletRequest request;
     @Autowired
     RootPropeties rootPropeties;
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResponseEntity<Object> add(ScoreRecord record) {
+    public ResponseEntity<Object> add(Sysdict record) {
         ResponseEntity<Object> result = null;
-        if (scoreRecordService.insertSelective(record) <= 0) {
+        if (sysdictService.insertSelective(record) <= 0) {
             result = ResponseStatu.failure(
-                    MessageFormat.format("添加{0}失败", rootPropeties.getScoreRecord()));
+                    MessageFormat.format("添加{0}失败", rootPropeties.getSysdict()));
         } else {
             result = ResponseStatu.success(
-                    MessageFormat.format("添加{0}成功", rootPropeties.getScoreRecord()));
+                    MessageFormat.format("添加{0}成功", rootPropeties.getSysdict()));
         }
         return result;
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public ResponseEntity<Object> update(ScoreRecord record) {
+    public ResponseEntity<Object> update(Sysdict record) {
         ResponseEntity<Object> result = null;
-        if (scoreRecordService.updateByPrimaryKeySelective(record) <= 0) {
+        if (sysdictService.updateByPrimaryKeySelective(record) <= 0) {
             result = ResponseStatu.failure(
-                    MessageFormat.format("修改{0}失败", rootPropeties.getScoreRecord()));
+                    MessageFormat.format("修改{0}失败", rootPropeties.getSysdict()));
         } else {
             result = ResponseStatu.success(
-                    MessageFormat.format("修改{0}成功", rootPropeties.getScoreRecord()));
+                    MessageFormat.format("修改{0}成功", rootPropeties.getSysdict()));
         }
         return result;
 
@@ -57,25 +57,25 @@ public class ScoreRecordController {
 
     @RequestMapping(value = "/delete/{primaryKey}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> deleteSubject(
-            @PathVariable(value = "primaryKey") Integer primaryKey) {
+            @PathVariable(value = "primaryKey") Long primaryKey) {
         ResponseEntity<Object> result = null;
-        if (scoreRecordService.deleteByPrimaryKey(primaryKey) <= 0) {
+        if (sysdictService.deleteByPrimaryKey(primaryKey) <= 0) {
             result = ResponseStatu.failure(
-                    MessageFormat.format("删除{0}失败", rootPropeties.getScoreRecord()));
+                    MessageFormat.format("删除{0}失败", rootPropeties.getSysdict()));
         } else {
             result = ResponseStatu.success(
-                    MessageFormat.format("删除{0}成功", rootPropeties.getScoreRecord()));
+                    MessageFormat.format("删除{0}成功", rootPropeties.getSysdict()));
         }
         return result;
     }
 
     @RequestMapping(value = "/getDetail/{primaryKey}", method = RequestMethod.GET)
-    public ResponseEntity<Object> getDetail(@PathVariable(value = "primaryKey") Integer primaryKey) {
+    public ResponseEntity<Object> getDetail(@PathVariable(value = "primaryKey") Long primaryKey) {
         ResponseEntity<Object> result = null;
-        ScoreRecord record = scoreRecordService.selectByPrimaryKey(primaryKey);
+        Sysdict record = sysdictService.selectByPrimaryKey(primaryKey);
         if (record == null) {
             result = ResponseStatu.failure(
-                    MessageFormat.format("该{0}不存在", rootPropeties.getScoreRecord()));
+                    MessageFormat.format("该{0}不存在", rootPropeties.getSysdict()));
         } else {
             result = ResponseStatu.success(record);
         }
@@ -88,18 +88,18 @@ public class ScoreRecordController {
                                        @RequestParam(required = false, defaultValue = "5") int pageSize) {
         try {
             return ResponseStatu
-                    .success(scoreRecordService.listByPage(params, page, pageSize));
+                    .success(sysdictService.listByPage(params, page, pageSize));
         } catch (Exception e) {
-            return ResponseStatu.failure(
-                    MessageFormat.format("获取{0}列表失败", rootPropeties.getAcademy()));
+            e.printStackTrace();
+            return ResponseStatu.failure("获取列表失败");
         }
     }
 
     @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> deleteScoreRecordList(List<Integer> lstprimaryKey) {
+    public ResponseEntity<Object> deleteSysdictList(List<Long> lstprimaryKey) {
         ResponseEntity<Object> result = null;
         try {
-            scoreRecordService.deleteByPrimaryKeyIn(lstprimaryKey);
+            sysdictService.deleteByPrimaryKeyIn(lstprimaryKey);
             result = ResponseStatu.success(
                     MessageFormat.format("批量删除{0}成功", rootPropeties.getAcademy()));
         } catch (Exception e) {
@@ -111,9 +111,9 @@ public class ScoreRecordController {
     }
 
     @RequestMapping(value = "/listUpdate", method = RequestMethod.POST)
-    public ResponseEntity<Object> updateScoreRecord(List<ScoreRecord> lstScoreRecord) {
+    public ResponseEntity<Object> updateSysdict(List<Sysdict> lstSysdict) {
         try {
-            return scoreRecordService.updateListByPrimaryKeySelective(lstScoreRecord);
+            return sysdictService.updateListByPrimaryKeySelective(lstSysdict);
         } catch (RuntimeException e) {
             return ResponseStatu.failure(e.getMessage());
         }

@@ -5,6 +5,7 @@ import com.graduationaldesign.graduation.mapper.ReportMapper;
 import com.graduationaldesign.graduation.mapper.SubjectMapper;
 import com.graduationaldesign.graduation.pojo.*;
 import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
+import com.graduationaldesign.graduation.service.ScoreRecordService;
 import com.graduationaldesign.graduation.service.SubjectService;
 import com.graduationaldesign.graduation.util.IDUtil;
 import com.graduationaldesign.graduation.util.PageBean;
@@ -42,6 +43,9 @@ public class SubjectServiceImpl implements SubjectService {
     private RootPropeties rootPropeties;
     @Autowired
     FileUploadServiceImpl fileUploadService;
+    @Autowired
+    ScoreRecordService scoreRecordService;
+
     final String FILE_PATH = System.getProperty("user.dir") + "/upload/" + this.getClass().getName().substring(0, this.getClass().getName().indexOf("ServiceImpl")) + "/";
 
     /*==============私有接口=====================*/
@@ -74,6 +78,8 @@ public class SubjectServiceImpl implements SubjectService {
         } else {
             Report one = new Report(record.getSubId(), 1, 1);
             Report two = new Report(record.getSubId(), 2, 1);
+            ScoreRecord scoreRecord = new ScoreRecord(record.getSubId());
+            scoreRecordService.insertSelective(scoreRecord);
             reportMapper.insertSelective(one);
             reportMapper.insertSelective(two);
         }
@@ -189,11 +195,10 @@ public class SubjectServiceImpl implements SubjectService {
         SubjectExample.Criteria criteria = subjectExample.createCriteria();
         ExampleHelper.addCondition(Subject.class, criteria, params);
         List<Subject> list = subjectMapper.selectByExampleWithBLOBs(subjectExample);
-        for(Subject sub:list){
-            sub.getTeacher().getTeaName();
+        for (Subject sub : list) {
+            sub.getTeacher();
         }
         pageBean.setBeanList(list);
-//        pageBean.setParams(params);
         return pageBean;
     }
 

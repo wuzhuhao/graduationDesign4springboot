@@ -1,12 +1,16 @@
 package com.graduationaldesign.graduation.pojo;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.graduationaldesign.graduation.pojo.helper.Column;
 import com.graduationaldesign.graduation.pojo.helper.Table;
+import lombok.Data;
 
 import java.io.Serializable;
 
+@Data
 @Table(value = "t_scorerecord")
+@JsonIgnoreProperties(value = {"handler"})
 public class ScoreRecord implements Serializable {
     /**
      * 表字段 : t_scorerecord.id
@@ -236,5 +240,9 @@ public class ScoreRecord implements Serializable {
 
     public void setReplyTeam(ReplyTeam replyTeam) {
         this.replyTeam = replyTeam;
+    }
+
+    public ScoreRecord(String scoreSubId) {
+        this.scoreSubId = scoreSubId;
     }
 }

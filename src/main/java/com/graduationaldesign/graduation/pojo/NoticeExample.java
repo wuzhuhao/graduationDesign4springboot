@@ -486,6 +486,16 @@ public class NoticeExample {
             addCriterion("notice_title not between", value1, value2, "noticeTitle");
             return (Criteria) this;
         }
+
+        public Criteria andJoinEqualLike(String value, String tableName) {
+            addCriterion(tableName + " like ", value, tableName);
+            return (Criteria) this;
+        }
+
+        public Criteria andJoinEqualTo(Object value, String tableName) {
+            addCriterion(tableName + " = ", value, tableName);
+            return (Criteria) this;
+        }
     }
 
     /**

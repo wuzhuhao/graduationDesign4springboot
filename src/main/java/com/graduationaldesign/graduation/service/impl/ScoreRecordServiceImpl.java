@@ -4,6 +4,7 @@ import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.mapper.ScoreRecordMapper;
 import com.graduationaldesign.graduation.pojo.ScoreRecord;
 import com.graduationaldesign.graduation.pojo.ScoreRecordExample;
+import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.ScoreRecordService;
 import com.graduationaldesign.graduation.util.PageBean;
 import com.graduationaldesign.graduation.util.ResponseStatu;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -79,13 +81,13 @@ public class ScoreRecordServiceImpl implements ScoreRecordService {
     }
 
     @Override
-    public PageBean<ScoreRecord> listByPage(HashMap<String, Object> params, int page, int pageSize) {
+    public PageBean<ScoreRecord> listByPage(HashMap<String, Object> params, int page, int pageSize) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<ScoreRecord> pageBean = new PageBean<>();
         ScoreRecordExample example = new ScoreRecordExample();
         ScoreRecordExample.Criteria criteria = example.createCriteria();
+        ExampleHelper.addCondition(ScoreRecord.class, criteria, params);
         List<ScoreRecord> list = this.scoreRecordMapper.selectByExample(example);
         pageBean.setBeanList(list);
-//        pageBean.setParams();
         return pageBean;
     }
 }

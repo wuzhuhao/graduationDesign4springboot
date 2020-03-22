@@ -28,7 +28,7 @@ public class TeacherExample {
      * @mbg.generated
      */
     protected List<Criteria> oredCriteria;
-    
+
     private String join;
 
     public String getJoin() {
@@ -172,7 +172,7 @@ public class TeacherExample {
         }
 
         protected void addCriterion(String condition, Object value1, Object value2,
-                String property) {
+                                    String property) {
             if (value1 == null || value2 == null) {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
@@ -928,6 +928,16 @@ public class TeacherExample {
             addCriterion("academy_id not between", value1, value2, "academyId");
             return (Criteria) this;
         }
+
+        public Criteria andJoinEqualLike(String value, String tableName) {
+            addCriterion(tableName + " like ", value, tableName);
+            return (Criteria) this;
+        }
+
+        public Criteria andJoinEqualTo(Object value, String tableName) {
+            addCriterion(tableName + " = ", value, tableName);
+            return (Criteria) this;
+        }
     }
 
     /**
@@ -1021,7 +1031,7 @@ public class TeacherExample {
         }
 
         protected Criterion(String condition, Object value, Object secondValue,
-                String typeHandler) {
+                            String typeHandler) {
             super();
             this.condition = condition;
             this.value = value;

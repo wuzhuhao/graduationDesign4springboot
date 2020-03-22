@@ -29,14 +29,14 @@ public class RoleExample {
     protected List<Criteria> oredCriteria;
 
     /**
-     *  构造查询条件,t_role
+     * 构造查询条件,t_role
      */
     public RoleExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
     /**
-     *  设置排序字段,t_role
+     * 设置排序字段,t_role
      *
      * @param orderByClause 排序字段
      */
@@ -45,14 +45,14 @@ public class RoleExample {
     }
 
     /**
-     *  获取排序字段,t_role
+     * 获取排序字段,t_role
      */
     public String getOrderByClause() {
         return orderByClause;
     }
 
     /**
-     *  设置过滤重复数据,t_role
+     * 设置过滤重复数据,t_role
      *
      * @param distinct 是否过滤重复数据
      */
@@ -61,14 +61,14 @@ public class RoleExample {
     }
 
     /**
-     *  是否过滤重复数据,t_role
+     * 是否过滤重复数据,t_role
      */
     public boolean isDistinct() {
         return distinct;
     }
 
     /**
-     *  获取当前的查询条件实例,t_role
+     * 获取当前的查询条件实例,t_role
      */
     public List<Criteria> getOredCriteria() {
         return oredCriteria;
@@ -93,7 +93,7 @@ public class RoleExample {
     }
 
     /**
-     *  创建一个查询条件,t_role
+     * 创建一个查询条件,t_role
      */
     public Criteria createCriteria() {
         Criteria criteria = createCriteriaInternal();
@@ -104,7 +104,7 @@ public class RoleExample {
     }
 
     /**
-     *  内部构建查询条件对象,t_role
+     * 内部构建查询条件对象,t_role
      */
     protected Criteria createCriteriaInternal() {
         Criteria criteria = new Criteria();
@@ -112,7 +112,7 @@ public class RoleExample {
     }
 
     /**
-     *  清除查询条件,t_role
+     * 清除查询条件,t_role
      */
     public void clear() {
         oredCriteria.clear();
@@ -363,6 +363,16 @@ public class RoleExample {
 
         public Criteria andRoleDescNotBetween(String value1, String value2) {
             addCriterion("role_desc not between", value1, value2, "roleDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andJoinEqualLike(String value, String tableName) {
+            addCriterion(tableName + " like ", value, tableName);
+            return (Criteria) this;
+        }
+
+        public Criteria andJoinEqualTo(Object value, String tableName) {
+            addCriterion(tableName + " = ", value, tableName);
             return (Criteria) this;
         }
     }

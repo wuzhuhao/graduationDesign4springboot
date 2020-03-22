@@ -172,7 +172,7 @@ public class ReportExample {
         }
 
         protected void addCriterion(String condition, Object value1, Object value2,
-                String property) {
+                                    String property) {
             if (value1 == null || value2 == null) {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
@@ -698,6 +698,16 @@ public class ReportExample {
             addCriterion("t_subject.sub_tea_id = ", value, "t_subject.sub_tea_id");
             return (Criteria) this;
         }
+
+        public Criteria andJoinEqualLike(String value, String tableName) {
+            addCriterion(tableName + " like ", value, tableName);
+            return (Criteria) this;
+        }
+
+        public Criteria andJoinEqualTo(Object value, String tableName) {
+            addCriterion(tableName + " = ", value, tableName);
+            return (Criteria) this;
+        }
     }
 
     /**
@@ -790,7 +800,7 @@ public class ReportExample {
         }
 
         protected Criterion(String condition, Object value, Object secondValue,
-                String typeHandler) {
+                            String typeHandler) {
             super();
             this.condition = condition;
             this.value = value;
