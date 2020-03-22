@@ -4,49 +4,59 @@ import cn.hutool.core.date.DateUtil;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.graduationaldesign.graduation.pojo.helper.Column;
 import com.graduationaldesign.graduation.pojo.helper.MyPrimaryKey;
+import com.graduationaldesign.graduation.pojo.helper.Table;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(value = {"handler"})
+@Table(value = "t_progress")
 public class Progress implements Serializable {
 
     /**
      * 表字段 : t_progress.id
      */
     @MyPrimaryKey
+    @Column(columnName = "id", viewName = "progressId")
     private Integer id;
 
     /**
      * 课题id，外键课题表id
      * 表字段 : t_progress.progress_sub_id
      */
+    @Column(columnName = "progress_sub_id")
     private String progressSubId;
 
     /**
      * 问题发表时间
      * 表字段 : t_progress.prog_content_time
      */
+    @Column(columnName = "prog_content_time")
     private Date progContentTime;
 
     /**
      * 导师回复时间
      * 表字段 : t_progress.prog_reply_time
      */
+    @Column(columnName = "prog_reply_time")
     private Date progReplyTime;
 
     /**
      * 问题内容
      * 表字段 : t_progress.prog_content
      */
+    @Column(columnName = "prog_content")
     private String progContent;
 
     /**
      * 导师回复内容
      * 表字段 : t_progress.prog_reply
      */
+    @Column(columnName = "prog_reply")
     private String progReply;
 
     private Subject subject;

@@ -1,34 +1,42 @@
 package com.graduationaldesign.graduation.pojo;
 
+import com.graduationaldesign.graduation.pojo.helper.Column;
 import com.graduationaldesign.graduation.pojo.helper.MyPrimaryKey;
-import java.io.Serializable;
+import com.graduationaldesign.graduation.pojo.helper.Table;
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
+@Table(value = "t_permission")
 public class Permission implements Serializable {
 
     /**
      * 表字段 : t_permission.id
      */
     @MyPrimaryKey
+    @Column(columnName = "id", viewName = "permissionId")
     private Long id;
 
     /**
      * 权限名字
      * 表字段 : t_permission.per_name
      */
+    @Column(columnName = "per_name")
     private String perName;
 
     /**
      * 权限描述
      * 表字段 : t_permission.per_desc
      */
+    @Column(columnName = "per_desc")
     private String perDesc;
 
     /**
      * 权限url
      * 表字段 : t_permission.per_url
      */
+    @Column(columnName = "per_url")
     private String perUrl;
 
     /**

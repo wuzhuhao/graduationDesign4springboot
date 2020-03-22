@@ -4,12 +4,16 @@ import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.graduationaldesign.graduation.pojo.helper.Column;
 import com.graduationaldesign.graduation.pojo.helper.MyPrimaryKey;
-import java.io.Serializable;
+import com.graduationaldesign.graduation.pojo.helper.Table;
 import lombok.Data;
+
+import java.io.Serializable;
 
 @Data
 @JsonIgnoreProperties(value = {"handler"})
+@Table(value = "t_teacher")
 public class Teacher implements Serializable {
 
     /**
@@ -18,6 +22,7 @@ public class Teacher implements Serializable {
      */
     @MyPrimaryKey
     @Excel(name = "教师账号*", orderNum = "0")
+    @Column(columnName = "tea_id")
     private String teaId;
 
     /**
@@ -25,6 +30,7 @@ public class Teacher implements Serializable {
      * 表字段 : t_teacher.tea_password
      */
     @Excel(name = "密码", orderNum = "0")
+    @Column(columnName = "tea_password")
     private String teaPassword;
 
     /**
@@ -32,6 +38,7 @@ public class Teacher implements Serializable {
      * 表字段 : t_teacher.tea_name
      */
     @Excel(name = "姓名", orderNum = "0")
+    @Column(columnName = "tea_name")
     private String teaName;
 
     /**
@@ -39,6 +46,7 @@ public class Teacher implements Serializable {
      * 表字段 : t_teacher.tea_sex
      */
     @Excel(name = "性别", orderNum = "0")
+    @Column(columnName = "tea_sex")
     private String teaSex;
 
     /**
@@ -46,6 +54,7 @@ public class Teacher implements Serializable {
      * 表字段 : t_teacher.tea_age
      */
     @Excel(name = "年龄", orderNum = "0")
+    @Column(columnName = "tea_age")
     private Integer teaAge;
 
     /**
@@ -53,6 +62,7 @@ public class Teacher implements Serializable {
      * 表字段 : t_teacher.tea_birthday
      */
     @Excel(name = "出生日期", orderNum = "0")
+    @Column(columnName = "tea_birthday")
     private String teaBirthday;
 
     /**
@@ -60,6 +70,7 @@ public class Teacher implements Serializable {
      * 表字段 : t_teacher.tea_phone
      */
     @Excel(name = "电话", orderNum = "0")
+    @Column(columnName = "tea_phone")
     private String teaPhone;
 
     /**
@@ -67,6 +78,7 @@ public class Teacher implements Serializable {
      * 表字段 : t_teacher.tea_mail
      */
     @Excel(name = "邮箱", orderNum = "0")
+    @Column(columnName = "tea_mail")
     private String teaMail;
 
     /**
@@ -74,6 +86,7 @@ public class Teacher implements Serializable {
      * 表字段 : t_teacher.tea_address
      */
     @Excel(name = "地址", orderNum = "0")
+    @Column(columnName = "tea_address")
     private String teaAddress;
 
     /**
@@ -81,6 +94,7 @@ public class Teacher implements Serializable {
      * 表字段 : t_teacher.tea_remarks
      */
     @Excel(name = "备注", orderNum = "0")
+    @Column(columnName = "tea_remarks")
     private String teaRemarks;
 
     /**
@@ -88,6 +102,7 @@ public class Teacher implements Serializable {
      * 表字段 : t_teacher.academy_id
      */
     @Excel(name = "学院代码*", orderNum = "0")
+    @Column(columnName = "academy_id")
     private Integer academyId;
 
     private Academy academy;

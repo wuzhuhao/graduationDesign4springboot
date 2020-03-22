@@ -1,48 +1,59 @@
 package com.graduationaldesign.graduation.pojo;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.graduationaldesign.graduation.pojo.helper.Column;
+import com.graduationaldesign.graduation.pojo.helper.Table;
 
 import java.io.Serializable;
 
+@Table(value = "t_scorerecord")
 public class ScoreRecord implements Serializable {
     /**
      * 表字段 : t_scorerecord.id
      */
+    @Column(columnName = "id")
     private Integer id;
 
     /**
      * 表字段 : t_scorerecord.score_sub_id
      */
+    @Column(columnName = "score_sub_id")
     private String scoreSubId;
 
     /**
      * 表字段 : t_scorerecord.first_report_score
      */
+    @Column(columnName = "first_report_score")
     private Long firstReportScore;
 
     /**
      * 表字段 : t_scorerecord.final_report_score
      */
+    @Column(columnName = "final_report_score")
     private Long finalReportScore;
 
     /**
      * 表字段 : t_scorerecord.reply_score_
      */
+    @Column(columnName = "reply_score_")
     private Long replyScore;
 
     /**
      * 表字段 : t_scorerecord.reply_team_id
      */
+    @Column(columnName = "reply_team_id")
     private Integer replyTeamId;
 
     /**
      * 表字段 : t_scorerecord.ext1
      */
+    @Column(columnName = "ext1")
     private String ext1;
 
     /**
      * 表字段 : t_scorerecord.ext2
      */
+    @Column(columnName = "ext2")
     private String ext2;
 
     private Subject subject;

@@ -307,7 +307,7 @@ export default {
                 minWidth: 100,
             },
             {
-                title: '##',
+                title: '备注',
                 key: 'stuRemarks',
                 minWidth: 100,
             }, {

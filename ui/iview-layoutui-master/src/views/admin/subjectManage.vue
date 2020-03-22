@@ -76,17 +76,22 @@
         >
             <Form :model="formData">
                 <Row :gutter="32">
-                    <Col span="12">
-                        <FormItem label="id" label-position="top">
-                            <Input v-model="formData.subId" placeholder="请输入id" />
-                        </FormItem>
-                    </Col>
+<!--                    <Col span="12">-->
+<!--                        <FormItem label="id" label-position="top">-->
+<!--                            <Input v-model="formData.subId" placeholder="请输入id" />-->
+<!--                        </FormItem>-->
+<!--                    </Col>-->
                     <Col span="12">
                         <FormItem label="课题名称" label-position="top">
                             <Input v-model="formData.subName" placeholder="请输入课题名称">
                             </Input>
                         </FormItem>
                     </Col>
+                  <Col span="12">
+                    <FormItem label="学生id" label-position="top">
+                      <Input v-model="formData.stuId" placeholder="请输入指定学生id(为空则不指定)" />
+                    </FormItem>
+                  </Col>
                 </Row>
                 <Row :gutter="32">
                     <Col span="12">
@@ -115,7 +120,7 @@
                 </Row><Row :gutter="32">
                     <Col span="12">
                         <FormItem label="学生id" label-position="top">
-                            <Input v-model="formData.stuId" placeholder="请输入学生id" />
+                            <Input v-model="formData.stuId" placeholder="请输入指定学生id(为空则不指定)" />
                         </FormItem>
                     </Col>
                     <Col span="12">
@@ -125,17 +130,17 @@
                         </FormItem>
                     </Col>
                 </Row><Row :gutter="32">
-                    <Col span="12">
-                        <FormItem label="总评" label-position="top">
-                            <Input v-model="formData.subLastScore" placeholder="请输入总评" />
-                        </FormItem>
-                    </Col>
-                    <Col span="12">
-                        <FormItem label="展示id" label-position="top">
-                            <Input v-model="formData.showId" placeholder="请输入展示id">
-                            </Input>
-                        </FormItem>
-                    </Col>
+<!--                    <Col span="12">-->
+<!--                        <FormItem label="总评" label-position="top">-->
+<!--                            <Input v-model="formData.subLastScore" placeholder="请输入总评" />-->
+<!--                        </FormItem>-->
+<!--                    </Col>-->
+<!--                    <Col span="12">-->
+<!--                        <FormItem label="展示id" label-position="top">-->
+<!--                            <Input v-model="formData.showId" placeholder="请输入展示id">-->
+<!--                            </Input>-->
+<!--                        </FormItem>-->
+<!--                    </Col>-->
                 </Row>
                 
             </Form>

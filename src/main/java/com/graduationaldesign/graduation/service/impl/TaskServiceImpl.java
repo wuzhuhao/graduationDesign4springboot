@@ -2,10 +2,12 @@ package com.graduationaldesign.graduation.service.impl;
 
 import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.mapper.TaskMapper;
+import com.graduationaldesign.graduation.pojo.Subject;
 import com.graduationaldesign.graduation.pojo.Task;
 import com.graduationaldesign.graduation.pojo.TaskExample;
 import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.TaskService;
+import com.graduationaldesign.graduation.util.DataConvertUtil;
 import com.graduationaldesign.graduation.util.PageBean;
 import com.graduationaldesign.graduation.util.ResponseStatu;
 import lombok.extern.slf4j.Slf4j;
@@ -86,9 +88,13 @@ public class TaskServiceImpl implements TaskService {
         TaskExample taskExample = new TaskExample();
         TaskExample.Criteria criteria = taskExample.createCriteria();
         ExampleHelper.addCondition(Task.class, criteria, params);
+        if (DataConvertUtil.strToBoolean(DataConvertUtil.objToStr(params.get("isJoinSubject")))) {
+            taskExample.setJoin(" left join t_subject on t_subject.sub_id = t_task.task_sub_id ");
+            ExampleHelper.addJoinCondition(Subject.class, criteria, params);
+        }
         List<Task> list = taskMapper.selectByExampleWithBLOBs(taskExample);
         pageBean.setBeanList(list);
-        for(Task task :list){
+        for (Task task : list) {
             task.getSubject();
             task.getSubject().getStudent();
             task.getSubject().getTeacher();
@@ -109,7 +115,7 @@ public class TaskServiceImpl implements TaskService {
         criteria.andJoinTeaIdEqualTo(teaId);
         List<Task> taskList = taskMapper.selectByExampleWithBLOBs(taskExample);
         PageBean<Task> pageBean = new PageBean<>();
-        for(Task task :taskList){
+        for (Task task : taskList) {
             task.getSubject();
             task.getSubject().getStudent();
             task.getSubject().getTeacher();
@@ -134,7 +140,7 @@ public class TaskServiceImpl implements TaskService {
         criteria.andJoinStuIdEqualTo(stuId);
         criteria.andTaskStateEqualTo(type);
         List<Task> list = taskMapper.selectByExampleWithBLOBs(taskExample);
-        for(Task task :list){
+        for (Task task : list) {
             task.getSubject();
             task.getSubject().getStudent();
             task.getSubject().getTeacher();
