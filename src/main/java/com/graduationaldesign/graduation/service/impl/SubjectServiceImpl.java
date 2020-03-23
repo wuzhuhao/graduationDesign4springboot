@@ -172,10 +172,10 @@ public class SubjectServiceImpl implements SubjectService {
         ExampleHelper.addCondition(Subject.class, criteria, params);
         criteria.andSubStuStateEqualTo(1);
         List<Subject> list = subjectMapper.selectByExampleWithBLOBs(subjectExample);
-//        for (Subject sub : list) {
-//            sub.getTeacher();
-//            sub.getStudent();
-//        }
+        for (Subject sub : list) {
+            sub.getTeacher();
+            sub.getStudent();
+        }
         pageBean.setBeanList(list);
         //pageBean.setParams(params);
         return pageBean;
@@ -190,7 +190,8 @@ public class SubjectServiceImpl implements SubjectService {
         ExampleHelper.addCondition(Subject.class, criteria, params);
         List<Subject> list = subjectMapper.selectByExampleWithBLOBs(subjectExample);
         for(Subject sub:list){
-            sub.getTeacher().getTeaName();
+            if(sub.getTeacher()!=null)
+                sub.getTeacher().getTeaName();
         }
         pageBean.setBeanList(list);
 //        pageBean.setParams(params);

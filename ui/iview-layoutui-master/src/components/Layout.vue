@@ -882,7 +882,7 @@ export default {
                         {
                             title:'成绩总评学生',
                             name:'about29',
-                            href:'/home',
+                            href:'/studentScore',
                             closable:true,
                             showInTags:false,
                             showInMenus:true,
@@ -926,7 +926,16 @@ export default {
                     icon:'ios-people',
                     children:[
                         {
-                            title:'学生选题',
+                            title:'自主选题',
+                            name:'studentSubject',
+                            href:'/studentSubject',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        },
+                        {
+                            title:'我的选题',
                             name:'studentSelection',
                             href:'/studentSelection',
                             closable:true,
@@ -1033,7 +1042,7 @@ export default {
                         {
                             title:'成绩总评学生',
                             name:'about29',
-                            href:'/home',
+                            href:'/studentScore',
                             closable:true,
                             showInTags:false,
                             showInMenus:true,

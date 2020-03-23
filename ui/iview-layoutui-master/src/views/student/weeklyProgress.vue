@@ -97,7 +97,7 @@
               </Row>
                <Row>
                 <Col span="24">
-                  <FormItem label="指导内容:  "   class="label">
+                  <FormItem label="指导方式:  "   class="label">
                     <Input v-model="zhidao"  readonly size="large"  placeholder="请输入内容指导"></Input>
                 </FormItem>
                 </Col>
@@ -203,11 +203,12 @@ export default {
                 key: 'progContentTime',
                 minWidth: 100,
             },
+            // {
+            //     title: '导师回复',
+            //     key: 'progReply',
+            //     minWidth: 100,
+            // }, 
             {
-                title: '导师回复',
-                key: 'progReply',
-                minWidth: 100,
-            }, {
                 title: '回复时间',
                 key: 'progReplyTime',
                 minWidth: 100,
@@ -416,6 +417,9 @@ export default {
                          this.tableData = [];
                           let list = res.data.data.beanList;
                           list.forEach((item, index) => {
+                            if(item.progReplyTime==null){
+                              item.progReplyTime='未回复'
+                            }
                            this.tableData.push({
                             id: item.id,
                             progContent:item.progContent,

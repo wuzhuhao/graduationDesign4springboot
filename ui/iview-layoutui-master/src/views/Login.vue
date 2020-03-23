@@ -153,7 +153,7 @@ export default {
                               
                                     
                                 }else  if(this.userForm.type==2){
-                                    this.$router.push('/home')
+                                    this.$router.push('/studentNotice')
                                     this.$store.commit('userName',res.data.data.teaName);  
                                 }else if(this.userForm.type==1){
                                     

@@ -87,7 +87,7 @@ export default {
       }
     },
      created(){
-       this.getUser()
+       this.getData()
      },
     methods:{
       getParams () {
@@ -96,7 +96,7 @@ export default {
         // 将数据放在当前组件的数据内
         this.id = routerParams
       },
-      getUser(){
+      getData(){
         let userId = localStorage.getItem("userId") 
          this.$axios({
                             url: 'stu/getStuById',//请求的地址

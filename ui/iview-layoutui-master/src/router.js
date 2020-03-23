@@ -40,6 +40,11 @@ const router = new Router({
           component: () => import('@/views/notice/showNotice')
         },
         {
+          path: '/studentSubject',
+          name: 'studentSubject',
+          component: () => import('@/views/student/studentSubject')
+        },
+        {
           path: '/studentSelection',
           name: 'studentSelection',
           component: () => import('@/views/student/studentSelection')
@@ -78,9 +83,9 @@ const router = new Router({
           component: () => import('@/views/notice/notice')
         },
         {
-          path: '/notice',
-          name: 'notice',
-          component: () => import('@/views/notice/notice')
+          path: '/studentScore',
+          name: 'studentScore',
+          component: () => import('@/views/student/studentScore')
         },
         {
           path: '/studentInfo',
