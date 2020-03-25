@@ -50,7 +50,7 @@ public class Subject implements Serializable {
      * 课题导师，外键对教师表
      * 表字段 : t_subject.sub_tea_id
      */
-    @Column(columnName = "sub_tea_id")
+    @Column(columnName = "sub_tea_id", joinPojo = "Teacher")
     private String subTeaId;
 
     /**
@@ -78,7 +78,7 @@ public class Subject implements Serializable {
      * 学生id，外键对学生表
      * 表字段 : t_subject.stu_id
      */
-    @Column(columnName = "stu_id")
+    @Column(columnName = "stu_id", joinPojo = "Student")
     private String stuId;
 
     /**
@@ -99,7 +99,7 @@ public class Subject implements Serializable {
      * 展示id，外键展示表id
      * 表字段 : t_subject.show_id
      */
-    @Column(columnName = "show_id")
+    @Column(columnName = "show_id", joinPojo = "DesignShow")
     private Integer showId;
 
     /**
@@ -423,7 +423,11 @@ public class Subject implements Serializable {
         this.scoreRecord = scoreRecord;
     }
 
-    public Subject(String subId, String subName, Integer subNature, Integer subSource, String subTeaId, String subFile, Date firstReportDeadline, Date lastReportDeadline, String stuId, Integer subStuState, Long subLastScore, Integer showId, String subIntroduce, Teacher teacher, Student student, DesignShow designShow, ScoreRecord scoreRecord) {
+    public Subject(String subId, String subName, Integer subNature, Integer subSource,
+                   String subTeaId, String subFile, Date firstReportDeadline, Date lastReportDeadline,
+                   String stuId, Integer subStuState, Long subLastScore, Integer showId,
+                   String subIntroduce, Teacher teacher, Student student, DesignShow designShow,
+                   ScoreRecord scoreRecord) {
         this.subId = subId;
         this.subName = subName;
         this.subNature = subNature;

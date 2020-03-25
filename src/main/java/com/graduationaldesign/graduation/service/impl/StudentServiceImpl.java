@@ -149,10 +149,11 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public PageBean<Student> listByPage(HashMap<String, Object> params, int page, int pageSize)
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
         PageBean<Student> pageBean = new PageBean<>();
         StudentExample example = new StudentExample();
         StudentExample.Criteria criteria = example.createCriteria();
+        ExampleHelper.searchJoin(Student.class, example, criteria, params);
         ExampleHelper.addCondition(Student.class, criteria, params);
         List<Student> list = this.studentMapper.selectByExample(example);
         pageBean.setBeanList(list);

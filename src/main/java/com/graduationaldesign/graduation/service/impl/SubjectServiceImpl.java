@@ -283,7 +283,7 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public PageBean<Map<String, Object>> listChoosedByPageOfTea(HashMap<String, Object> params, int page,
                                                                 int pageSize, Teacher teacher)
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
         PageBean<Map<String, Object>> pageBean = new PageBean<>();
         SubjectExample subjectExample = new SubjectExample();
         Map<String, String> ma = new HashMap<>();
@@ -292,8 +292,9 @@ public class SubjectServiceImpl implements SubjectService {
         ma.put("t_teacher.tea_name", "teaName");
         String s = SqlUtil.spliceResultStringByMap(ma);
         subjectExample.setResultString(" t_subject.sub_name subName,t_subject.sub_id subId,t_teacher.tea_name teaName,t_teacher.tea_id teaId,t_student.stu_name stuName,t_student.stu_id stuId,t_student.stu_major stuMajor,t_task.id taskId,t_task.task_state taskState,t_report.id reportId,t_report.report_type reportType,t_report.report_state reportState,t_scorerecord.reply_score_ replyScore ");
-        subjectExample.setJoin(" left join t_student on t_student.stu_id = t_subject.stu_id left join t_teacher on t_teacher.tea_id = t_subject.sub_tea_id left join t_task on t_task.task_sub_id = t_subject.sub_id left join t_report on t_report.report_sub_id = t_subject.sub_id left join t_scorerecord on t_scorerecord.score_sub_id = t_subject.sub_id");
+//        subjectExample.setJoin(" left join t_student on t_student.stu_id = t_subject.stu_id left join t_teacher on t_teacher.tea_id = t_subject.sub_tea_id left join t_task on t_task.task_sub_id = t_subject.sub_id left join t_report on t_report.report_sub_id = t_subject.sub_id left join t_scorerecord on t_scorerecord.score_sub_id = t_subject.sub_id");
         SubjectExample.Criteria criteria = subjectExample.createCriteria();
+        ExampleHelper.searchJoin(Subject.class, subjectExample, criteria, params);
         ExampleHelper.addCondition(Subject.class, criteria, params);
         criteria.andSubTeaIdEqualTo(teacher.getTeaId());
         criteria.andSubStuStateNotEqualTo(1);

@@ -49,7 +49,7 @@ public class Task implements Serializable {
      * 课题id，外键对应课题表id
      * 表字段 : t_task.task_sub_id
      */
-    @Column(columnName = "task_sub_id")
+    @Column(columnName = "task_sub_id", joinPojo = "Subject")
     private String taskSubId;
 
     /**

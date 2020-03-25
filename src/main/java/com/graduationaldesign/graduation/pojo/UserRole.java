@@ -22,14 +22,14 @@ public class UserRole implements Serializable {
      * 管理员id，外键
      * 表字段 : user_role.admin_id
      */
-    @Column(columnName = "admin_id")
+    @Column(columnName = "admin_id", joinPojo = "Admin")
     private String adminId;
 
     /**
      * 角色id，外键
      * 表字段 : user_role.role_id
      */
-    @Column(columnName = "role_id")
+    @Column(columnName = "role_id", joinPojo = "Role")
     private Long roleId;
 
     /**

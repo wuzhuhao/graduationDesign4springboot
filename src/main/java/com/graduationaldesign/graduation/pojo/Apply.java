@@ -31,7 +31,7 @@ public class Apply implements Serializable {
      * 表字段 : t_apply.apply_tea_id
      */
     @Excel(name = "申请导师id", orderNum = "1")
-    @Column(columnName = "apply_tea_id")
+    @Column(columnName = "apply_tea_id", joinPojo = "Teacher")
     private String applyTeaId;
 
     /**
@@ -47,7 +47,7 @@ public class Apply implements Serializable {
      * 表字段 : t_apply.apply_stu_id
      */
     @Excel(name = "关联学生id", orderNum = "1")
-    @Column(columnName = "apply_stu_id")
+    @Column(columnName = "apply_stu_id", joinPojo = "Student")
     private String applyStuId;
 
     /**
@@ -55,7 +55,7 @@ public class Apply implements Serializable {
      * 表字段 : t_apply.apply_sub_id
      */
     @Excel(name = "关联课题id", orderNum = "1")
-    @Column(columnName = "apply_sub_id")
+    @Column(columnName = "apply_sub_id", joinPojo = "Subject")
     private String applySubId;
 
     /**

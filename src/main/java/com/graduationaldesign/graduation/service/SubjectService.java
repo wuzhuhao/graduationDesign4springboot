@@ -55,7 +55,7 @@ public interface SubjectService {
 
     PageBean<Map<String, Object>> listChoosedByPageOfTea(HashMap<String, Object> params, int page,
                                                          int pageSize, Teacher teacher)
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException;
 
     void uploadSubjectFile(MultipartFile file, String subId);
 }

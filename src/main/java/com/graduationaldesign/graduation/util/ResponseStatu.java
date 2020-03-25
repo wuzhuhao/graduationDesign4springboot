@@ -5,6 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Type;
+import java.util.Map;
+
 /**
  * @Author: wuzhuhao
  * @Date: 2020/1/10 19:30
@@ -38,14 +42,38 @@ public class ResponseStatu {
         if (result instanceof PageBean) {
             try {
                 className = ((PageBean) result).getBeanList().get(0).getClass().getSimpleName().split("_")[0];
+                if (((PageBean) result).getBeanList().get(0) instanceof Map) {
+                    className = "All";
+                }
             } catch (Exception e) {
-                e.printStackTrace();
+                className = getListBean(((PageBean) result).getBeanList());
                 log.error("无数据，默认传page类");
             }
         }
         Result result1 = Result.success(result);
         result1.setDict(ApplicationContextProvider.getBean(SysdictService.class).selectByModel(lowerFirstCapse(className)));
         return ResponseStatu.response(HttpStatus.SC_OK, result1);
+    }
+
+    public static String getListBean(Object bean) {
+        Field[] fields = bean.getClass().getDeclaredFields();
+        String result = "";
+        for (Field f : fields) {
+            f.setAccessible(true);
+            if (f.getType() == java.util.List.class) {
+                // 如果是List类型，得到其Generic的类型
+                Type genericType = f.getGenericType();
+                result = genericType.getTypeName();
+//                if (genericType == null) continue;
+//                // 如果是泛型参数的类型
+//                if (genericType instanceof ParameterizedType) {
+//                    ParameterizedType pt = (ParameterizedType) genericType;
+//                    //得到泛型里的class类型对象
+//                    Class<?> genericClazz = (Class<?>) pt.getActualTypeArguments()[0];
+//                }
+            }
+        }
+        return result;
     }
 
     public static ResponseEntity<Object> failure(String message) {

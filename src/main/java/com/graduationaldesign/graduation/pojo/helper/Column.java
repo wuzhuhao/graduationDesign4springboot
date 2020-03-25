@@ -12,6 +12,7 @@ import java.lang.annotation.Target;
 @Target(value = ElementType.FIELD)
 @Retention(value = RetentionPolicy.RUNTIME)
 public @interface Column {
+
     String columnName();//表格字段名
 
 //    String type();//字段类型
@@ -20,4 +21,6 @@ public @interface Column {
 
     //字段预备前端约定名字
     String viewName() default "";
+
+    String joinPojo() default "";
 }

@@ -31,7 +31,7 @@ public class GoodGraduation implements Serializable {
      * 表字段 : t_goodgraduation.good_sub_id
      */
     @Excel(name = "课题编号", orderNum = "1")
-    @Column(columnName = "good_sub_id")
+    @Column(columnName = "good_sub_id", joinPojo = "Subject")
     private String goodSubId;
 
     /**

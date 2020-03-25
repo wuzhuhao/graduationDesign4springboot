@@ -59,7 +59,9 @@ public class SysdictServiceImpl implements SysdictService {
         SysdictExample example = new SysdictExample();
         SysdictExample.Criteria criteria = example.createCriteria();
         criteria.andDictTypeEqualTo("model");
-        criteria.andDictValueEqualTo(Modelvalue);
+        if (!Modelvalue.equals("all")) {
+            criteria.andDictValueEqualTo(Modelvalue);
+        }
         Long pId;
         try {
             pId = sysdictMapper.selectByExample(example).get(0).getId();

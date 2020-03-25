@@ -43,7 +43,7 @@ public class Notice implements Serializable {
      * 学院id，外键学院表
      * 表字段 : t_notice.aca_id
      */
-    @Column(columnName = "aca_id")
+    @Column(columnName = "aca_id", joinPojo = "Academy")
     private Integer acaId;
 
     /**
