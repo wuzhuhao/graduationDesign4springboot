@@ -49,7 +49,7 @@ public class ReplyTeam implements Serializable {
      * 答辩组长id
      * 表字段 : reply_team.team_leader_id
      */
-    @Column(columnName = "team_leader_id")
+    @Column(columnName = "team_leader_id", joinPojo = "Teacher")
     private String teamLeaderId;
 
     private Teacher teacher;

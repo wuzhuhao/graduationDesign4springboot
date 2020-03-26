@@ -12,6 +12,7 @@ import java.io.Serializable;
 @Table(value = "t_scorerecord")
 @JsonIgnoreProperties(value = {"handler"})
 public class ScoreRecord implements Serializable {
+
     /**
      * 表字段 : t_scorerecord.id
      */
@@ -21,7 +22,7 @@ public class ScoreRecord implements Serializable {
     /**
      * 表字段 : t_scorerecord.score_sub_id
      */
-    @Column(columnName = "score_sub_id")
+    @Column(columnName = "score_sub_id", joinPojo = "Subject")
     private String scoreSubId;
 
     /**
@@ -45,7 +46,7 @@ public class ScoreRecord implements Serializable {
     /**
      * 表字段 : t_scorerecord.reply_team_id
      */
-    @Column(columnName = "reply_team_id")
+    @Column(columnName = "reply_team_id", joinPojo = "ReplyTeam")
     private Integer replyTeamId;
 
     /**

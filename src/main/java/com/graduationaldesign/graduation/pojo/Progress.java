@@ -28,7 +28,7 @@ public class Progress implements Serializable {
      * 课题id，外键课题表id
      * 表字段 : t_progress.progress_sub_id
      */
-    @Column(columnName = "progress_sub_id")
+    @Column(columnName = "progress_sub_id", joinPojo = "Subject")
     private String progressSubId;
 
     /**

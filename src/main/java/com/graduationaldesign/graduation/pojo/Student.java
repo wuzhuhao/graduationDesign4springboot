@@ -117,7 +117,7 @@ public class Student implements Serializable {
      * 表字段 : t_student.academy_id
      */
     @Excel(name = "学院代码*", orderNum = "0")
-    @Column(columnName = "academy_id")
+    @Column(columnName = "academy_id", joinPojo = "Academy")
     private Integer academyId;
 
     private Academy academy;

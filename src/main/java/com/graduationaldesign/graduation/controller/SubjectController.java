@@ -101,7 +101,7 @@ public class SubjectController {
     /**
      * 查看课题详情
      *
-     * @param sudId
+     * @param subId
      * @return
      */
     @RequestMapping(value = "/getSubject", method = RequestMethod.GET)

@@ -22,14 +22,14 @@ public class RolePermission implements Serializable {
      * 角色id，外键
      * 表字段 : t_role_permission.role_id
      */
-    @Column(columnName = "role_id")
+    @Column(columnName = "role_id", joinPojo = "Role")
     private Long roleId;
 
     /**
      * 权限id，外键
      * 表字段 : t_role_permission.per_id
      */
-    @Column(columnName = "per_id")
+    @Column(columnName = "per_id", joinPojo = "Permission")
     private Long perId;
 
     /**

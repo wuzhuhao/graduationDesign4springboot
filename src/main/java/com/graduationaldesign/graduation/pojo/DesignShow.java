@@ -30,7 +30,7 @@ public class DesignShow implements Serializable {
      * 表字段 : t_designshow.show_sub_id
      */
     @Excel(name = "课题id", orderNum = "1")
-    @Column(columnName = "show_sub_id")
+    @Column(columnName = "show_sub_id", joinPojo = "Subject")
     private String showSubId;
 
     /**
