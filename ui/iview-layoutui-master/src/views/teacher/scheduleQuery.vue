@@ -19,17 +19,17 @@
               <Row>
                 <Col span="8">
                   <FormItem label="id">
-                    <Input v-model="formItem.subId" placeholder="请输入id"></Input>
+                    <Input v-model="formItem.teaId" placeholder="请输入id"></Input>
                 </FormItem>
                 </Col>
                 <Col span="8">
-                  <FormItem label="课题名称">
-                    <Input v-model="formItem.subName" placeholder="请输入课题名称"></Input>
+                  <FormItem label="姓名">
+                    <Input v-model="formItem.teaName" placeholder="请输入姓名"></Input>
                 </FormItem>
                 </Col>
                 <Col span="8">
-                  <FormItem label="课程性质">
-                    <Select v-model="formItem.subNature">
+                  <FormItem label="学院：">
+                    <Select v-model="formItem.select">
                         <Option value="beijing">New York</Option>
                         <Option value="shanghai">London</Option>
                         <Option value="shenzhen">Sydney</Option>
@@ -49,106 +49,25 @@
         <Upload action="http://localhost:8080/graManagement/uploadFile/importUserByExcel?type=2"    style="float:left;margin:0 8px">
             <Button  type="info" icon="ios-cloud-upload-outline">批量注册</Button>
         </Upload>
-         <Button type="info"  style="float:left;margin:0 8px"  @click="exportDataDemo(2)"><Icon type="ios-download-outline"></Icon>导出注册模板</Button>&nbsp;
         </div>
         <div slot="btns">
           <Button type="primary" icon="md-add" @click="handleCreate">添加</Button>
         </div>
         <div slot="paddingContent">
-          <Table border  show-summary :columns="columns2" :data="tableData"  @on-selection-change="changeSelect" ref="table"></Table>
+          <Table border  :columns="columns2" :data="tableData" border show-summary  height="200" :summary-method="handleSummary"  @on-selection-change="changeSelect" ref="table"></Table>
         </div>
+        <div slot="paddingContent">
+          <Table :columns="columns2" :data="tableData" border show-summary :summary-method="handleSummary" height="200"></Table>
+        </div>
+        
         <div slot="pager">
             <Page :total="this.pagination.total"  :page-size="this.pagination.pageSize"  :page-size-opts="this.pagination.pageSizeOpts" 
-            :current="this.pagination.currentPage"  @on-change="pageChange" @on-page-size-change="pageSizeChange"  show-elevator show-total show-sizer />
+            :current="this.pagination.currentPage"  show-total  />
         </div>    
 
     </MasterPage>
 
 
-    <!--  添加和编辑弹出抽屉  +++++++++++++++++++++++++++++++++++++++++++++++++++++     -->
-        <!--  :title 加:为绑定数据 即实现自定义标题  -->
-       <Drawer
-            :title='this.dialogStatus'
-            v-model="value3"
-            width="720"
-            :mask-closable="false"
-            :styles="styles"
-        >
-            <Form :model="formData">
-                <Row :gutter="32">
-<!--                    <Col span="12">-->
-<!--                        <FormItem label="id" label-position="top">-->
-<!--                            <Input v-model="formData.subId" placeholder="请输入id" />-->
-<!--                        </FormItem>-->
-<!--                    </Col>-->
-                    <Col span="12">
-                        <FormItem label="课题名称" label-position="top">
-                            <Input v-model="formData.subName" placeholder="请输入课题名称">
-                            </Input>
-                        </FormItem>
-                    </Col>
-                  <Col span="12">
-                    <FormItem label="学生id" label-position="top">
-                      <Input v-model="formData.stuId" placeholder="请输入指定学生id(为空则不指定)" />
-                    </FormItem>
-                  </Col>
-                </Row>
-                <Row :gutter="32">
-                    <Col span="12">
-                        <FormItem label="课题性质" label-position="top">
-                            <Input v-model="formData.subNature" placeholder="请输入课题性质" />
-                        </FormItem>
-                    </Col>
-                    <Col span="12">
-                        <FormItem label="课题来源" label-position="top">
-                            <Input v-model="formData.subSource" placeholder="请输入课题来源">
-                            </Input>
-                        </FormItem>
-                    </Col>
-                </Row><Row :gutter="32">
-                    <Col span="12">
-                        <FormItem label="开题报告截止期限" label-position="top">
-                            <Input v-model="formData.firstReportDeadline" placeholder="请输入开题报告截止期限" />
-                        </FormItem>
-                    </Col>
-                    <Col span="12">
-                        <FormItem label="论文定稿截止期限" label-position="top">
-                            <Input v-model="formData.lastReportDeadline" placeholder="请输入论文定稿截止期限">
-                            </Input>
-                        </FormItem>
-                    </Col>
-                </Row><Row :gutter="32">
-                    <Col span="12">
-                        <FormItem label="学生id" label-position="top">
-                            <Input v-model="formData.stuId" placeholder="请输入指定学生id(为空则不指定)" />
-                        </FormItem>
-                    </Col>
-                    <Col span="12">
-                        <FormItem label="提交状态" label-position="top">
-                            <Input v-model="formData.subStuState" placeholder="请输入提交状态">
-                            </Input>
-                        </FormItem>
-                    </Col>
-                </Row><Row :gutter="32">
-<!--                    <Col span="12">-->
-<!--                        <FormItem label="总评" label-position="top">-->
-<!--                            <Input v-model="formData.subLastScore" placeholder="请输入总评" />-->
-<!--                        </FormItem>-->
-<!--                    </Col>-->
-<!--                    <Col span="12">-->
-<!--                        <FormItem label="展示id" label-position="top">-->
-<!--                            <Input v-model="formData.showId" placeholder="请输入展示id">-->
-<!--                            </Input>-->
-<!--                        </FormItem>-->
-<!--                    </Col>-->
-                </Row>
-                
-            </Form>
-            <div class="demo-drawer-footer">
-                <Button style="margin-right: 8px" @click="value3 = false">Cancel</Button>
-                <Button type="primary" @click="update()">Submit</Button>
-            </div>
-        </Drawer>    
   
 </section>
 
@@ -175,21 +94,17 @@ export default {
                     position: 'static'
                 },
                 formData: {
-                   subId: '',
-                    subName: '',
-                    subNature: '',
-                    subSource: '',
-                    subTeaId: '',
-                    subFile:'',
-                    firstReportDeadline: '',
-                    lastReportDeadline:'',
-                    stuId:'',
-                    subStuState: '',
-                    subLastScore:'',
-                    showId:'',
-                    subIntroduce: '',
-                    student:'',
-                    teacher: '',
+                    teaId: '',
+                    teaPassword: '',
+                    teaName: '',
+                    teaSex: '',
+                    teaAge: '',
+                    teaBirthday: '',
+                    teaPhone: '',
+                    teaMail: '',
+                    teaAddress: '',
+                    teaRemarks: '',
+                    academyId: '',
                 },
             
         pagination: {
@@ -203,122 +118,77 @@ export default {
          selectCount: 0, // 多选计数
         tableData:[],
         formItem: {
-             subId: '',
-            subName: '',
-            subNature: '',
-            subSource: '',
-            subTeaId: '',
-            subFile:'',
-            firstReportDeadline: '',
-            lastReportDeadline:'',
-            stuId:'',
-            subStuState: '',
-            subLastScore:'',
-            showId:'',
-            subIntroduce: '',
+            teaId: '',
+            teaPassword: '',
+            teaName: '',
+            teaSex: '',
+            teaAge: '',
+            teaBirthday: '',
+            teaPhone: '',
+            teaMail: '',
+            teaAddress: '',
+            teaRemarks: '',
+            academyId: '',
         },
         columns2: [
             {
-               type: '课题id',
-                key: 'subId',
+               type: 'selection',
                width: 60,
                align: 'center',
               fixed: 'left'
              },
             
             {
-                title: '课题名称',
-                key: 'subName',
+                title: '序号',
+                type: 'index',
                 width: 100,
                 fixed: 'left',
                 sortable: true
             },
             {
-                title: '课题性质',
-                key: 'subNature',
+                title: '学生名称',
+                key: 'stuName',
                 minWidth: 100,
             },
             {
-                title: '课程来源',
-                key: 'subSource',
+                title: '课题名称',
+                key: 'subName',
                 minWidth: 100,
             }, {
-                title: '课题介绍',
-                key: 'subIntroduce',
+                title: '指导教师',
+                key: 'teaName',
                 minWidth: 100,
             },
             {
-                title: '课题导师',
-                key: 'subTeaId',
+                title: '专业名称',
+                key: 'stuMajor',
                 minWidth: 100,
             },
             {
-                title: '开题报告截止',
-                key: 'firstReportDeadline',
+                title: '学生选题',
+                key: 'subStuState',
                 minWidth: 100,
             } ,
             {
-                title: '论文定稿截止',
-                key: 'lastReportDeadline',
+                title: '任务书',
+                key: 'taskStateString',
                 minWidth: 100,
             },
             {
-                title: '学生',
-                key: 'studId',
+                title: '开题报告',
+                key: 'firstReportState',
                 minWidth: 100,
             },
             {
-                title: '选定状态',
-                key: 'subStuState',
+                title: '论文定稿',
+                key: 'finalReportState',
                 minWidth: 100,
-            }, {
-                title: '最终评分',
-                key: 'subLastScore',
+            },
+            {
+                title: '学生答辩',
+                key: 'replyState',
                 minWidth: 100,
-            },{
-                title: '展示id',
-                key: 'showId',
-                minWidth: 100,
-            },{
-                        title: '操作',
-                        key: 'action',
-                        fixed: 'right',
-                        minWidth: 120,
-                        render: (h, params) => {
-                            return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small',
-                                        icon: "icon iconfont icon-shanchu"
-                                    },
-                                     attrs:{
-                                        title:'删除'
-                                    },
-                                      on: {
-                                        click: () => {
-                                        this.delById(params.row)             //编辑方法
-                                        }
-                                      }
-                                }),
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small',
-                                        icon:'icon iconfont icon-edit'
-                                    },
-                                     attrs:{
-                                        title:'编辑'
-                                    },
-                                      on: {
-                                        click: () => {
-                                        this.edit(params.row)             //编辑方法
-                                        }
-                                      }
-                                })
-                            ]);
-                        }
-                    }
+            }
         ]
       }
     },
@@ -353,21 +223,17 @@ export default {
       //编辑
         edit(row){
             this.dialogStatus = '编辑';//对应标题
-            this.formData.subId = row.subId
-            this.formData.subName = row.subName
-            this.formData.subNature =  row.subNature
-            this.formData.subSource =  row.subSource
-            this.formData.subTeaId =  row.subTeaId
-            this.formData.subFile =  row.subFile
-            this.formData.firstReportDeadline = row.firstReportDeadline
-            this.formData.lastReportDeadline =  row.lastReportDeadline
-            this.formData.stuId =  row.stuId
-            this.formData.subStuState =  row.subStuState
-            this.formData.subLastScore =  row.subLastScore
-            this.formData.showId = row.showId
-            this.formData.subIntroduce = row.subIntroduce
-            this.formData.subNature =  row.subNature
-            this.formData.subSource =  row.subSource
+            this.formData.teaId = row.teaId
+            this.formData.teaPassword = row.teaPassword
+            this.formData.teaName =  row.teaName
+            this.formData.teaSex =  row.teaSex
+            this.formData.teaAge =  row.teaAge
+            this.formData.teaBirthday =  row.teaBirthday
+            this.formData.teaPhone = row.teaPhone
+            this.formData.teaMail =  row.teaMail
+            this.formData.teaAddress =  row.teaAddress
+            this.formData.teaRemarks =  row.teaRemarks
+            this.formData.academyId =  row.academyId
             this.value3 = true
         },
         delById(row) {
@@ -377,7 +243,7 @@ export default {
                 onOk: () => {
                     console.log(row)
                  this.$axios({     
-                            url: 'sub/delete/' + row.subId,
+                            url: 'tea/delete/' + row.teaId,
                             method: 'delete',//请求的方式
                             data:this.$Qs.stringify(this.formData),
                             // token:localStorage.getItem('token')
@@ -396,7 +262,7 @@ export default {
           console.log(this.formData)
         if(this.dialogStatus == '新增'){
             this.$axios({     
-                            url: 'sub/add',
+                            url: 'tea/add',
                             method: 'post',//请求的方式
                             data:this.$Qs.stringify(this.formData),
                             // token:localStorage.getItem('token')
@@ -410,7 +276,7 @@ export default {
                         this.value3 = false
         }else if(this.dialogStatus == '编辑'){
              this.$axios({     
-                            url: 'sub/update',
+                            url: 'tea/update',
                             method: 'put',//请求的方式
                             data:this.$Qs.stringify(this.formData),
                             // token:localStorage.getItem('token')
@@ -430,7 +296,7 @@ export default {
        let  token = localStorage.getItem('token')
          this.$axios({
                             
-                            url: 'sub/list?page=' + page  + '&pageSize=' + pageSize,
+                            url: 'sub/listScheduleOfTea?page=' + page  + '&pageSize=' + pageSize,
                             method: 'get',//请求的方式
                             params:params,
                             // token:localStorage.getItem('token')
@@ -438,23 +304,38 @@ export default {
                           console.log(res.data)
                          this.tableData = [];
                           let list = res.data.data.beanList;
+                           let firstReportStateString= '未完成';
+                           let finalReportStateString= '未完成';
+                           let taskStateString= '完成';
+                           let subStateString= '完成';
                           list.forEach((item, index) => {
+                              if(item.reportList.reportType===1&&item.reportList.reportState===4){
+                                        firstReportStateString = '完成'
+                              }else if(item.reportList.reportType===2&&item.reportList.reportState===4){
+                                        finalReportStateString = '完成'
+                              }else if(item.reportList.reportState===4){
+                                   taskStateString  = '完成'
+                               }else if(item.taskList.subStuState===3){
+                                   tsubStateString = '完成'
+                               }
+                            console.log(firstReportStateString)
+                            console.log(finalReportStateString)
+                            console.log(taskStateString)
+                            console.log(subStateString)
                            this.tableData.push({
-                              subId: item.subId,
-                              subName: item.subName,
-                              subNature:item.subNature,
-                              subNature: item.subNature,
-                              subSource: item.subSource,
-                              subTeaId:item.subTeaId,
-                              subFile:item.subFile,
-                              teafirstReportDeadlineMail:item.firstReportDeadline,
-                              lastReportDeadline:item.lastReportDeadline,
-                              stuId: item.stuId,
-                              subStuState: item.subStuState,
-                              subLastScore: item.subLastScore,
-                              showId: item.showId,
-                              subIntroduce: item.subIntroduce,
-     
+                               taskStateString:taskStateString,
+                               subStuState:subStateString,
+                                replyState:item.replyState,
+                                firstReportState:firstReportStateString,
+                                finalReportState:firstReportStateString,
+                                stuId:item.stuId,
+                                stuMajor: item.stuMajor,
+                                stuName:item.stuName,
+                                subId:item.subId,
+                                subName: item.subName,
+                                taskList: item.taskList,
+                                teaId: item.teaId,
+                                teaName: item.teaName
                            })
                           })
                   
@@ -479,18 +360,17 @@ export default {
      
    
        handleCreate () {
-        this.formData.subId = ''
-        this.formData.subName = ''
-        this.formData.subNature = ''
-        this.formData.subSource = ''
-        this.formData.subTeaId = ''
-        this.formData.firstReportDeadline = ''
-        this.formData.lastReportDeadline = ''
-        this.formData.stuId = ''
-        this.formData.subStuState = ''
-        this.formData.subLastScore = ''
-        this.formData.showId = ''
-        this.formData.subIntroduce = ''
+        this.formData.teaId = ''
+        this.formData.teaPassword = ''
+        this.formData.teaName = ''
+        this.formData.teaSex = ''
+        this.formData.teaAge = ''
+        this.formData.teaBirthday = ''
+        this.formData.teaPhone = ''
+        this.formData.teaMail = ''
+        this.formData.teaAddress = ''
+        this.formData.teaRemarks = ''
+        this.formData.academyId = ''
         this.dialogStatus = '新增';//对应标题
         this.value3 = true
         
@@ -511,7 +391,7 @@ export default {
     console.log(this.selectList)
     var lstprimaryKey = []
     for(var i = 0;i<this.selectCount;i++){
-		lstprimaryKey.push(this.selectList[i].subId)
+		lstprimaryKey.push(this.selectList[i].teaId)
 	}
      console.log(lstprimaryKey)
       this.$Modal.confirm({
@@ -519,7 +399,7 @@ export default {
         content: "您确认要删除所选的 " + this.selectCount + " 条数据?",
         onOk: () => {
            this.$axios({     
-                            url: 'sub/deleteAll',
+                            url: 'tea/deleteAll',
                             method: 'delete',//请求的方式
                             params: {lstprimaryKey:lstprimaryKey},
                             paramsSerializer: params => {
@@ -589,20 +469,53 @@ export default {
         this.drawer = false;
       },
       doReset(){
-        this.formItem.subId = ''
-        this.formItem.subName = ''
-        this.formItem.subNature = ''
-        this.formItem.subSource = ''
-        this.formItem.subTeaId = ''
-        this.formItem.firstReportDeadline = ''
-        this.formItem.lastReportDeadline = ''
-        this.formItem.stuId = ''
-        this.formItem.subStuState = ''
-        this.formItem.subLastScore = ''
-        this.formItem.showId = ''
-        this.formItem.subIntroduce = ''
-        this.getData(1,10);
+        this.formItem.teaId = ''
+        this.formItem.teaPassword = ''
+        this.formItem.teaName = ''
+        this.formItem.teaSex = ''
+        this.formItem.teaAge = ''
+        this.formItem.teaBirthday = ''
+        this.formItem.teaPhone = ''
+        this.formItem.teaMail = ''
+        this.formItem.teaAddress = ''
+        this.formItem.teaRemarks = ''
     },
+     handleSummary ({ columns, data }) {
+          console.log(21)
+                const sums = {};
+                columns.forEach((column, index) => {
+                    const key = column.key;
+                    if (index === 0) {
+                        sums[key] = {
+                            key,
+                            value: '完成'
+                        };
+                        return;
+                    }
+                    const values = data.map(item => Number(item[key]));
+                    if (!values.every(value => isNaN(value))) {
+                        const v = values.reduce((prev, curr) => {
+                            const value = Number(curr);
+                            if (!isNaN(value)) {
+                                return prev + curr;
+                            } else {
+                                return prev;
+                            }
+                        }, 0);
+                        sums[key] = {
+                            key,
+                            value: v + ' 元'
+                        };
+                    } else {
+                        sums[key] = {
+                            key,
+                            value: 'N/A'
+                        };
+                    }
+                });
+               
+                return sums;
+            },
     exportDataDemo(type){
        
             window.location.href="http://localhost:8080/graManagement/downFile/exportDemo?type=" + type

@@ -4,43 +4,52 @@ import cn.hutool.core.date.DateUtil;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.graduationaldesign.graduation.pojo.helper.Column;
 import com.graduationaldesign.graduation.pojo.helper.MyPrimaryKey;
+import com.graduationaldesign.graduation.pojo.helper.Table;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(value = {"handler"})
+@Table(value = "t_progress")
 public class ReplyTeam implements Serializable {
 
     /**
      * 表字段 : reply_team.id
      */
     @MyPrimaryKey
+    @Column(columnName = "id", viewName = "replyTeamId")
     private Integer id;
 
     /**
      * 答辩组名称
      * 表字段 : reply_team.team_name
      */
+    @Column(columnName = "team_name")
     private String teamName;
 
     /**
      * 答辩地址
      * 表字段 : reply_team.team_address
      */
+    @Column(columnName = "team_address")
     private String teamAddress;
 
     /**
      * 答辩时间
      * 表字段 : reply_team.reply_time
      */
+    @Column(columnName = "reply_time")
     private Date replyTime;
 
     /**
      * 答辩组长id
      * 表字段 : reply_team.team_leader_id
      */
+    @Column(columnName = "team_leader_id")
     private String teamLeaderId;
 
     private Teacher teacher;

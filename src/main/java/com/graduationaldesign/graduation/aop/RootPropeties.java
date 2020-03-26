@@ -38,6 +38,15 @@ public class RootPropeties {
     private String teacher;
     private String userRole;
     private String scoreRecord;
+    private String sysdict;
+
+    public String getSysdict() {
+        return sysdict;
+    }
+
+    public void setSysdict(String sysdict) {
+        this.sysdict = sysdict;
+    }
 
     public String getAcademy() {
         return academy;

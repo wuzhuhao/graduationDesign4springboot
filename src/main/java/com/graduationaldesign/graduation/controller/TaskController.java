@@ -41,10 +41,6 @@ public class TaskController {
     @Autowired
     HttpServletResponse response;
 
-    //    @RequestMapping(value="/temp")
-    public ResponseEntity<Object> temp() {
-        return ResponseStatu.success("退出登陆成功");
-    }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ResponseEntity<Object> listByPage(@RequestParam HashMap<String, Object> param,

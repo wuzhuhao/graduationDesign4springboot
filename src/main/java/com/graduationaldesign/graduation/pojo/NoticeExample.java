@@ -30,14 +30,14 @@ public class NoticeExample {
     protected List<Criteria> oredCriteria;
 
     /**
-     *  构造查询条件,t_notice
+     * 构造查询条件,t_notice
      */
     public NoticeExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
     /**
-     *  设置排序字段,t_notice
+     * 设置排序字段,t_notice
      *
      * @param orderByClause 排序字段
      */
@@ -46,14 +46,14 @@ public class NoticeExample {
     }
 
     /**
-     *  获取排序字段,t_notice
+     * 获取排序字段,t_notice
      */
     public String getOrderByClause() {
         return orderByClause;
     }
 
     /**
-     *  设置过滤重复数据,t_notice
+     * 设置过滤重复数据,t_notice
      *
      * @param distinct 是否过滤重复数据
      */
@@ -62,14 +62,14 @@ public class NoticeExample {
     }
 
     /**
-     *  是否过滤重复数据,t_notice
+     * 是否过滤重复数据,t_notice
      */
     public boolean isDistinct() {
         return distinct;
     }
 
     /**
-     *  获取当前的查询条件实例,t_notice
+     * 获取当前的查询条件实例,t_notice
      */
     public List<Criteria> getOredCriteria() {
         return oredCriteria;
@@ -94,7 +94,7 @@ public class NoticeExample {
     }
 
     /**
-     *  创建一个查询条件,t_notice
+     * 创建一个查询条件,t_notice
      */
     public Criteria createCriteria() {
         Criteria criteria = createCriteriaInternal();
@@ -105,7 +105,7 @@ public class NoticeExample {
     }
 
     /**
-     *  内部构建查询条件对象,t_notice
+     * 内部构建查询条件对象,t_notice
      */
     protected Criteria createCriteriaInternal() {
         Criteria criteria = new Criteria();
@@ -113,7 +113,7 @@ public class NoticeExample {
     }
 
     /**
-     *  清除查询条件,t_notice
+     * 清除查询条件,t_notice
      */
     public void clear() {
         oredCriteria.clear();
@@ -414,6 +414,86 @@ public class NoticeExample {
 
         public Criteria andAcaIdNotBetween(Integer value1, Integer value2) {
             addCriterion("aca_id not between", value1, value2, "acaId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeTitleIsNull() {
+            addCriterion("notice_title is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeTitleIsNotNull() {
+            addCriterion("notice_title is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeTitleEqualTo(String value) {
+            addCriterion("notice_title =", value, "noticeTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeTitleNotEqualTo(String value) {
+            addCriterion("notice_title <>", value, "noticeTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeTitleGreaterThan(String value) {
+            addCriterion("notice_title >", value, "noticeTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeTitleGreaterThanOrEqualTo(String value) {
+            addCriterion("notice_title >=", value, "noticeTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeTitleLessThan(String value) {
+            addCriterion("notice_title <", value, "noticeTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeTitleLessThanOrEqualTo(String value) {
+            addCriterion("notice_title <=", value, "noticeTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeTitleLike(String value) {
+            addCriterion("notice_title like", value, "noticeTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeTitleNotLike(String value) {
+            addCriterion("notice_title not like", value, "noticeTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeTitleIn(List<String> values) {
+            addCriterion("notice_title in", values, "noticeTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeTitleNotIn(List<String> values) {
+            addCriterion("notice_title not in", values, "noticeTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeTitleBetween(String value1, String value2) {
+            addCriterion("notice_title between", value1, value2, "noticeTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeTitleNotBetween(String value1, String value2) {
+            addCriterion("notice_title not between", value1, value2, "noticeTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andJoinEqualLike(String value, String tableName) {
+            addCriterion(tableName + " like ", value, tableName);
+            return (Criteria) this;
+        }
+
+        public Criteria andJoinEqualTo(Object value, String tableName) {
+            addCriterion(tableName + " = ", value, tableName);
             return (Criteria) this;
         }
     }

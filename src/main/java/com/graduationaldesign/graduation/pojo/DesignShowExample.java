@@ -162,7 +162,7 @@ public class DesignShowExample {
         }
 
         protected void addCriterion(String condition, Object value1, Object value2,
-                String property) {
+                                    String property) {
             if (value1 == null || value2 == null) {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
@@ -428,6 +428,16 @@ public class DesignShowExample {
             addCriterion("show_time not between", value1, value2, "showTime");
             return (Criteria) this;
         }
+
+        public Criteria andJoinEqualLike(String value, String tableName) {
+            addCriterion(tableName + " like ", value, tableName);
+            return (Criteria) this;
+        }
+
+        public Criteria andJoinEqualTo(Object value, String tableName) {
+            addCriterion(tableName + " = ", value, tableName);
+            return (Criteria) this;
+        }
     }
 
     /**
@@ -520,7 +530,7 @@ public class DesignShowExample {
         }
 
         protected Criterion(String condition, Object value, Object secondValue,
-                String typeHandler) {
+                            String typeHandler) {
             super();
             this.condition = condition;
             this.value = value;

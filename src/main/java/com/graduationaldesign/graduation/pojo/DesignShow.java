@@ -5,7 +5,9 @@ import cn.hutool.core.date.DateUtil;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.graduationaldesign.graduation.pojo.helper.Column;
 import com.graduationaldesign.graduation.pojo.helper.MyPrimaryKey;
+import com.graduationaldesign.graduation.pojo.helper.Table;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -13,6 +15,7 @@ import java.util.Date;
 
 @Data
 @JsonIgnoreProperties(value = {"handler"})
+@Table(value = "t_designshow")
 public class DesignShow implements Serializable {
 
     /**
@@ -20,12 +23,14 @@ public class DesignShow implements Serializable {
      */
     @MyPrimaryKey
     @Excel(name = "设计展示id", orderNum = "1")
+    @Column(columnName = "id", viewName = "designShowId")
     private Integer id;
 
     /**
      * 表字段 : t_designshow.show_sub_id
      */
     @Excel(name = "课题id", orderNum = "1")
+    @Column(columnName = "show_sub_id")
     private String showSubId;
 
     /**
@@ -33,6 +38,7 @@ public class DesignShow implements Serializable {
      * 表字段 : t_designshow.show_file
      */
     @Excel(name = "附件路径", orderNum = "1")
+    @Column(columnName = "show_file")
     private String showFile;
 
     /**
@@ -40,6 +46,7 @@ public class DesignShow implements Serializable {
      * 表字段 : t_designshow.show_time
      */
     @Excel(name = "设计上传时间", orderNum = "1")
+    @Column(columnName = "show_time")
     private Date showTime;
 
     /**
@@ -47,6 +54,7 @@ public class DesignShow implements Serializable {
      * 表字段 : t_designshow.show_content
      */
     @Excel(name = "展示内容", orderNum = "1")
+    @Column(columnName = "show_content")
     private String showContent;
 
     private Subject subject;

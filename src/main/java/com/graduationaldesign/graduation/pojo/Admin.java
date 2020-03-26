@@ -2,12 +2,16 @@ package com.graduationaldesign.graduation.pojo;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.graduationaldesign.graduation.pojo.helper.Column;
 import com.graduationaldesign.graduation.pojo.helper.MyPrimaryKey;
-import java.io.Serializable;
+import com.graduationaldesign.graduation.pojo.helper.Table;
 import lombok.Data;
+
+import java.io.Serializable;
 
 @Data
 @JsonIgnoreProperties(value = {"handler"})
+@Table(value = "t_admin")
 public class Admin implements Serializable {
 
     /**
@@ -16,6 +20,7 @@ public class Admin implements Serializable {
      */
     @MyPrimaryKey
     @Excel(name = "管理员账号*", orderNum = "0")
+    @Column(columnName = "admin_id")
     private String adminId;
 
     /**
@@ -23,6 +28,7 @@ public class Admin implements Serializable {
      * 表字段 : t_admin.admin_password
      */
     @Excel(name = "密码", orderNum = "0")
+    @Column(columnName = "admin_password")
     private String adminPassword;
 
     /**
@@ -30,6 +36,7 @@ public class Admin implements Serializable {
      * 表字段 : t_admin.admin_name
      */
     @Excel(name = "姓名", orderNum = "0")
+    @Column(columnName = "admin_name")
     private String adminName;
 
     /**
@@ -37,6 +44,7 @@ public class Admin implements Serializable {
      * 表字段 : t_admin.admin_sex
      */
     @Excel(name = "性别", orderNum = "0")
+    @Column(columnName = "admin_sex")
     private String adminSex;
 
     /**
@@ -44,6 +52,7 @@ public class Admin implements Serializable {
      * 表字段 : t_admin.admin_age
      */
     @Excel(name = "年龄", orderNum = "0")
+    @Column(columnName = "admin_age")
     private Integer adminAge;
 
     /**
@@ -51,6 +60,7 @@ public class Admin implements Serializable {
      * 表字段 : t_admin.admin_birthday
      */
     @Excel(name = "出生日期", orderNum = "0")
+    @Column(columnName = "admin_birthday")
     private String adminBirthday;
 
     /**
@@ -58,6 +68,7 @@ public class Admin implements Serializable {
      * 表字段 : t_admin.admin_phone
      */
     @Excel(name = "电话", orderNum = "0")
+    @Column(columnName = "admin_phone")
     private String adminPhone;
 
     /**
@@ -65,6 +76,7 @@ public class Admin implements Serializable {
      * 表字段 : t_admin.admin_mail
      */
     @Excel(name = "邮箱", orderNum = "0")
+    @Column(columnName = "admin_mail")
     private String adminMail;
 
     /**
@@ -72,6 +84,7 @@ public class Admin implements Serializable {
      * 表字段 : t_admin.admin_address
      */
     @Excel(name = "地址", orderNum = "0")
+    @Column(columnName = "admin_address")
     private String adminAddress;
 
     /**
@@ -79,6 +92,7 @@ public class Admin implements Serializable {
      * 表字段 : t_admin.admin_remarks
      */
     @Excel(name = "备注", orderNum = "0")
+    @Column(columnName = "admin_remarks")
     private String adminRemarks;
 
     /**
@@ -86,6 +100,7 @@ public class Admin implements Serializable {
      * 表字段 : t_admin.admin_type
      */
     @Excel(name = "管理角色", orderNum = "0")
+    @Column(columnName = "admin_type")
     private Integer adminType;
 
     /**

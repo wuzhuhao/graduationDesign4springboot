@@ -29,14 +29,14 @@ public class AcademyExample {
     protected List<Criteria> oredCriteria;
 
     /**
-     *  构造查询条件,t_academy
+     * 构造查询条件,t_academy
      */
     public AcademyExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
     /**
-     *  设置排序字段,t_academy
+     * 设置排序字段,t_academy
      *
      * @param orderByClause 排序字段
      */
@@ -45,14 +45,14 @@ public class AcademyExample {
     }
 
     /**
-     *  获取排序字段,t_academy
+     * 获取排序字段,t_academy
      */
     public String getOrderByClause() {
         return orderByClause;
     }
 
     /**
-     *  设置过滤重复数据,t_academy
+     * 设置过滤重复数据,t_academy
      *
      * @param distinct 是否过滤重复数据
      */
@@ -61,14 +61,14 @@ public class AcademyExample {
     }
 
     /**
-     *  是否过滤重复数据,t_academy
+     * 是否过滤重复数据,t_academy
      */
     public boolean isDistinct() {
         return distinct;
     }
 
     /**
-     *  获取当前的查询条件实例,t_academy
+     * 获取当前的查询条件实例,t_academy
      */
     public List<Criteria> getOredCriteria() {
         return oredCriteria;
@@ -93,7 +93,7 @@ public class AcademyExample {
     }
 
     /**
-     *  创建一个查询条件,t_academy
+     * 创建一个查询条件,t_academy
      */
     public Criteria createCriteria() {
         Criteria criteria = createCriteriaInternal();
@@ -104,7 +104,7 @@ public class AcademyExample {
     }
 
     /**
-     *  内部构建查询条件对象,t_academy
+     * 内部构建查询条件对象,t_academy
      */
     protected Criteria createCriteriaInternal() {
         Criteria criteria = new Criteria();
@@ -112,7 +112,7 @@ public class AcademyExample {
     }
 
     /**
-     *  清除查询条件,t_academy
+     * 清除查询条件,t_academy
      */
     public void clear() {
         oredCriteria.clear();
@@ -293,6 +293,16 @@ public class AcademyExample {
 
         public Criteria andAcaNameNotBetween(String value1, String value2) {
             addCriterion("aca_name not between", value1, value2, "acaName");
+            return (Criteria) this;
+        }
+
+        public Criteria andJoinEqualLike(String value, String tableName) {
+            addCriterion(tableName + " like ", value, tableName);
+            return (Criteria) this;
+        }
+
+        public Criteria andJoinEqualTo(Object value, String tableName) {
+            addCriterion(tableName + " = ", value, tableName);
             return (Criteria) this;
         }
     }

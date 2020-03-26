@@ -5,11 +5,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
- * Created by Zhou Jie on 2017/5/24.
+ * Created by wuzhuhao
  */
-public class Result implements Serializable{
+public class Result implements Serializable {
     /**
      * 成功状态
      */
@@ -34,6 +35,8 @@ public class Result implements Serializable{
     //数据
     private Object data;
 
+    private Map dict;
+
     //构造方法
     private Result(Integer status, String message, Object data) {
         this.status = status;
@@ -42,66 +45,71 @@ public class Result implements Serializable{
     }
 
     //无数据的成功结果
-    public static Result success(){
-        return new Result(SUCCESS_STATUS,SUCCESS_MESSAGE,null);
+    public static Result success() {
+        return new Result(SUCCESS_STATUS, SUCCESS_MESSAGE, null);
     }
 
     //有数据,有提示信息的成功结果
-    public static Result success(String message,Object data){
-        return new Result(SUCCESS_STATUS,message,data);
+    public static Result success(String message, Object data) {
+        return new Result(SUCCESS_STATUS, message, data);
     }
 
     //有数据的成功结果
-    public static Result success(Object data){
-        return new Result(SUCCESS_STATUS,SUCCESS_MESSAGE,data);
+    public static Result success(Object data) {
+        return new Result(SUCCESS_STATUS, SUCCESS_MESSAGE, data);
     }
 
     //无数据的成功结果
-    public static Result success(String message){
-        return new Result(SUCCESS_STATUS,message,null);
+    public static Result success(String message) {
+        return new Result(SUCCESS_STATUS, message, null);
     }
 
     //无消息的失败结果
-    public static Result failure(){
-        return new Result(FAILURE_STATUS,FAILURE_MESSAGE,null);
+    public static Result failure() {
+        return new Result(FAILURE_STATUS, FAILURE_MESSAGE, null);
     }
 
     //有消息的失败结果
-    public static Result failure(String message){
-        return new Result(FAILURE_STATUS,message,null);
+    public static Result failure(String message) {
+        return new Result(FAILURE_STATUS, message, null);
     }
 
     //无消息的内部异常结果
-    public static Result internalError(){
-        return new Result(INTERNAL_ERROR_STATUS,INTERNAL_ERROR_MESSAGE,null);
+    public static Result internalError() {
+        return new Result(INTERNAL_ERROR_STATUS, INTERNAL_ERROR_MESSAGE, null);
     }
 
     //有消息的内部异常结果
-    public static Result internalError(String message){
-        return new Result(INTERNAL_ERROR_STATUS,message,null);
+    public static Result internalError(String message) {
+        return new Result(INTERNAL_ERROR_STATUS, message, null);
     }
 
     //自定义构建结果
-    public static Result build(Integer status,String message,Object data){
-        return new Result(status,message,data);
+    public static Result build(Integer status, String message, Object data) {
+        return new Result(status, message, data);
     }
 
     //设置和获取成员变量的方法
     public Integer getStatus() {
         return status;
     }
+
     public void setStatus(Integer status) {
         this.status = status;
     }
+
     public String getMessage() {
         return message;
     }
+
     public void setMessage(String message) {
         this.message = message;
     }
+
     public Object getData() {
         return data;
     }
+
     public void setData(Object data) {
         this.data = data;
     }
@@ -118,6 +126,7 @@ public class Result implements Serializable{
         }
         return null;
     }
+
     //数据是对象的转化
     public static Result formatToPojo(String json, Class<?> clazz) {
         try {
@@ -140,6 +149,7 @@ public class Result implements Serializable{
         }
         return null;
     }
+
     //数据是集合的转化
     public static Result formatToList(String jsonData, Class<?> clazz) {
         try {
@@ -155,5 +165,13 @@ public class Result implements Serializable{
             e.printStackTrace();
         }
         return null;
+    }
+
+    public Map getDict() {
+        return dict;
+    }
+
+    public void setDict(Map dict) {
+        this.dict = dict;
     }
 }

@@ -3,7 +3,9 @@ package com.graduationaldesign.graduation.pojo;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.graduationaldesign.graduation.pojo.helper.Column;
 import com.graduationaldesign.graduation.pojo.helper.MyPrimaryKey;
+import com.graduationaldesign.graduation.pojo.helper.Table;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -11,72 +13,84 @@ import java.util.Date;
 
 @Data
 @JsonIgnoreProperties(value = {"handler"})
+@Table(value = "t_report")
 public class Report implements Serializable {
 
     /**
      * 课题id，外键对课题表id
      * 表字段 : t_report.report_sub_id
      */
+    @Column(columnName = "report_sub_id")
     private String reportSubId;
 
     /**
      * 报告类型，1是开题报告，2是论文定稿
      * 表字段 : t_report.report_type
      */
+    @Column(columnName = "report_type")
     private Integer reportType;
 
     /**
      * 表字段 : t_report.id
      */
     @MyPrimaryKey
+    @Column(columnName = "id")
     private Integer id;
 
     /**
      * 状态：1是未提交，2是已提交，3是延期提交，4是通过，5是驳回待修改，6是已修改
      * 表字段 : t_report.report_state
      */
+    @Column(columnName = "report_state")
     private Integer reportState;
 
     /**
      * 报告提交时间
      * 表字段 : t_report.report_subtime
      */
+    @Column(columnName = "report_subtime")
     private Date reportSubtime;
 
     /**
      * 版本信息，默认是0
      * 表字段 : t_report.report_version
      */
+    @Column(columnName = "report_version")
     private Float reportVersion;
 
     /**
      * 报告附件
      * 表字段 : t_report.report_file
      */
+    @Column(columnName = "report_file")
     private String reportFile;
 
     /**
      * 报告模板
      * 表字段 : t_report.report_temp
      */
+    @Column(columnName = "report_temp")
     private String reportTemp;
 
     /**
      * 报告内容（使用富文本编辑）
      * 表字段 : t_report.report_content
      */
+    @Column(columnName = "report_content")
     private String reportContent;
 
     /**
      * 学生提交反馈信息
      * 表字段 : t_report.stu_message
      */
+    @Column(columnName = "stu_message")
     private String stuMessage;
 
     /**
      * 导师意见
      * 表字段 : t_report.tea_suggestion
      */
+    @Column(columnName = "tea_suggestion")
     private String teaSuggestion;
 
     private Subject subject;

@@ -29,14 +29,14 @@ public class RolePermissionExample {
     protected List<Criteria> oredCriteria;
 
     /**
-     *  构造查询条件,t_role_permission
+     * 构造查询条件,t_role_permission
      */
     public RolePermissionExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
     /**
-     *  设置排序字段,t_role_permission
+     * 设置排序字段,t_role_permission
      *
      * @param orderByClause 排序字段
      */
@@ -45,14 +45,14 @@ public class RolePermissionExample {
     }
 
     /**
-     *  获取排序字段,t_role_permission
+     * 获取排序字段,t_role_permission
      */
     public String getOrderByClause() {
         return orderByClause;
     }
 
     /**
-     *  设置过滤重复数据,t_role_permission
+     * 设置过滤重复数据,t_role_permission
      *
      * @param distinct 是否过滤重复数据
      */
@@ -61,14 +61,14 @@ public class RolePermissionExample {
     }
 
     /**
-     *  是否过滤重复数据,t_role_permission
+     * 是否过滤重复数据,t_role_permission
      */
     public boolean isDistinct() {
         return distinct;
     }
 
     /**
-     *  获取当前的查询条件实例,t_role_permission
+     * 获取当前的查询条件实例,t_role_permission
      */
     public List<Criteria> getOredCriteria() {
         return oredCriteria;
@@ -93,7 +93,7 @@ public class RolePermissionExample {
     }
 
     /**
-     *  创建一个查询条件,t_role_permission
+     * 创建一个查询条件,t_role_permission
      */
     public Criteria createCriteria() {
         Criteria criteria = createCriteriaInternal();
@@ -104,7 +104,7 @@ public class RolePermissionExample {
     }
 
     /**
-     *  内部构建查询条件对象,t_role_permission
+     * 内部构建查询条件对象,t_role_permission
      */
     protected Criteria createCriteriaInternal() {
         Criteria criteria = new Criteria();
@@ -112,7 +112,7 @@ public class RolePermissionExample {
     }
 
     /**
-     *  清除查询条件,t_role_permission
+     * 清除查询条件,t_role_permission
      */
     public void clear() {
         oredCriteria.clear();
@@ -343,6 +343,16 @@ public class RolePermissionExample {
 
         public Criteria andPerIdNotBetween(Long value1, Long value2) {
             addCriterion("per_id not between", value1, value2, "perId");
+            return (Criteria) this;
+        }
+
+        public Criteria andJoinEqualLike(String value, String tableName) {
+            addCriterion(tableName + " like ", value, tableName);
+            return (Criteria) this;
+        }
+
+        public Criteria andJoinEqualTo(Object value, String tableName) {
+            addCriterion(tableName + " = ", value, tableName);
             return (Criteria) this;
         }
     }

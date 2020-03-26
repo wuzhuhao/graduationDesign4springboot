@@ -960,6 +960,16 @@ public class SubjectExample {
             addCriterion("show_id not between", value1, value2, "showId");
             return (Criteria) this;
         }
+
+        public Criteria andJoinEqualLike(String value, String tableName) {
+            addCriterion(tableName + " like ", value, tableName);
+            return (Criteria) this;
+        }
+
+        public Criteria andJoinEqualTo(Object value, String tableName) {
+            addCriterion(tableName + " = ", value, tableName);
+            return (Criteria) this;
+        }
     }
 
     /**

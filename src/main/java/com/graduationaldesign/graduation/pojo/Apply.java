@@ -5,13 +5,17 @@ import cn.hutool.core.date.DateUtil;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.graduationaldesign.graduation.pojo.helper.Column;
 import com.graduationaldesign.graduation.pojo.helper.MyPrimaryKey;
+import com.graduationaldesign.graduation.pojo.helper.Table;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(value = {"handler"})
+@Table(value = "t_apply")
 public class Apply implements Serializable {
 
     /**
@@ -19,6 +23,7 @@ public class Apply implements Serializable {
      */
     @MyPrimaryKey
     @Excel(name = "申请ID*", orderNum = "1")
+    @Column(columnName = "id", viewName = "applyId")
     private Integer id;
 
     /**
@@ -26,6 +31,7 @@ public class Apply implements Serializable {
      * 表字段 : t_apply.apply_tea_id
      */
     @Excel(name = "申请导师id", orderNum = "1")
+    @Column(columnName = "apply_tea_id")
     private String applyTeaId;
 
     /**
@@ -33,6 +39,7 @@ public class Apply implements Serializable {
      * 表字段 : t_apply.apply_state
      */
     @Excel(name = "处理状态(默认是1)", orderNum = "1")
+    @Column(columnName = "apply_state")
     private Integer applyState;
 
     /**
@@ -40,6 +47,7 @@ public class Apply implements Serializable {
      * 表字段 : t_apply.apply_stu_id
      */
     @Excel(name = "关联学生id", orderNum = "1")
+    @Column(columnName = "apply_stu_id")
     private String applyStuId;
 
     /**
@@ -47,6 +55,7 @@ public class Apply implements Serializable {
      * 表字段 : t_apply.apply_sub_id
      */
     @Excel(name = "关联课题id", orderNum = "1")
+    @Column(columnName = "apply_sub_id")
     private String applySubId;
 
     /**
@@ -54,6 +63,7 @@ public class Apply implements Serializable {
      * 表字段 : t_apply.apply_time
      */
     @Excel(name = "申请时间", orderNum = "1")
+    @Column(columnName = "apply_time")
     private Date applyTime;
 
     /**
@@ -61,6 +71,7 @@ public class Apply implements Serializable {
      * 表字段 : t_apply.apply_reply_time
      */
     @Excel(name = "处理时间", orderNum = "1")
+    @Column(columnName = "apply_reply_time")
     private Date applyReplyTime;
 
     /**
@@ -68,6 +79,7 @@ public class Apply implements Serializable {
      * 表字段 : t_apply.apply_content
      */
     @Excel(name = "申请内容", orderNum = "1")
+    @Column(columnName = "apply_content")
     private String applyContent;
 
     /**
@@ -75,6 +87,7 @@ public class Apply implements Serializable {
      * 表字段 : t_apply.apply_reason
      */
     @Excel(name = "申请理由", orderNum = "1")
+    @Column(columnName = "apply_reason")
     private String applyReason;
 
     /**
@@ -82,6 +95,7 @@ public class Apply implements Serializable {
      * 表字段 : t_apply.apply_reply
      */
     @Excel(name = "处理反馈", orderNum = "1")
+    @Column(columnName = "apply_reply")
     private String applyReply;
 
     private Student student;

@@ -4,90 +4,107 @@ import cn.hutool.core.date.DateUtil;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.graduationaldesign.graduation.pojo.helper.Column;
 import com.graduationaldesign.graduation.pojo.helper.MyPrimaryKey;
+import com.graduationaldesign.graduation.pojo.helper.Table;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(value = {"handler"})
+@Table(value = "t_task")
 public class Task implements Serializable {
 
     /**
      * 表字段 : t_task.id
      */
     @MyPrimaryKey
+    @Column(columnName = "id")
     private Integer id;
 
     /**
      * 任务附件
      * 表字段 : t_task.task_file
      */
+    @Column(columnName = "task_file")
     private String taskFile;
 
     /**
      * 任务状态,，1是待接受，2是已接受
      * 表字段 : t_task.task_state
      */
+    @Column(columnName = "task_state")
     private String taskState;
 
     /**
      * 点击次数
      * 表字段 : t_task.task_number
      */
+    @Column(columnName = "task_number")
     private Integer taskNumber;
 
     /**
      * 课题id，外键对应课题表id
      * 表字段 : t_task.task_sub_id
      */
+    @Column(columnName = "task_sub_id")
     private String taskSubId;
 
     /**
      * 回复附件
      * 表字段 : t_task.reply_file
      */
+    @Column(columnName = "reply_file")
     private String replyFile;
 
     /**
      * 任务发布时间
      * 表字段 : t_task.task_time
      */
+    @Column(columnName = "task_time")
     private Date taskTime;
 
     /**
      * 回复时间
      * 表字段 : t_task.reply_time
      */
+    @Column(columnName = "reply_time")
     private Date replyTime;
 
     /**
      * 主要内容
      * 表字段 : t_task.task_content
      */
+    @Column(columnName = "task_content")
     private String taskContent;
 
     /**
      * 基本要求
      * 表字段 : t_task.task_require
      */
+    @Column(columnName = "task_require")
     private String taskRequire;
 
     /**
      * 表字段 : t_task.task_schedule
      */
+    @Column(columnName = "task_schedule")
     private String taskSchedule;
 
     /**
      * 应收集的资料及主要参考文献
      * 表字段 : t_task.task_literature
      */
+    @Column(columnName = "task_literature")
     private String taskLiterature;
 
     /**
      * 回应内容
      * 表字段 : t_task.reply_content
      */
+    @Column(columnName = "reply_content")
     private String replyContent;
 
     private Subject subject;

@@ -4,7 +4,9 @@ import cn.hutool.core.date.DateUtil;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.graduationaldesign.graduation.pojo.helper.Column;
 import com.graduationaldesign.graduation.pojo.helper.MyPrimaryKey;
+import com.graduationaldesign.graduation.pojo.helper.Table;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -12,6 +14,7 @@ import java.util.Date;
 
 @Data
 @JsonIgnoreProperties(value = {"handler"})
+@Table(value = "t_subject")
 public class Subject implements Serializable {
 
     /**
@@ -19,78 +22,91 @@ public class Subject implements Serializable {
      * 表字段 : t_subject.sub_id
      */
     @MyPrimaryKey
+    @Column(columnName = "sub_id")
     private String subId;
 
     /**
      * 课题名称
      * 表字段 : t_subject.sub_name
      */
+    @Column(columnName = "sub_name")
     private String subName;
 
     /**
      * 课题性质，1是理论性课题，2是实践性课题
      * 表字段 : t_subject.sub_nature
      */
+    @Column(columnName = "sub_nature")
     private Integer subNature;
 
     /**
      * 课程来源，1是科研题目，2是企业题目，3是自拟题目
      * 表字段 : t_subject.sub_source
      */
+    @Column(columnName = "sub_source")
     private Integer subSource;
 
     /**
      * 课题导师，外键对教师表
      * 表字段 : t_subject.sub_tea_id
      */
+    @Column(columnName = "sub_tea_id")
     private String subTeaId;
 
     /**
      * 课题附件
      * 表字段 : t_subject.sub_file
      */
+    @Column(columnName = "sub_file")
     private String subFile;
 
     /**
      * 开题报告最后的时间
      * 表字段 : t_subject.first_report_deadline
      */
+    @Column(columnName = "first_report_deadline")
     private Date firstReportDeadline;
 
     /**
      * 论文定稿最后时间
      * 表字段 : t_subject.last_report_deadline
      */
+    @Column(columnName = "last_report_deadline")
     private Date lastReportDeadline;
 
     /**
      * 学生id，外键对学生表
      * 表字段 : t_subject.stu_id
      */
+    @Column(columnName = "stu_id")
     private String stuId;
 
     /**
      * 选定状态，1是待选定，2是待审核，3是通过
      * 表字段 : t_subject.sub_stu_state
      */
+    @Column(columnName = "sub_stu_state")
     private Integer subStuState;
 
     /**
      * 最终评分
      * 表字段 : t_subject.sub_last_score
      */
+    @Column(columnName = "sub_last_score")
     private Long subLastScore;
 
     /**
      * 展示id，外键展示表id
      * 表字段 : t_subject.show_id
      */
+    @Column(columnName = "show_id")
     private Integer showId;
 
     /**
      * 课题介绍
      * 表字段 : t_subject.sub_introduce
      */
+    @Column(columnName = "sub_introduce")
     private String subIntroduce;
 
     private Teacher teacher;

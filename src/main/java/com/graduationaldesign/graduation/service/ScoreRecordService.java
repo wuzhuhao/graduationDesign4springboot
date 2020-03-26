@@ -4,6 +4,7 @@ import com.graduationaldesign.graduation.pojo.ScoreRecord;
 import com.graduationaldesign.graduation.util.PageBean;
 import org.springframework.http.ResponseEntity;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,6 +31,6 @@ public interface ScoreRecordService {
 
     public void deleteByPrimaryKeyIn(List<Integer> lstPrimaryKey) throws Exception;//分页service层
 
-    PageBean<ScoreRecord> listByPage(HashMap<String, Object> params, int page, int pageSize);
+    PageBean<ScoreRecord> listByPage(HashMap<String, Object> params, int page, int pageSize) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
 }

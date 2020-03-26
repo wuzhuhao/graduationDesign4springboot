@@ -5,7 +5,9 @@ import cn.hutool.core.date.DateUtil;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.graduationaldesign.graduation.pojo.helper.Column;
 import com.graduationaldesign.graduation.pojo.helper.MyPrimaryKey;
+import com.graduationaldesign.graduation.pojo.helper.Table;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -13,6 +15,7 @@ import java.util.Date;
 
 @Data
 @JsonIgnoreProperties(value = {"handler"})
+@Table(value = "t_goodgraduation")
 public class GoodGraduation implements Serializable {
 
     /**
@@ -20,6 +23,7 @@ public class GoodGraduation implements Serializable {
      */
     @MyPrimaryKey
     @Excel(name = "Id", orderNum = "1")
+    @Column(columnName = "id", viewName = "goodGraduationId")
     private Integer id;
 
     /**
@@ -27,6 +31,7 @@ public class GoodGraduation implements Serializable {
      * 表字段 : t_goodgraduation.good_sub_id
      */
     @Excel(name = "课题编号", orderNum = "1")
+    @Column(columnName = "good_sub_id")
     private String goodSubId;
 
     /**
@@ -34,6 +39,7 @@ public class GoodGraduation implements Serializable {
      * 表字段 : t_goodgraduation.good_time
      */
     @Excel(name = "评定时间", orderNum = "1")
+    @Column(columnName = "good_time")
     private Date goodTime;
 
     /**
@@ -41,6 +47,7 @@ public class GoodGraduation implements Serializable {
      * 表字段 : t_goodgraduation.good_reason
      */
     @Excel(name = "评定理由", orderNum = "1")
+    @Column(columnName = "good_reason")
     private String goodReason;
 
     private Subject subject;

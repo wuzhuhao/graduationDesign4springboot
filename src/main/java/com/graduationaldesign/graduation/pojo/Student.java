@@ -4,12 +4,16 @@ import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.graduationaldesign.graduation.pojo.helper.Column;
 import com.graduationaldesign.graduation.pojo.helper.MyPrimaryKey;
-import java.io.Serializable;
+import com.graduationaldesign.graduation.pojo.helper.Table;
 import lombok.Data;
+
+import java.io.Serializable;
 
 @Data
 @JsonIgnoreProperties(value = {"handler"})
+@Table(value = "t_student")
 public class Student implements Serializable {
 
     /**
@@ -18,6 +22,7 @@ public class Student implements Serializable {
      */
     @Excel(name = "学号*", orderNum = "0")
     @MyPrimaryKey
+    @Column(columnName = "stu_id")
     private String stuId;
 
     /**
@@ -25,6 +30,7 @@ public class Student implements Serializable {
      * 表字段 : t_student.stu_password
      */
     @Excel(name = "密码", orderNum = "0")
+    @Column(columnName = "stu_password")
     private String stuPassword;
 
     /**
@@ -32,6 +38,7 @@ public class Student implements Serializable {
      * 表字段 : t_student.stu_name
      */
     @Excel(name = "姓名", orderNum = "0")
+    @Column(columnName = "stu_name")
     private String stuName;
 
     /**
@@ -39,6 +46,7 @@ public class Student implements Serializable {
      * 表字段 : t_student.stu_major
      */
     @Excel(name = "专业", orderNum = "0")
+    @Column(columnName = "stu_major")
     private String stuMajor;
 
     /**
@@ -46,6 +54,7 @@ public class Student implements Serializable {
      * 表字段 : t_student.stu_class
      */
     @Excel(name = "班级", orderNum = "0")
+    @Column(columnName = "stu_class")
     private String stuClass;
 
     /**
@@ -53,6 +62,7 @@ public class Student implements Serializable {
      * 表字段 : t_student.stu_sex
      */
     @Excel(name = "性别", orderNum = "0")
+    @Column(columnName = "stu_sex")
     private String stuSex;
 
     /**
@@ -60,6 +70,7 @@ public class Student implements Serializable {
      * 表字段 : t_student.stu_age
      */
     @Excel(name = "年龄", orderNum = "0")
+    @Column(columnName = "stu_age")
     private Integer stuAge;
 
     /**
@@ -67,6 +78,7 @@ public class Student implements Serializable {
      * 表字段 : t_student.stu_birthday
      */
     @Excel(name = "出生日期", orderNum = "2")
+    @Column(columnName = "stu_birthday")
     private String stuBirthday;
 
     /**
@@ -74,6 +86,7 @@ public class Student implements Serializable {
      * 表字段 : t_student.stu_phone
      */
     @Excel(name = "电话", orderNum = "0")
+    @Column(columnName = "stu_phone")
     private String stuPhone;
 
     /**
@@ -81,6 +94,7 @@ public class Student implements Serializable {
      * 表字段 : t_student.stu_mail
      */
     @Excel(name = "邮箱", orderNum = "0")
+    @Column(columnName = "stu_mail")
     private String stuMail;
 
     /**
@@ -88,6 +102,7 @@ public class Student implements Serializable {
      * 表字段 : t_student.stu_address
      */
     @Excel(name = "地址", orderNum = "0")
+    @Column(columnName = "stu_address")
     private String stuAddress;
 
     /**
@@ -95,12 +110,14 @@ public class Student implements Serializable {
      * 表字段 : t_student.stu_remarks
      */
     @Excel(name = "优秀毕业生", orderNum = "0")
+    @Column(columnName = "stu_remarks")
     private String stuRemarks;
 
     /**
      * 表字段 : t_student.academy_id
      */
     @Excel(name = "学院代码*", orderNum = "0")
+    @Column(columnName = "academy_id")
     private Integer academyId;
 
     private Academy academy;
@@ -394,8 +411,8 @@ public class Student implements Serializable {
     }
 
     public Student(String stuId, String stuName, String stuMajor, String stuClass,
-            String stuSex, Integer stuAge, String stuBirthday, String stuPhone,
-            String stuMail, String stuAddress, String stuRemarks) {
+                   String stuSex, Integer stuAge, String stuBirthday, String stuPhone,
+                   String stuMail, String stuAddress, String stuRemarks) {
         this.stuId = stuId;
         this.stuName = stuName;
         this.stuMajor = stuMajor;

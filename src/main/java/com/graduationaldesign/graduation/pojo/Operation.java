@@ -1,12 +1,16 @@
 package com.graduationaldesign.graduation.pojo;
 
 import cn.hutool.core.date.DateUtil;
+import com.graduationaldesign.graduation.pojo.helper.Column;
 import com.graduationaldesign.graduation.pojo.helper.MyPrimaryKey;
-import java.io.Serializable;
-import java.util.Date;
+import com.graduationaldesign.graduation.pojo.helper.Table;
 import lombok.Data;
 
+import java.io.Serializable;
+import java.util.Date;
+
 @Data
+@Table(value = "log_operation")
 public class Operation implements Serializable {
 
     /**
@@ -14,24 +18,28 @@ public class Operation implements Serializable {
      * 表字段 : log_operation.id
      */
     @MyPrimaryKey
+    @Column(columnName = "id")
     private Integer id;
 
     /**
      * 操作人
      * 表字段 : log_operation.opera_role
      */
+    @Column(columnName = "opera_role")
     private String operaRole;
 
     /**
      * 操作时间
      * 表字段 : log_operation.opera_time
      */
+    @Column(columnName = "opera_time")
     private Date operaTime;
 
     /**
      * 操作内容
      * 表字段 : log_operation.opera_content
      */
+    @Column(columnName = "opera_content")
     private String operaContent;
 
     /**

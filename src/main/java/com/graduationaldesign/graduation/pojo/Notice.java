@@ -4,13 +4,17 @@ import cn.hutool.core.date.DateUtil;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.graduationaldesign.graduation.pojo.helper.Column;
 import com.graduationaldesign.graduation.pojo.helper.MyPrimaryKey;
+import com.graduationaldesign.graduation.pojo.helper.Table;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(value = {"handler"})
+@Table(value = "t_notice")
 public class Notice implements Serializable {
 
     /**
@@ -18,31 +22,42 @@ public class Notice implements Serializable {
      * 表字段 : t_notice.id
      */
     @MyPrimaryKey
+    @Column(columnName = "id", viewName = "noticeId")
     private Integer id;
 
     /**
      * 公告发布时间
      * 表字段 : t_notice.notice_time
      */
+    @Column(columnName = "notice_time")
     private Date noticeTime;
 
     /**
      * 公告发布人
      * 表字段 : t_notice.notice_publisher
      */
+    @Column(columnName = "notice_publisher")
     private String noticePublisher;
 
     /**
      * 学院id，外键学院表
      * 表字段 : t_notice.aca_id
      */
+    @Column(columnName = "aca_id")
     private Integer acaId;
 
     /**
      * 公告内容
      * 表字段 : t_notice.notice_content
      */
+    @Column(columnName = "notice_content")
     private String noticeContent;
+
+    /**
+     * 表字段 : t_notice.notice_title
+     */
+    @Column(columnName = "notice_title")
+    private String noticeTitle;
 
     private Academy academy;
 
@@ -142,6 +157,24 @@ public class Notice implements Serializable {
      */
     public void setNoticeContent(String noticeContent) {
         this.noticeContent = noticeContent == null ? null : noticeContent.trim();
+    }
+
+    /**
+     * 获取  字段:t_notice.notice_title
+     *
+     * @return t_notice.notice_title,
+     */
+    public String getNoticeTitle() {
+        return noticeTitle;
+    }
+
+    /**
+     * 设置  字段:t_notice.notice_title
+     *
+     * @param noticeTitle the value for t_notice.notice_title,
+     */
+    public void setNoticeTitle(String noticeTitle) {
+        this.noticeTitle = noticeTitle == null ? null : noticeTitle.trim();
     }
 
     @JsonIgnore

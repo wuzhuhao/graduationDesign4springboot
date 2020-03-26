@@ -1,28 +1,35 @@
 package com.graduationaldesign.graduation.pojo;
 
+import com.graduationaldesign.graduation.pojo.helper.Column;
 import com.graduationaldesign.graduation.pojo.helper.MyPrimaryKey;
-import java.io.Serializable;
+import com.graduationaldesign.graduation.pojo.helper.Table;
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
+@Table(value = "t_role_permission")
 public class RolePermission implements Serializable {
 
     /**
      * 表字段 : t_role_permission.id
      */
     @MyPrimaryKey
+    @Column(columnName = "id")
     private Long id;
 
     /**
      * 角色id，外键
      * 表字段 : t_role_permission.role_id
      */
+    @Column(columnName = "role_id")
     private Long roleId;
 
     /**
      * 权限id，外键
      * 表字段 : t_role_permission.per_id
      */
+    @Column(columnName = "per_id")
     private Long perId;
 
     /**

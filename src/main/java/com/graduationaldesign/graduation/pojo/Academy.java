@@ -1,11 +1,15 @@
 package com.graduationaldesign.graduation.pojo;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
+import com.graduationaldesign.graduation.pojo.helper.Column;
 import com.graduationaldesign.graduation.pojo.helper.MyPrimaryKey;
-import java.io.Serializable;
+import com.graduationaldesign.graduation.pojo.helper.Table;
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
+@Table(value = "t_academy")
 public class Academy implements Serializable {
 
     /**
@@ -13,6 +17,7 @@ public class Academy implements Serializable {
      */
     @Excel(name = "学院代码*", orderNum = "0")
     @MyPrimaryKey
+    @Column(columnName = "id", viewName = "academyId")
     private Integer id;
 
     /**
@@ -20,6 +25,7 @@ public class Academy implements Serializable {
      * 表字段 : t_academy.aca_name
      */
     @Excel(name = "学院名称", orderNum = "1")
+    @Column(columnName = "aca_name")
     private String acaName;
 
     /**
@@ -27,6 +33,7 @@ public class Academy implements Serializable {
      * 表字段 : t_academy.aca_introduce
      */
     @Excel(name = "学院介绍", orderNum = "1")
+    @Column(columnName = "aca_introduce")
     private String acaIntroduce;
 
     /**
