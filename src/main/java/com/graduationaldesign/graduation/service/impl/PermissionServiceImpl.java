@@ -62,10 +62,11 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public PageBean<Permission> listByPage(HashMap<String, Object> params, int page, int pageSize)
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
         PageBean<Permission> pageBean = new PageBean<>();
         PermissionExample example = new PermissionExample();
         PermissionExample.Criteria criteria = example.createCriteria();
+        ExampleHelper.searchJoin(Permission.class, example, criteria, params);
         ExampleHelper.addCondition(Permission.class, criteria, params);
         List<Permission> list = this.permissionMapper.selectByExample(example);
         pageBean.setBeanList(list);

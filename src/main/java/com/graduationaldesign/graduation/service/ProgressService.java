@@ -31,7 +31,7 @@ public interface ProgressService {
     int updateByPrimaryKey(Progress record);
 
     PageBean<Progress> listByPage(HashMap<String, Object> params, int page, Integer pageSize)
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException;
 
     PageBean<Progress> listByPageOfStu(HashMap<String, Object> params, int page, Integer pageSize,
                                        Student student)

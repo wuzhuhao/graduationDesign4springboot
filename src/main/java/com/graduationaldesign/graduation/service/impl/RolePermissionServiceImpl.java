@@ -63,14 +63,14 @@ public class RolePermissionServiceImpl implements RolePermissionService {
     @Override
     public PageBean<RolePermission> listByPage(HashMap<String, Object> params, int page,
                                                int pageSize)
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
         PageBean<RolePermission> pageBean = new PageBean<>();
         RolePermissionExample example = new RolePermissionExample();
         RolePermissionExample.Criteria criteria = example.createCriteria();
+        ExampleHelper.searchJoin(RolePermission.class, example, criteria, params);
         ExampleHelper.addCondition(RolePermission.class, criteria, params);
         List<RolePermission> list = this.rolePermissionMapper.selectByExample(example);
         pageBean.setBeanList(list);
-        //pageBean.setParams(params);
         return pageBean;
     }
 

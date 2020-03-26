@@ -45,7 +45,7 @@ public interface SubjectService {
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
     PageBean<Subject> listByPage(HashMap<String, Object> params, int page, int pageSize)
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException;
 
     String ChoiceSubject(String subId, Student login_user);
 

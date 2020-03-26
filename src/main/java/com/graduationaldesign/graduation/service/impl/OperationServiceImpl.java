@@ -62,10 +62,11 @@ public class OperationServiceImpl implements OperationService {
 
     @Override
     public PageBean<Operation> listByPage(HashMap<String, Object> params, int page, int pageSize)
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
         PageBean<Operation> pageBean = new PageBean<>();
         OperationExample example = new OperationExample();
         OperationExample.Criteria criteria = example.createCriteria();
+        ExampleHelper.searchJoin(Operation.class, example, criteria, params);
         ExampleHelper.addCondition(Operation.class, criteria, params);
         List<Operation> list = this.operationMapper.selectByExampleWithBLOBs(example);
         pageBean.setBeanList(list);

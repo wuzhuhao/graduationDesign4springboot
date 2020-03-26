@@ -35,5 +35,5 @@ public interface SysdictService {
 
     public void deleteByPrimaryKeyIn(List<Long> lstPrimaryKey) throws Exception;//分页service层
 
-    PageBean<Sysdict> listByPage(HashMap<String, Object> params, int page, int pageSize) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
+    PageBean<Sysdict> listByPage(HashMap<String, Object> params, int page, int pageSize) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException;
 }

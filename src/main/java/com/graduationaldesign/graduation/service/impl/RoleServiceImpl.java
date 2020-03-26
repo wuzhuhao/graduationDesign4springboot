@@ -62,10 +62,11 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public PageBean<Role> listByPage(HashMap<String, Object> params, int page, int pageSize)
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
         PageBean<Role> pageBean = new PageBean<>();
         RoleExample example = new RoleExample();
         RoleExample.Criteria criteria = example.createCriteria();
+        ExampleHelper.searchJoin(Role.class, example, criteria, params);
         ExampleHelper.addCondition(Role.class, criteria, params);
         List<Role> list = this.roleMapper.selectByExample(example);
         pageBean.setBeanList(list);

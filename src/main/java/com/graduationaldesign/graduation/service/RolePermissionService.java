@@ -27,7 +27,7 @@ public interface RolePermissionService {
     int updateByPrimaryKey(RolePermission record);
 
     PageBean<RolePermission> listByPage(HashMap<String, Object> params, int page, int pageSize)
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException;
 
     void deleteByPrimaryKeyIn(List<Long> lstprimaryKey) throws Exception;
 

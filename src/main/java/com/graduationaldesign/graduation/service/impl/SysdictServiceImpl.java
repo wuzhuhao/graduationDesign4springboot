@@ -123,10 +123,11 @@ public class SysdictServiceImpl implements SysdictService {
 
 
     @Override
-    public PageBean<Sysdict> listByPage(HashMap<String, Object> params, int page, int pageSize) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    public PageBean<Sysdict> listByPage(HashMap<String, Object> params, int page, int pageSize) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
         PageBean<Sysdict> pageBean = new PageBean<>();
         SysdictExample example = new SysdictExample();
         SysdictExample.Criteria criteria = example.createCriteria();
+        ExampleHelper.searchJoin(Sysdict.class, example, criteria, params);
         ExampleHelper.addCondition(Sysdict.class, criteria, params);
         List<Sysdict> list = this.sysdictMapper.selectByExample(example);
         pageBean.setBeanList(list);

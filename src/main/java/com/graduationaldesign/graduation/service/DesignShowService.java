@@ -28,7 +28,7 @@ public interface DesignShowService {
     int updateByPrimaryKey(DesignShow record);
 
     PageBean<DesignShow> listByPage(HashMap<String, Object> params, int page, int pageSize)
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException;
 
     void deleteByPrimaryKeyIn(List<Integer> lstprimaryKey) throws Exception;
 

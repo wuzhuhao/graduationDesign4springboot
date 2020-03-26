@@ -29,7 +29,7 @@ public interface PermissionService {
     int updateByPrimaryKey(Permission record);
 
     PageBean<Permission> listByPage(HashMap<String, Object> params, int page, int pageSize)
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException;
 
     public ResponseEntity<Object> updateListByPrimaryKeySelective(List<Permission> lstRecord);
 

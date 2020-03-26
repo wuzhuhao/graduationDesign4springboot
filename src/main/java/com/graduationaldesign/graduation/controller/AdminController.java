@@ -119,7 +119,7 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/listUpdate", method = RequestMethod.POST)
-    public ResponseEntity<Object> updateAdmin(List<Admin> lstAdmin) {
+    public ResponseEntity<Object> updateAdmin(@RequestBody List<Admin> lstAdmin) {
         try {
             return adminService.updateListByPrimaryKeySelective(lstAdmin);
         } catch (RuntimeException e) {

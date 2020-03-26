@@ -189,10 +189,11 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public PageBean<Subject> listByPage(HashMap<String, Object> params, int page, int pageSize)
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
         PageBean<Subject> pageBean = new PageBean<>();
         SubjectExample subjectExample = new SubjectExample();
         SubjectExample.Criteria criteria = subjectExample.createCriteria();
+        ExampleHelper.searchJoin(Subject.class, subjectExample, criteria, params);
         ExampleHelper.addCondition(Subject.class, criteria, params);
         List<Subject> list = subjectMapper.selectByExampleWithBLOBs(subjectExample);
         for (Subject sub : list) {
