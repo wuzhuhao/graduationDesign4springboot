@@ -434,6 +434,7 @@ export default {
                    this.title = '实体类详情'
                     this.columns = this.columns3
                 } else if (row.dictType === 'item') {
+                  this.dictShow=true
                      this.formItem.dictType='dict'
                       this.formItem.dictParentid = row.id;
                    this.formData.dictType= 'dict'
@@ -467,8 +468,8 @@ export default {
                 this.dictValueLabel = '字典名称:'
                 this.dictDescriptionLabel = '字典描述:'
             }else{
-                this.dictValueLabel = 'key"'
-                this.dictDescriptionLabel = '值描述"'
+                this.dictValueLabel = 'key:'
+                this.dictDescriptionLabel = '值描述:'
             }
              this.formData.dictDescription= row.dictDescription
             this.formData.dictParentid= row.dictParentid

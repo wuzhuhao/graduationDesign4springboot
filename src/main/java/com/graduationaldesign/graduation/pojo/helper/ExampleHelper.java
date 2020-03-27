@@ -52,7 +52,7 @@ public class ExampleHelper {
             } else if (type.equals("class java.lang.Long") && StrUtil.isNotBlank(value)) {
                 Method method = criteria.getClass()
                         .getMethod("and" + name + "EqualTo", Long.class);
-                method.invoke(criteria, Convert.toInt(value, 0));
+                method.invoke(criteria, Convert.toLong(value, 0L));
             } else if (isDate(type, value)) {
                 Method method = criteria.getClass()
                         .getMethod("and" + name + "EqualTo", Date.class);

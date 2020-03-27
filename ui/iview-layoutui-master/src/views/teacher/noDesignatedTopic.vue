@@ -43,7 +43,6 @@
         <div slot="search">
             
           <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doSearch">查询</Button>  &nbsp; &nbsp; &nbsp; &nbsp;
-          <Button type="info"  style="float:left;margin:0 8px"  @click="exportData(1)"><Icon type="ios-download-outline"></Icon>分配选题</Button>&nbsp;
         </div>
         <div slot="btns">
           <Button type="primary" icon="md-add" @click="handleCreate">添加</Button>

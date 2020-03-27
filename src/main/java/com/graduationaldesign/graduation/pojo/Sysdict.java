@@ -1,7 +1,9 @@
 package com.graduationaldesign.graduation.pojo;
 
-import java.io.Serializable;
+import com.graduationaldesign.graduation.pojo.helper.Table;
 
+import java.io.Serializable;
+@Table(value = "sys_sysdict")
 public class Sysdict implements Serializable {
     /**
      * 自增id

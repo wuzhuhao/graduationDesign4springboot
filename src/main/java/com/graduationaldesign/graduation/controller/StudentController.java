@@ -120,7 +120,7 @@ public class StudentController {
     }
 
     @RequestMapping(value = "/listUpdate", method = RequestMethod.POST)
-    public ResponseEntity<Object> updateStudent(List<Student> lstStudent) {
+    public ResponseEntity<Object> updateStudent( List<Student> lstStudent) {
         try {
             return studentService.updateListByPrimaryKeySelective(lstStudent);
         } catch (RuntimeException e) {

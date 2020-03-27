@@ -9,6 +9,9 @@
         <div slot="title-icon">
             <Icon type="ios-game-controller-b" />
         </div>
+        <div slot="title-toolbar">
+            <Button type="primary" icon="md-add"  @click="handleCreate">新增</Button>
+        </div>
 
         <!-- 条件搜索 -->
         <div slot="searchContent" class="search-content-slot">
@@ -16,17 +19,17 @@
               <Row>
                 <Col span="8">
                   <FormItem label="id：">
-                    <Input v-model="formItem.subId" placeholder="..."></Input>
+                    <Input v-model="formItem.stuId" placeholder="请输入id"></Input>
                 </FormItem>
                 </Col>
                 <Col span="8">
-                  <FormItem label="课题名称">
-                    <Input v-model="formItem.subName" placeholder="Enter something..."></Input>
+                  <FormItem label="姓名：">
+                    <Input v-model="formItem.stuName" placeholder="请输入姓名"></Input>
                 </FormItem>
                 </Col>
                 <Col span="8">
-                  <FormItem label="课程性质">
-                    <Select v-model="formItem.subNature">
+                  <FormItem label="学院：">
+                    <Select v-model="formItem.select">
                         <Option value="beijing">New York</Option>
                         <Option value="shanghai">London</Option>
                         <Option value="shenzhen">Sydney</Option>
@@ -40,6 +43,16 @@
         <div slot="search">
             
           <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doSearch">查询</Button>  &nbsp; &nbsp; &nbsp; &nbsp;
+           <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doReset">重置</Button>  &nbsp;
+          <Button type="info"  style="float:left;margin:0 8px"  @click="exportData(1)"><Icon type="ios-download-outline"></Icon>导出数据</Button>&nbsp;
+          <Button type="info" icon="ios-search;margin:0 8px"  style="float:left" @click="delAll">批量删除</Button>  &nbsp;
+        <Upload action="http://localhost:8080/graManagement/uploadFile/importUserByExcel?type=1"    style="float:left;margin:0 8px">
+            <Button  type="info" icon="ios-cloud-upload-outline">批量注册</Button>
+        </Upload>
+         <Button type="info"  style="float:left;margin:0 8px"  @click="exportDataDemo(1)"><Icon type="ios-download-outline"></Icon>导出注册模板</Button>&nbsp;
+        </div>
+        <div slot="btns">
+          <Button type="primary" icon="md-add" @click="handleCreate">添加</Button>
         </div>
         <div slot="paddingContent">
           <Table border  show-summary :columns="columns2" :data="tableData"  @on-selection-change="changeSelect" ref="table"></Table>
@@ -64,67 +77,98 @@
             <Form :model="formData">
                 <Row :gutter="32">
                     <Col span="12">
-                        <FormItem label="id" label-position="top">
-                            <Input v-model="formData.subId" placeholder="please enter user name" />
+                        <FormItem label="账号" label-position="top">
+                            <Input v-model="formData.stuId" placeholder="请输入账号" />
                         </FormItem>
                     </Col>
                     <Col span="12">
-                        <FormItem label="课题名称" label-position="top">
-                            <Input v-model="formData.subName" placeholder="please enter url">
+                        <FormItem label="密码" label-position="top">
+                            <Input v-model="formData.stuPassword" placeholder="请输入密码">
                             </Input>
                         </FormItem>
                     </Col>
                 </Row>
                 <Row :gutter="32">
                     <Col span="12">
-                        <FormItem label="课题性质" label-position="top">
-                            <Input v-model="formData.subNature" placeholder="please enter user name" />
+                        <FormItem label="名称" label-position="top">
+                            <Input v-model="formData.stuName" placeholder="请输入名称" />
                         </FormItem>
                     </Col>
                     <Col span="12">
-                        <FormItem label="课题来源" label-position="top">
-                            <Input v-model="formData.subSource" placeholder="please enter url">
+                        <FormItem label="专业" label-position="top">
+                            <Input v-model="formData.stuMajor" placeholder="请输入专业">
                             </Input>
                         </FormItem>
                     </Col>
                 </Row><Row :gutter="32">
                     <Col span="12">
-                        <FormItem label="开题报告截止期限" label-position="top">
-                            <Input v-model="formData.firstReportDeadline" placeholder="please enter user name" />
+                        <FormItem label="班级" label-position="top">
+                            <Input v-model="formData.stuClass" placeholder="请输入班级" />
                         </FormItem>
                     </Col>
                     <Col span="12">
-                        <FormItem label="论文定稿截止期限" label-position="top">
-                            <Input v-model="formData.lastReportDeadline" placeholder="please enter url">
+                        <FormItem label="性别" label-position="top">
+                            <Input v-model="formData.stuSex" placeholder="请输入性别">
                             </Input>
                         </FormItem>
                     </Col>
                 </Row><Row :gutter="32">
                     <Col span="12">
-                        <FormItem label="学生id" label-position="top">
-                            <Input v-model="formData.stuId" placeholder="please enter user name" />
+                        <FormItem label="年龄" label-position="top">
+                            <Input v-model="formData.stuAge" placeholder="请输入年龄" />
                         </FormItem>
                     </Col>
                     <Col span="12">
-                        <FormItem label="提交状态" label-position="top">
-                            <Input v-model="formData.subStuState" placeholder="please enter url">
+                        <FormItem label="生日" label-position="top">
+                            <Input v-model="formData.stuBirthday" placeholder="请输入生日">
                             </Input>
                         </FormItem>
                     </Col>
                 </Row><Row :gutter="32">
                     <Col span="12">
-                        <FormItem label="总评" label-position="top">
-                            <Input v-model="formData.subLastScore" placeholder="please enter user name" />
+                        <FormItem label="电话" label-position="top">
+                            <Input v-model="formData.stuPhone" placeholder="请输入电话" />
                         </FormItem>
                     </Col>
                     <Col span="12">
-                        <FormItem label="展示id" label-position="top">
-                            <Input v-model="formData.showId" placeholder="please enter url">
+                        <FormItem label="邮箱" label-position="top">
+                            <Input v-model="formData.stuMail" placeholder="请输入邮箱">
                             </Input>
                         </FormItem>
                     </Col>
                 </Row>
-                
+                </Row><Row :gutter="32">
+                    <Col span="12">
+                        <FormItem label="地址" label-position="top">
+                            <Input v-model="formData.stuAddress" placeholder="请输入地址" />
+                        </FormItem>
+                    </Col>
+                    <Col span="12">
+                        <FormItem label="备注" label-position="top">
+                            <Input v-model="formData.stuRemarks" placeholder="请输入备注">
+                            </Input>
+                        </FormItem>
+                    </Col>
+                </Row></Row><Row :gutter="32">
+                    <Col span="12">
+                        <FormItem label="学院" label-position="top">
+                            <Input v-model="formData.academyId" placeholder="请输入学院" />
+                        </FormItem>
+                    </Col>
+                    <Col span="12">
+                        <FormItem label="邮箱" label-position="top">
+                            <Input v-model="formData.stuMail" placeholder="请输入邮箱">
+                            </Input>
+                        </FormItem>
+                    </Col>
+                </Row>
+                </Row><Row :gutter="32">
+                    <Col span="12">
+                        <FormItem label="学院id" label-position="top">
+                            <Input v-model="formData.academyId" placeholder="请输入学院id" />
+                        </FormItem>
+                    </Col>
+                </Row>
             </Form>
             <div class="demo-drawer-footer">
                 <Button style="margin-right: 8px" @click="value3 = false">Cancel</Button>
@@ -148,7 +192,7 @@ export default {
     data(){
       
       return{
-            dialogStatus: '',//title自定义标题
+          dialogStatus: '',//title自定义标题
           value3: false,
                 styles: {
                     height: 'calc(100% - 55px)',
@@ -157,21 +201,20 @@ export default {
                     position: 'static'
                 },
                 formData: {
-                   subId: '',
-                    subName: '',
-                    subNature: '',
-                    subSource: '',
-                    subTeaId: '',
-                    subFile:'',
-                    firstReportDeadline: '',
-                    lastReportDeadline:'',
-                    stuId:'',
-                    subStuState: '',
-                    subLastScore:'',
-                    showId:'',
-                    subIntroduce: '',
-                    student:'',
-                    teacher: '',
+                    stuId: '',
+                    stuPassword: '',
+                    stuName:  '',
+                    stuMajor: '',
+                    stuClass:  '',
+                    stuSex:  '',
+                    stuAge: '',
+                    stuBirthday:  '',
+                    stuPhone:  '',
+                    stuMail:  '',
+                    stuAddress:  '',
+                    stuRemarks: '',
+                    academyId:  '',
+                    // academy:  '',
                 },
             
         pagination: {
@@ -185,66 +228,114 @@ export default {
          selectCount: 0, // 多选计数
         tableData:[],
         formItem: {
-             subId: '',
-            subName: '',
-            subNature: '',
-            subSource: '',
-            subTeaId: '',
-            subFile:'',
-            firstReportDeadline: '',
-            lastReportDeadline:'',
-            stuId:'',
-            subStuState: '',
-            subLastScore:'',
-            showId:'',
-            subIntroduce: '',
+          stuId: '',
+          stuPassword: '',
+          stuName:  '',
+          stuMajor: '',
+          stuClass:  '',
+          stuSex:  '',
+          stuAge: '',
+          stuBirthday:  '',
+          stuPhone:  '',
+          stuMail:  '',
+          stuAddress:  '',
+          stuRemarks: '',
+          academyId:  '',
+        //   academy:  '',
         },
         columns2: [
-             {
+            {
                type: 'selection',
-               width: 80,
+               width: 60,
                align: 'center',
-              fixed: 'left',
-               minWidth: 100,
+              fixed: 'left'
              },
-             {
-              title: '序号',
-              type: 'index',
-               sortable: true,
-              minWidth: 100,
-               width: 100,
+           
+            {
+                title: '账号',
+                key: 'stuId',
+                 width: 100,
                 fixed: 'left',
-              align: 'center'
-            },  
-            {
-                title: '学生姓名',
-                key: 'stuName',
-               minWidth: 120,
-              width: 200,
                 sortable: true
             },
             {
-                title: '课题名称',
-                key: 'subName',
-               minWidth: 150,
-                sortable: true
-            },
-          
-            {
-                title: '审核结果',
-                key: 'subStuState',
+                title: '密码',
+                key: 'stuPassword',
                 minWidth: 100,
-                  width: 200,
-                sortable: true
+                
+            },
+            {
+                title: '姓名',
+                key: 'stuName',
+                minWidth: 100,
             }, {
+                title: '专业',
+                key: 'stuMajor',
+                minWidth: 100,
+            },
+            {
+                title: '班级',
+                key: 'stuClass',
+                minWidth: 100,
+            },
+            {
+                title: '性别',
+                key: 'stuSex',
+                minWidth: 100,
+            } ,
+            {
+                title: '年龄',
+                key: 'stuAge',
+                minWidth: 100,
+            },
+            {
+                title: '生日',
+                key: 'stuBirthday',
+                minWidth: 100,
+            },
+            {
+                title: '电话',
+                key: 'stuPhone',
+                minWidth: 100,
+            }, {
+                title: '邮箱',
+                key: 'stuMail',
+                minWidth: 100,
+            },{
+                title: '地址',
+                key: 'stuAddress',
+                minWidth: 100,
+            },
+            {
+                title: '备注',
+                key: 'stuRemarks',
+                minWidth: 100,
+            }, {
+                title: '学院',
+                key: 'academyId',
+                minWidth: 100,
+            },{
                         title: '操作',
                         key: 'action',
                         fixed: 'right',
                         minWidth: 120,
-                        width: 200,
                         render: (h, params) => {
                             return h('div', [
-                                
+                                h('Button', {
+                                    props: {
+                                       type: 'text',
+                                        size: 'small',
+                                        icon: "icon iconfont icon-shanchu"
+                                    },
+                                     attrs:{
+                                        title:'删除'
+                                    },
+                                      on: {
+                                        click: () => {
+                                        this.delById(params.row)             //编辑方法
+                                        }
+                                      }
+                                }),
                                 h('Button', {
                                     props: {
                                         type: 'text',
@@ -252,14 +343,14 @@ export default {
                                         icon:'icon iconfont icon-edit'
                                     },
                                      attrs:{
-                                        title:'查看'
+                                        title:'编辑'
                                     },
                                       on: {
                                         click: () => {
                                         this.edit(params.row)             //编辑方法
                                         }
                                       }
-                                },'查看')
+                                })
                             ]);
                         }
                     }
@@ -297,21 +388,19 @@ export default {
       //编辑
         edit(row){
             this.dialogStatus = '编辑';//对应标题
-            this.formData.subId = row.subId
-            this.formData.subName = row.subName
-            this.formData.subNature =  row.subNature
-            this.formData.subSource =  row.subSource
-            this.formData.subTeaId =  row.subTeaId
-            this.formData.subFile =  row.subFile
-            this.formData.firstReportDeadline = row.firstReportDeadline
-            this.formData.lastReportDeadline =  row.lastReportDeadline
-            this.formData.stuId =  row.stuId
-            this.formData.subStuState =  row.subStuState
-            this.formData.subLastScore =  row.subLastScore
-            this.formData.showId = row.showId
-            this.formData.subIntroduce = row.subIntroduce
-            this.formData.subNature =  row.subNature
-            this.formData.subSource =  row.subSource
+            this.formData.stuId = row.stuId
+            this.formData.stuPassword = row.stuPassword
+            this.formData.stuName =  row.stuName
+            this.formData.stuMajor =  row.stuMajor
+            this.formData.stuClass =  row.stuClass
+            this.formData.stuSex =  row.stuSex
+            this.formData.stuAge = row.stuAge
+            this.formData.stuBirthday =  row.stuBirthday
+            this.formData.stuPhone =  row.stuPhone
+            this.formData.stuMail =  row.stuMail
+             this.formData.stuAddress =  row.stuAddress
+            this.formData.stuRemarks =  row.stuRemarks
+            this.formData.academyId =  row.academyId
             this.value3 = true
         },
         delById(row) {
@@ -321,7 +410,7 @@ export default {
                 onOk: () => {
                     console.log(row)
                  this.$axios({     
-                            url: 'sub/delete/' + row.subId,
+                            url: 'stu/delete/' + row.stuId,
                             method: 'delete',//请求的方式
                             data:this.$Qs.stringify(this.formData),
                             // token:localStorage.getItem('token')
@@ -340,7 +429,7 @@ export default {
           console.log(this.formData)
         if(this.dialogStatus == '新增'){
             this.$axios({     
-                            url: 'sub/add',
+                            url: 'stu/add',
                             method: 'post',//请求的方式
                             data:this.$Qs.stringify(this.formData),
                             // token:localStorage.getItem('token')
@@ -354,7 +443,7 @@ export default {
                         this.value3 = false
         }else if(this.dialogStatus == '编辑'){
              this.$axios({     
-                            url: 'sub/update',
+                            url: 'stu/update',
                             method: 'post',//请求的方式
                             data:this.$Qs.stringify(this.formData),
                             // token:localStorage.getItem('token')
@@ -370,14 +459,11 @@ export default {
    
       },
       getData(page,pageSize){
+        let params = this.formItem
        let  token = localStorage.getItem('token')
-        let  userId = localStorage.getItem('userId')
-        this.formItem.subTeaId = userId
-        this.formItem.subStuState=3
-         let params = this.formItem
          this.$axios({
                             
-                            url: 'sub/listOfTea?page=' + page  + '&pageSize=' + pageSize,
+                            url: 'stu/list?page=' + page  + '&pageSize=' + pageSize,
                             method: 'get',//请求的方式
                             params:params,
                             // token:localStorage.getItem('token')
@@ -385,24 +471,22 @@ export default {
                           console.log(res.data)
                          this.tableData = [];
                           let list = res.data.data.beanList;
-                           this.subStuStateList = res.data.dict.subStuState
                           list.forEach((item, index) => {
                            this.tableData.push({
-                              subId: item.subId,
-                              subName: item.subName,
-                              subNature:item.subNature,
-                              subNature: item.subNature,
-                              subSource: item.subSource,
-                              subTeaId:item.subTeaId,
-                              subFile:item.subFile,
-                              teafirstReportDeadlineMail:item.firstReportDeadline,
-                              lastReportDeadline:item.lastReportDeadline,
                               stuId: item.stuId,
-                             subStuState: this.subStuStateList[item.subStuState],
-                              subLastScore: item.subLastScore,
-                              showId: item.showId,
-                              subIntroduce: item.subIntroduce,
-                              stuName :item.student.stuName
+                              stuPassword: item.stuPassword,
+                              stuName: item.stuName,
+                              stuMajor: item.stuMajor,
+                              stuClass: item.stuClass,
+                              stuSex: item.stuSex,
+                              stuAge:item.stuAge,
+                              stuBirthday: item.stuBirthday,
+                              stuPhone: item.stuPhone,
+                              stuMail: item.stuMail,
+                              stuAddress: item.stuAddress,
+                              stuRemarks: item.stuRemarks,
+                              academyId: item.academyId,
+                            //   academy: item.academy
                            })
                           })
                   
@@ -427,18 +511,19 @@ export default {
      
    
        handleCreate () {
-        this.formData.subId = ''
-        this.formData.subName = ''
-        this.formData.subNature = ''
-        this.formData.subSource = ''
-        this.formData.subTeaId = ''
-        this.formData.firstReportDeadline = ''
-        this.formData.lastReportDeadline = ''
         this.formData.stuId = ''
-        this.formData.subStuState = ''
-        this.formData.subLastScore = ''
-        this.formData.showId = ''
-        this.formData.subIntroduce = ''
+        this.formData.stuPassword = ''
+        this.formData.stuName = ''
+        this.formData.stuMajor = ''
+        this.formData.stuClass = ''
+        this.formData.stuSex = ''
+        this.formData.stuAge = ''
+        this.formData.stuBirthday = ''
+        this.formData.stuPhone = ''
+        this.formData.stuMail = ''
+        this.formData.stuAddress = ''
+        this.formData.stuRemarks = ''
+        this.formData.academyId = ''
         this.dialogStatus = '新增';//对应标题
         this.value3 = true
         
@@ -459,7 +544,7 @@ export default {
     console.log(this.selectList)
     var lstprimaryKey = []
     for(var i = 0;i<this.selectCount;i++){
-		lstprimaryKey.push(this.selectList[i].subId)
+		lstprimaryKey.push(this.selectList[i].stuId)
 	}
      console.log(lstprimaryKey)
       this.$Modal.confirm({
@@ -467,7 +552,7 @@ export default {
         content: "您确认要删除所选的 " + this.selectCount + " 条数据?",
         onOk: () => {
            this.$axios({     
-                            url: 'sub/deleteAll',
+                            url: 'stu/deleteAll',
                             method: 'delete',//请求的方式
                             params: {lstprimaryKey:lstprimaryKey},
                             paramsSerializer: params => {
@@ -537,22 +622,23 @@ export default {
         this.drawer = false;
       },
       doReset(){
-        this.formItem.subId = ''
-        this.formItem.subName = ''
-        this.formItem.subNature = ''
-        this.formItem.subSource = ''
-        this.formItem.subTeaId = ''
-        this.formItem.firstReportDeadline = ''
-        this.formItem.lastReportDeadline = ''
         this.formItem.stuId = ''
-        this.formItem.subStuState = ''
-        this.formItem.subLastScore = ''
-        this.formItem.showId = ''
-        this.formItem.subIntroduce = ''
-        this.getData(1,10);
+        this.formItem.stuPassword = ''
+        this.formItem.stuName = ''
+        this.formItem.stuMajor = ''
+        this.formItem.stuClass = ''
+        this.formItem.stuSex = ''
+        this.formItem.stuAge = ''
+        this.formItem.stuBirthday = ''
+        this.formItem.stuPhone = ''
+        this.formItem.stuMail = ''
+        this.formItem.stuAddress = ''
+        this.formItem.stuRemarks = ''
+        this.formItem.academyId = ''
+         this.getData(1,10);
     },
     exportDataDemo(type){
-       
+      
             window.location.href="http://localhost:8080/graManagement/downFile/exportDemo?type=" + type
         
     }
