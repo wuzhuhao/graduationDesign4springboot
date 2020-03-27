@@ -2,12 +2,10 @@ package com.graduationaldesign.graduation.service.impl;
 
 import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.mapper.TaskMapper;
-import com.graduationaldesign.graduation.pojo.Subject;
 import com.graduationaldesign.graduation.pojo.Task;
 import com.graduationaldesign.graduation.pojo.TaskExample;
 import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.TaskService;
-import com.graduationaldesign.graduation.util.DataConvertUtil;
 import com.graduationaldesign.graduation.util.PageBean;
 import com.graduationaldesign.graduation.util.ResponseStatu;
 import lombok.extern.slf4j.Slf4j;
@@ -83,15 +81,16 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public PageBean<Task> listByPage(HashMap<String, Object> params, int page, int pageSize)
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
         PageBean<Task> pageBean = new PageBean<>();
         TaskExample taskExample = new TaskExample();
         TaskExample.Criteria criteria = taskExample.createCriteria();
         ExampleHelper.addCondition(Task.class, criteria, params);
-        if (DataConvertUtil.strToBoolean(DataConvertUtil.objToStr(params.get("isJoinSubject")))) {
-            taskExample.setJoin(" left join t_subject on t_subject.sub_id = t_task.task_sub_id ");
-            ExampleHelper.addJoinCondition(Subject.class, criteria, params);
-        }
+//        if (DataConvertUtil.strToBoolean(DataConvertUtil.objToStr(params.get("isJoinSubject")))) {
+//            taskExample.setJoin(" left join t_subject on t_subject.sub_id = t_task.task_sub_id ");
+//            ExampleHelper.addJoinCondition(Subject.class, criteria, params);
+//        }
+        ExampleHelper.searchJoin(Task.class, taskExample, criteria, params);
         List<Task> list = taskMapper.selectByExampleWithBLOBs(taskExample);
         pageBean.setBeanList(list);
         for (Task task : list) {

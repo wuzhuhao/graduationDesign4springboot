@@ -178,7 +178,7 @@ public class ReportController {
     }
 
     @RequestMapping(value = "/listUpdate", method = RequestMethod.POST)
-    public ResponseEntity<Object> updateReport(List<Report> lstReport) {
+    public ResponseEntity<Object> updateReport(@RequestBody List<Report> lstReport) {
         try {
             return reportService.updateListByPrimaryKeySelective(lstReport);
         } catch (RuntimeException e) {

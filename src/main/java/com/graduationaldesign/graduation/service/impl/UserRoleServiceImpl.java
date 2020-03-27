@@ -62,10 +62,11 @@ public class UserRoleServiceImpl implements UserRoleService {
 
     @Override
     public PageBean<UserRole> listByPage(HashMap<String, Object> params, int page, int pageSize)
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
         PageBean<UserRole> pageBean = new PageBean<>();
         UserRoleExample example = new UserRoleExample();
         UserRoleExample.Criteria criteria = example.createCriteria();
+        ExampleHelper.searchJoin(UserRole.class, example, criteria, params);
         ExampleHelper.addCondition(UserRole.class, criteria, params);
         List<UserRole> list = this.userRoleMapper.selectByExample(example);
         pageBean.setBeanList(list);

@@ -36,7 +36,7 @@ public interface TaskService {
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
     public PageBean<Task> listByPage(HashMap<String, Object> param, int page, int pageSize)
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException;
 
     void deleteByPrimaryKeyIn(List<Integer> lstprimaryKey) throws Exception;
 

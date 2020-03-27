@@ -34,7 +34,7 @@ public interface TeacherService {
     int updateByPrimaryKey(Teacher record);
 
     PageBean<Teacher> listByPage(HashMap<String, Object> params, int page, int pageSize)
-            throws InvocationTargetException, IllegalAccessException, NoSuchMethodException;
+            throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, ClassNotFoundException;
 
     Teacher findById(String number);
 

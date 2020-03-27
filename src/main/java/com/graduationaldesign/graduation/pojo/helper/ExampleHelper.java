@@ -3,16 +3,14 @@ package com.graduationaldesign.graduation.pojo.helper;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
+import com.graduationaldesign.graduation.pojo.Example;
 import com.graduationaldesign.graduation.util.DataConvertUtil;
 import org.apache.poi.ss.formula.functions.T;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -47,9 +45,13 @@ public class ExampleHelper {
             if (isStringType(type, value)) {
                 Method method = criteria.getClass().getMethod("and" + name + "Like", String.class);
                 method.invoke(criteria, getValue(field, value));
-            } else if (isIntOrLong(type, value)) {
+            } else if (type.equals("class java.lang.Integer") && StrUtil.isNotBlank(value)) {
                 Method method = criteria.getClass()
                         .getMethod("and" + name + "EqualTo", Integer.class);
+                method.invoke(criteria, Convert.toInt(value, 0));
+            } else if (type.equals("class java.lang.Long") && StrUtil.isNotBlank(value)) {
+                Method method = criteria.getClass()
+                        .getMethod("and" + name + "EqualTo", Long.class);
                 method.invoke(criteria, Convert.toInt(value, 0));
             } else if (isDate(type, value)) {
                 Method method = criteria.getClass()
@@ -208,11 +210,12 @@ public class ExampleHelper {
         return null;
     }
 
-    public static void searchJoin(Class pojo, Object example, Object criteria, Map<String, Object> params) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public static void searchJoin(Class pojo, Example example, Object criteria, Map<String, Object> params) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        example.setDistinct(true);
         searchJoin(pojo, example, criteria, params, null, true, false);
     }
 
-    public static void searchJoin(Class pojo, Object example, Object criteria, Map<String, Object> params, List<String> lstJoin, boolean isForce, boolean isConversion) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public static void searchJoin(Class pojo, Example example, Object criteria, Map<String, Object> params, List<String> lstJoin, boolean isForce, boolean isConversion) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         List<String> lstKey = params.keySet().stream().collect(Collectors.toList());
         //查找出所有外键
         List<Field> lstField = Arrays.asList(pojo.getDeclaredFields()).stream().filter(field -> (field.isAnnotationPresent(Column.class) && !field.getAnnotation(Column.class).joinPojo().equals(""))).collect(Collectors.toList());
@@ -226,7 +229,8 @@ public class ExampleHelper {
         lstField = lstField.stream().filter(item -> lstJoinTable.contains(item.getAnnotation(Column.class).joinPojo())).collect(Collectors.toList());
         String tableName = getTable(pojo);
         List<String> lstJoinEdTable = lstField.stream().map(e -> e.getAnnotation(Column.class).joinPojo()).collect(Collectors.toList());
-        lstJoin = lstJoin.stream().filter(e -> !lstJoinEdTable.contains(e.substring("isJoin".length()))).collect(Collectors.toList());
+        List<String> lstJoin1 = lstJoin.stream().filter(e -> lstJoinEdTable.contains(e.substring("isJoin".length()))).collect(Collectors.toList());
+        lstJoin.removeAll(lstJoin1);
         for (Field field : lstField) {
             Column column = field.getAnnotation(Column.class);
             Class obj = Class.forName("com.graduationaldesign.graduation.pojo." + column.joinPojo());
@@ -253,7 +257,9 @@ public class ExampleHelper {
         if (lstJoin.size() != 0 && isForce) {
             for (String e : lstJoin) {
                 Class obj = Class.forName("com.graduationaldesign.graduation.pojo." + e.substring("isJoin".length()));
-                searchJoin(obj, example, criteria, params, Arrays.asList("isJoin" + pojo.getSimpleName()), false, true);
+                ArrayList<String> lstJoins = new ArrayList<>();
+                lstJoins.add("isJoin" + pojo.getSimpleName());
+                searchJoin(obj, example, criteria, params, lstJoins, false, true);
             }
         }
         //处理多个类lstField

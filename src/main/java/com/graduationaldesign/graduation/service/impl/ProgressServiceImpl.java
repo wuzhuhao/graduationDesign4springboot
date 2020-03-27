@@ -87,7 +87,7 @@ public class ProgressServiceImpl implements ProgressService {
     @Override
     public PageBean<Progress> listByPage(HashMap<String, Object> params, int page,
                                          Integer pageSize)
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
         PageBean<Progress> pageBean = new PageBean<>();
         ProgressExample example = new ProgressExample();
         StringBuilder orderby = getOrderString(params);
@@ -95,6 +95,7 @@ public class ProgressServiceImpl implements ProgressService {
             example.setOrderByClause(orderby.toString());
         }
         ProgressExample.Criteria criteria = example.createCriteria();
+        ExampleHelper.searchJoin(Progress.class, example, criteria, params);
         ExampleHelper.addCondition(Progress.class, criteria, params);
         List<Progress> list = progressMapper.selectByExampleWithBLOBs(example);
         list.stream().forEach(item -> {

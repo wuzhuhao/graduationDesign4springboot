@@ -74,7 +74,7 @@ public class SubjectController {
     }
 
     @RequestMapping(value = "/listUpdate", method = RequestMethod.POST)
-    public ResponseEntity<Object> updateSubject(List<Subject> lstSubject) {
+    public ResponseEntity<Object> updateSubject(@RequestBody List<Subject> lstSubject) {
         try {
             return subjectService.updateListByPrimaryKeySelective(lstSubject);
         } catch (RuntimeException e) {

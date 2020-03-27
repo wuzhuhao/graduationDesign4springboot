@@ -39,7 +39,7 @@ public interface ReportService {
 
     PageBean<Report> listByPage(HashMap<String, Object> params, int page, Integer pageSize,
                                 int reportType)
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException;
 
     PageBean<Report> listByPageOfStu(HashMap<String, Object> params, int page, Integer pageSize,
                                      Student student, int reportType)

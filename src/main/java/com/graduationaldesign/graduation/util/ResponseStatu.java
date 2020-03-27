@@ -46,7 +46,8 @@ public class ResponseStatu {
                     className = "All";
                 }
             } catch (Exception e) {
-                className = getListBean(((PageBean) result).getBeanList());
+//                List<Teacher> j = new ArrayList<>();
+//                className = getListBean(j);
                 log.error("无数据，默认传page类");
             }
         }

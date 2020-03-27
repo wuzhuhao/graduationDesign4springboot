@@ -72,10 +72,11 @@ public class AcademyServiceImpl implements AcademyService {
 
     @Override
     public PageBean<Academy> listByPage(HashMap<String, Object> params, int page, int pageSize)
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
         PageBean<Academy> pageBean = new PageBean<>();
         AcademyExample example = new AcademyExample();
         AcademyExample.Criteria criteria = example.createCriteria();
+        ExampleHelper.searchJoin(Academy.class, example, criteria, params);
         ExampleHelper.addCondition(Academy.class, criteria, params);
         List<Academy> list = this.academyMapper.selectByExampleWithBLOBs(example);
         pageBean.setBeanList(list);

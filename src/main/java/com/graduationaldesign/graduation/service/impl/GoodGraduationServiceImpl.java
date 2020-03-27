@@ -63,10 +63,11 @@ public class GoodGraduationServiceImpl implements GoodGraduationService {
     @Override
     public PageBean<GoodGraduation> listByPage(HashMap<String, Object> params, int page,
                                                int pageSize)
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
         PageBean<GoodGraduation> pageBean = new PageBean<>();
         GoodGraduationExample example = new GoodGraduationExample();
         GoodGraduationExample.Criteria criteria = example.createCriteria();
+        ExampleHelper.searchJoin(GoodGraduation.class, example, criteria, params);
         ExampleHelper.addCondition(GoodGraduation.class, criteria, params);
         List<GoodGraduation> list = this.goodGraduationMapper.selectByExampleWithBLOBs(example);
         pageBean.setBeanList(list);

@@ -27,10 +27,10 @@ public interface UserRoleService {
     int updateByPrimaryKey(UserRole record);
 
     PageBean<UserRole> listByPage(HashMap<String, Object> params, int page, int pageSize)
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException;
 
     void deleteByPrimaryKeyIn(List<Long> lstprimaryKey) throws Exception;
 
     public ResponseEntity<Object> updateListByPrimaryKeySelective(List<UserRole> lstRecord);
-    
+
 }

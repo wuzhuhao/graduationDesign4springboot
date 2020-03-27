@@ -62,10 +62,11 @@ public class ApplyServiceImpl implements ApplyService {
 
     @Override
     public PageBean<Apply> listByPage(HashMap<String, Object> params, int page, int pageSize)
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
         PageBean<Apply> pageBean = new PageBean<>();
         ApplyExample example = new ApplyExample();
         ApplyExample.Criteria criteria = example.createCriteria();
+        ExampleHelper.searchJoin(Apply.class, example, criteria, params);
         ExampleHelper.addCondition(Apply.class, criteria, params);
         List<Apply> list = this.applyMapper.selectByExampleWithBLOBs(example);
         pageBean.setBeanList(list);

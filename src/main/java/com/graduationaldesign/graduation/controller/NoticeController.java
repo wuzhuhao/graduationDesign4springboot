@@ -113,7 +113,7 @@ public class NoticeController {
     }
 
     @RequestMapping(value = "/listUpdate", method = RequestMethod.POST)
-    public ResponseEntity<Object> updateNotice(List<Notice> lstNotice) {
+    public ResponseEntity<Object> updateNotice(@RequestBody List<Notice> lstNotice) {
         try {
             return noticeService.updateListByPrimaryKeySelective(lstNotice);
         } catch (RuntimeException e) {

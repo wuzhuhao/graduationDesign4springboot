@@ -150,10 +150,11 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public PageBean<Admin> listByPage(HashMap<String, Object> params, int page, int pageSize)
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
         PageBean<Admin> pageBean = new PageBean<>();
         AdminExample adminExample = new AdminExample();
         AdminExample.Criteria criteria = adminExample.createCriteria();
+        ExampleHelper.searchJoin(Admin.class, adminExample, criteria, params);
         ExampleHelper.addCondition(Admin.class, criteria, params);
         List<Admin> list = this.adminMapper.selectByExample(adminExample);
         pageBean.setBeanList(list);

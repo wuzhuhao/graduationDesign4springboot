@@ -27,7 +27,7 @@ public interface ReplyTeamService {
     int updateByPrimaryKey(ReplyTeam record);
 
     PageBean<ReplyTeam> listByPage(HashMap<String, Object> params, int page, int pageSize)
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException;
 
     void deleteByPrimaryKeyIn(List<Integer> lstprimaryKey) throws Exception;
 

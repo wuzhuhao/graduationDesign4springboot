@@ -62,10 +62,11 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     public PageBean<Notice> listByPage(HashMap<String, Object> params, int page, int pageSize)
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
         PageBean<Notice> pageBean = new PageBean<>();
         NoticeExample example = new NoticeExample();
         NoticeExample.Criteria criteria = example.createCriteria();
+        ExampleHelper.searchJoin(Notice.class, example, criteria, params);
         ExampleHelper.addCondition(Notice.class, criteria, params);
         List<Notice> list = this.noticeMapper.selectByExampleWithBLOBs(example);
         pageBean.setBeanList(list);

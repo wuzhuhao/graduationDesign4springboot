@@ -67,10 +67,11 @@ public class DesignShowServiceImpl implements DesignShowService {
 
     @Override
     public PageBean<DesignShow> listByPage(HashMap<String, Object> params, int page, int pageSize)
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
         PageBean<DesignShow> pageBean = new PageBean<>();
         DesignShowExample example = new DesignShowExample();
         DesignShowExample.Criteria criteria = example.createCriteria();
+        ExampleHelper.searchJoin(DesignShow.class, example, criteria, params);
         ExampleHelper.addCondition(DesignShow.class, criteria, params);
         List<DesignShow> list = this.designShowMapper.selectByExampleWithBLOBs(example);
         pageBean.setBeanList(list);

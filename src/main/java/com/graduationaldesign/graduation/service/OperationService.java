@@ -1,15 +1,10 @@
 package com.graduationaldesign.graduation.service;
 
-import com.graduationaldesign.graduation.aop.RootPropeties;
-import com.graduationaldesign.graduation.mapper.OperationMapper;
 import com.graduationaldesign.graduation.pojo.Operation;
 import com.graduationaldesign.graduation.util.PageBean;
-import com.graduationaldesign.graduation.util.ResponseStatu;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
 import java.lang.reflect.InvocationTargetException;
-import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,7 +27,7 @@ public interface OperationService {
     int updateByPrimaryKey(Operation record);
 
     PageBean<Operation> listByPage(HashMap<String, Object> params, int page, int pageSize)
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException;
 
     void deleteByPrimaryKeyIn(List<Integer> lstprimaryKey) throws Exception;
 
