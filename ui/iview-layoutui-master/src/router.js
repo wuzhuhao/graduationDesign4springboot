@@ -115,11 +115,16 @@ const router = new Router({
       },
       // {
     
-
+        
       //   path: '/studentSelection',
       //   name: 'studentSelection',
       //   component: () => import('@/views/student/studentSelection')
       // },
+      {
+        path: '/scheduleQuery',
+        name: 'scheduleQuery',
+        component: () => import('@/views/teacher/scheduleQuery')
+      },
       {
         path: '/teacherReport',
         name: 'teacherReport',
@@ -165,11 +170,11 @@ const router = new Router({
         name: 'teacherWeeklyProgress',
         component: () => import('@/views/teacher/teacherWeeklyProgress')
       },
-      // {
-      //   path: '/designshow',
-      //   name: 'designshow',
-      //   component: () => import('@/views/student/designshow')
-      //},
+      {
+        path: '/teacherScore',
+        name: 'teacherScore',
+        component: () => import('@/views/teacher/teacherScore')
+      },
       {
         path: '/teacherFinalThesis',
         name: 'teacherFinalThesis',
@@ -214,6 +219,12 @@ const router = new Router({
           path: '/notice',
           name: 'adminHome',
           component: () => import('@/views/Home')
+        },
+        
+        {
+          path: '/dictManage',
+          name: 'dictManage',
+          component: () => import('@/views/admin/dictManage')
         },
         {
           path: '/studentManage',

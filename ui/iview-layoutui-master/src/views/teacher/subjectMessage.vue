@@ -9,9 +9,6 @@
         <div slot="title-icon">
             <Icon type="ios-game-controller-b" />
         </div>
-        <div slot="title-toolbar">
-            <Button type="primary" icon="md-add"  @click="handleCreate">新增</Button>
-        </div>
 
         <!-- 条件搜索 -->
         <div slot="searchContent" class="search-content-slot">
@@ -43,9 +40,9 @@
         <div slot="search">
             
           <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doSearch">查询</Button>  &nbsp; &nbsp; &nbsp; &nbsp;
-           <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doReset">通过审核</Button>  &nbsp;
-            <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doReset">撤销审核</Button>  &nbsp;
-         
+           <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="distribution">分配选题</Button>  &nbsp;
+           <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="toExamine">通过审核</Button>  &nbsp;
+            <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doReset">拒绝审核</Button>  &nbsp;
         </div>
         <div slot="paddingContent">
           <Table border  show-summary :columns="columns2" :data="tableData"  @on-selection-change="changeSelect" ref="table"></Table>
@@ -259,16 +256,16 @@ export default {
                         title: '操作',
                         key: 'action',
                         fixed: 'right',
-                        minWidth: 120,
-                        width: 200,
+                        minWidth: 100,
+                        width: 100,
+                         align: 'center',
                         render: (h, params) => {
                             return h('div', [
                                 
                                 h('Button', {
                                     props: {
-                                        type: 'text',
+                                        type: 'primary',
                                         size: 'small',
-                                        icon:'icon iconfont icon-edit'
                                     },
                                      attrs:{
                                         title:'查看'
@@ -374,7 +371,7 @@ export default {
         }else if(this.dialogStatus == '编辑'){
              this.$axios({     
                             url: 'sub/update',
-                            method: 'put',//请求的方式
+                            method: 'post',//请求的方式
                             data:this.$Qs.stringify(this.formData),
                             // token:localStorage.getItem('token')
                         }).then(res => {
@@ -397,12 +394,13 @@ export default {
                             
                             url: 'sub/listOfTea?page=' + page  + '&pageSize=' + pageSize,
                             method: 'get',//请求的方式
-                            params:params,
+                             params:params,
                             // token:localStorage.getItem('token')
                         }).then(res => {
                           console.log(res.data)
                          this.tableData = [];
                           let list = res.data.data.beanList;
+                           this.subStuStateList = res.data.dict.subStuState
                           list.forEach((item, index) => {
                            this.tableData.push({
                               subId: item.subId,
@@ -415,7 +413,7 @@ export default {
                               teafirstReportDeadlineMail:item.firstReportDeadline,
                               lastReportDeadline:item.lastReportDeadline,
                               stuId: item.stuId,
-                              subStuState: item.subStuState,
+                              subStuState: this.subStuStateList[item.subStuState],
                               subLastScore: item.subLastScore,
                               showId: item.showId,
                               subIntroduce: item.subIntroduce,
@@ -570,11 +568,96 @@ export default {
         this.formItem.subIntroduce = ''
         this.getData(1,10);
     },
+    distribution(){
+         if (this.selectCount <= 0) {
+        this.$Message.warning("您还未选择要分配的课题");
+        return;
+        }else if (this.selectCount >1 ) {
+          this.$Message.warning("您每次只能为一个学生分配课题");
+          return;
+        }else if (this.selectList.subStuState != 1 ) {
+          this.$Message.warning("该课题已分配");
+          return;
+          }
+    console.log(this.selectList)
+    var lstprimaryKey = []
+    for(var i = 0;i<this.selectCount;i++){
+		lstprimaryKey.push(this.selectList[i].subId)
+	}
+     console.log(lstprimaryKey)
+    
+       
+           this.$axios({     
+                            url: 'sub/list',
+                            method: 'get',//请求的方式
+                            // params: {lstprimaryKey:lstprimaryKey},
+                            paramsSerializer: params => {
+                                return this.$Qs.stringify(params, { indices: false })
+                            }
+                           
+                            // token:localStorage.getItem('token')
+                        }).then(res => {
+                          console.log(res.data)
+                           this.getData(1,10);
+                        }).catch(err => {
+                            console.info('报错的信息',err);
+                            
+                        });
+          this.$Message.success("操作成功");
+        //   this.clearSelectAll();
+          this.getData();
+        
+     
+    
+    },
+    toExamine(){
+       if (this.selectCount <= 0) {
+        this.$Message.warning("您还未选择课题");
+        return;
+        }
+    for(var i = 0;i<this.selectCount;i++){
+      if (this.selectList[i].subStuState != this.subStuStateList[2] ) {
+            this.$Message.warning("请正确选择需要审核的课题");
+            console.log(this.selectList)
+           
+            return;
+          }
+	}
+   
+    var lstprimaryKey = new Array();
+     var lstprimaryKey1 = {}
+    for(var i = 0;i<this.selectCount;i++){
+      this.selectList[i].subStuState=3
+      lstprimaryKey1={
+        subId:this.selectList[i].subId,
+        subStuState:this.selectList[i].subStuState
+      }
+      
+      lstprimaryKey.push( lstprimaryKey1)
+    
+	}
+     console.log(this.lstprimaryKey)
+           this.$axios({     
+                            url: 'sub/listUpdate',
+                            method: 'post',//请求的方式
+                           data:lstprimaryKey,
+                            // token:localStorage.getItem('token')
+                        }).then(res => {
+                          console.log(res.data)
+                           this.getData(1,10);
+                        }).catch(err => {
+                            console.info('报错的信息',err);
+                            
+                        });
+          this.$Message.success("操作成功");
+        //   this.clearSelectAll();
+     
+    }
+    },
     exportDataDemo(type){
        
             window.location.href="http://localhost:8080/graManagement/downFile/exportDemo?type=" + type
         
-    }
     
     }
 };

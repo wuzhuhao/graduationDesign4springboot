@@ -485,7 +485,7 @@ export default {
                 onOk: () => {
                     console.log(row)
                  this.$axios({     
-                            url: 'tea/delete/' + row.teaId,
+                            url: 'sysdict/delete/' + row.id,
                             method: 'delete',//请求的方式
                             data:this.$Qs.stringify(this.formData),
                             // token:localStorage.getItem('token')

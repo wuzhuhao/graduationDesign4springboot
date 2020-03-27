@@ -358,7 +358,7 @@ export default {
         }else if(this.dialogStatus == '编辑'){
              this.$axios({     
                             url: 'sub/update',
-                            method: 'put',//请求的方式
+                            method: 'post',//请求的方式
                             data:this.$Qs.stringify(this.formData),
                             // token:localStorage.getItem('token')
                         }).then(res => {
@@ -387,6 +387,7 @@ export default {
                           console.log(res.data)
                          this.tableData = [];
                           let list = res.data.data.beanList;
+                           this.subStuStateList = res.data.dict.subStuState
                           list.forEach((item, index) => {
                            this.tableData.push({
                               subId: item.subId,
@@ -399,7 +400,7 @@ export default {
                               teafirstReportDeadlineMail:item.firstReportDeadline,
                               lastReportDeadline:item.lastReportDeadline,
                               stuId: item.stuId,
-                              subStuState: item.subStuState,
+                             subStuState: this.subStuStateList[item.subStuState],
                               subLastScore: item.subLastScore,
                               showId: item.showId,
                               subIntroduce: item.subIntroduce,

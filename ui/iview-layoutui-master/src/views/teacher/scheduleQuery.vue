@@ -277,7 +277,7 @@ export default {
         }else if(this.dialogStatus == '编辑'){
              this.$axios({     
                             url: 'tea/update',
-                            method: 'put',//请求的方式
+                            method: 'post',//请求的方式
                             data:this.$Qs.stringify(this.formData),
                             // token:localStorage.getItem('token')
                         }).then(res => {
@@ -296,7 +296,8 @@ export default {
        let  token = localStorage.getItem('token')
          this.$axios({
                             
-                            url: 'sub/listScheduleOfTea?page=' + page  + '&pageSize=' + pageSize,
+                            // url: 'sub/listScheduleOfTea?page=' + page  + '&pageSize=' + pageSize,
+                            url:'sub/listScheduleOfTea?isJoinStudent=true&isJoinTeacher=true&isJoinTask=true&isJoinReport=true&isJoinScoreRecord=true&subId=1',
                             method: 'get',//请求的方式
                             params:params,
                             // token:localStorage.getItem('token')

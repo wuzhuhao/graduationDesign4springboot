@@ -43,9 +43,7 @@
         <div slot="search">
             
           <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doSearch">查询</Button>  &nbsp; &nbsp; &nbsp; &nbsp;
-           <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doReset">提交审核</Button>  &nbsp;
           <Button type="info"  style="float:left;margin:0 8px"  @click="exportData(1)"><Icon type="ios-download-outline"></Icon>分配选题</Button>&nbsp;
-          <Button type="info" icon="ios-search;margin:0 8px"  style="float:left" @click="delAll">批量删除</Button>  &nbsp;
         </div>
         <div slot="btns">
           <Button type="primary" icon="md-add" @click="handleCreate">添加</Button>
@@ -149,10 +147,12 @@
 </template>
 <script>
 import MasterPage from '@/components/Master'
+import info from './assignmentSubject'
 
 export default {
     components:{
-        MasterPage
+        MasterPage,
+        info
     },
     data(){
       
@@ -165,6 +165,7 @@ export default {
                     paddingBottom: '53px',
                     position: 'static'
                 },
+                subStuStateList:{},
                 formData: {
                    subId: '',
                     subName: '',
@@ -357,7 +358,7 @@ export default {
         }else if(this.dialogStatus == '编辑'){
              this.$axios({     
                             url: 'sub/update',
-                            method: 'put',//请求的方式
+                            method: 'post',//请求的方式
                             data:this.$Qs.stringify(this.formData),
                             // token:localStorage.getItem('token')
                         }).then(res => {
@@ -386,6 +387,8 @@ export default {
                           console.log(res.data)
                          this.tableData = [];
                           let list = res.data.data.beanList;
+                          this.subStuStateList = res.data.dict.subStuState
+                          console.log( this.subStuStateList)
                           list.forEach((item, index) => {
                            this.tableData.push({
                               subId: item.subId,
@@ -398,7 +401,7 @@ export default {
                               teafirstReportDeadlineMail:item.firstReportDeadline,
                               lastReportDeadline:item.lastReportDeadline,
                               stuId: item.stuId,
-                              subStuState: item.subStuState,
+                              subStuState: this.subStuStateList[item.subStuState],
                               subLastScore: item.subLastScore,
                               showId: item.showId,
                               subIntroduce: item.subIntroduce,

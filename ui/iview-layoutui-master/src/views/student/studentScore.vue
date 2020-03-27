@@ -126,17 +126,14 @@ export default {
                           let list = res.data.data.beanList;
                           list.forEach((item, index) => {
                            this.tableData.push({
-                              teaId: item.teaId,
-                              teaPassword: item.teaPassword,
-                              teaName:item.teaName,
-                              teaSex: item.teaSex,
-                              teaAge: item.teaAge,
-                              teaBirthday:item.teaBirthday,
-                              teaPhone:item.teaPhone,
-                              teaMail:item.teaMail,
-                              teaAddress:item.teaAddress,
-                              teaRemarks: item.teaRemarks,
-                              academyId: item.academyId,
+                              finalReportScore: item.finalReportScore,
+                              firstReportScore:item.firstReportScore,
+                              id: item.id,
+                              replyScore: item.replyScore,
+                              replyTeam: item.replyTeam,
+                              replyTeamId: item.replyTeamId,
+                              scoreSubId:item.scoreSubId,
+                              subject: item.subject
                            })
                           })
                   

@@ -109,13 +109,14 @@
         
         
     </div>
+    <router-view v-if="isRouterAlive"/>
 </section>
 </template>
 <script>
 export default {
     data(){
         return{
-
+        isRouterAlive: true
         }
     },
     props:{
@@ -123,11 +124,11 @@ export default {
             type:String
         }
     },
+    methods: {
+        
+ },
     mounted(){
         // console.log('paddingContent=',this.$slots)
     },
-    methods:{
-
-    }
 }
 </script>

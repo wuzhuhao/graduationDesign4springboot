@@ -23,10 +23,10 @@
                 </Col>
                 <Col span="8">
                   <FormItem label="指导老师">
-                    <Select v-model="formItem.subNature">
-                        <Option value="beijing">New York</Option>
-                        <Option value="shanghai">London</Option>
-                        <Option value="shenzhen">Sydney</Option>
+                    <Select v-model="formItem.subSource">
+                         <Option v-for="(item,index) in subSourceList" :value="index"  >{{item}}
+                    </Option>d
+
                     </Select>
                 </FormItem>
                 </Col>
@@ -154,6 +154,7 @@ export default {
                     paddingBottom: '53px',
                     position: 'static'
                 },
+                subSourceList:{},
                 formData: {
                    subId: '',
                     subName: '',
@@ -214,7 +215,7 @@ export default {
             },
             {
                 title: '课题来源',
-                key: 'subNature',
+                key: 'subSource',
                 minWidth: 150,
             },
             {
@@ -366,19 +367,27 @@ export default {
                             
                             url: 'sub/listOfNotChoice?page=' + page  + '&pageSize=' + pageSize,
                             method: 'get',//请求的方式
-                         
+                            params:params,
                             // token:localStorage.getItem('token')
                         }).then(res => {
                           console.log(res.data)
                          this.tableData = [];
                           let list = res.data.data.beanList;
+                          this.subSourceList = res.data.dict.subSource;
+                          
+                        //   for( var key in this.subSourceList ){
+                        //     console.log( key+' : '+this.subSourceList[key] );  
+                        //     var a = new Map()
+                        //     a.set(key,value)
+                        // }
+                        
                           list.forEach((item, index) => {
                            this.tableData.push({
                               subId: item.subId,
                               subName: item.subName,
                               subNature:item.subNature,
                               subNature: item.subNature,
-                              subSource: item.subSource,
+                              subSource:this.subSourceList[item.subSource],
                               subTeaId:item.subTeaId,
                               subFile:item.subFile,
                               teafirstReportDeadlineMail:item.firstReportDeadline,
@@ -409,6 +418,7 @@ export default {
           this.getData(this.pagination.page,pageSize)
       },
       doSearch(){
+          console.log(this.formItem.subSource)
          this.getData(1,this.pagination.pageSize)
       },
      

@@ -134,7 +134,7 @@ export default {
           console.log(this.formItem)
             this.$axios({     
                             url: 'stu/update',
-                            method: 'put',//请求的方式
+                            method: 'post',//请求的方式
                             data:this.$Qs.stringify(this.formItem),
                             // token:localStorage.getItem('token')
                         }).then(res => {

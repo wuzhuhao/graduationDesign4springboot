@@ -50,7 +50,7 @@ router.beforeEach((to, from, next) => {
 axios.defaults.baseURL = '/api'
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 // axios.defaults.headers.post['Access-Control-Allow-Origin'] = 'http://localhost:8080'
-// axios.defaults.headers.post['Access-Control-Allow-Methods'] = 'GET, POST, PATCH, PUT, DELETE, OPTIONS'
+// axios.defaults.headers.post['Access-Control-Allow-Methods'] = 'GET, POST, PATCH, post, DELETE, OPTIONS'
 axios.defaults.withCredentials = true; //配置为true
 //添加请求拦截器
 // axios.interceptors.request.use(

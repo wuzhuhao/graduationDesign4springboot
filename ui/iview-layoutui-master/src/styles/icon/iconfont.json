@@ -6,6 +6,167 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "11213523",
+      "name": "详情",
+      "font_class": "dianjianxiangqing",
+      "unicode": "e91e",
+      "unicode_decimal": 59678
+    },
+    {
+      "icon_id": "28203",
+      "name": "数据",
+      "font_class": "statistics",
+      "unicode": "e645",
+      "unicode_decimal": 58949
+    },
+    {
+      "icon_id": "403794",
+      "name": "展示",
+      "font_class": "zhanshi-copy",
+      "unicode": "e631",
+      "unicode_decimal": 58929
+    },
+    {
+      "icon_id": "887932",
+      "name": "首页 (1)",
+      "font_class": "shouye1",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "975501",
+      "name": "拓展",
+      "font_class": "tuozhan",
+      "unicode": "e635",
+      "unicode_decimal": 58933
+    },
+    {
+      "icon_id": "2566777",
+      "name": "开题报告",
+      "font_class": "kaitibaogao",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "2878973",
+      "name": "评估",
+      "font_class": "pinggu",
+      "unicode": "e623",
+      "unicode_decimal": 58915
+    },
+    {
+      "icon_id": "3279925",
+      "name": "日志",
+      "font_class": "rizhi",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "3714602",
+      "name": "用户管理",
+      "font_class": "yonghuguanli",
+      "unicode": "e613",
+      "unicode_decimal": 58899
+    },
+    {
+      "icon_id": "3758280",
+      "name": "系统模块",
+      "font_class": "xitongmokuai",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "3775333",
+      "name": "答辩",
+      "font_class": "dabian",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "4611610",
+      "name": "报告",
+      "font_class": "baogao",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "5364775",
+      "name": "接收",
+      "font_class": "jieshou",
+      "unicode": "e6c6",
+      "unicode_decimal": 59078
+    },
+    {
+      "icon_id": "5427718",
+      "name": "设计",
+      "font_class": "sheji",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "6513238",
+      "name": "处理",
+      "font_class": "chuli",
+      "unicode": "e6fb",
+      "unicode_decimal": 59131
+    },
+    {
+      "icon_id": "8769880",
+      "name": "课题",
+      "font_class": "keti",
+      "unicode": "e686",
+      "unicode_decimal": 59014
+    },
+    {
+      "icon_id": "9067046",
+      "name": "任务书查询",
+      "font_class": "renwushuchaxun",
+      "unicode": "e626",
+      "unicode_decimal": 58918
+    },
+    {
+      "icon_id": "9764497",
+      "name": "进展",
+      "font_class": "jinzhan",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "10203265",
+      "name": "评分",
+      "font_class": "pingfen",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    },
+    {
+      "icon_id": "10450357",
+      "name": "公共 ",
+      "font_class": "gonggong",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "11727023",
+      "name": "个人信息",
+      "font_class": "gerenxinxi",
+      "unicode": "e634",
+      "unicode_decimal": 58932
+    },
+    {
+      "icon_id": "13159772",
+      "name": "设 置",
+      "font_class": "shezhi",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "13502976",
+      "name": "报告",
+      "font_class": "baogao1",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
       "icon_id": "9667238",
       "name": "删除",
       "font_class": "shanchu",

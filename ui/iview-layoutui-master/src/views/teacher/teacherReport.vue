@@ -261,7 +261,7 @@ export default {
         }else if(this.dialogStatus == '编辑'){
              this.$axios({     
                             url: 'task/update',
-                            method: 'put',//请求的方式
+                            method: 'post',//请求的方式
                             data:this.$Qs.stringify(this.formItem),
                             // token:localStorage.getItem('token')
                         }).then(res => {

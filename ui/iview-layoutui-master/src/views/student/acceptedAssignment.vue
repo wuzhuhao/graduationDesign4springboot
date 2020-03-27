@@ -249,7 +249,7 @@ export default {
         }else if(this.dialogStatus == '编辑'){
              this.$axios({     
                             url: 'task/update',
-                            method: 'put',//请求的方式
+                            method: 'post',//请求的方式
                             data:this.$Qs.stringify(this.formItem),
                             // token:localStorage.getItem('token')
                         }).then(res => {
@@ -269,9 +269,9 @@ export default {
        let  token = localStorage.getItem('token')
          this.$axios({
                             
-                            url: 'task/listByStu/' + userId + '/2?page=' + page + '&pageSize=' + pageSize,
+                            url: 'task/listByStu/' + userId + '/2?page=' + page + '&pageSize=' + pageSize + '&isJoinSubject=true',
                             method: 'get',//请求的方式
-                            // params:params,
+                             params:params,
                             // token:localStorage.getItem('token')
                         }).then(res => {
                           console.log(res.data)

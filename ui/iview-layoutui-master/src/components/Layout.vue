@@ -471,10 +471,29 @@ export default {
                     showInTags:true,
                     showInMenus:true,
                     choosed:true
-                },         
-                {
+                },  
+                 {
                     title:'系统模块',
                     name:'ios-flask',
+                    icon:'ios-people',
+                    children:[   
+                       
+                        {
+                            title:'系统字典',
+                            name:'dictManage',
+                            href:'dictManage',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        },
+                        
+                        
+                    ]
+                },       
+                {
+                    title:'公共管理',
+                    name:'common',
                     icon:'ios-people',
                     children:[   
                        
@@ -663,7 +682,7 @@ export default {
                 {
                     title:'拓展模块',
                     name:'game-platform-manage',
-                    icon:'icon iconfont icon-edit',
+                    icon:'icon iconfont icon-jieshou',
                     children:[
                         {
                             title:'历届优秀毕设（论文）',
@@ -699,8 +718,8 @@ export default {
                     children:[
                         {
                             title:'学生进度查询',
-                            name:'studentSelection',
-                            href:'/studentSelection',
+                            name:'scheduleQuery',
+                            href:'/scheduleQuery',
                             closable:true,
                             showInTags:false,
                             showInMenus:true,
@@ -744,15 +763,6 @@ export default {
                             title:'开题报告',
                             name:'teacherReport',
                             href:'/teacherReport',
-                            closable:true,
-                            showInTags:false,
-                            showInMenus:true,
-                            choosed:false
-                        },
-                        {
-                            title:'中期检查',
-                            name:'acceptedAssignment',
-                            href:'/acceptedAssignment',
                             closable:true,
                             showInTags:false,
                             showInMenus:true,
@@ -880,9 +890,9 @@ export default {
                     icon:'ios-cafe',
                     children:[
                         {
-                            title:'成绩总评学生',
-                            name:'about29',
-                            href:'/studentScore',
+                            title:'成绩总评',
+                            name:'teacherScore',
+                            href:'/teacherScore',
                             closable:true,
                             showInTags:false,
                             showInMenus:true,
