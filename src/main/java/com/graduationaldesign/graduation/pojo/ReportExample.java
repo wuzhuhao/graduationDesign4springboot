@@ -690,6 +690,217 @@ public class ReportExample implements Example {
             return (Criteria) this;
         }
 
+        public Criteria andReportContentIsNull() {
+            addCriterion("report_content is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReportContentIsNotNull() {
+            addCriterion("report_content is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReportContentEqualTo(String value) {
+            addCriterion("report_content =", value, "reportContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReportContentNotEqualTo(String value) {
+            addCriterion("report_content <>", value, "reportContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReportContentGreaterThan(String value) {
+            addCriterion("report_content >", value, "reportContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReportContentGreaterThanOrEqualTo(String value) {
+            addCriterion("report_content >=", value, "reportContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReportContentLessThan(String value) {
+            addCriterion("report_content <", value, "reportContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReportContentLessThanOrEqualTo(String value) {
+            addCriterion("report_content <=", value, "reportContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReportContentLike(String value) {
+            addCriterion("report_content like", value, "reportContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReportContentNotLike(String value) {
+            addCriterion("report_content not like", value, "reportContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReportContentIn(List<String> values) {
+            addCriterion("report_content in", values, "reportContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReportContentNotIn(List<String> values) {
+            addCriterion("report_content not in", values, "reportContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReportContentBetween(String value1, String value2) {
+            addCriterion("report_content between", value1, value2, "reportContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReportContentNotBetween(String value1, String value2) {
+            addCriterion("report_content not between", value1, value2, "reportContent");
+            return (Criteria) this;
+        }
+
+
+        public Criteria andTeaSuggestionIsNull() {
+            addCriterion("tea_suggestion is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeaSuggestionIsNotNull() {
+            addCriterion("tea_suggestion is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeaSuggestionEqualTo(String value) {
+            addCriterion("tea_suggestion =", value, "teaSuggestion");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeaSuggestionNotEqualTo(String value) {
+            addCriterion("tea_suggestion <>", value, "teaSuggestion");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeaSuggestionGreaterThan(String value) {
+            addCriterion("tea_suggestion >", value, "teaSuggestion");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeaSuggestionGreaterThanOrEqualTo(String value) {
+            addCriterion("tea_suggestion >=", value, "teaSuggestion");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeaSuggestionLessThan(String value) {
+            addCriterion("tea_suggestion <", value, "teaSuggestion");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeaSuggestionLessThanOrEqualTo(String value) {
+            addCriterion("tea_suggestion <=", value, "teaSuggestion");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeaSuggestionLike(String value) {
+            addCriterion("tea_suggestion like", value, "teaSuggestion");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeaSuggestionNotLike(String value) {
+            addCriterion("tea_suggestion not like", value, "teaSuggestion");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeaSuggestionIn(List<String> values) {
+            addCriterion("tea_suggestion in", values, "teaSuggestion");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeaSuggestionNotIn(List<String> values) {
+            addCriterion("tea_suggestion not in", values, "teaSuggestion");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeaSuggestionBetween(String value1, String value2) {
+            addCriterion("tea_suggestion between", value1, value2, "teaSuggestion");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeaSuggestionNotBetween(String value1, String value2) {
+            addCriterion("tea_suggestion not between", value1, value2, "teaSuggestion");
+            return (Criteria) this;
+        }
+
+        public Criteria andStuMessageIsNull() {
+            addCriterion("stu_message is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStuMessageIsNotNull() {
+            addCriterion("stu_message is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStuMessageEqualTo(String value) {
+            addCriterion("stu_message =", value, "stuMessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andStuMessageNotEqualTo(String value) {
+            addCriterion("stu_message <>", value, "stuMessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andStuMessageGreaterThan(String value) {
+            addCriterion("stu_message >", value, "stuMessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andStuMessageGreaterThanOrEqualTo(String value) {
+            addCriterion("stu_message >=", value, "stuMessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andStuMessageLessThan(String value) {
+            addCriterion("stu_message <", value, "stuMessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andStuMessageLessThanOrEqualTo(String value) {
+            addCriterion("stu_message <=", value, "stuMessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andStuMessageLike(String value) {
+            addCriterion("stu_message like", value, "stuMessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andStuMessageNotLike(String value) {
+            addCriterion("stu_message not like", value, "stuMessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andStuMessageIn(List<String> values) {
+            addCriterion("stu_message in", values, "stuMessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andStuMessageNotIn(List<String> values) {
+            addCriterion("stu_message not in", values, "stuMessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andStuMessageBetween(String value1, String value2) {
+            addCriterion("stu_message between", value1, value2, "stuMessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andStuMessageNotBetween(String value1, String value2) {
+            addCriterion("stu_message not between", value1, value2, "stuMessage");
+            return (Criteria) this;
+        }
+
         public Criteria andJoinStuIdEqualTo(String value) {
             addCriterion("t_subject.stu_id = ", value, "t_subject.stu_id");
             return (Criteria) this;

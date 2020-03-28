@@ -618,6 +618,216 @@ public class ApplyExample implements Example {
             return (Criteria) this;
         }
 
+        public Criteria andApplyContentIsNull() {
+            addCriterion("apply_content is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyContentIsNotNull() {
+            addCriterion("apply_content is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyContentEqualTo(String value) {
+            addCriterion("apply_content =", value, "applyContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyContentNotEqualTo(String value) {
+            addCriterion("apply_content <>", value, "applyContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyContentGreaterThan(String value) {
+            addCriterion("apply_content >", value, "applyContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyContentGreaterThanOrEqualTo(String value) {
+            addCriterion("apply_content >=", value, "applyContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyContentLessThan(String value) {
+            addCriterion("apply_content <", value, "applyContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyContentLessThanOrEqualTo(String value) {
+            addCriterion("apply_content <=", value, "applyContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyContentLike(String value) {
+            addCriterion("apply_content like", value, "applyContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyContentNotLike(String value) {
+            addCriterion("apply_content not like", value, "applyContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyContentIn(List<String> values) {
+            addCriterion("apply_content in", values, "applyContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyContentNotIn(List<String> values) {
+            addCriterion("apply_content not in", values, "applyContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyContentBetween(String value1, String value2) {
+            addCriterion("apply_content between", value1, value2, "applyContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyContentNotBetween(String value1, String value2) {
+            addCriterion("apply_content not between", value1, value2, "applyContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyReasonIsNull() {
+            addCriterion("apply_reason is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyReasonIsNotNull() {
+            addCriterion("apply_reason is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyReasonEqualTo(String value) {
+            addCriterion("apply_reason =", value, "applyReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyReasonNotEqualTo(String value) {
+            addCriterion("apply_reason <>", value, "applyReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyReasonGreaterThan(String value) {
+            addCriterion("apply_reason >", value, "applyReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyReasonGreaterThanOrEqualTo(String value) {
+            addCriterion("apply_reason >=", value, "applyReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyReasonLessThan(String value) {
+            addCriterion("apply_reason <", value, "applyReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyReasonLessThanOrEqualTo(String value) {
+            addCriterion("apply_reason <=", value, "applyReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyReasonLike(String value) {
+            addCriterion("apply_reason like", value, "applyReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyReasonNotLike(String value) {
+            addCriterion("apply_reason not like", value, "applyReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyReasonIn(List<String> values) {
+            addCriterion("apply_reason in", values, "applyReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyReasonNotIn(List<String> values) {
+            addCriterion("apply_reason not in", values, "applyReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyReasonBetween(String value1, String value2) {
+            addCriterion("apply_reason between", value1, value2, "applyReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyReasonNotBetween(String value1, String value2) {
+            addCriterion("apply_reason not between", value1, value2, "applyReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyReplyIsNull() {
+            addCriterion("apply_reply is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyReplyIsNotNull() {
+            addCriterion("apply_reply is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyReplyEqualTo(String value) {
+            addCriterion("apply_reply =", value, "applyReply");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyReplyNotEqualTo(String value) {
+            addCriterion("apply_reply <>", value, "applyReply");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyReplyGreaterThan(String value) {
+            addCriterion("apply_reply >", value, "applyReply");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyReplyGreaterThanOrEqualTo(String value) {
+            addCriterion("apply_reply >=", value, "applyReply");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyReplyLessThan(String value) {
+            addCriterion("apply_reply <", value, "applyReply");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyReplyLessThanOrEqualTo(String value) {
+            addCriterion("apply_reply <=", value, "applyReply");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyReplyLike(String value) {
+            addCriterion("apply_reply like", value, "applyReply");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyReplyNotLike(String value) {
+            addCriterion("apply_reply not like", value, "applyReply");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyReplyIn(List<String> values) {
+            addCriterion("apply_reply in", values, "applyReply");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyReplyNotIn(List<String> values) {
+            addCriterion("apply_reply not in", values, "applyReply");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyReplyBetween(String value1, String value2) {
+            addCriterion("apply_reply between", value1, value2, "applyReply");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyReplyNotBetween(String value1, String value2) {
+            addCriterion("apply_reply not between", value1, value2, "applyReply");
+            return (Criteria) this;
+        }
+
         public Criteria andJoinEqualLike(String value, String tableName) {
             addCriterion(tableName + " like ", value, tableName);
             return (Criteria) this;

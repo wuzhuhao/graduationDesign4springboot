@@ -7,7 +7,7 @@ import com.graduationaldesign.graduation.pojo.GoodGraduationExample;
 import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.GoodGraduationService;
 import com.graduationaldesign.graduation.util.PageBean;
-import com.graduationaldesign.graduation.util.ResponseStatu;
+import com.graduationaldesign.graduation.util.ResponseStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -92,6 +92,6 @@ public class GoodGraduationServiceImpl implements GoodGraduationService {
             e.printStackTrace();
             message = MessageFormat.format("批量修改{0}失败", rootPropeties.getGoodGraduation());
         }
-        return ResponseStatu.success(message);
+        return ResponseStatus.success(message);
     }
 }

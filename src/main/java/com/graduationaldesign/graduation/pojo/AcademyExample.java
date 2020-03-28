@@ -297,6 +297,76 @@ public class AcademyExample implements Example {
             return (Criteria) this;
         }
 
+        public Criteria andAcaIntroduceIsNull() {
+            addCriterion("aca_introduce is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAcaIntroduceIsNotNull() {
+            addCriterion("aca_introduce is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAcaIntroduceEqualTo(String value) {
+            addCriterion("aca_introduce =", value, "acaIntroduce");
+            return (Criteria) this;
+        }
+
+        public Criteria andAcaIntroduceNotEqualTo(String value) {
+            addCriterion("aca_introduce <>", value, "acaIntroduce");
+            return (Criteria) this;
+        }
+
+        public Criteria andAcaIntroduceGreaterThan(String value) {
+            addCriterion("aca_introduce >", value, "acaIntroduce");
+            return (Criteria) this;
+        }
+
+        public Criteria andAcaIntroduceGreaterThanOrEqualTo(String value) {
+            addCriterion("aca_introduce >=", value, "acaIntroduce");
+            return (Criteria) this;
+        }
+
+        public Criteria andAcaIntroduceLessThan(String value) {
+            addCriterion("aca_introduce <", value, "acaIntroduce");
+            return (Criteria) this;
+        }
+
+        public Criteria andAcaIntroduceLessThanOrEqualTo(String value) {
+            addCriterion("aca_introduce <=", value, "acaIntroduce");
+            return (Criteria) this;
+        }
+
+        public Criteria andAcaIntroduceLike(String value) {
+            addCriterion("aca_introduce like", value, "acaIntroduce");
+            return (Criteria) this;
+        }
+
+        public Criteria andAcaIntroduceNotLike(String value) {
+            addCriterion("aca_introduce not like", value, "acaIntroduce");
+            return (Criteria) this;
+        }
+
+        public Criteria andAcaIntroduceIn(List<String> values) {
+            addCriterion("aca_introduce in", values, "acaIntroduce");
+            return (Criteria) this;
+        }
+
+        public Criteria andAcaIntroduceNotIn(List<String> values) {
+            addCriterion("aca_introduce not in", values, "acaIntroduce");
+            return (Criteria) this;
+        }
+
+        public Criteria andAcaIntroduceBetween(String value1, String value2) {
+            addCriterion("aca_introduce between", value1, value2, "acaIntroduce");
+            return (Criteria) this;
+        }
+
+        public Criteria andAcaIntroduceNotBetween(String value1, String value2) {
+            addCriterion("aca_introduce not between", value1, value2, "acaIntroduce");
+            return (Criteria) this;
+        }
+
         public Criteria andJoinEqualLike(String value, String tableName) {
             addCriterion(tableName + " like ", value, tableName);
             return (Criteria) this;

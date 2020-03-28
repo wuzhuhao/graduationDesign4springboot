@@ -7,7 +7,7 @@ import com.graduationaldesign.graduation.pojo.SysdictExample;
 import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.SysdictService;
 import com.graduationaldesign.graduation.util.PageBean;
-import com.graduationaldesign.graduation.util.ResponseStatu;
+import com.graduationaldesign.graduation.util.ResponseStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -53,8 +51,9 @@ public class SysdictServiceImpl implements SysdictService {
     }
 
     @Override
-    public Map<String, Map<Object, String>> selectByModel(String Modelvalue) {
-        Map<String, Map<Object, String>> map = new HashMap<>();
+    public Map<String, Object> selectByModel(String Modelvalue) {
+        Map<String, Object> map = new HashMap<>();
+        Map<Long, String> p_name_map = new HashMap<>();
         //查出model_id
         SysdictExample example = new SysdictExample();
         SysdictExample.Criteria criteria = example.createCriteria();
@@ -62,20 +61,28 @@ public class SysdictServiceImpl implements SysdictService {
         if (!Modelvalue.equals("all")) {
             criteria.andDictValueEqualTo(Modelvalue);
         }
-        Long pId;
+        List<Long> pId = new ArrayList<>();
+        pId.add(0L);
         try {
-            pId = sysdictMapper.selectByExample(example).get(0).getId();
+            List<Sysdict> sysdictList = sysdictMapper.selectByExample(example);
+            p_name_map = sysdictList.stream().collect(Collectors.toMap(Sysdict::getId, Sysdict::getDictValue));
+            pId.addAll(sysdictList.stream().map(e -> e.getId()).collect(Collectors.toList()));
         } catch (IndexOutOfBoundsException e) {
             log.error("无数据，默认不输出");
-            pId = 0L;
+            pId = Arrays.asList(0L);
         }
         //查出所有item_id
         example = new SysdictExample();
         criteria = example.createCriteria();
-        criteria.andDictParentidEqualTo(pId);
+        criteria.andDictParentidIn(pId);
         criteria.andDictTypeEqualTo("item");
         List<Sysdict> itemList = sysdictMapper.selectByExample(example);
         for (Sysdict sysdict : itemList) {
+            String modelName = p_name_map.get(sysdict.getDictParentid());
+            Map<String, Map> map1 = (Map<String, Map>) map.get(modelName);
+            if (map.get(modelName) == null) {
+                map1 = new HashMap<>();
+            }
             Long id = sysdict.getId();
             String name = sysdict.getDictValue();
             example = new SysdictExample();
@@ -83,7 +90,8 @@ public class SysdictServiceImpl implements SysdictService {
             criteria.andDictParentidEqualTo(id);
             criteria.andDictTypeEqualTo("dict");
             List<Sysdict> sysdictList = sysdictMapper.selectByExample(example);
-            map.put(name, sysdictList.stream().collect(Collectors.toMap(Sysdict::getDictValue, Sysdict::getDictText)));
+            map1.put(name, sysdictList.stream().collect(Collectors.toMap(Sysdict::getDictValue, Sysdict::getDictText)));
+            map.put(modelName, map1);
         }
         return map;
     }
@@ -110,7 +118,7 @@ public class SysdictServiceImpl implements SysdictService {
             e.printStackTrace();
             message = MessageFormat.format("批量修改{0}失败", rootPropeties.getSysdict());
         }
-        return ResponseStatu.success(message);
+        return ResponseStatus.success(message);
     }
 
     @Override

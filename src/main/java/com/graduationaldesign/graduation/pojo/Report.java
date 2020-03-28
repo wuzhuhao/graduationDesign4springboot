@@ -1,5 +1,6 @@
 package com.graduationaldesign.graduation.pojo;
 
+import cn.hutool.core.date.DateUtil;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -194,8 +195,14 @@ public class Report implements Serializable {
      *
      * @return t_report.report_subtime, 报告提交时间
      */
+    @JsonIgnore
     public Date getReportSubtime() {
         return reportSubtime;
+    }
+
+    @JsonGetter(value = "reportSubtime")
+    public String getReportSubtimeJson() {
+        return DateUtil.formatDateTime(reportSubtime);
     }
 
     /**

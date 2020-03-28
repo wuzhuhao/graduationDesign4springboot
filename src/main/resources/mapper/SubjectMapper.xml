@@ -389,9 +389,16 @@
             <if test="lastReportDeadline != null">
                 last_report_deadline = #{lastReportDeadline,jdbcType=TIMESTAMP},
             </if>
-            <if test="stuId != null">
-                stu_id = #{stuId,jdbcType=VARCHAR},
-            </if>
+            <choose>
+                <when test="stuId != null">
+                    stu_id = #{stuId,jdbcType=VARCHAR},
+                </when>
+                <otherwise>
+                    <if test="subStuState == 3">
+                        stu_id = NULL,
+                    </if>
+                </otherwise>
+            </choose>
             <if test="subStuState != null">
                 sub_stu_state = #{subStuState,jdbcType=INTEGER},
             </if>

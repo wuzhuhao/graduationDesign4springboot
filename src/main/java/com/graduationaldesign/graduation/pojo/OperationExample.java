@@ -358,6 +358,76 @@ public class OperationExample implements Example {
             return (Criteria) this;
         }
 
+        public Criteria andOperaContentIsNull() {
+            addCriterion("opera_content is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperaContentIsNotNull() {
+            addCriterion("opera_content is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperaContentEqualTo(String value) {
+            addCriterion("opera_content =", value, "operaContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperaContentNotEqualTo(String value) {
+            addCriterion("opera_content <>", value, "operaContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperaContentGreaterThan(String value) {
+            addCriterion("opera_content >", value, "operaContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperaContentGreaterThanOrEqualTo(String value) {
+            addCriterion("opera_content >=", value, "operaContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperaContentLessThan(String value) {
+            addCriterion("opera_content <", value, "operaContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperaContentLessThanOrEqualTo(String value) {
+            addCriterion("opera_content <=", value, "operaContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperaContentLike(String value) {
+            addCriterion("opera_content like", value, "operaContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperaContentNotLike(String value) {
+            addCriterion("opera_content not like", value, "operaContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperaContentIn(List<String> values) {
+            addCriterion("opera_content in", values, "operaContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperaContentNotIn(List<String> values) {
+            addCriterion("opera_content not in", values, "operaContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperaContentBetween(String value1, String value2) {
+            addCriterion("opera_content between", value1, value2, "operaContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperaContentNotBetween(String value1, String value2) {
+            addCriterion("opera_content not between", value1, value2, "operaContent");
+            return (Criteria) this;
+        }
+
         public Criteria andJoinEqualLike(String value, String tableName) {
             addCriterion(tableName + " like ", value, tableName);
             return (Criteria) this;

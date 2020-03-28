@@ -430,6 +430,76 @@ public class DesignShowExample implements Example {
             return (Criteria) this;
         }
 
+        public Criteria andShowContentIsNull() {
+            addCriterion("show_content is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowContentIsNotNull() {
+            addCriterion("show_content is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowContentEqualTo(String value) {
+            addCriterion("show_content =", value, "showContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowContentNotEqualTo(String value) {
+            addCriterion("show_content <>", value, "showContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowContentGreaterThan(String value) {
+            addCriterion("show_content >", value, "showContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowContentGreaterThanOrEqualTo(String value) {
+            addCriterion("show_content >=", value, "showContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowContentLessThan(String value) {
+            addCriterion("show_content <", value, "showContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowContentLessThanOrEqualTo(String value) {
+            addCriterion("show_content <=", value, "showContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowContentLike(String value) {
+            addCriterion("show_content like", value, "showContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowContentNotLike(String value) {
+            addCriterion("show_content not like", value, "showContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowContentIn(List<String> values) {
+            addCriterion("show_content in", values, "showContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowContentNotIn(List<String> values) {
+            addCriterion("show_content not in", values, "showContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowContentBetween(String value1, String value2) {
+            addCriterion("show_content between", value1, value2, "showContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowContentNotBetween(String value1, String value2) {
+            addCriterion("show_content not between", value1, value2, "showContent");
+            return (Criteria) this;
+        }
+
         public Criteria andJoinEqualLike(String value, String tableName) {
             addCriterion(tableName + " like ", value, tableName);
             return (Criteria) this;

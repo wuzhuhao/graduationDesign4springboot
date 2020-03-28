@@ -7,7 +7,7 @@ import com.graduationaldesign.graduation.pojo.TaskExample;
 import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.TaskService;
 import com.graduationaldesign.graduation.util.PageBean;
-import com.graduationaldesign.graduation.util.ResponseStatu;
+import com.graduationaldesign.graduation.util.ResponseStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -165,6 +165,6 @@ public class TaskServiceImpl implements TaskService {
             e.printStackTrace();
             message = MessageFormat.format("批量修改{0}失败", rootPropeties.getTask());
         }
-        return ResponseStatu.success(message);
+        return ResponseStatus.success(message);
     }
 }

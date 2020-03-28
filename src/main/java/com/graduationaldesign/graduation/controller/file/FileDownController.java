@@ -44,7 +44,7 @@ public class FileDownController {
         String filePathName = fileName;
         File file = new File("upload/" + filePathName);
         if (!file.exists()) {
-            return ResponseStatu.failure("文件不存在");
+            return ResponseStatus.failure("文件不存在", this);
         }
         //使用URLEncoder解决中文变__问题
         response.setHeader("Content-Disposition",
@@ -64,9 +64,9 @@ public class FileDownController {
             inStream.close();
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseStatu.failure("下载失败");
+            return ResponseStatus.failure("下载失败", this);
         }
-        return ResponseStatu.success("下载成功");
+        return ResponseStatus.success("下载成功", this);
     }
 
     @GetMapping("/downMultipleFiles")
@@ -99,7 +99,7 @@ public class FileDownController {
             log.info("正在删除第" + i + "个文件");
         }
         f.delete();
-        return ResponseStatu.success("多文件下载成功");
+        return ResponseStatus.success("多文件下载成功", this);
     }
 
     @RequestMapping("/export")
@@ -118,13 +118,13 @@ public class FileDownController {
         ResponseEntity<Object> result = null;
         try {
             fileDownService.exportDemo(type, response);
-            result = ResponseStatu.success("导出模板成功");
+            result = ResponseStatus.success("导出模板成功", this);
         } catch (RuntimeException e) {
             e.printStackTrace();
-            result = ResponseStatu.failure(e.getMessage());
+            result = ResponseStatus.failure(e.getMessage(), this);
         } catch (Exception e) {
             e.printStackTrace();
-            result = ResponseStatu.failure("导出模板失败");
+            result = ResponseStatus.failure("导出模板失败", this);
         }
         return result;
     }
@@ -156,13 +156,13 @@ public class FileDownController {
             }
             map.put("listInfo", list);
             WordUtils.exportMillCertificateWord(request, response, map, "测试title", "progress.ftl");
-            result = ResponseStatu.success("导出模板成功");
+            result = ResponseStatus.success("导出模板成功", this);
         } catch (RuntimeException e) {
             e.printStackTrace();
-            result = ResponseStatu.failure(e.getMessage());
+            result = ResponseStatus.failure(e.getMessage(), this);
         } catch (Exception e) {
             e.printStackTrace();
-            result = ResponseStatu.failure("导出模板失败");
+            result = ResponseStatus.failure("导出模板失败", this);
         }
         return result;
     }

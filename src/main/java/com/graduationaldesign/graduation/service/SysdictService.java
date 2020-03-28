@@ -25,7 +25,7 @@ public interface SysdictService {
 
     Sysdict selectByPrimaryKey(Long id);
 
-    Map<String, Map<Object, String>> selectByModel(String Modelvalue);
+    Map<String, Object> selectByModel(String Modelvalue);
 
     int updateByPrimaryKeySelective(Sysdict record);
 

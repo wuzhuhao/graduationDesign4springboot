@@ -8,7 +8,7 @@ import com.graduationaldesign.graduation.pojo.UserModel;
 import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.StudentService;
 import com.graduationaldesign.graduation.util.PageBean;
-import com.graduationaldesign.graduation.util.ResponseStatu;
+import com.graduationaldesign.graduation.util.ResponseStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -178,6 +178,6 @@ public class StudentServiceImpl implements StudentService {
             e.printStackTrace();
             message = MessageFormat.format("批量修改{0}失败", rootPropeties.getStudent());
         }
-        return ResponseStatu.success(message);
+        return ResponseStatus.success(message);
     }
 }

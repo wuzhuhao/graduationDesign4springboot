@@ -3,7 +3,7 @@ package com.graduationaldesign.graduation.controller;
 import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.pojo.ScoreRecord;
 import com.graduationaldesign.graduation.service.ScoreRecordService;
-import com.graduationaldesign.graduation.util.ResponseStatu;
+import com.graduationaldesign.graduation.util.ResponseStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,10 +32,10 @@ public class ScoreRecordController {
     public ResponseEntity<Object> add(ScoreRecord record) {
         ResponseEntity<Object> result = null;
         if (scoreRecordService.insertSelective(record) <= 0) {
-            result = ResponseStatu.failure(
-                    MessageFormat.format("添加{0}失败", rootPropeties.getScoreRecord()));
+            result = ResponseStatus.failure(
+                    MessageFormat.format("添加{0}失败", rootPropeties.getScoreRecord()), this);
         } else {
-            result = ResponseStatu.success(
+            result = ResponseStatus.success(
                     MessageFormat.format("添加{0}成功", rootPropeties.getScoreRecord()));
         }
         return result;
@@ -45,10 +45,10 @@ public class ScoreRecordController {
     public ResponseEntity<Object> update(ScoreRecord record) {
         ResponseEntity<Object> result = null;
         if (scoreRecordService.updateByPrimaryKeySelective(record) <= 0) {
-            result = ResponseStatu.failure(
-                    MessageFormat.format("修改{0}失败", rootPropeties.getScoreRecord()));
+            result = ResponseStatus.failure(
+                    MessageFormat.format("修改{0}失败", rootPropeties.getScoreRecord()), this);
         } else {
-            result = ResponseStatu.success(
+            result = ResponseStatus.success(
                     MessageFormat.format("修改{0}成功", rootPropeties.getScoreRecord()));
         }
         return result;
@@ -60,10 +60,10 @@ public class ScoreRecordController {
             @PathVariable(value = "primaryKey") Integer primaryKey) {
         ResponseEntity<Object> result = null;
         if (scoreRecordService.deleteByPrimaryKey(primaryKey) <= 0) {
-            result = ResponseStatu.failure(
-                    MessageFormat.format("删除{0}失败", rootPropeties.getScoreRecord()));
+            result = ResponseStatus.failure(
+                    MessageFormat.format("删除{0}失败", rootPropeties.getScoreRecord()), this);
         } else {
-            result = ResponseStatu.success(
+            result = ResponseStatus.success(
                     MessageFormat.format("删除{0}成功", rootPropeties.getScoreRecord()));
         }
         return result;
@@ -74,10 +74,10 @@ public class ScoreRecordController {
         ResponseEntity<Object> result = null;
         ScoreRecord record = scoreRecordService.selectByPrimaryKey(primaryKey);
         if (record == null) {
-            result = ResponseStatu.failure(
-                    MessageFormat.format("该{0}不存在", rootPropeties.getScoreRecord()));
+            result = ResponseStatus.failure(
+                    MessageFormat.format("该{0}不存在", rootPropeties.getScoreRecord()), this);
         } else {
-            result = ResponseStatu.success(record);
+            result = ResponseStatus.success(record, this);
         }
         return result;
     }
@@ -87,11 +87,10 @@ public class ScoreRecordController {
                                        @RequestParam(required = false, defaultValue = "1") int page,
                                        @RequestParam(required = false, defaultValue = "5") int pageSize) {
         try {
-            return ResponseStatu
-                    .success(scoreRecordService.listByPage(params, page, pageSize));
+            return ResponseStatus.success(scoreRecordService.listByPage(params, page, pageSize), this);
         } catch (Exception e) {
-            return ResponseStatu.failure(
-                    MessageFormat.format("获取{0}列表失败", rootPropeties.getAcademy()));
+            return ResponseStatus.failure(
+                    MessageFormat.format("获取{0}列表失败", rootPropeties.getAcademy()), this);
         }
     }
 
@@ -100,12 +99,12 @@ public class ScoreRecordController {
         ResponseEntity<Object> result = null;
         try {
             scoreRecordService.deleteByPrimaryKeyIn(lstprimaryKey);
-            result = ResponseStatu.success(
+            result = ResponseStatus.success(
                     MessageFormat.format("批量删除{0}成功", rootPropeties.getAcademy()));
         } catch (Exception e) {
             e.printStackTrace();
-            result = ResponseStatu.failure(
-                    MessageFormat.format("批量删除{0}失败", rootPropeties.getAcademy()));
+            result = ResponseStatus.failure(
+                    MessageFormat.format("批量删除{0}失败", rootPropeties.getAcademy()), this);
         }
         return result;
     }
@@ -115,7 +114,7 @@ public class ScoreRecordController {
         try {
             return scoreRecordService.updateListByPrimaryKeySelective(lstScoreRecord);
         } catch (RuntimeException e) {
-            return ResponseStatu.failure(e.getMessage());
+            return ResponseStatus.failure(e.getMessage(), this);
         }
     }
 }

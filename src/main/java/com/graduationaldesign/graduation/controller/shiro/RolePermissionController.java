@@ -3,7 +3,7 @@ package com.graduationaldesign.graduation.controller.shiro;
 import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.pojo.RolePermission;
 import com.graduationaldesign.graduation.service.RolePermissionService;
-import com.graduationaldesign.graduation.util.ResponseStatu;
+import com.graduationaldesign.graduation.util.ResponseStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -35,10 +35,10 @@ public class RolePermissionController {
     public ResponseEntity<Object> add(RolePermission record) {
         ResponseEntity<Object> result = null;
         if (rolePermissionService.insertSelective(record) <= 0) {
-            result = ResponseStatu.failure(
-                    MessageFormat.format("添加{0}失败", rootPropeties.getRolePermission()));
+            result = ResponseStatus.failure(
+                    MessageFormat.format("添加{0}失败", rootPropeties.getRolePermission()), this);
         } else {
-            result = ResponseStatu.success(
+            result = ResponseStatus.success(
                     MessageFormat.format("添加{0}成功", rootPropeties.getRolePermission()));
         }
         return result;
@@ -48,10 +48,10 @@ public class RolePermissionController {
     public ResponseEntity<Object> update(RolePermission record) {
         ResponseEntity<Object> result = null;
         if (rolePermissionService.updateByPrimaryKeySelective(record) <= 0) {
-            result = ResponseStatu.failure(
-                    MessageFormat.format("修改{0}失败", rootPropeties.getRolePermission()));
+            result = ResponseStatus.failure(
+                    MessageFormat.format("修改{0}失败", rootPropeties.getRolePermission()), this);
         } else {
-            result = ResponseStatu.success(
+            result = ResponseStatus.success(
                     MessageFormat.format("修改{0}成功", rootPropeties.getRolePermission()));
         }
         return result;
@@ -63,10 +63,10 @@ public class RolePermissionController {
             @PathVariable(value = "primaryKey") long primaryKey) {
         ResponseEntity<Object> result = null;
         if (rolePermissionService.deleteByPrimaryKey(primaryKey) <= 0) {
-            result = ResponseStatu.failure(
-                    MessageFormat.format("删除{0}失败", rootPropeties.getRolePermission()));
+            result = ResponseStatus.failure(
+                    MessageFormat.format("删除{0}失败", rootPropeties.getRolePermission()), this);
         } else {
-            result = ResponseStatu.success(
+            result = ResponseStatus.success(
                     MessageFormat.format("删除{0}成功", rootPropeties.getRolePermission()));
         }
         return result;
@@ -77,10 +77,10 @@ public class RolePermissionController {
         ResponseEntity<Object> result = null;
         RolePermission record = rolePermissionService.selectByPrimaryKey(primaryKey);
         if (record == null) {
-            result = ResponseStatu.failure(
-                    MessageFormat.format("该{0}不存在", rootPropeties.getRolePermission()));
+            result = ResponseStatus.failure(
+                    MessageFormat.format("该{0}不存在", rootPropeties.getRolePermission()), this);
         } else {
-            result = ResponseStatu.success(record);
+            result = ResponseStatus.success(record, this);
         }
         return result;
     }
@@ -90,12 +90,10 @@ public class RolePermissionController {
                                        @RequestParam(required = false, defaultValue = "1") int page,
                                        @RequestParam(required = false, defaultValue = "5") int pageSize) {
         try {
-            return ResponseStatu
-                    .success(rolePermissionService
-                            .listByPage(params, page, pageSize));
+            return ResponseStatus.success(rolePermissionService.listByPage(params, page, pageSize), this);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseStatu.failure("获取列表失败");
+            return ResponseStatus.failure("获取列表失败", this);
         }
     }
 
@@ -104,12 +102,12 @@ public class RolePermissionController {
         ResponseEntity<Object> result = null;
         try {
             rolePermissionService.deleteByPrimaryKeyIn(lstprimaryKey);
-            result = ResponseStatu.success(
+            result = ResponseStatus.success(
                     MessageFormat.format("批量删除{0}成功", rootPropeties.getAcademy()));
         } catch (Exception e) {
             e.printStackTrace();
-            result = ResponseStatu.failure(
-                    MessageFormat.format("批量删除{0}失败", rootPropeties.getAcademy()));
+            result = ResponseStatus.failure(
+                    MessageFormat.format("批量删除{0}失败", rootPropeties.getAcademy()), this);
         }
         return result;
     }
@@ -119,7 +117,7 @@ public class RolePermissionController {
         try {
             return rolePermissionService.updateListByPrimaryKeySelective(lstRolePermission);
         } catch (RuntimeException e) {
-            return ResponseStatu.failure(e.getMessage());
+            return ResponseStatus.failure(e.getMessage(), this);
         }
     }
 

@@ -488,6 +488,66 @@ public class NoticeExample implements Example {
             return (Criteria) this;
         }
 
+        public Criteria andNoticeContentIsNull() {
+            addCriterion("notice_content is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeContentIsNotNull() {
+            addCriterion("notice_content is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeContentEqualTo(String value) {
+            addCriterion("notice_content =", value, "noticeContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeContentNotEqualTo(String value) {
+            addCriterion("notice_content <>", value, "noticeContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeContentGreaterThan(String value) {
+            addCriterion("notice_content >", value, "noticeContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeContentGreaterThanOrEqualTo(String value) {
+            addCriterion("notice_content >=", value, "noticeContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeContentLessThan(String value) {
+            addCriterion("notice_content <", value, "noticeContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeContentLessThanOrEqualTo(String value) {
+            addCriterion("notice_content <=", value, "noticeContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeContentLike(String value) {
+            addCriterion("notice_content like", value, "noticeContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeContentNotLike(String value) {
+            addCriterion("notice_content not like", value, "noticeContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeContentIn(List<String> values) {
+            addCriterion("notice_content in", values, "noticeContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoticeContentNotIn(List<String> values) {
+            addCriterion("notice_content not in", values, "noticeContent");
+            return (Criteria) this;
+        }
+
         public Criteria andJoinEqualLike(String value, String tableName) {
             addCriterion(tableName + " like ", value, tableName);
             return (Criteria) this;

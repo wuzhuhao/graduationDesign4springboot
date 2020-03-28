@@ -7,9 +7,10 @@ import com.graduationaldesign.graduation.pojo.*;
 import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.ScoreRecordService;
 import com.graduationaldesign.graduation.service.SubjectService;
+import com.graduationaldesign.graduation.service.TaskService;
 import com.graduationaldesign.graduation.util.IDUtil;
 import com.graduationaldesign.graduation.util.PageBean;
-import com.graduationaldesign.graduation.util.ResponseStatu;
+import com.graduationaldesign.graduation.util.ResponseStatus;
 import com.graduationaldesign.graduation.util.SqlUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,8 @@ public class SubjectServiceImpl implements SubjectService {
     FileUploadServiceImpl fileUploadService;
     @Autowired
     ScoreRecordService scoreRecordService;
+    @Autowired
+    TaskService taskService;
 
     final String FILE_PATH = System.getProperty("user.dir") + "/upload/" + this.getClass().getName().substring(0, this.getClass().getName().indexOf("ServiceImpl")) + "/";
 
@@ -78,12 +81,14 @@ public class SubjectServiceImpl implements SubjectService {
         } else {
             Report one = new Report(record.getSubId(), 1, 1);
             Report two = new Report(record.getSubId(), 2, 1);
+            Task task = new Task(record.getSubId());
             ScoreRecord scoreRecord = new ScoreRecord(record.getSubId());
             scoreRecordService.insertSelective(scoreRecord);
             reportMapper.insertSelective(one);
             reportMapper.insertSelective(two);
+            taskService.insert(task);
         }
-        return ResponseStatu.success(message);
+        return ResponseStatus.success(message);
     }
 
     @Override
@@ -102,7 +107,7 @@ public class SubjectServiceImpl implements SubjectService {
         if (subjectMapper.updateByPrimaryKeySelective(record) <= 0) {
             message = "修改课题失败";
         }
-        return ResponseStatu.success(message);
+        return ResponseStatus.success(message);
     }
 
     @Override
@@ -266,7 +271,7 @@ public class SubjectServiceImpl implements SubjectService {
             e.printStackTrace();
             message = MessageFormat.format("批量修改{0}失败", rootPropeties.getSubject());
         }
-        return ResponseStatu.success(message);
+        return ResponseStatus.success(message);
     }
 
     /**
@@ -300,15 +305,16 @@ public class SubjectServiceImpl implements SubjectService {
         criteria.andSubTeaIdEqualTo(teacher.getTeaId());
         criteria.andSubStuStateNotEqualTo(1);
         List<Map<String, Object>> list = subjectMapper.selectByExampleWithMap(subjectExample);
-        list.stream().forEach(e -> e.put("replyState", e.get("replyScore") == null || e.get("replyScore").equals("-1") ? "未开始" : "已完成"));
+        list.stream().forEach(e -> e.put("replyState", (e.get("replyScore") == null || e.get("replyScore").toString().equals("-1")) ? "未开始" : "已完成"));
         pageBean.setBeanList(list);
         return pageBean;
     }
 
     @Override
     public void uploadSubjectFile(MultipartFile file, String subId) {
+        String path = System.getProperty("user.dir") + "/upload/" + this.getClass().getName().substring(0, this.getClass().getName().indexOf("ServiceImpl")) + "/";
         Subject subject = new Subject(subId);
-        subject.setSubFile(fileUploadService.singleFile(file, FILE_PATH));
+        subject.setSubFile(fileUploadService.singleFile(file, path));
         subjectMapper.updateByPrimaryKeySelective(subject);
     }
 }

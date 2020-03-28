@@ -9,7 +9,7 @@ import com.graduationaldesign.graduation.pojo.Teacher;
 import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.ProgressService;
 import com.graduationaldesign.graduation.util.PageBean;
-import com.graduationaldesign.graduation.util.ResponseStatu;
+import com.graduationaldesign.graduation.util.ResponseStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -214,6 +214,6 @@ public class ProgressServiceImpl implements ProgressService {
             e.printStackTrace();
             message = MessageFormat.format("批量修改{0}失败", rootPropeties.getProgress());
         }
-        return ResponseStatu.success(message);
+        return ResponseStatus.success(message);
     }
 }

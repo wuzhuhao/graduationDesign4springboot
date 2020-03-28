@@ -3,7 +3,7 @@ package com.graduationaldesign.graduation.controller;
 import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.pojo.Apply;
 import com.graduationaldesign.graduation.service.ApplyService;
-import com.graduationaldesign.graduation.util.ResponseStatu;
+import com.graduationaldesign.graduation.util.ResponseStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,11 +33,9 @@ public class ApplyController {
     public ResponseEntity<Object> add(Apply record) {
         ResponseEntity<Object> result = null;
         if (applyService.insertSelective(record) <= 0) {
-            result = ResponseStatu.failure(
-                    MessageFormat.format("添加{0}失败", rootPropeties.getApply()));
+            result = ResponseStatus.failure(MessageFormat.format("添加{0}失败", rootPropeties.getApply()), this);
         } else {
-            result = ResponseStatu.success(
-                    MessageFormat.format("添加{0}成功", rootPropeties.getApply()));
+            result = ResponseStatus.success(MessageFormat.format("添加{0}成功", rootPropeties.getApply()));
         }
         return result;
     }
@@ -46,11 +44,9 @@ public class ApplyController {
     public ResponseEntity<Object> update(Apply record) {
         ResponseEntity<Object> result = null;
         if (applyService.updateByPrimaryKeySelective(record) <= 0) {
-            result = ResponseStatu.failure(
-                    MessageFormat.format("修改{0}失败", rootPropeties.getApply()));
+            result = ResponseStatus.failure(MessageFormat.format("修改{0}失败", rootPropeties.getApply()), this);
         } else {
-            result = ResponseStatu.success(
-                    MessageFormat.format("修改{0}成功", rootPropeties.getApply()));
+            result = ResponseStatus.success(MessageFormat.format("修改{0}成功", rootPropeties.getApply()));
         }
         return result;
 
@@ -61,11 +57,9 @@ public class ApplyController {
             @PathVariable(value = "primaryKey") int primaryKey) {
         ResponseEntity<Object> result = null;
         if (applyService.deleteByPrimaryKey(primaryKey) <= 0) {
-            result = ResponseStatu.failure(
-                    MessageFormat.format("删除{0}失败", rootPropeties.getApply()));
+            result = ResponseStatus.failure(MessageFormat.format("删除{0}失败", rootPropeties.getApply()), this);
         } else {
-            result = ResponseStatu.success(
-                    MessageFormat.format("删除{0}成功", rootPropeties.getApply()));
+            result = ResponseStatus.success(MessageFormat.format("删除{0}成功", rootPropeties.getApply()));
         }
         return result;
     }
@@ -75,10 +69,9 @@ public class ApplyController {
         ResponseEntity<Object> result = null;
         Apply record = applyService.selectByPrimaryKey(primaryKey);
         if (record == null) {
-            result = ResponseStatu.failure(
-                    MessageFormat.format("该{0}不存在", rootPropeties.getApply()));
+            result = ResponseStatus.failure(MessageFormat.format("该{0}不存在", rootPropeties.getApply()), this);
         } else {
-            result = ResponseStatu.success(record);
+            result = ResponseStatus.success(record, this);
         }
         return result;
     }
@@ -88,12 +81,10 @@ public class ApplyController {
                                        @RequestParam(required = false, defaultValue = "1") int page,
                                        @RequestParam(required = false, defaultValue = "5") int pageSize) {
         try {
-            return ResponseStatu
-                    .success(applyService.listByPage(params, page, pageSize));
+            return ResponseStatus.success(applyService.listByPage(params, page, pageSize), this);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseStatu
-                    .failure("列表获取失败");
+            return ResponseStatus.failure("列表获取失败", this);
         }
     }
 
@@ -103,12 +94,10 @@ public class ApplyController {
         ResponseEntity<Object> result = null;
         try {
             applyService.deleteByPrimaryKeyIn(lstprimaryKey);
-            result = ResponseStatu.success(
-                    MessageFormat.format("批量删除{0}成功", rootPropeties.getAcademy()));
+            result = ResponseStatus.success(MessageFormat.format("批量删除{0}成功", rootPropeties.getAcademy()));
         } catch (Exception e) {
             e.printStackTrace();
-            result = ResponseStatu.failure(
-                    MessageFormat.format("批量删除{0}失败", rootPropeties.getAcademy()));
+            result = ResponseStatus.failure(MessageFormat.format("批量删除{0}失败", rootPropeties.getAcademy()), this);
         }
         return result;
     }
@@ -118,7 +107,7 @@ public class ApplyController {
         try {
             return applyService.updateListByPrimaryKeySelective(lstApply);
         } catch (RuntimeException e) {
-            return ResponseStatu.failure(e.getMessage());
+            return ResponseStatus.failure(e.getMessage(), this);
         }
     }
 

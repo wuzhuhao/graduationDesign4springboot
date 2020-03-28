@@ -360,6 +360,76 @@ public class GoodGraduationExample implements Example {
             return (Criteria) this;
         }
 
+        public Criteria andGoodReasonIsNull() {
+            addCriterion("good_reason is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodReasonIsNotNull() {
+            addCriterion("good_reason is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodReasonEqualTo(String value) {
+            addCriterion("good_reason =", value, "goodReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodReasonNotEqualTo(String value) {
+            addCriterion("good_reason <>", value, "goodReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodReasonGreaterThan(String value) {
+            addCriterion("good_reason >", value, "goodReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodReasonGreaterThanOrEqualTo(String value) {
+            addCriterion("good_reason >=", value, "goodReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodReasonLessThan(String value) {
+            addCriterion("good_reason <", value, "goodReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodReasonLessThanOrEqualTo(String value) {
+            addCriterion("good_reason <=", value, "goodReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodReasonLike(String value) {
+            addCriterion("good_reason like", value, "goodReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodReasonNotLike(String value) {
+            addCriterion("good_reason not like", value, "goodReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodReasonIn(List<String> values) {
+            addCriterion("good_reason in", values, "goodReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodReasonNotIn(List<String> values) {
+            addCriterion("good_reason not in", values, "goodReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodReasonBetween(String value1, String value2) {
+            addCriterion("good_reason between", value1, value2, "goodReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodReasonNotBetween(String value1, String value2) {
+            addCriterion("good_reason not between", value1, value2, "goodReason");
+            return (Criteria) this;
+        }
+
         public Criteria andJoinEqualLike(String value, String tableName) {
             addCriterion(tableName + " like ", value, tableName);
             return (Criteria) this;

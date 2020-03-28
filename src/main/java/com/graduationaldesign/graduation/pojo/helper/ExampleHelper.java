@@ -90,7 +90,11 @@ public class ExampleHelper {
             } else if (isIntOrLong(type, value)) {
                 Method method = criteria.getClass()
                         .getMethod("andJoinEqualTo", Object.class, String.class);
-                method.invoke(criteria, Convert.toLong(value, 0L), tableName + "." + columnName);
+                if ((type.equals("class java.lang.Integer"))) {
+                    method.invoke(criteria, Convert.toInt(value, 0), tableName + "." + columnName);
+                } else {
+                    method.invoke(criteria, Convert.toLong(value, 0L), tableName + "." + columnName);
+                }
             } else if (isDate(type, value)) {
                 Method method = criteria.getClass()
                         .getMethod("andJoinEqualTo", Object.class, String.class);

@@ -3,7 +3,7 @@ package com.graduationaldesign.graduation.controller;
 import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.pojo.GoodGraduation;
 import com.graduationaldesign.graduation.service.GoodGraduationService;
-import com.graduationaldesign.graduation.util.ResponseStatu;
+import com.graduationaldesign.graduation.util.ResponseStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,10 +33,10 @@ public class GoodGraduationController {
     public ResponseEntity<Object> add(GoodGraduation record) {
         ResponseEntity<Object> result = null;
         if (goodGraduationService.insertSelective(record) <= 0) {
-            result = ResponseStatu.failure(
-                    MessageFormat.format("添加{0}失败", rootPropeties.getGoodGraduation()));
+            result = ResponseStatus.failure(
+                    MessageFormat.format("添加{0}失败", rootPropeties.getGoodGraduation()), this);
         } else {
-            result = ResponseStatu.success(
+            result = ResponseStatus.success(
                     MessageFormat.format("添加{0}成功", rootPropeties.getGoodGraduation()));
         }
         return result;
@@ -46,10 +46,10 @@ public class GoodGraduationController {
     public ResponseEntity<Object> update(GoodGraduation record) {
         ResponseEntity<Object> result = null;
         if (goodGraduationService.updateByPrimaryKeySelective(record) <= 0) {
-            result = ResponseStatu.failure(
-                    MessageFormat.format("修改{0}失败", rootPropeties.getGoodGraduation()));
+            result = ResponseStatus.failure(
+                    MessageFormat.format("修改{0}失败", rootPropeties.getGoodGraduation()), this);
         } else {
-            result = ResponseStatu.success(
+            result = ResponseStatus.success(
                     MessageFormat.format("修改{0}成功", rootPropeties.getGoodGraduation()));
         }
         return result;
@@ -61,10 +61,10 @@ public class GoodGraduationController {
             @PathVariable(value = "primaryKey") int primaryKey) {
         ResponseEntity<Object> result = null;
         if (goodGraduationService.deleteByPrimaryKey(primaryKey) <= 0) {
-            result = ResponseStatu.failure(
-                    MessageFormat.format("删除{0}失败", rootPropeties.getGoodGraduation()));
+            result = ResponseStatus.failure(
+                    MessageFormat.format("删除{0}失败", rootPropeties.getGoodGraduation()), this);
         } else {
-            result = ResponseStatu.success(
+            result = ResponseStatus.success(
                     MessageFormat.format("删除{0}成功", rootPropeties.getGoodGraduation()));
         }
         return result;
@@ -75,10 +75,10 @@ public class GoodGraduationController {
         ResponseEntity<Object> result = null;
         GoodGraduation record = goodGraduationService.selectByPrimaryKey(primaryKey);
         if (record == null) {
-            result = ResponseStatu.failure(
-                    MessageFormat.format("该{0}不存在", rootPropeties.getGoodGraduation()));
+            result = ResponseStatus.failure(
+                    MessageFormat.format("该{0}不存在", rootPropeties.getGoodGraduation()), this);
         } else {
-            result = ResponseStatu.success(record);
+            result = ResponseStatus.success(record, this);
         }
         return result;
     }
@@ -88,12 +88,12 @@ public class GoodGraduationController {
                                        @RequestParam(required = false, defaultValue = "1") int page,
                                        @RequestParam(required = false, defaultValue = "5") int pageSize) {
         try {
-            return ResponseStatu
+            return ResponseStatus
                     .success(goodGraduationService
-                            .listByPage(params, page, pageSize));
+                            .listByPage(params, page, pageSize), this);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseStatu.failure("获取列表失败");
+            return ResponseStatus.failure("获取列表失败", this);
         }
     }
 
@@ -103,12 +103,12 @@ public class GoodGraduationController {
         ResponseEntity<Object> result = null;
         try {
             goodGraduationService.deleteByPrimaryKeyIn(lstprimaryKey);
-            result = ResponseStatu.success(
+            result = ResponseStatus.success(
                     MessageFormat.format("批量删除{0}成功", rootPropeties.getAcademy()));
         } catch (Exception e) {
             e.printStackTrace();
-            result = ResponseStatu.failure(
-                    MessageFormat.format("批量删除{0}失败", rootPropeties.getAcademy()));
+            result = ResponseStatus.failure(
+                    MessageFormat.format("批量删除{0}失败", rootPropeties.getAcademy()), this);
         }
         return result;
     }
@@ -118,7 +118,7 @@ public class GoodGraduationController {
         try {
             return goodGraduationService.updateListByPrimaryKeySelective(lstGoodGraduation);
         } catch (RuntimeException e) {
-            return ResponseStatu.failure(e.getMessage());
+            return ResponseStatus.failure(e.getMessage(), this);
         }
     }
 

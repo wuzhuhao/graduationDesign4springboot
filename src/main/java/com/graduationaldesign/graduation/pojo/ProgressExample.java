@@ -439,6 +439,146 @@ public class ProgressExample implements Example {
             return (Criteria) this;
         }
 
+        public Criteria andProgReplyIsNull() {
+            addCriterion("prog_reply is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgReplyIsNotNull() {
+            addCriterion("prog_reply is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgReplyEqualTo(String value) {
+            addCriterion("prog_reply =", value, "progReply");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgReplyNotEqualTo(String value) {
+            addCriterion("prog_reply <>", value, "progReply");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgReplyGreaterThan(String value) {
+            addCriterion("prog_reply >", value, "progReply");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgReplyGreaterThanOrEqualTo(String value) {
+            addCriterion("prog_reply >=", value, "progReply");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgReplyLessThan(String value) {
+            addCriterion("prog_reply <", value, "progReply");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgReplyLessThanOrEqualTo(String value) {
+            addCriterion("prog_reply <=", value, "progReply");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgReplyLike(String value) {
+            addCriterion("prog_reply like", value, "progReply");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgReplyNotLike(String value) {
+            addCriterion("prog_reply not like", value, "progReply");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgReplyIn(List<String> values) {
+            addCriterion("prog_reply in", values, "progReply");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgReplyNotIn(List<String> values) {
+            addCriterion("prog_reply not in", values, "progReply");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgReplyBetween(String value1, String value2) {
+            addCriterion("prog_reply between", value1, value2, "progReply");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgReplyNotBetween(String value1, String value2) {
+            addCriterion("prog_reply not between", value1, value2, "progReply");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgContentIsNull() {
+            addCriterion("prog_content is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgContentIsNotNull() {
+            addCriterion("prog_content is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgContentEqualTo(String value) {
+            addCriterion("prog_content =", value, "progContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgContentNotEqualTo(String value) {
+            addCriterion("prog_content <>", value, "progContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgContentGreaterThan(String value) {
+            addCriterion("prog_content >", value, "progContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgContentGreaterThanOrEqualTo(String value) {
+            addCriterion("prog_content >=", value, "progContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgContentLessThan(String value) {
+            addCriterion("prog_content <", value, "progContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgContentLessThanOrEqualTo(String value) {
+            addCriterion("prog_content <=", value, "progContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgContentLike(String value) {
+            addCriterion("prog_content like", value, "progContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgContentNotLike(String value) {
+            addCriterion("prog_content not like", value, "progContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgContentIn(List<String> values) {
+            addCriterion("prog_content in", values, "progContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgContentNotIn(List<String> values) {
+            addCriterion("prog_content not in", values, "progContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgContentBetween(String value1, String value2) {
+            addCriterion("prog_content between", value1, value2, "progContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgContentNotBetween(String value1, String value2) {
+            addCriterion("prog_content not between", value1, value2, "progContent");
+            return (Criteria) this;
+        }
+
         public Criteria andJoinEqualLike(String value, String tableName) {
             addCriterion(tableName + " like ", value, tableName);
             return (Criteria) this;

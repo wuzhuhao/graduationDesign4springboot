@@ -3,7 +3,7 @@ package com.graduationaldesign.graduation.controller;
 import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.pojo.Notice;
 import com.graduationaldesign.graduation.service.NoticeService;
-import com.graduationaldesign.graduation.util.ResponseStatu;
+import com.graduationaldesign.graduation.util.ResponseStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,10 +33,10 @@ public class NoticeController {
     public ResponseEntity<Object> add(Notice record) {
         ResponseEntity<Object> result = null;
         if (noticeService.insertSelective(record) <= 0) {
-            result = ResponseStatu.failure(
-                    MessageFormat.format("添加{0}失败", rootPropeties.getNotice()));
+            result = ResponseStatus.failure(
+                    MessageFormat.format("添加{0}失败", rootPropeties.getNotice()), this);
         } else {
-            result = ResponseStatu.success(
+            result = ResponseStatus.success(
                     MessageFormat.format("添加{0}成功", rootPropeties.getNotice()));
         }
         return result;
@@ -46,10 +46,10 @@ public class NoticeController {
     public ResponseEntity<Object> update(Notice record) {
         ResponseEntity<Object> result = null;
         if (noticeService.updateByPrimaryKeySelective(record) <= 0) {
-            result = ResponseStatu.failure(
-                    MessageFormat.format("修改{0}失败", rootPropeties.getNotice()));
+            result = ResponseStatus.failure(
+                    MessageFormat.format("修改{0}失败", rootPropeties.getNotice()), this);
         } else {
-            result = ResponseStatu.success(
+            result = ResponseStatus.success(
                     MessageFormat.format("修改{0}成功", rootPropeties.getNotice()));
         }
         return result;
@@ -61,10 +61,10 @@ public class NoticeController {
             @PathVariable(value = "primaryKey") int primaryKey) {
         ResponseEntity<Object> result = null;
         if (noticeService.deleteByPrimaryKey(primaryKey) <= 0) {
-            result = ResponseStatu.failure(
-                    MessageFormat.format("删除{0}失败", rootPropeties.getNotice()));
+            result = ResponseStatus.failure(
+                    MessageFormat.format("删除{0}失败", rootPropeties.getNotice()), this);
         } else {
-            result = ResponseStatu.success(
+            result = ResponseStatus.success(
                     MessageFormat.format("删除{0}成功", rootPropeties.getNotice()));
         }
         return result;
@@ -75,10 +75,10 @@ public class NoticeController {
         ResponseEntity<Object> result = null;
         Notice record = noticeService.selectByPrimaryKey(primaryKey);
         if (record == null) {
-            result = ResponseStatu.failure(
-                    MessageFormat.format("该{0}不存在", rootPropeties.getNotice()));
+            result = ResponseStatus.failure(
+                    MessageFormat.format("该{0}不存在", rootPropeties.getNotice()), this);
         } else {
-            result = ResponseStatu.success(record);
+            result = ResponseStatus.success(record, this);
         }
         return result;
     }
@@ -88,11 +88,10 @@ public class NoticeController {
                                        @RequestParam(required = false, defaultValue = "1") int page,
                                        @RequestParam(required = false, defaultValue = "5") int pageSize) {
         try {
-            return ResponseStatu
-                    .success(noticeService.listByPage(params, page, pageSize));
+            return ResponseStatus.success(noticeService.listByPage(params, page, pageSize), this);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseStatu.failure("获取列表失败");
+            return ResponseStatus.failure("获取列表失败", this);
         }
     }
 
@@ -102,12 +101,12 @@ public class NoticeController {
         ResponseEntity<Object> result = null;
         try {
             noticeService.deleteByPrimaryKeyIn(lstprimaryKey);
-            result = ResponseStatu.success(
+            result = ResponseStatus.success(
                     MessageFormat.format("批量删除{0}成功", rootPropeties.getAcademy()));
         } catch (Exception e) {
             e.printStackTrace();
-            result = ResponseStatu.failure(
-                    MessageFormat.format("批量删除{0}失败", rootPropeties.getAcademy()));
+            result = ResponseStatus.failure(
+                    MessageFormat.format("批量删除{0}失败", rootPropeties.getAcademy()), this);
         }
         return result;
     }
@@ -117,7 +116,7 @@ public class NoticeController {
         try {
             return noticeService.updateListByPrimaryKeySelective(lstNotice);
         } catch (RuntimeException e) {
-            return ResponseStatu.failure(e.getMessage());
+            return ResponseStatus.failure(e.getMessage(), this);
         }
     }
 

@@ -962,6 +962,76 @@ public class SubjectExample implements Example {
             return (Criteria) this;
         }
 
+        public Criteria andSubIntroduceIsNull() {
+            addCriterion("sub_introduce is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubIntroduceIsNotNull() {
+            addCriterion("sub_introduce is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubIntroduceEqualTo(String value) {
+            addCriterion("sub_introduce =", value, "subIntroduce");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubIntroduceNotEqualTo(String value) {
+            addCriterion("sub_introduce <>", value, "subIntroduce");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubIntroduceGreaterThan(String value) {
+            addCriterion("sub_introduce >", value, "subIntroduce");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubIntroduceGreaterThanOrEqualTo(String value) {
+            addCriterion("sub_introduce >=", value, "subIntroduce");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubIntroduceLessThan(String value) {
+            addCriterion("sub_introduce <", value, "subIntroduce");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubIntroduceLessThanOrEqualTo(String value) {
+            addCriterion("sub_introduce <=", value, "subIntroduce");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubIntroduceLike(String value) {
+            addCriterion("sub_introduce like", value, "subIntroduce");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubIntroduceNotLike(String value) {
+            addCriterion("sub_introduce not like", value, "subIntroduce");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubIntroduceIn(List<String> values) {
+            addCriterion("sub_introduce in", values, "subIntroduce");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubIntroduceNotIn(List<String> values) {
+            addCriterion("sub_introduce not in", values, "subIntroduce");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubIntroduceBetween(String value1, String value2) {
+            addCriterion("sub_introduce between", value1, value2, "subIntroduce");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubIntroduceNotBetween(String value1, String value2) {
+            addCriterion("sub_introduce not between", value1, value2, "subIntroduce");
+            return (Criteria) this;
+        }
+
         public Criteria andJoinEqualLike(String value, String tableName) {
             addCriterion(tableName + " like ", value, tableName);
             return (Criteria) this;

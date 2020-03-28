@@ -1,7 +1,7 @@
 package com.graduationaldesign.graduation.controller.file;
 
 import com.graduationaldesign.graduation.service.impl.FileUploadServiceImpl;
-import com.graduationaldesign.graduation.util.ResponseStatu;
+import com.graduationaldesign.graduation.util.ResponseStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,9 +27,9 @@ public class FileUploadController {
     @PostMapping("/singleFile")
     public ResponseEntity<Object> singleFile(@RequestParam("file") MultipartFile file) {
         try {
-            return ResponseStatu.success(fileUploadService.singleFile(file, "/"));
+            return ResponseStatus.success(fileUploadService.singleFile(file, "/"), this);
         } catch (RuntimeException e) {
-            return ResponseStatu.failure(e.getMessage());
+            return ResponseStatus.failure(e.getMessage(), this);
         }
     }
 
@@ -48,10 +48,10 @@ public class FileUploadController {
                                                        Integer type) {
         try {
             fileUploadService.importUser(file, type);
-            return ResponseStatu.success("导入数据成功");
+            return ResponseStatus.success("导入数据成功", this);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseStatu.failure(e.getMessage());
+            return ResponseStatus.failure(e.getMessage(), this);
         }
     }
 }

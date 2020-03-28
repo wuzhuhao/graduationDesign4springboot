@@ -11,7 +11,7 @@ import com.graduationaldesign.graduation.service.AdminService;
 import com.graduationaldesign.graduation.service.StudentService;
 import com.graduationaldesign.graduation.service.TeacherService;
 import com.graduationaldesign.graduation.util.CookieUtil;
-import com.graduationaldesign.graduation.util.ResponseStatu;
+import com.graduationaldesign.graduation.util.ResponseStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
@@ -61,17 +61,17 @@ public class GlobalController {
             } else if (type.equals(ADMIN)) {
                 result = adminService.login(new Admin(number, password));
             } else {
-                return ResponseStatu.failure("请选择正确的身份");
+                return ResponseStatus.failure("请选择正确的身份", this);
             }
         } catch (NullPointerException e) {
-            return ResponseStatu.failure("请选择登陆身份");
+            return ResponseStatus.failure("请选择登陆身份", this);
         } catch (RuntimeException e) {
-            return ResponseStatu.failure(e.getMessage());
+            return ResponseStatus.failure(e.getMessage(), this);
         }
 //        session.setAttribute(rootPropeties.getUserAttribute(), result);
         CookieUtil.setCookie(request, response, "token", JWTUtil.createToken(number, type),
                 CookieUtil.COOKIEMAXTIME);
-        return ResponseStatu.success(result);
+        return ResponseStatus.success(result, this);
     }
 
     @RequestMapping(value = "/stu/changPassword", method = RequestMethod.POST)
@@ -116,7 +116,7 @@ public class GlobalController {
         } catch (RuntimeException e) {
             message = e.getMessage();
         }
-        result = ResponseStatu.success(message);
+        result = ResponseStatus.success(message, this);
         return result;
     }
 
@@ -163,7 +163,7 @@ public class GlobalController {
         } catch (RuntimeException e) {
             message = e.getMessage();
         }
-        result = ResponseStatu.success(message);
+        result = ResponseStatus.success(message, this);
         return result;
     }
 
@@ -182,10 +182,10 @@ public class GlobalController {
     public ResponseEntity<Object> exit() {
         try {
             CookieUtil.deleteCookie(request, response, "token");
-            return ResponseStatu.success("退出登陆成功");
+            return ResponseStatus.success("退出登陆成功", this);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseStatu.failure("退出登陆失败");
+            return ResponseStatus.failure("退出登陆失败", this);
         }
     }
 }

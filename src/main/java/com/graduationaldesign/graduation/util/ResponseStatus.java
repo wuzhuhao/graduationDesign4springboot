@@ -5,8 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Type;
 import java.util.Map;
 
 /**
@@ -14,7 +12,7 @@ import java.util.Map;
  * @Date: 2020/1/10 19:30
  */
 @Slf4j
-public class ResponseStatu {
+public class ResponseStatus {
 
     /**
      * 添加状态码和封装结果
@@ -28,7 +26,7 @@ public class ResponseStatu {
     }
 
     public static ResponseEntity<Object> success(String message) {
-        return ResponseStatu.response(HttpStatus.SC_OK, Result.success(message));
+        return ResponseStatus.response(HttpStatus.SC_OK, Result.success(message));
     }
 
     /**
@@ -37,7 +35,7 @@ public class ResponseStatu {
      * @param result
      * @return
      */
-    public static ResponseEntity<Object> success(Object result) {
+    public static ResponseEntity<Object> success(Object result, Object controller) {
         String className = result.getClass().getSimpleName().split("_")[0];
         if (result instanceof PageBean) {
             try {
@@ -46,39 +44,20 @@ public class ResponseStatu {
                     className = "All";
                 }
             } catch (Exception e) {
-//                List<Teacher> j = new ArrayList<>();
-//                className = getListBean(j);
-                log.error("无数据，默认传page类");
+                className = controller.getClass().getSimpleName().split("_")[0].substring(0, controller.getClass().getSimpleName().split("_")[0].indexOf("Controller"));
+                log.error("List无数据传Controller层的类名");
             }
         }
         Result result1 = Result.success(result);
         result1.setDict(ApplicationContextProvider.getBean(SysdictService.class).selectByModel(lowerFirstCapse(className)));
-        return ResponseStatu.response(HttpStatus.SC_OK, result1);
+        return ResponseStatus.response(HttpStatus.SC_OK, result1);
     }
 
-    public static String getListBean(Object bean) {
-        Field[] fields = bean.getClass().getDeclaredFields();
-        String result = "";
-        for (Field f : fields) {
-            f.setAccessible(true);
-            if (f.getType() == java.util.List.class) {
-                // 如果是List类型，得到其Generic的类型
-                Type genericType = f.getGenericType();
-                result = genericType.getTypeName();
-//                if (genericType == null) continue;
-//                // 如果是泛型参数的类型
-//                if (genericType instanceof ParameterizedType) {
-//                    ParameterizedType pt = (ParameterizedType) genericType;
-//                    //得到泛型里的class类型对象
-//                    Class<?> genericClazz = (Class<?>) pt.getActualTypeArguments()[0];
-//                }
-            }
-        }
-        return result;
-    }
-
-    public static ResponseEntity<Object> failure(String message) {
-        return ResponseStatu.response(HttpStatus.SC_OK, Result.failure(message));
+    public static ResponseEntity<Object> failure(String message, Object controller) {
+        String className = controller.getClass().getSimpleName().split("_")[0].substring(0, controller.getClass().getSimpleName().split("_")[0].indexOf("Controller"));
+        Result result1 = Result.failure(message);
+        result1.setDict(ApplicationContextProvider.getBean(SysdictService.class).selectByModel(lowerFirstCapse(className)));
+        return ResponseStatus.response(HttpStatus.SC_OK, result1);
     }
 
     public static String lowerFirstCapse(String str) {

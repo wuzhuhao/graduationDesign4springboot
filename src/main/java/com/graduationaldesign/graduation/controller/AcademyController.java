@@ -3,7 +3,7 @@ package com.graduationaldesign.graduation.controller;
 import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.pojo.Academy;
 import com.graduationaldesign.graduation.service.AcademyService;
-import com.graduationaldesign.graduation.util.ResponseStatu;
+import com.graduationaldesign.graduation.util.ResponseStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,10 +33,10 @@ public class AcademyController {
     public ResponseEntity<Object> add(Academy record) {
         ResponseEntity<Object> result = null;
         if (academyService.insertSelective(record) <= 0) {
-            result = ResponseStatu.failure(
-                    MessageFormat.format("添加{0}失败", rootPropeties.getAcademy()));
+            result = ResponseStatus.failure(
+                    MessageFormat.format("添加{0}失败", rootPropeties.getAcademy()), this);
         } else {
-            result = ResponseStatu.success(
+            result = ResponseStatus.success(
                     MessageFormat.format("添加{0}成功", rootPropeties.getAcademy()));
         }
         return result;
@@ -46,10 +46,10 @@ public class AcademyController {
     public ResponseEntity<Object> update(Academy record) {
         ResponseEntity<Object> result = null;
         if (academyService.updateByPrimaryKeySelective(record) <= 0) {
-            result = ResponseStatu.failure(
-                    MessageFormat.format("修改{0}失败", rootPropeties.getAcademy()));
+            result = ResponseStatus.failure(
+                    MessageFormat.format("修改{0}失败", rootPropeties.getAcademy()), this);
         } else {
-            result = ResponseStatu.success(
+            result = ResponseStatus.success(
                     MessageFormat.format("修改{0}成功", rootPropeties.getAcademy()));
         }
         return result;
@@ -61,10 +61,10 @@ public class AcademyController {
             @PathVariable(value = "primaryKey") int primaryKey) {
         ResponseEntity<Object> result = null;
         if (academyService.deleteByPrimaryKey(primaryKey) <= 0) {
-            result = ResponseStatu.failure(
-                    MessageFormat.format("删除{0}失败", rootPropeties.getAcademy()));
+            result = ResponseStatus.failure(
+                    MessageFormat.format("删除{0}失败", rootPropeties.getAcademy()), this);
         } else {
-            result = ResponseStatu.success(
+            result = ResponseStatus.success(
                     MessageFormat.format("删除{0}成功", rootPropeties.getAcademy()));
         }
         return result;
@@ -75,10 +75,10 @@ public class AcademyController {
         ResponseEntity<Object> result = null;
         Academy record = academyService.selectByPrimaryKey(primaryKey);
         if (record == null) {
-            result = ResponseStatu.failure(
-                    MessageFormat.format("该{0}不存在", rootPropeties.getAcademy()));
+            result = ResponseStatus.failure(
+                    MessageFormat.format("该{0}不存在", rootPropeties.getAcademy()), this);
         } else {
-            result = ResponseStatu.success(record);
+            result = ResponseStatus.success(record, this);
         }
         return result;
     }
@@ -88,12 +88,11 @@ public class AcademyController {
                                        @RequestParam(required = false, defaultValue = "1") int page,
                                        @RequestParam(required = false, defaultValue = "5") int pageSize) {
         try {
-            return ResponseStatu
-                    .success(academyService.listByPage(params, page, pageSize));
+            return ResponseStatus
+                    .success(academyService.listByPage(params, page, pageSize), this);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseStatu
-                    .failure("获取列表失败");
+            return ResponseStatus.failure("获取列表失败", this);
         }
     }
 
@@ -103,12 +102,12 @@ public class AcademyController {
         ResponseEntity<Object> result = null;
         try {
             academyService.deleteByPrimaryKeyIn(lstprimaryKey);
-            result = ResponseStatu.success(
+            result = ResponseStatus.success(
                     MessageFormat.format("批量删除{0}成功", rootPropeties.getAcademy()));
         } catch (Exception e) {
             e.printStackTrace();
-            result = ResponseStatu.failure(
-                    MessageFormat.format("批量删除{0}失败", rootPropeties.getAcademy()));
+            result = ResponseStatus.failure(
+                    MessageFormat.format("批量删除{0}失败", rootPropeties.getAcademy()), this);
         }
         return result;
     }
@@ -116,21 +115,21 @@ public class AcademyController {
     @RequestMapping(value = "/getItems", method = RequestMethod.GET)
     public ResponseEntity<Object> getItems() {
         try {
-            return ResponseStatu
-                    .success(academyService.getItems());
+            return ResponseStatus
+                    .success(academyService.getItems(), this);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseStatu
-                    .success(new HashMap<Integer, String>());
+            return ResponseStatus
+                    .success(new HashMap<Integer, String>(), this);
         }
     }
 
     @RequestMapping(value = "/listUpdate", method = RequestMethod.POST)
-    public ResponseEntity<Object> updateAcademy( List<Academy> lstAcademy) {
+    public ResponseEntity<Object> updateAcademy(List<Academy> lstAcademy) {
         try {
             return academyService.updateListByPrimaryKeySelective(lstAcademy);
         } catch (RuntimeException e) {
-            return ResponseStatu.failure(e.getMessage());
+            return ResponseStatus.failure(e.getMessage(), this);
         }
     }
 }

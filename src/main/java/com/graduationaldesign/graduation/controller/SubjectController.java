@@ -8,7 +8,7 @@ import com.graduationaldesign.graduation.pojo.Subject;
 import com.graduationaldesign.graduation.pojo.Teacher;
 import com.graduationaldesign.graduation.service.FileDownService;
 import com.graduationaldesign.graduation.service.SubjectService;
-import com.graduationaldesign.graduation.util.ResponseStatu;
+import com.graduationaldesign.graduation.util.ResponseStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +40,7 @@ public class SubjectController {
 
     @RequestMapping(value = "/temp")
     public ResponseEntity<Object> temp() {
-        return ResponseStatu.success("退出登陆成功");
+        return ResponseStatus.success("退出登陆成功", this);
     }
 
     /**
@@ -54,7 +54,7 @@ public class SubjectController {
         try {
             return subjectService.insert(subject);
         } catch (RuntimeException e) {
-            return ResponseStatu.failure(e.getMessage());
+            return ResponseStatus.failure(e.getMessage(), this);
         }
     }
 
@@ -69,7 +69,7 @@ public class SubjectController {
         try {
             return subjectService.updateByPrimaryKeySelective(subject);
         } catch (RuntimeException e) {
-            return ResponseStatu.failure(e.getMessage());
+            return ResponseStatus.failure(e.getMessage(), this);
         }
     }
 
@@ -78,7 +78,7 @@ public class SubjectController {
         try {
             return subjectService.updateListByPrimaryKeySelective(lstSubject);
         } catch (RuntimeException e) {
-            return ResponseStatu.failure(e.getMessage());
+            return ResponseStatus.failure(e.getMessage(), this);
         }
     }
 
@@ -91,10 +91,10 @@ public class SubjectController {
     @RequestMapping(value = "/delete/{sudId}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> deleteSubject(@PathVariable(value = "sudId") String sudId) {
         try {
-            return ResponseStatu.success(subjectService.deleteByPrimaryKey(sudId));
+            return ResponseStatus.success(subjectService.deleteByPrimaryKey(sudId), this);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseStatu.failure("请求失败");
+            return ResponseStatus.failure("请求失败", this);
         }
     }
 
@@ -107,10 +107,10 @@ public class SubjectController {
     @RequestMapping(value = "/getSubject", method = RequestMethod.GET)
     public ResponseEntity<Object> getSubject(String subId) {
         try {
-            return ResponseStatu.success(subjectService.selectByPrimaryKey(subId));
+            return ResponseStatus.success(subjectService.selectByPrimaryKey(subId), this);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseStatu.failure("请求失败");
+            return ResponseStatus.failure("请求失败", this);
         }
     }
 
@@ -125,11 +125,10 @@ public class SubjectController {
             @RequestParam(required = false, defaultValue = "1") int page,
             @RequestParam(required = false, defaultValue = "5") int pageSize) {
         try {
-            return ResponseStatu.success(
-                    subjectService.listByPageOfNotChoice(params, page, pageSize));
+            return ResponseStatus.success(subjectService.listByPageOfNotChoice(params, page, pageSize), this);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseStatu.failure("获取列表失败");
+            return ResponseStatus.failure("获取列表失败", this);
         }
     }
 
@@ -143,12 +142,10 @@ public class SubjectController {
                                                      @RequestParam(required = false, defaultValue = "1") int page,
                                                      @RequestParam(required = false, defaultValue = "5") int pageSize) {
         try {
-            return ResponseStatu.success(subjectService.listByPageOfChoice(params, page,
-                    pageSize,
-                    ((Student) tokenService.getUserByToken(request))));
+            return ResponseStatus.success(subjectService.listByPageOfChoice(params, page, pageSize, ((Student) tokenService.getUserByToken(request))), this);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseStatu.failure("获取列表失败");
+            return ResponseStatus.failure("获取列表失败", this);
         }
     }
 
@@ -162,12 +159,10 @@ public class SubjectController {
                                                   @RequestParam(required = false, defaultValue = "1") int page,
                                                   @RequestParam(required = false, defaultValue = "5") int pageSize) {
         try {
-            return ResponseStatu.success(subjectService.listByPageOfTea(params, page,
-                    pageSize,
-                    ((Teacher) tokenService.getUserByToken(request))));
+            return ResponseStatus.success(subjectService.listByPageOfTea(params, page, pageSize, ((Teacher) tokenService.getUserByToken(request))), this);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseStatu.failure("获取列表失败");
+            return ResponseStatus.failure("获取列表失败", this);
         }
     }
 
@@ -181,12 +176,10 @@ public class SubjectController {
                                                          @RequestParam(required = false, defaultValue = "1") int page,
                                                          @RequestParam(required = false, defaultValue = "5") int pageSize) {
         try {
-            return ResponseStatu.success(subjectService.listChoosedByPageOfTea(params, page,
-                    pageSize,
-                    ((Teacher) tokenService.getUserByToken(request))));
+            return ResponseStatus.success(subjectService.listChoosedByPageOfTea(params, page, pageSize, ((Teacher) tokenService.getUserByToken(request))), this);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseStatu.failure("获取列表失败");
+            return ResponseStatus.failure("获取列表失败", this);
         }
     }
 
@@ -200,11 +193,10 @@ public class SubjectController {
                                        @RequestParam(required = false, defaultValue = "1") int page,
                                        @RequestParam(required = false, defaultValue = "5") int pageSize) {
         try {
-            return ResponseStatu
-                    .success(subjectService.listByPage(params, page, pageSize));
+            return ResponseStatus.success(subjectService.listByPage(params, page, pageSize), this);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseStatu.failure("获取列表失败");
+            return ResponseStatus.failure("获取列表失败", this);
         }
     }
 
@@ -217,10 +209,10 @@ public class SubjectController {
     @RequestMapping(value = "/choice", method = RequestMethod.POST)
     public ResponseEntity<Object> choiceSubject(String subId) {
         try {
-            return ResponseStatu.success(subjectService.ChoiceSubject(subId,
+            return ResponseStatus.success(subjectService.ChoiceSubject(subId,
                     (Student) tokenService.getUserByToken(request)));
         } catch (ClassCastException e) {
-            return ResponseStatu.failure("用户异常，请重新登陆");
+            return ResponseStatus.failure("用户异常，请重新登陆", this);
         }
     }
 
@@ -233,10 +225,10 @@ public class SubjectController {
     @RequestMapping(value = "/appointChoice", method = RequestMethod.POST)
     public ResponseEntity<Object> appointChoice(String subId, String stuId) {
         try {
-            return ResponseStatu.success(subjectService.ChoiceSubject(subId,
+            return ResponseStatus.success(subjectService.ChoiceSubject(subId,
                     new Student(stuId, "")));
         } catch (ClassCastException e) {
-            return ResponseStatu.failure("用户异常，请重新登陆");
+            return ResponseStatus.failure("用户异常，请重新登陆", this);
         }
     }
 
@@ -249,10 +241,10 @@ public class SubjectController {
     @RequestMapping(value = "/cancelChoice", method = RequestMethod.POST)
     public ResponseEntity<Object> cancelChoice(String subId) {
         try {
-            return ResponseStatu.success(subjectService.cancelChoice(subId,
+            return ResponseStatus.success(subjectService.cancelChoice(subId,
                     (Student) tokenService.getUserByToken(request)));
         } catch (ClassCastException e) {
-            return ResponseStatu.failure("用户异常，请重新登陆");
+            return ResponseStatus.failure("用户异常，请重新登陆", this);
         }
     }
 
@@ -262,12 +254,12 @@ public class SubjectController {
         ResponseEntity<Object> result = null;
         try {
             subjectService.deleteByPrimaryKeyIn(lstprimaryKey);
-            result = ResponseStatu.success(
+            result = ResponseStatus.success(
                     MessageFormat.format("批量删除{0}成功", rootPropeties.getAcademy()));
         } catch (Exception e) {
             e.printStackTrace();
-            result = ResponseStatu.failure(
-                    MessageFormat.format("批量删除{0}失败", rootPropeties.getAcademy()));
+            result = ResponseStatus.failure(
+                    MessageFormat.format("批量删除{0}失败", rootPropeties.getAcademy()), this);
         }
         return result;
     }
@@ -276,10 +268,10 @@ public class SubjectController {
     public ResponseEntity<Object> uploadSubjectFile(@RequestParam("file") MultipartFile file, String subId) {
         try {
             subjectService.uploadSubjectFile(file, subId);
-            return ResponseStatu.success("上传附件成功");
-//            return ResponseStatu.success();
+            return ResponseStatus.success("上传附件成功", this);
+//            return ResponseStatu.success(,this);
         } catch (RuntimeException e) {
-            return ResponseStatu.failure(e.getMessage());
+            return ResponseStatus.failure(e.getMessage(), this);
         }
     }
 }

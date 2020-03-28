@@ -13,7 +13,7 @@ import com.graduationaldesign.graduation.service.ReportService;
 import com.graduationaldesign.graduation.util.BeanUtil;
 import com.graduationaldesign.graduation.util.FileUtil;
 import com.graduationaldesign.graduation.util.PageBean;
-import com.graduationaldesign.graduation.util.ResponseStatu;
+import com.graduationaldesign.graduation.util.ResponseStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -275,7 +275,7 @@ public class ReportServiceImpl implements ReportService {
             e.printStackTrace();
             message = MessageFormat.format("批量修改{0}失败", rootPropeties.getReport());
         }
-        return ResponseStatu.success(message);
+        return ResponseStatus.success(message);
     }
 
     @Override

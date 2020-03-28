@@ -384,4 +384,11 @@ public class Task implements Serializable {
                 ", subject=" + subject +
                 '}';
     }
+
+    public Task() {
+    }
+
+    public Task(String taskSubId) {
+        this.taskSubId = taskSubId;
+    }
 }

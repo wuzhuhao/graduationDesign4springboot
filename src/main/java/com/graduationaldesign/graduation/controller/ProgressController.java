@@ -7,7 +7,7 @@ import com.graduationaldesign.graduation.pojo.Progress;
 import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.Teacher;
 import com.graduationaldesign.graduation.service.ProgressService;
-import com.graduationaldesign.graduation.util.ResponseStatu;
+import com.graduationaldesign.graduation.util.ResponseStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,16 +37,16 @@ public class ProgressController {
 
     //    @RequestMapping(value="/temp")
     public ResponseEntity<Object> temp() {
-        return ResponseStatu.success("退出登陆成功");
+        return ResponseStatus.success("退出登陆成功", this);
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<Object> add(Progress progress) {
         progress.setProgContentTime(new Date());
         try {
-            return ResponseStatu.success(progressService.insertSelective(progress));
+            return ResponseStatus.success(progressService.insertSelective(progress), this);
         } catch (RuntimeException e) {
-            return ResponseStatu.failure(e.getMessage());
+            return ResponseStatus.failure(e.getMessage(), this);
         }
     }
 
@@ -59,9 +59,9 @@ public class ProgressController {
     @RequestMapping(value = "/getDetail/{progressId}", method = RequestMethod.GET)
     public ResponseEntity<Object> getDetail(@PathVariable int progressId) {
         try {
-            return ResponseStatu.success(progressService.selectByPrimaryKey(progressId));
+            return ResponseStatus.success(progressService.selectByPrimaryKey(progressId), this);
         } catch (RuntimeException e) {
-            return ResponseStatu.failure(e.getMessage());
+            return ResponseStatus.failure(e.getMessage(), this);
         }
     }
 
@@ -75,27 +75,27 @@ public class ProgressController {
     public ResponseEntity<Object> update(Progress progress) {
 
         try {
-            return ResponseStatu.success(progressService.updateByPrimaryKeySelective(progress));
+            return ResponseStatus.success(progressService.updateByPrimaryKeySelective(progress), this);
         } catch (RuntimeException e) {
-            return ResponseStatu.failure(e.getMessage());
+            return ResponseStatus.failure(e.getMessage(), this);
         }
     }
 
     @RequestMapping(value = "/reply", method = RequestMethod.POST)
     public ResponseEntity<Object> reply(Progress progress) {
         try {
-            return ResponseStatu.success(progressService.reply(progress));
+            return ResponseStatus.success(progressService.reply(progress), this);
         } catch (RuntimeException e) {
-            return ResponseStatu.failure(e.getMessage());
+            return ResponseStatus.failure(e.getMessage(), this);
         }
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public ResponseEntity<Object> delete(Integer processId) {
         try {
-            return ResponseStatu.success(progressService.deleteByPrimaryKey(processId));
+            return ResponseStatus.success(progressService.deleteByPrimaryKey(processId), this);
         } catch (RuntimeException e) {
-            return ResponseStatu.failure(e.getMessage());
+            return ResponseStatus.failure(e.getMessage(), this);
         }
     }
 
@@ -109,11 +109,11 @@ public class ProgressController {
                                        @RequestParam(required = false, defaultValue = "1") int page,
                                        @RequestParam(required = false, defaultValue = "5") int pageSize) {
         try {
-            return ResponseStatu
+            return ResponseStatus
                     .success(progressService
-                            .listByPage(params, page, pageSize));
+                            .listByPage(params, page, pageSize), this);
         } catch (Exception e) {
-            return ResponseStatu.failure("获取列表失败");
+            return ResponseStatus.failure("获取列表失败", this);
         }
     }
 
@@ -131,17 +131,15 @@ public class ProgressController {
             student = (Student) tokenService.getUserByToken(request);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseStatu.failure("登陆身份不对");
+            return ResponseStatus.failure("登陆身份不对", this);
         }
         student = new Student();
         student.setStuId(stuId);
         try {
-            return ResponseStatu.success(progressService.listByPageOfStu(params, page,
-                    pageSize
-                    , student));
+            return ResponseStatus.success(progressService.listByPageOfStu(params, page, pageSize, student), this);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseStatu.failure("获取列表失败");
+            return ResponseStatus.failure("获取列表失败", this);
         }
     }
 
@@ -159,16 +157,14 @@ public class ProgressController {
             teacher = (Teacher) tokenService.getUserByToken(request);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseStatu.failure("登陆身份不对");
+            return ResponseStatus.failure("登陆身份不对", this);
         }
         teacher = new Teacher();
         teacher.setTeaId(teaId);
         try {
-            return ResponseStatu.success(progressService.listByPageOfTea(params, page,
-                    pageSize,
-                    teacher));
+            return ResponseStatus.success(progressService.listByPageOfTea(params, page, pageSize, teacher), this);
         } catch (Exception e) {
-            return ResponseStatu.failure("获取列表失败");
+            return ResponseStatus.failure("获取列表失败", this);
         }
     }
 
@@ -178,12 +174,12 @@ public class ProgressController {
         ResponseEntity<Object> result = null;
         try {
             progressService.deleteByPrimaryKeyIn(lstprimaryKey);
-            result = ResponseStatu.success(
+            result = ResponseStatus.success(
                     MessageFormat.format("批量删除{0}成功", rootPropeties.getAcademy()));
         } catch (Exception e) {
             e.printStackTrace();
-            result = ResponseStatu.failure(
-                    MessageFormat.format("批量删除{0}失败", rootPropeties.getAcademy()));
+            result = ResponseStatus.failure(
+                    MessageFormat.format("批量删除{0}失败", rootPropeties.getAcademy()), this);
         }
         return result;
     }
@@ -193,7 +189,7 @@ public class ProgressController {
         try {
             return progressService.updateListByPrimaryKeySelective(lstProgress);
         } catch (RuntimeException e) {
-            return ResponseStatu.failure(e.getMessage());
+            return ResponseStatus.failure(e.getMessage(), this);
         }
     }
 

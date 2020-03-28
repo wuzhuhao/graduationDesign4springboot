@@ -7,7 +7,7 @@ import com.graduationaldesign.graduation.pojo.Report;
 import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.Teacher;
 import com.graduationaldesign.graduation.service.ReportService;
-import com.graduationaldesign.graduation.util.ResponseStatu;
+import com.graduationaldesign.graduation.util.ResponseStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,18 +41,18 @@ public class ReportController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<Object> add(Report report) {
         try {
-            return ResponseStatu.success(reportService.insert(report));
+            return ResponseStatus.success(reportService.insert(report), this);
         } catch (RuntimeException e) {
-            return ResponseStatu.failure(e.getMessage());
+            return ResponseStatus.failure(e.getMessage(), this);
         }
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public ResponseEntity<Object> delete(Integer reportId) {
         try {
-            return ResponseStatu.success(reportService.deleteById(reportId));
+            return ResponseStatus.success(reportService.deleteById(reportId), this);
         } catch (RuntimeException e) {
-            return ResponseStatu.failure(e.getMessage());
+            return ResponseStatus.failure(e.getMessage(), this);
         }
     }
 
@@ -72,9 +72,9 @@ public class ReportController {
             } else {
                 message = reportService.updateByPrimaryKeySelective(report);
             }
-            return ResponseStatu.success(message);
+            return ResponseStatus.success(message, this);
         } catch (Exception e) {
-            return ResponseStatu.failure(e.getMessage());
+            return ResponseStatus.failure(e.getMessage(), this);
         }
     }
 
@@ -87,9 +87,9 @@ public class ReportController {
     @RequestMapping(value = "/getDetail/{reportId}", method = RequestMethod.GET)
     public ResponseEntity<Object> getDetail(@PathVariable int reportId) {
         try {
-            return ResponseStatu.success(reportService.selectById(reportId));
+            return ResponseStatus.success(reportService.selectById(reportId), this);
         } catch (RuntimeException e) {
-            return ResponseStatu.failure(e.getMessage());
+            return ResponseStatus.failure(e.getMessage(), this);
         }
     }
 
@@ -104,12 +104,12 @@ public class ReportController {
                                        int reportType,
                                        @RequestParam(required = false, defaultValue = "5") int pageSize) {
         try {
-            return ResponseStatu
+            return ResponseStatus
                     .success(reportService
-                            .listByPage(params, page, pageSize, reportType));
+                            .listByPage(params, page, pageSize, reportType), this);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseStatu.failure("获取列表失败");
+            return ResponseStatus.failure("获取列表失败", this);
         }
     }
 
@@ -127,13 +127,13 @@ public class ReportController {
         student = new Student();
         student.setStuId(stuId);
         try {
-            return ResponseStatu.success(reportService.listByPageOfStu(params, page,
+            return ResponseStatus.success(reportService.listByPageOfStu(params, page,
                     pageSize
                     , student
-                    , reportType));
+                    , reportType), this);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseStatu.failure("获取列表失败");
+            return ResponseStatus.failure("获取列表失败", this);
         }
     }
 
@@ -151,13 +151,13 @@ public class ReportController {
         teacher = new Teacher();
         teacher.setTeaId(teaId);
         try {
-            return ResponseStatu.success(reportService.listByPageOfTea(params, page,
+            return ResponseStatus.success(reportService.listByPageOfTea(params, page,
                     pageSize,
                     teacher
-                    , reportType));
+                    , reportType), this);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseStatu.failure("获取列表失败");
+            return ResponseStatus.failure("获取列表失败", this);
         }
     }
 
@@ -167,12 +167,12 @@ public class ReportController {
         ResponseEntity<Object> result = null;
         try {
             reportService.deleteByPrimaryKeyIn(lstprimaryKey);
-            result = ResponseStatu.success(
+            result = ResponseStatus.success(
                     MessageFormat.format("批量删除{0}成功", rootPropeties.getAcademy()));
         } catch (Exception e) {
             e.printStackTrace();
-            result = ResponseStatu.failure(
-                    MessageFormat.format("批量删除{0}失败", rootPropeties.getAcademy()));
+            result = ResponseStatus.failure(
+                    MessageFormat.format("批量删除{0}失败", rootPropeties.getAcademy()), this);
         }
         return result;
     }
@@ -182,7 +182,7 @@ public class ReportController {
         try {
             return reportService.updateListByPrimaryKeySelective(lstReport);
         } catch (RuntimeException e) {
-            return ResponseStatu.failure(e.getMessage());
+            return ResponseStatus.failure(e.getMessage(), this);
         }
     }
 
@@ -190,29 +190,45 @@ public class ReportController {
     public ResponseEntity<Object> export(String subId, Integer type) {
         try {
             reportService.export(request, response, subId, type);
-            return ResponseStatu.success("下载成功");
+            return ResponseStatus.success("下载成功", this);
         } catch (RuntimeException e) {
-            return ResponseStatu.failure(e.getMessage());
+            return ResponseStatus.failure(e.getMessage(), this);
         }
     }
 
+    /**
+     * 学生上传报告附件
+     *
+     * @param file
+     * @param subId
+     * @param type
+     * @return
+     */
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
     public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file, String subId, Integer type) {
         try {
             reportService.uploadFile(file, subId, type, false);
-            return ResponseStatu.success("上传文件成功");
+            return ResponseStatus.success("上传文件成功", this);
         } catch (RuntimeException e) {
-            return ResponseStatu.failure(e.getMessage());
+            return ResponseStatus.failure(e.getMessage(), this);
         }
     }
 
+    /**
+     * 教师上传模板
+     *
+     * @param file
+     * @param subId
+     * @param type
+     * @return
+     */
     @RequestMapping(value = "/uploadTemp", method = RequestMethod.POST)
     public ResponseEntity<Object> uploadTemp(@RequestParam("file") MultipartFile file, String subId, Integer type) {
         try {
             reportService.uploadFile(file, subId, type, true);
-            return ResponseStatu.success("上传模板成功");
+            return ResponseStatus.success("上传模板成功", this);
         } catch (RuntimeException e) {
-            return ResponseStatu.failure(e.getMessage());
+            return ResponseStatus.failure(e.getMessage(), this);
         }
     }
 }

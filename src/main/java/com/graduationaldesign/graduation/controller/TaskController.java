@@ -8,7 +8,7 @@ import com.graduationaldesign.graduation.service.TaskService;
 import com.graduationaldesign.graduation.util.BeanUtil;
 import com.graduationaldesign.graduation.util.FileUtil;
 import com.graduationaldesign.graduation.util.PageBean;
-import com.graduationaldesign.graduation.util.ResponseStatu;
+import com.graduationaldesign.graduation.util.ResponseStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -47,11 +47,11 @@ public class TaskController {
                                              @RequestParam(required = false, defaultValue = "1") int page,
                                              @RequestParam(required = false, defaultValue = "5") int pageSize) {
         try {
-            return ResponseStatu
-                    .success(taskService.listByPage(param, page, pageSize));
+            return ResponseStatus
+                    .success(taskService.listByPage(param, page, pageSize), this);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseStatu.failure("获取列表失败");
+            return ResponseStatus.failure("获取列表失败", this);
         }
     }
 
@@ -67,33 +67,33 @@ public class TaskController {
                     .listByPageOfTea(param, page, pageSize, teaId);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseStatu.failure("获取列表失败");
+            return ResponseStatus.failure("获取列表失败", this);
         }
         object.setTotalRecord(1);
         object.setPageSize(5);
-        return ResponseStatu.success(object);
+        return ResponseStatus.success(object, this);
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<Object> addTask(Task task) {
-        return ResponseStatu.success(taskService.insertSelective(task));
+        return ResponseStatus.success(taskService.insertSelective(task), this);
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public ResponseEntity<Object> delTask(Integer id) {
         try {
-            return ResponseStatu.success(taskService.deleteByPrimaryKey(id));
+            return ResponseStatus.success(taskService.deleteByPrimaryKey(id), this);
         } catch (RuntimeException e) {
-            return ResponseStatu.failure(e.getMessage());
+            return ResponseStatus.failure(e.getMessage(), this);
         }
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ResponseEntity<Object> updateTask(Task task) {
         try {
-            return ResponseStatu.success(taskService.updateByPrimaryKeySelective(task));
+            return ResponseStatus.success(taskService.updateByPrimaryKeySelective(task), this);
         } catch (RuntimeException e) {
-            return ResponseStatu.failure(e.getMessage());
+            return ResponseStatus.failure(e.getMessage(), this);
         }
     }
 
@@ -113,10 +113,10 @@ public class TaskController {
         try {
             PageBean<Task> object = taskService
                     .listByPageOfStu(param, page, pageSize, stuId, type);
-            return ResponseStatu.success(object);
+            return ResponseStatus.success(object, this);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseStatu.failure("获取列表失败");
+            return ResponseStatus.failure("获取列表失败", this);
         }
     }
 
@@ -126,12 +126,12 @@ public class TaskController {
         ResponseEntity<Object> result = null;
         try {
             taskService.deleteByPrimaryKeyIn(lstprimaryKey);
-            result = ResponseStatu.success(
+            result = ResponseStatus.success(
                     MessageFormat.format("批量删除{0}成功", rootPropeties.getAcademy()));
         } catch (Exception e) {
             e.printStackTrace();
-            result = ResponseStatu.failure(
-                    MessageFormat.format("批量删除{0}失败", rootPropeties.getAcademy()));
+            result = ResponseStatus.failure(
+                    MessageFormat.format("批量删除{0}失败", rootPropeties.getAcademy()), this);
         }
         return result;
     }
@@ -141,7 +141,7 @@ public class TaskController {
         try {
             return taskService.updateListByPrimaryKeySelective(lstTask);
         } catch (RuntimeException e) {
-            return ResponseStatu.failure(e.getMessage());
+            return ResponseStatus.failure(e.getMessage(), this);
         }
     }
 
