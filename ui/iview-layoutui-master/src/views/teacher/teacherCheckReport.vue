@@ -42,7 +42,7 @@
           <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doSearch">查询</Button>  &nbsp; &nbsp; &nbsp; &nbsp;
           </div>
         <div slot="paddingContent">
-          <Table border  show-summary :columns="columns2" :data="tableData"  @on-selection-change="changeSelect" ref="table"></Table>
+          <Table border   :columns="columns2" :data="tableData"  @on-selection-change="changeSelect" ref="table"></Table>
         </div>
         <div slot="pager">
             <Page :total="this.pagination.total"  :page-size="this.pagination.pageSize"  :page-size-opts="this.pagination.pageSizeOpts" 
@@ -142,7 +142,7 @@ export default {
                         title: '操作',
                         key: 'action',
                         fixed: 'right',
-                        minWidth: 120,
+                        width: 150,
                         render: (h, params) => {
                             return h('div', [
                                 h('Button', {
@@ -151,6 +151,9 @@ export default {
                                         size: 'small',
                                        
                                     },
+                                     style: {
+                                        marginRight: '5px'
+                                        },
                                      attrs:{
                                         title:'查看'
                                     },
@@ -159,7 +162,22 @@ export default {
                                         this.select(params.row)            //编辑方法
                                         }
                                       }
-                                },'查看')
+                                },'查看'),
+                                  h('Button', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small',
+                                       
+                                    },
+                                     attrs:{
+                                        title:'下载附件'
+                                    },
+                                      on: {
+                                        click: () => {
+                                        this.select(params.row)            //编辑方法
+                                        }
+                                      }
+                                },'下载附件')
                             ]);
                         }
                     }

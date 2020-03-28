@@ -13,7 +13,7 @@
             <Button type="primary" icon="md-add"  @click="modal12=true">新增</Button>
         </div>
         <div slot="paddingContent">
-          <Table border  show-summary :columns="columns2" :data="tableData"  @on-selection-change="changeSelect" ref="table"></Table>
+          <Table border   :columns="columns2" :data="tableData"  @on-selection-change="changeSelect" ref="table"></Table>
         </div>
         <div slot="pager">
             <Page :total="this.pagination.total"  :page-size="this.pagination.pageSize"  :page-size-opts="this.pagination.pageSizeOpts" 
@@ -193,9 +193,19 @@ export default {
                 fixed: 'left',
                 sortable: true
             },
+             {
+                title: '所属课题',
+                key: 'subName',
+                minWidth: 200,
+            },
             {
                 title: '内容',
                 key: 'progContent',
+                minWidth: 100,
+            },
+             {
+                title: '教师回复',
+                key: 'progReply',
                 minWidth: 100,
             },
             {
@@ -213,11 +223,7 @@ export default {
                 key: 'progReplyTime',
                 minWidth: 100,
             },
-            {
-                title: '课题id',
-                key: 'progressSubId',
-                minWidth: 100,
-            },{
+           {
                         title: '操作',
                         key: 'action',
                         fixed: 'right',
@@ -427,6 +433,7 @@ export default {
                             progReply: item.progReply,
                             progReplyTime: item.progReplyTime,
                             progressSubId: item.progressSubId,
+                            subName:item.subject.subName
                            })
                           })
                   

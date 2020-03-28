@@ -54,11 +54,9 @@
           <Button type="primary" icon="md-add" @click="handleCreate">添加</Button>
         </div>
         <div slot="paddingContent">
-          <Table border  :columns="columns2" :data="tableData" border show-summary  height="200" :summary-method="handleSummary"  @on-selection-change="changeSelect" ref="table"></Table>
+          <Table border  :columns="columns2" show-summary :data="tableData" border   :summary-method="handleSummary"  @on-selection-change="changeSelect" ref="table"></Table>
         </div>
-        <div slot="paddingContent">
-          <Table :columns="columns2" :data="tableData" border show-summary :summary-method="handleSummary" height="200"></Table>
-        </div>
+       
         
         <div slot="pager">
             <Page :total="this.pagination.total"  :page-size="this.pagination.pageSize"  :page-size-opts="this.pagination.pageSizeOpts" 
@@ -131,12 +129,6 @@ export default {
             academyId: '',
         },
         columns2: [
-            {
-               type: 'selection',
-               width: 60,
-               align: 'center',
-              fixed: 'left'
-             },
             
             {
                 title: '序号',
@@ -297,7 +289,7 @@ export default {
          this.$axios({
                             
                             // url: 'sub/listScheduleOfTea?page=' + page  + '&pageSize=' + pageSize,
-                            url:'sub/listScheduleOfTea?isJoinStudent=true&isJoinTeacher=true&isJoinTask=true&isJoinReport=true&isJoinScoreRecord=true&subId=1',
+                            url:'sub/listScheduleOfTea?isJoinStudent=true&isJoinTeacher=true&isJoinTask=true&isJoinReport=true&isJoinScoreRecord=true',
                             method: 'get',//请求的方式
                             params:params,
                             // token:localStorage.getItem('token')
@@ -307,17 +299,17 @@ export default {
                           let list = res.data.data.beanList;
                            let firstReportStateString= '未完成';
                            let finalReportStateString= '未完成';
-                           let taskStateString= '完成';
-                           let subStateString= '完成';
+                           let taskStateString= '已完成';
+                           let subStateString= '已完成';
                           list.forEach((item, index) => {
                               if(item.reportList.reportType===1&&item.reportList.reportState===4){
-                                        firstReportStateString = '完成'
+                                        firstReportStateString = '已完成'
                               }else if(item.reportList.reportType===2&&item.reportList.reportState===4){
-                                        finalReportStateString = '完成'
+                                        finalReportStateString = '已完成'
                               }else if(item.reportList.reportState===4){
-                                   taskStateString  = '完成'
+                                   taskStateString  = '已完成'
                                }else if(item.taskList.subStuState===3){
-                                   tsubStateString = '完成'
+                                   tsubStateString = '已完成'
                                }
                             console.log(firstReportStateString)
                             console.log(finalReportStateString)
@@ -482,41 +474,50 @@ export default {
         this.formItem.teaRemarks = ''
     },
      handleSummary ({ columns, data }) {
-          console.log(21)
+          console.log(columns)
+        
                 const sums = {};
+                var i = 0
+                var j = 0
+                var k = 0
                 columns.forEach((column, index) => {
+                    i++
                     const key = column.key;
                     if (index === 0) {
                         sums[key] = {
                             key,
-                            value: '完成'
+                            value: '完成人数'
                         };
                         return;
                     }
-                    const values = data.map(item => Number(item[key]));
-                    if (!values.every(value => isNaN(value))) {
-                        const v = values.reduce((prev, curr) => {
-                            const value = Number(curr);
-                            if (!isNaN(value)) {
-                                return prev + curr;
-                            } else {
-                                return prev;
-                            }
-                        }, 0);
+                    const values = data.map(item => String(item[key]));
+                    console.log(values)
+                    for( k =0; k < values.length;k++){
+                        if(values[k]=='已完成'){
+                            j++
+                        }
+                    }
+                    if(i>5){
+                       
                         sums[key] = {
                             key,
-                            value: v + ' 元'
+                            value: '完成(' +j + ')'
                         };
-                    } else {
+                        j=0
+                    }else{
                         sums[key] = {
                             key,
-                            value: 'N/A'
+                            value: ''
                         };
                     }
+                    
                 });
                
                 return sums;
             },
+    check(str){
+        return str.search('完成')!=-1
+    },
     exportDataDemo(type){
        
             window.location.href="http://localhost:8080/graManagement/downFile/exportDemo?type=" + type

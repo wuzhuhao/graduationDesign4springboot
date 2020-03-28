@@ -113,13 +113,13 @@ const router = new Router({
         name: 'studentHome',
         component: () => import('@/views/notice/notice')
       },
-      // {
+      {
     
         
-      //   path: '/studentSelection',
-      //   name: 'studentSelection',
-      //   component: () => import('@/views/student/studentSelection')
-      // },
+        path: '/fileDownload',
+        name: 'fileDownload',
+        component: () => import('@/views/teacher/fileDownload')
+      },
       {
         path: '/scheduleQuery',
         name: 'scheduleQuery',

@@ -84,7 +84,7 @@
     
             <div slot="paddingContent">
     
-                <Table border show-summary :columns="columns2" :data="tableData" @on-selection-change="changeSelect" ref="table"></Table>
+                <Table border  :columns="columns2" :data="tableData" @on-selection-change="changeSelect" ref="table"></Table>
     
             </div>
     
@@ -168,7 +168,7 @@
     
                 <div slot="paddingContent">
     
-                    <Table border show-summary :columns="columns" :data="tableData1" @on-selection-change="changeSelect" ref="table"></Table>
+                    <Table border  :columns="columns" :data="tableData1" @on-selection-change="changeSelect" ref="table"></Table>
     
                 </div>
     
@@ -738,7 +738,7 @@ export default {
                     this.selectList[i].subStuState = 1
                 lstprimaryKey1 = {
                     subId: this.selectList[i].subId,
-                    subStuState:3
+                    subStuState:3,
                 }
 
                 lstprimaryKey.push(lstprimaryKey1)

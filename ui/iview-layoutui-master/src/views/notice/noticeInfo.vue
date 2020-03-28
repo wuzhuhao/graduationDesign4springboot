@@ -18,7 +18,7 @@
             <Form :model="formItem">
            <Row>
                 <Col span="24">
-                  <FormItem :label="this.formItem.noticeContent"   class="label">
+                  <FormItem :label="this.formItem.noticeTitlet"   class="label">
                 </FormItem>
                 </Col>
               </Row>
@@ -75,6 +75,7 @@ export default {
                 noticePublisher:  '',
                 acaId: '',
                 noticeContent:  '',
+                noticeTitlet:  '',
                 academy:  '',
         },
        

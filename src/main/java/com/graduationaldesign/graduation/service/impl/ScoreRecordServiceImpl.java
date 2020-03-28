@@ -88,6 +88,12 @@ public class ScoreRecordServiceImpl implements ScoreRecordService {
         ExampleHelper.addCondition(ScoreRecord.class, criteria, params);
         List<ScoreRecord> list = this.scoreRecordMapper.selectByExample(example);
         pageBean.setBeanList(list);
+        for(ScoreRecord scoreRecord :list){
+            scoreRecord.getSubject();
+            if(scoreRecord.getSubject()!=null){
+                scoreRecord.getSubject().getStudent();
+            }
+        }
         return pageBean;
     }
 }

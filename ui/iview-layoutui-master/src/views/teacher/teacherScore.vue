@@ -11,7 +11,7 @@
         </div>
        
         <div slot="paddingContent">
-          <Table border  show-summary :columns="columns2" :data="data1"  @on-selection-change="changeSelect" ref="table"></Table>
+          <Table border  :columns="columns2" :data="tableData"   ref="table"></Table>
         </div>
        
     </MasterPage>
@@ -51,13 +51,8 @@ export default {
             slider: [20, 50],
             textarea: ''
         },
+        tableData:[],
          columns2: [
-            {
-               type: 'selection',
-               width: 60,
-               align: 'center',
-              fixed: 'left'
-             },
             
             {
                 type: 'index',
@@ -77,19 +72,43 @@ export default {
                 minWidth: 100,
             }, {
                 title: '初稿成绩',
-                key: 'teaSex',
+                key: 'firstReportScore',
                 minWidth: 100,
             },
             {
                 title: '终稿成绩',
-                key: 'teaAge',
+                key: 'finalReportScore',
                 minWidth: 100,
             },
             {
                 title: '答辩成绩',
-                key: 'teaBirthday',
+                key: 'replyScore',
                 minWidth: 100,
-            } 
+            } ,{
+                        title: '操作',
+                        key: 'action',
+                        width: 120,
+                        render: (h, params) => {
+                            return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small',
+                                        // icon: "icon iconfont icon-shanchu"
+                                    },
+                                     attrs:{
+                                        title:'最终评定'
+                                    },
+                                      on: {
+                                        click: () => {
+                                        this.delById(params.row)             //编辑方法
+                                        }
+                                      }
+                                },'最终评定'),
+                              
+                            ]);
+                        }
+                    }
         ],
        
         data1: [
@@ -113,7 +132,7 @@ export default {
       // },
      getData(){
         let params = this.formItem
-       let  token = localStorage.getItem('token')
+       let  userId = localStorage.getItem('userId')
          this.$axios({
                             
                             url: 'scoreRecord/list?page=' + 1 ,
@@ -126,17 +145,16 @@ export default {
                           let list = res.data.data.beanList;
                           list.forEach((item, index) => {
                            this.tableData.push({
-                              teaId: item.teaId,
-                              teaPassword: item.teaPassword,
-                              teaName:item.teaName,
-                              teaSex: item.teaSex,
-                              teaAge: item.teaAge,
-                              teaBirthday:item.teaBirthday,
-                              teaPhone:item.teaPhone,
-                              teaMail:item.teaMail,
-                              teaAddress:item.teaAddress,
-                              teaRemarks: item.teaRemarks,
-                              academyId: item.academyId,
+                              finalReportScore: item.finalReportScore,
+                              firstReportScore:item.firstReportScore,
+                              id: item.id,
+                              replyScore: item.replyScore,
+                              replyTeam: item.replyTeam,
+                              replyTeamId: item.replyTeamId,
+                              scoreSubId:item.scoreSubId,
+                              subName: item.subject.subName,
+                              subLastScore: item.subject.subLastScore,
+                              stuName: item.subject.student.stuName
                            })
                           })
                   
