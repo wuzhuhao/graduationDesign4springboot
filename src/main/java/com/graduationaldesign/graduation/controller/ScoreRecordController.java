@@ -110,7 +110,7 @@ public class ScoreRecordController {
     }
 
     @RequestMapping(value = "/listUpdate", method = RequestMethod.POST)
-    public ResponseEntity<Object> updateScoreRecord(List<ScoreRecord> lstScoreRecord) {
+    public ResponseEntity<Object> updateScoreRecord(@RequestBody List<ScoreRecord> lstScoreRecord) {
         try {
             return scoreRecordService.updateListByPrimaryKeySelective(lstScoreRecord);
         } catch (RuntimeException e) {

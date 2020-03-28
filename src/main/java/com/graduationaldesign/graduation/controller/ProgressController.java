@@ -185,7 +185,7 @@ public class ProgressController {
     }
 
     @RequestMapping(value = "/listUpdate", method = RequestMethod.POST)
-    public ResponseEntity<Object> updateProgress(List<Progress> lstProgress) {
+    public ResponseEntity<Object> updateProgress(@RequestBody List<Progress> lstProgress) {
         try {
             return progressService.updateListByPrimaryKeySelective(lstProgress);
         } catch (RuntimeException e) {

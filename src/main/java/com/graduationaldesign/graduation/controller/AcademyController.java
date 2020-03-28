@@ -125,7 +125,7 @@ public class AcademyController {
     }
 
     @RequestMapping(value = "/listUpdate", method = RequestMethod.POST)
-    public ResponseEntity<Object> updateAcademy(List<Academy> lstAcademy) {
+    public ResponseEntity<Object> updateAcademy(@RequestBody List<Academy> lstAcademy) {
         try {
             return academyService.updateListByPrimaryKeySelective(lstAcademy);
         } catch (RuntimeException e) {

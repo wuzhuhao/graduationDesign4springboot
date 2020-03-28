@@ -103,7 +103,7 @@ public class ApplyController {
     }
 
     @RequestMapping(value = "/listUpdate", method = RequestMethod.POST)
-    public ResponseEntity<Object> updateApply(List<Apply> lstApply) {
+    public ResponseEntity<Object> updateApply(@RequestBody List<Apply> lstApply) {
         try {
             return applyService.updateListByPrimaryKeySelective(lstApply);
         } catch (RuntimeException e) {

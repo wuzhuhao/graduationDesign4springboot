@@ -114,7 +114,7 @@ public class GoodGraduationController {
     }
 
     @RequestMapping(value = "/listUpdate", method = RequestMethod.POST)
-    public ResponseEntity<Object> updateGoodGraduation(List<GoodGraduation> lstGoodGraduation) {
+    public ResponseEntity<Object> updateGoodGraduation(@RequestBody List<GoodGraduation> lstGoodGraduation) {
         try {
             return goodGraduationService.updateListByPrimaryKeySelective(lstGoodGraduation);
         } catch (RuntimeException e) {

@@ -114,7 +114,7 @@ public class DesignShowController {
     }
 
     @RequestMapping(value = "/listUpdate", method = RequestMethod.POST)
-    public ResponseEntity<Object> updateDesignShow(List<DesignShow> lstDesignShow) {
+    public ResponseEntity<Object> updateDesignShow(@RequestBody List<DesignShow> lstDesignShow) {
         try {
             return designShowService.updateListByPrimaryKeySelective(lstDesignShow);
         } catch (RuntimeException e) {

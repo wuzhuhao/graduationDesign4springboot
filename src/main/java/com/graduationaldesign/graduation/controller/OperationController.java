@@ -111,7 +111,7 @@ public class OperationController {
     }
 
     @RequestMapping(value = "/listUpdate", method = RequestMethod.POST)
-    public ResponseEntity<Object> updateOperation(List<Operation> lstOperation) {
+    public ResponseEntity<Object> updateOperation(@RequestBody List<Operation> lstOperation) {
         try {
             return operationService.updateListByPrimaryKeySelective(lstOperation);
         } catch (RuntimeException e) {

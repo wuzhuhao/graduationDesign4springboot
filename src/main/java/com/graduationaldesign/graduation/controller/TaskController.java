@@ -137,7 +137,7 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/listUpdate", method = RequestMethod.POST)
-    public ResponseEntity<Object> updateTask(List<Task> lstTask) {
+    public ResponseEntity<Object> updateTask(@RequestBody List<Task> lstTask) {
         try {
             return taskService.updateListByPrimaryKeySelective(lstTask);
         } catch (RuntimeException e) {

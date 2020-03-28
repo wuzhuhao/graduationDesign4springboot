@@ -113,7 +113,7 @@ public class ReplyTeamController {
     }
 
     @RequestMapping(value = "/listUpdate", method = RequestMethod.POST)
-    public ResponseEntity<Object> updateReplyTeam(List<ReplyTeam> lstReplyTeam) {
+    public ResponseEntity<Object> updateReplyTeam(@RequestBody List<ReplyTeam> lstReplyTeam) {
         try {
             return replyTeamService.updateListByPrimaryKeySelective(lstReplyTeam);
         } catch (RuntimeException e) {
