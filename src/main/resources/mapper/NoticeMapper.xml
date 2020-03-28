@@ -73,10 +73,10 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-    id, notice_time, notice_publisher, aca_id
+    t_notice.id, t_notice.notice_time, t_notice.notice_publisher, t_notice.aca_id,t_notice.notice_title
   </sql>
     <sql id="Blob_Column_List">
-    notice_content
+    t_notice.notice_content
   </sql>
     <select id="selectByExampleWithBLOBs" parameterType="com.graduationaldesign.graduation.pojo.NoticeExample"
             resultMap="ResultMapWithBLOBs">
@@ -135,9 +135,9 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
         insert into t_notice (notice_time, notice_publisher, aca_id,
-        notice_content)
+        notice_content,notice_title)
         values (#{noticeTime,jdbcType=TIMESTAMP}, #{noticePublisher,jdbcType=VARCHAR}, #{acaId,jdbcType=INTEGER},
-        #{noticeTitle,jdbcType=VARCHAR}, #{noticeContent,jdbcType=LONGVARCHAR})
+        #{noticeContent,jdbcType=LONGVARCHAR},#{noticeTitle,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.graduationaldesign.graduation.pojo.Notice">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">

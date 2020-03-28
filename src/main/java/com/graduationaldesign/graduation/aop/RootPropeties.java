@@ -39,6 +39,7 @@ public class RootPropeties {
     private String userRole;
     private String scoreRecord;
     private String sysdict;
+    private String teamTeaRelate;
 
     public String getSysdict() {
         return sysdict;
@@ -214,5 +215,13 @@ public class RootPropeties {
 
     public void setScoreRecord(String scoreRecord) {
         this.scoreRecord = scoreRecord;
+    }
+
+    public String getTeamTeaRelate() {
+        return teamTeaRelate;
+    }
+
+    public void setTeamTeaRelate(String teamTeaRelate) {
+        this.teamTeaRelate = teamTeaRelate;
     }
 }

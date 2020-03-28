@@ -31,13 +31,13 @@ public class ReplyTeamController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<Object> add(ReplyTeam record) {
-        ResponseEntity<Object> result = null;
-        if (replyTeamService.insertSelective(record) <= 0) {
-            result = ResponseStatus.failure(
-                    MessageFormat.format("添加{0}失败", rootPropeties.getReplyTeam()), this);
-        } else {
-            result = ResponseStatus.success(
-                    MessageFormat.format("添加{0}成功", rootPropeties.getReplyTeam()));
+        ResponseEntity<Object> result;
+        try {
+            replyTeamService.insertSelective(record);
+            result = ResponseStatus.success(MessageFormat.format("添加{0}成功", rootPropeties.getReplyTeam()), this);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = ResponseStatus.failure(MessageFormat.format("添加{0}失败", rootPropeties.getReplyTeam()), this);
         }
         return result;
     }

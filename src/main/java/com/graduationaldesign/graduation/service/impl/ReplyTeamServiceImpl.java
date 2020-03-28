@@ -4,8 +4,10 @@ import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.mapper.ReplyTeamMapper;
 import com.graduationaldesign.graduation.pojo.ReplyTeam;
 import com.graduationaldesign.graduation.pojo.ReplyTeamExample;
+import com.graduationaldesign.graduation.pojo.TeamTeaRelate;
 import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.ReplyTeamService;
+import com.graduationaldesign.graduation.service.TeamTeaRelateService;
 import com.graduationaldesign.graduation.util.PageBean;
 import com.graduationaldesign.graduation.util.ResponseStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,8 @@ public class ReplyTeamServiceImpl implements ReplyTeamService {
     private ReplyTeamMapper replyTeamMapper;
     @Autowired
     RootPropeties rootPropeties;
+    @Autowired
+    TeamTeaRelateService teamTeaRelateService;
 
     @Override
     public int deleteByPrimaryKey(Integer id) {
@@ -42,7 +46,12 @@ public class ReplyTeamServiceImpl implements ReplyTeamService {
 
     @Override
     public int insertSelective(ReplyTeam record) {
-        return replyTeamMapper.insertSelective(record);
+        int rowNum = replyTeamMapper.insertSelective(record);
+        if (rowNum > 0) {
+            TeamTeaRelate teamTeaRelate = new TeamTeaRelate(record.getTeamLeaderId(), record.getId());
+            teamTeaRelateService.insertSelective(teamTeaRelate);
+        }
+        return rowNum;
     }
 
     @Override

@@ -1,422 +1,426 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.graduationaldesign.graduation.mapper.AdminMapper">
-  <resultMap id="BaseResultMap" type="com.graduationaldesign.graduation.pojo.Admin">
-    <id column="admin_id" jdbcType="VARCHAR" property="adminId" />
-    <result column="admin_password" jdbcType="VARCHAR" property="adminPassword" />
-    <result column="admin_name" jdbcType="VARCHAR" property="adminName" />
-    <result column="admin_sex" jdbcType="VARCHAR" property="adminSex" />
-    <result column="admin_age" jdbcType="INTEGER" property="adminAge" />
-    <result column="admin_birthday" jdbcType="VARCHAR" property="adminBirthday" />
-    <result column="admin_phone" jdbcType="VARCHAR" property="adminPhone" />
-    <result column="admin_mail" jdbcType="VARCHAR" property="adminMail" />
-    <result column="admin_address" jdbcType="VARCHAR" property="adminAddress" />
-    <result column="admin_remarks" jdbcType="VARCHAR" property="adminRemarks" />
-    <result column="admin_type" jdbcType="INTEGER" property="adminType" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+    <resultMap id="BaseResultMap" type="com.graduationaldesign.graduation.pojo.Admin">
+        <id column="admin_id" jdbcType="VARCHAR" property="adminId"/>
+        <result column="admin_password" jdbcType="VARCHAR" property="adminPassword"/>
+        <result column="admin_name" jdbcType="VARCHAR" property="adminName"/>
+        <result column="admin_sex" jdbcType="VARCHAR" property="adminSex"/>
+        <result column="admin_age" jdbcType="INTEGER" property="adminAge"/>
+        <result column="admin_birthday" jdbcType="VARCHAR" property="adminBirthday"/>
+        <result column="admin_phone" jdbcType="VARCHAR" property="adminPhone"/>
+        <result column="admin_mail" jdbcType="VARCHAR" property="adminMail"/>
+        <result column="admin_address" jdbcType="VARCHAR" property="adminAddress"/>
+        <result column="admin_remarks" jdbcType="VARCHAR" property="adminRemarks"/>
+        <result column="admin_type" jdbcType="INTEGER" property="adminType"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    t_admin.admin_id, t_admin.admin_password, t_admin.admin_name, t_admin.admin_sex, t_admin.admin_age, t_admin.admin_birthday, t_admin.admin_phone,
+    t_admin.admin_mail, t_admin.admin_address, t_admin.admin_remarks, t_admin.admin_type
+  </sql>
+    <select id="selectByExample" parameterType="com.graduationaldesign.graduation.pojo.AdminExample"
+            resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
         </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
-    admin_id, admin_password, admin_name, admin_sex, admin_age, admin_birthday, admin_phone, 
-    admin_mail, admin_address, admin_remarks, admin_type
-  </sql>
-  <select id="selectByExample" parameterType="com.graduationaldesign.graduation.pojo.AdminExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    'true' as QUERYID,
-    <include refid="Base_Column_List" />
-    from t_admin
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 'false' as QUERYID,
-    <include refid="Base_Column_List" />
-    from t_admin
-    where admin_id = #{adminId,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from t_admin
-    where admin_id = #{adminId,jdbcType=VARCHAR}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.graduationaldesign.graduation.pojo.AdminExample">
-    delete from t_admin
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.graduationaldesign.graduation.pojo.Admin">
-    insert into t_admin (admin_id, admin_password, admin_name, 
-      admin_sex, admin_age, admin_birthday, 
-      admin_phone, admin_mail, admin_address, 
-      admin_remarks, admin_type)
-    values (#{adminId,jdbcType=VARCHAR}, #{adminPassword,jdbcType=VARCHAR}, #{adminName,jdbcType=VARCHAR}, 
-      #{adminSex,jdbcType=VARCHAR}, #{adminAge,jdbcType=INTEGER}, #{adminBirthday,jdbcType=VARCHAR}, 
-      #{adminPhone,jdbcType=VARCHAR}, #{adminMail,jdbcType=VARCHAR}, #{adminAddress,jdbcType=VARCHAR}, 
-      #{adminRemarks,jdbcType=VARCHAR}, #{adminType,jdbcType=INTEGER})
-  </insert>
-  <insert id="insertSelective" parameterType="com.graduationaldesign.graduation.pojo.Admin">
-    insert into t_admin
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="adminId != null">
-        admin_id,
-      </if>
-      <if test="adminPassword != null">
-        admin_password,
-      </if>
-      <if test="adminName != null">
-        admin_name,
-      </if>
-      <if test="adminSex != null">
-        admin_sex,
-      </if>
-      <if test="adminAge != null">
-        admin_age,
-      </if>
-      <if test="adminBirthday != null">
-        admin_birthday,
-      </if>
-      <if test="adminPhone != null">
-        admin_phone,
-      </if>
-      <if test="adminMail != null">
-        admin_mail,
-      </if>
-      <if test="adminAddress != null">
-        admin_address,
-      </if>
-      <if test="adminRemarks != null">
-        admin_remarks,
-      </if>
-      <if test="adminType != null">
-        admin_type,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="adminId != null">
-        #{adminId,jdbcType=VARCHAR},
-      </if>
-      <if test="adminPassword != null">
-        #{adminPassword,jdbcType=VARCHAR},
-      </if>
-      <if test="adminName != null">
-        #{adminName,jdbcType=VARCHAR},
-      </if>
-      <if test="adminSex != null">
-        #{adminSex,jdbcType=VARCHAR},
-      </if>
-      <if test="adminAge != null">
-        #{adminAge,jdbcType=INTEGER},
-      </if>
-      <if test="adminBirthday != null">
-        #{adminBirthday,jdbcType=VARCHAR},
-      </if>
-      <if test="adminPhone != null">
-        #{adminPhone,jdbcType=VARCHAR},
-      </if>
-      <if test="adminMail != null">
-        #{adminMail,jdbcType=VARCHAR},
-      </if>
-      <if test="adminAddress != null">
-        #{adminAddress,jdbcType=VARCHAR},
-      </if>
-      <if test="adminRemarks != null">
-        #{adminRemarks,jdbcType=VARCHAR},
-      </if>
-      <if test="adminType != null">
-        #{adminType,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.graduationaldesign.graduation.pojo.AdminExample" resultType="java.lang.Long">
-    select count(*) from t_admin
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update t_admin
-    <set>
-      <if test="record.adminId != null">
-        admin_id = #{record.adminId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.adminPassword != null">
+        'true' as QUERYID,
+        <include refid="Base_Column_List"/>
+        from t_admin
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select 'false' as QUERYID,
+        <include refid="Base_Column_List"/>
+        from t_admin
+        where admin_id = #{adminId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from t_admin
+        where admin_id = #{adminId,jdbcType=VARCHAR}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.graduationaldesign.graduation.pojo.AdminExample">
+        delete from t_admin
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.graduationaldesign.graduation.pojo.Admin">
+        insert into t_admin (admin_id, admin_password, admin_name,
+        admin_sex, admin_age, admin_birthday,
+        admin_phone, admin_mail, admin_address,
+        admin_remarks, admin_type)
+        values (#{adminId,jdbcType=VARCHAR}, #{adminPassword,jdbcType=VARCHAR}, #{adminName,jdbcType=VARCHAR},
+        #{adminSex,jdbcType=VARCHAR}, #{adminAge,jdbcType=INTEGER}, #{adminBirthday,jdbcType=VARCHAR},
+        #{adminPhone,jdbcType=VARCHAR}, #{adminMail,jdbcType=VARCHAR}, #{adminAddress,jdbcType=VARCHAR},
+        #{adminRemarks,jdbcType=VARCHAR}, #{adminType,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.graduationaldesign.graduation.pojo.Admin">
+        insert into t_admin
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="adminId != null">
+                admin_id,
+            </if>
+            <if test="adminPassword != null">
+                admin_password,
+            </if>
+            <if test="adminName != null">
+                admin_name,
+            </if>
+            <if test="adminSex != null">
+                admin_sex,
+            </if>
+            <if test="adminAge != null">
+                admin_age,
+            </if>
+            <if test="adminBirthday != null">
+                admin_birthday,
+            </if>
+            <if test="adminPhone != null">
+                admin_phone,
+            </if>
+            <if test="adminMail != null">
+                admin_mail,
+            </if>
+            <if test="adminAddress != null">
+                admin_address,
+            </if>
+            <if test="adminRemarks != null">
+                admin_remarks,
+            </if>
+            <if test="adminType != null">
+                admin_type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="adminId != null">
+                #{adminId,jdbcType=VARCHAR},
+            </if>
+            <if test="adminPassword != null">
+                #{adminPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="adminName != null">
+                #{adminName,jdbcType=VARCHAR},
+            </if>
+            <if test="adminSex != null">
+                #{adminSex,jdbcType=VARCHAR},
+            </if>
+            <if test="adminAge != null">
+                #{adminAge,jdbcType=INTEGER},
+            </if>
+            <if test="adminBirthday != null">
+                #{adminBirthday,jdbcType=VARCHAR},
+            </if>
+            <if test="adminPhone != null">
+                #{adminPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="adminMail != null">
+                #{adminMail,jdbcType=VARCHAR},
+            </if>
+            <if test="adminAddress != null">
+                #{adminAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="adminRemarks != null">
+                #{adminRemarks,jdbcType=VARCHAR},
+            </if>
+            <if test="adminType != null">
+                #{adminType,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.graduationaldesign.graduation.pojo.AdminExample"
+            resultType="java.lang.Long">
+        select count(*) from t_admin
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update t_admin
+        <set>
+            <if test="record.adminId != null">
+                admin_id = #{record.adminId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.adminPassword != null">
+                admin_password = #{record.adminPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="record.adminName != null">
+                admin_name = #{record.adminName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.adminSex != null">
+                admin_sex = #{record.adminSex,jdbcType=VARCHAR},
+            </if>
+            <if test="record.adminAge != null">
+                admin_age = #{record.adminAge,jdbcType=INTEGER},
+            </if>
+            <if test="record.adminBirthday != null">
+                admin_birthday = #{record.adminBirthday,jdbcType=VARCHAR},
+            </if>
+            <if test="record.adminPhone != null">
+                admin_phone = #{record.adminPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="record.adminMail != null">
+                admin_mail = #{record.adminMail,jdbcType=VARCHAR},
+            </if>
+            <if test="record.adminAddress != null">
+                admin_address = #{record.adminAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="record.adminRemarks != null">
+                admin_remarks = #{record.adminRemarks,jdbcType=VARCHAR},
+            </if>
+            <if test="record.adminType != null">
+                admin_type = #{record.adminType,jdbcType=INTEGER},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update t_admin
+        set admin_id = #{record.adminId,jdbcType=VARCHAR},
         admin_password = #{record.adminPassword,jdbcType=VARCHAR},
-      </if>
-      <if test="record.adminName != null">
         admin_name = #{record.adminName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.adminSex != null">
         admin_sex = #{record.adminSex,jdbcType=VARCHAR},
-      </if>
-      <if test="record.adminAge != null">
         admin_age = #{record.adminAge,jdbcType=INTEGER},
-      </if>
-      <if test="record.adminBirthday != null">
         admin_birthday = #{record.adminBirthday,jdbcType=VARCHAR},
-      </if>
-      <if test="record.adminPhone != null">
         admin_phone = #{record.adminPhone,jdbcType=VARCHAR},
-      </if>
-      <if test="record.adminMail != null">
         admin_mail = #{record.adminMail,jdbcType=VARCHAR},
-      </if>
-      <if test="record.adminAddress != null">
         admin_address = #{record.adminAddress,jdbcType=VARCHAR},
-      </if>
-      <if test="record.adminRemarks != null">
         admin_remarks = #{record.adminRemarks,jdbcType=VARCHAR},
-      </if>
-      <if test="record.adminType != null">
-        admin_type = #{record.adminType,jdbcType=INTEGER},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update t_admin
-    set admin_id = #{record.adminId,jdbcType=VARCHAR},
-      admin_password = #{record.adminPassword,jdbcType=VARCHAR},
-      admin_name = #{record.adminName,jdbcType=VARCHAR},
-      admin_sex = #{record.adminSex,jdbcType=VARCHAR},
-      admin_age = #{record.adminAge,jdbcType=INTEGER},
-      admin_birthday = #{record.adminBirthday,jdbcType=VARCHAR},
-      admin_phone = #{record.adminPhone,jdbcType=VARCHAR},
-      admin_mail = #{record.adminMail,jdbcType=VARCHAR},
-      admin_address = #{record.adminAddress,jdbcType=VARCHAR},
-      admin_remarks = #{record.adminRemarks,jdbcType=VARCHAR},
-      admin_type = #{record.adminType,jdbcType=INTEGER}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.graduationaldesign.graduation.pojo.Admin">
-    update t_admin
-    <set>
-      <if test="adminPassword != null">
-        admin_password = #{adminPassword,jdbcType=VARCHAR},
-      </if>
-      <if test="adminName != null">
+        admin_type = #{record.adminType,jdbcType=INTEGER}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.graduationaldesign.graduation.pojo.Admin">
+        update t_admin
+        <set>
+            <if test="adminPassword != null">
+                admin_password = #{adminPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="adminName != null">
+                admin_name = #{adminName,jdbcType=VARCHAR},
+            </if>
+            <if test="adminSex != null">
+                admin_sex = #{adminSex,jdbcType=VARCHAR},
+            </if>
+            <if test="adminAge != null">
+                admin_age = #{adminAge,jdbcType=INTEGER},
+            </if>
+            <if test="adminBirthday != null">
+                admin_birthday = #{adminBirthday,jdbcType=VARCHAR},
+            </if>
+            <if test="adminPhone != null">
+                admin_phone = #{adminPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="adminMail != null">
+                admin_mail = #{adminMail,jdbcType=VARCHAR},
+            </if>
+            <if test="adminAddress != null">
+                admin_address = #{adminAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="adminRemarks != null">
+                admin_remarks = #{adminRemarks,jdbcType=VARCHAR},
+            </if>
+            <if test="adminType != null">
+                admin_type = #{adminType,jdbcType=INTEGER},
+            </if>
+        </set>
+        where admin_id = #{adminId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.graduationaldesign.graduation.pojo.Admin">
+        update t_admin
+        set admin_password = #{adminPassword,jdbcType=VARCHAR},
         admin_name = #{adminName,jdbcType=VARCHAR},
-      </if>
-      <if test="adminSex != null">
         admin_sex = #{adminSex,jdbcType=VARCHAR},
-      </if>
-      <if test="adminAge != null">
         admin_age = #{adminAge,jdbcType=INTEGER},
-      </if>
-      <if test="adminBirthday != null">
         admin_birthday = #{adminBirthday,jdbcType=VARCHAR},
-      </if>
-      <if test="adminPhone != null">
         admin_phone = #{adminPhone,jdbcType=VARCHAR},
-      </if>
-      <if test="adminMail != null">
         admin_mail = #{adminMail,jdbcType=VARCHAR},
-      </if>
-      <if test="adminAddress != null">
         admin_address = #{adminAddress,jdbcType=VARCHAR},
-      </if>
-      <if test="adminRemarks != null">
         admin_remarks = #{adminRemarks,jdbcType=VARCHAR},
-      </if>
-      <if test="adminType != null">
-        admin_type = #{adminType,jdbcType=INTEGER},
-      </if>
-    </set>
-    where admin_id = #{adminId,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.graduationaldesign.graduation.pojo.Admin">
-    update t_admin
-    set admin_password = #{adminPassword,jdbcType=VARCHAR},
-      admin_name = #{adminName,jdbcType=VARCHAR},
-      admin_sex = #{adminSex,jdbcType=VARCHAR},
-      admin_age = #{adminAge,jdbcType=INTEGER},
-      admin_birthday = #{adminBirthday,jdbcType=VARCHAR},
-      admin_phone = #{adminPhone,jdbcType=VARCHAR},
-      admin_mail = #{adminMail,jdbcType=VARCHAR},
-      admin_address = #{adminAddress,jdbcType=VARCHAR},
-      admin_remarks = #{adminRemarks,jdbcType=VARCHAR},
-      admin_type = #{adminType,jdbcType=INTEGER}
-    where admin_id = #{adminId,jdbcType=VARCHAR}
-  </update>
-  <insert id="insertBatchSelective" parameterType="java.util.List">
-    insert into t_admin
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="list[0].adminId!=null">
-        admin_id,
-      </if>
-      <if test="list[0].adminPassword!=null">
-        admin_password,
-      </if>
-      <if test="list[0].adminName!=null">
-        admin_name,
-      </if>
-      <if test="list[0].adminSex!=null">
-        admin_sex,
-      </if>
-      <if test="list[0].adminAge!=null">
-        admin_age,
-      </if>
-      <if test="list[0].adminBirthday!=null">
-        admin_birthday,
-      </if>
-      <if test="list[0].adminPhone!=null">
-        admin_phone,
-      </if>
-      <if test="list[0].adminMail!=null">
-        admin_mail,
-      </if>
-      <if test="list[0].adminAddress!=null">
-        admin_address,
-      </if>
-      <if test="list[0].adminRemarks!=null">
-        admin_remarks,
-      </if>
-      <if test="list[0].adminType!=null">
-        admin_type,
-      </if>
-    </trim>
-     values 
-    <foreach collection="list" index="index" item="item" separator=",">
-      <trim prefix=" (" suffix=")" suffixOverrides=",">
-        <if test="item.adminId!=null">
-          #{item.adminId,jdbcType=VARCHAR},
-        </if>
-        <if test="item.adminPassword!=null">
-          #{item.adminPassword,jdbcType=VARCHAR},
-        </if>
-        <if test="item.adminName!=null">
-          #{item.adminName,jdbcType=VARCHAR},
-        </if>
-        <if test="item.adminSex!=null">
-          #{item.adminSex,jdbcType=VARCHAR},
-        </if>
-        <if test="item.adminAge!=null">
-          #{item.adminAge,jdbcType=INTEGER},
-        </if>
-        <if test="item.adminBirthday!=null">
-          #{item.adminBirthday,jdbcType=VARCHAR},
-        </if>
-        <if test="item.adminPhone!=null">
-          #{item.adminPhone,jdbcType=VARCHAR},
-        </if>
-        <if test="item.adminMail!=null">
-          #{item.adminMail,jdbcType=VARCHAR},
-        </if>
-        <if test="item.adminAddress!=null">
-          #{item.adminAddress,jdbcType=VARCHAR},
-        </if>
-        <if test="item.adminRemarks!=null">
-          #{item.adminRemarks,jdbcType=VARCHAR},
-        </if>
-        <if test="item.adminType!=null">
-          #{item.adminType,jdbcType=INTEGER},
-        </if>
-      </trim>
-    </foreach>
-  </insert>
-  <update id="updateBatchByPrimaryKeySelective" parameterType="java.util.List">
-    <foreach collection="list" index="index" item="item" separator=";">
-      update t_admin
-      <set>
-        <if test="item.adminPassword!=null">
-          admin_password=#{item.adminPassword,jdbcType=VARCHAR},
-        </if>
-        <if test="item.adminName!=null">
-          admin_name=#{item.adminName,jdbcType=VARCHAR},
-        </if>
-        <if test="item.adminSex!=null">
-          admin_sex=#{item.adminSex,jdbcType=VARCHAR},
-        </if>
-        <if test="item.adminAge!=null">
-          admin_age=#{item.adminAge,jdbcType=INTEGER},
-        </if>
-        <if test="item.adminBirthday!=null">
-          admin_birthday=#{item.adminBirthday,jdbcType=VARCHAR},
-        </if>
-        <if test="item.adminPhone!=null">
-          admin_phone=#{item.adminPhone,jdbcType=VARCHAR},
-        </if>
-        <if test="item.adminMail!=null">
-          admin_mail=#{item.adminMail,jdbcType=VARCHAR},
-        </if>
-        <if test="item.adminAddress!=null">
-          admin_address=#{item.adminAddress,jdbcType=VARCHAR},
-        </if>
-        <if test="item.adminRemarks!=null">
-          admin_remarks=#{item.adminRemarks,jdbcType=VARCHAR},
-        </if>
-        <if test="item.adminType!=null">
-          admin_type=#{item.adminType,jdbcType=INTEGER},
-        </if>
-      </set>
-      where 
-      admin_id = #{item.adminId,jdbcType=VARCHAR}
-    </foreach>
-  </update>
+        admin_type = #{adminType,jdbcType=INTEGER}
+        where admin_id = #{adminId,jdbcType=VARCHAR}
+    </update>
+    <insert id="insertBatchSelective" parameterType="java.util.List">
+        insert into t_admin
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="list[0].adminId!=null">
+                admin_id,
+            </if>
+            <if test="list[0].adminPassword!=null">
+                admin_password,
+            </if>
+            <if test="list[0].adminName!=null">
+                admin_name,
+            </if>
+            <if test="list[0].adminSex!=null">
+                admin_sex,
+            </if>
+            <if test="list[0].adminAge!=null">
+                admin_age,
+            </if>
+            <if test="list[0].adminBirthday!=null">
+                admin_birthday,
+            </if>
+            <if test="list[0].adminPhone!=null">
+                admin_phone,
+            </if>
+            <if test="list[0].adminMail!=null">
+                admin_mail,
+            </if>
+            <if test="list[0].adminAddress!=null">
+                admin_address,
+            </if>
+            <if test="list[0].adminRemarks!=null">
+                admin_remarks,
+            </if>
+            <if test="list[0].adminType!=null">
+                admin_type,
+            </if>
+        </trim>
+        values
+        <foreach collection="list" index="index" item="item" separator=",">
+            <trim prefix=" (" suffix=")" suffixOverrides=",">
+                <if test="item.adminId!=null">
+                    #{item.adminId,jdbcType=VARCHAR},
+                </if>
+                <if test="item.adminPassword!=null">
+                    #{item.adminPassword,jdbcType=VARCHAR},
+                </if>
+                <if test="item.adminName!=null">
+                    #{item.adminName,jdbcType=VARCHAR},
+                </if>
+                <if test="item.adminSex!=null">
+                    #{item.adminSex,jdbcType=VARCHAR},
+                </if>
+                <if test="item.adminAge!=null">
+                    #{item.adminAge,jdbcType=INTEGER},
+                </if>
+                <if test="item.adminBirthday!=null">
+                    #{item.adminBirthday,jdbcType=VARCHAR},
+                </if>
+                <if test="item.adminPhone!=null">
+                    #{item.adminPhone,jdbcType=VARCHAR},
+                </if>
+                <if test="item.adminMail!=null">
+                    #{item.adminMail,jdbcType=VARCHAR},
+                </if>
+                <if test="item.adminAddress!=null">
+                    #{item.adminAddress,jdbcType=VARCHAR},
+                </if>
+                <if test="item.adminRemarks!=null">
+                    #{item.adminRemarks,jdbcType=VARCHAR},
+                </if>
+                <if test="item.adminType!=null">
+                    #{item.adminType,jdbcType=INTEGER},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+    <update id="updateBatchByPrimaryKeySelective" parameterType="java.util.List">
+        <foreach collection="list" index="index" item="item" separator=";">
+            update t_admin
+            <set>
+                <if test="item.adminPassword!=null">
+                    admin_password=#{item.adminPassword,jdbcType=VARCHAR},
+                </if>
+                <if test="item.adminName!=null">
+                    admin_name=#{item.adminName,jdbcType=VARCHAR},
+                </if>
+                <if test="item.adminSex!=null">
+                    admin_sex=#{item.adminSex,jdbcType=VARCHAR},
+                </if>
+                <if test="item.adminAge!=null">
+                    admin_age=#{item.adminAge,jdbcType=INTEGER},
+                </if>
+                <if test="item.adminBirthday!=null">
+                    admin_birthday=#{item.adminBirthday,jdbcType=VARCHAR},
+                </if>
+                <if test="item.adminPhone!=null">
+                    admin_phone=#{item.adminPhone,jdbcType=VARCHAR},
+                </if>
+                <if test="item.adminMail!=null">
+                    admin_mail=#{item.adminMail,jdbcType=VARCHAR},
+                </if>
+                <if test="item.adminAddress!=null">
+                    admin_address=#{item.adminAddress,jdbcType=VARCHAR},
+                </if>
+                <if test="item.adminRemarks!=null">
+                    admin_remarks=#{item.adminRemarks,jdbcType=VARCHAR},
+                </if>
+                <if test="item.adminType!=null">
+                    admin_type=#{item.adminType,jdbcType=INTEGER},
+                </if>
+            </set>
+            where
+            admin_id = #{item.adminId,jdbcType=VARCHAR}
+        </foreach>
+    </update>
 </mapper>
