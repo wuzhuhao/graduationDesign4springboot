@@ -5,6 +5,7 @@ import com.graduationaldesign.graduation.pojo.TeamTeaRelate;
 import com.graduationaldesign.graduation.util.PageBean;
 import org.springframework.http.ResponseEntity;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public interface TeamTeaRelateService {
 
     int updateByPrimaryKey(TeamTeaRelate record);
 
-    PageBean<TeamTeaRelate> listByPage(HashMap<String, Object> params, int page, int pageSize);
+    PageBean<TeamTeaRelate> listByPage(HashMap<String, Object> params, int page, int pageSize) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
     public void deleteByPrimaryKeyIn(List<Integer> lstPrimaryKey) throws Exception;
 

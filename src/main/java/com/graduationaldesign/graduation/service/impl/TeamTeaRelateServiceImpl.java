@@ -4,6 +4,7 @@ import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.mapper.TeamTeaRelateMapper;
 import com.graduationaldesign.graduation.pojo.TeamTeaRelate;
 import com.graduationaldesign.graduation.pojo.TeamTeaRelateExample;
+import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.TeamTeaRelateService;
 import com.graduationaldesign.graduation.util.PageBean;
 import com.graduationaldesign.graduation.util.ResponseStatus;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -82,10 +84,12 @@ public class TeamTeaRelateServiceImpl implements TeamTeaRelateService {
 
 
     @Override
-    public PageBean<TeamTeaRelate> listByPage(HashMap<String, Object> params, int page, int pageSize) {
+    public PageBean<TeamTeaRelate> listByPage(HashMap<String, Object> params, int page, int pageSize) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         PageBean<TeamTeaRelate> pageBean = new PageBean<>();
         TeamTeaRelateExample example = new TeamTeaRelateExample();
         TeamTeaRelateExample.Criteria criteria = example.createCriteria();
+        ExampleHelper.searchJoin(TeamTeaRelate.class, example, criteria, params);
+        ExampleHelper.addCondition(TeamTeaRelate.class, criteria, params);
         List<TeamTeaRelate> list = this.teamTeaRelateMapper.selectByExample(example);
         pageBean.setBeanList(list);
         return pageBean;
