@@ -15,7 +15,7 @@
 
         
         <div slot="paddingContent">
-          <Table border  show-summary :columns="columns2" :data="tableData"  @on-selection-change="changeSelect" ref="table"></Table>
+          <Table border   :columns="columns2" :data="tableData"  @on-selection-change="changeSelect" ref="table"></Table>
         </div>
         <div slot="pager">
             <Page :total="this.pagination.total"  :page-size="this.pagination.pageSize"  :page-size-opts="this.pagination.pageSizeOpts" 
@@ -140,6 +140,9 @@ export default {
                                         size: 'small',
                                        
                                     },
+                                     style: {
+                                        marginRight: '5px'
+                                        },
                                      attrs:{
                                         title:'上传论文'
                                     },
@@ -148,7 +151,22 @@ export default {
                                         this.select(params.row)            //编辑方法
                                         }
                                       }
-                                },'上传论文')
+                                },'上传论文'),
+                                h('Button', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small',
+                                       
+                                    },
+                                     attrs:{
+                                        title:'下载附件'
+                                    },
+                                      on: {
+                                        click: () => {
+                                        this.select(params.row)            //编辑方法
+                                        }
+                                      }
+                                },'下载附件')
                             ]);
                         }
                     }

@@ -602,15 +602,16 @@ export default {
                             showInTags:false,
                             showInMenus:true,
                             choosed:false
-                        }, {
-                            title:'选优申请管理',
-                            name:'applyManage',
-                            href:'applyManage',
-                            closable:true,
-                            showInTags:false,
-                            showInMenus:true,
-                            choosed:false
-                        },
+                        }, 
+                        // {
+                        //     title:'选优申请管理',
+                        //     name:'applyManage',
+                        //     href:'applyManage',
+                        //     closable:true,
+                        //     showInTags:false,
+                        //     showInMenus:true,
+                        //     choosed:false
+                        // },
                         
                     ]
                   },
@@ -631,38 +632,38 @@ export default {
                         },
                     ]
                 },
-                {
-                    title:'展示管理',
-                    name:'accounting-manage',
-                    icon:'md-flask',
-                    children:[
-                       {
-                            title:'设计展示管理',
-                            name:'designShowManage',
-                            href:'designShowManage',
-                            closable:true,
-                            showInTags:false,
-                            showInMenus:true,
-                            choosed:false
-                        }
-                    ]
-                },
-                {
-                    title:'优秀毕业生评估',
-                    name:'report-manage',
-                    icon:'ios-stats',
-                    children:[
-                       {
-                            title:'优秀毕业生管理',
-                            name:'goodGraduationManage',
-                            href:'goodGraduationManage',
-                            closable:true,
-                            showInTags:false,
-                            showInMenus:true,
-                            choosed:false
-                        },
-                    ]
-                },
+                // {
+                //     title:'展示管理',
+                //     name:'accounting-manage',
+                //     icon:'md-flask',
+                //     children:[
+                //        {
+                //             title:'设计展示管理',
+                //             name:'designShowManage',
+                //             href:'designShowManage',
+                //             closable:true,
+                //             showInTags:false,
+                //             showInMenus:true,
+                //             choosed:false
+                //         }
+                //     ]
+                // },
+                // {
+                //     title:'优秀毕业生评估',
+                //     name:'report-manage',
+                //     icon:'ios-stats',
+                //     children:[
+                //        {
+                //             title:'优秀毕业生管理',
+                //             name:'goodGraduationManage',
+                //             href:'goodGraduationManage',
+                //             closable:true,
+                //             showInTags:false,
+                //             showInMenus:true,
+                //             choosed:false
+                //         },
+                //     ]
+                // },
                 {
                     title:'评分',
                     name:'frontend-setting',
@@ -679,22 +680,22 @@ export default {
                         }
                     ]
                 },
-                {
-                    title:'拓展模块',
-                    name:'game-platform-manage',
-                    icon:'icon iconfont icon-jieshou',
-                    children:[
-                        {
-                            title:'历届优秀毕设（论文）',
-                            name:'platform-manage',
-                            href:'/home',
-                            closable:true,
-                            showInTags:false,
-                            showInMenus:true,
-                            choosed:false
-                        }                     
-                    ]
-                },
+                // {
+                //     title:'拓展模块',
+                //     name:'game-platform-manage',
+                //     icon:'icon iconfont icon-jieshou',
+                //     children:[
+                //         {
+                //             title:'历届优秀毕设（论文）',
+                //             name:'platform-manage',
+                //             href:'/home',
+                //             closable:true,
+                //             showInTags:false,
+                //             showInMenus:true,
+                //             choosed:false
+                //         }                     
+                //     ]
+                // },
                
             ],
 
@@ -727,8 +728,8 @@ export default {
                         },
                          {
                             title:'文件下载',
-                            name:'studentSelection',
-                            href:'/studentSelection',
+                            name:'fileDownload',
+                            href:'/fileDownload',
                             closable:true,
                             showInTags:false,
                             showInMenus:true,
@@ -785,7 +786,7 @@ export default {
                             choosed:false
                         },
                          {
-                            title:'指定学生的课题',
+                            title:'已审核的课题',
                             name:'designatedTopic',
                             href:'/designatedTopic',
                             closable:true,
@@ -794,32 +795,32 @@ export default {
                             choosed:false
                         }
                     ]
-                },
-                 {
-                    title:'任务书管理',
-                    name:'teacherTask',
-                    icon:'ios-book',
-                    children:[
-                        {
-                            title:'待接收任务书',
-                            name:'teacherNoAcceptedAssignment',
-                            href:'/teacherNoAcceptedAssignment',
-                            closable:true,
-                            showInTags:false,
-                            showInMenus:true,
-                            choosed:false
-                        },
-                        {
-                            title:'已接收任务书',
-                            name:'taacherAcceptedAssignment',
-                            href:'/taacherAcceptedAssignment',
-                            closable:true,
-                            showInTags:false,
-                            showInMenus:true,
-                            choosed:false
-                        }
-                    ]
-                },
+                 },
+                //  {
+                //     title:'任务书管理',
+                //     name:'teacherTask',
+                //     icon:'ios-book',
+                //     children:[
+                //         {
+                //             title:'待接收任务书',
+                //             name:'teacherNoAcceptedAssignment',
+                //             href:'/teacherNoAcceptedAssignment',
+                //             closable:true,
+                //             showInTags:false,
+                //             showInMenus:true,
+                //             choosed:false
+                //         },
+                //         {
+                //             title:'已接收任务书',
+                //             name:'taacherAcceptedAssignment',
+                //             href:'/taacherAcceptedAssignment',
+                //             closable:true,
+                //             showInTags:false,
+                //             showInMenus:true,
+                //             choosed:false
+                //         }
+                //     ]
+                // },
                 {
                     title:'开题报告',
                     name:'report',

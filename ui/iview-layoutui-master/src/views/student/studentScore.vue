@@ -11,7 +11,7 @@
         </div>
        
         <div slot="paddingContent">
-          <Table border  show-summary :columns="columns2" :data="data1"  @on-selection-change="changeSelect" ref="table"></Table>
+          <Table border  :columns="columns2" :data="tableData"   ref="table"></Table>
         </div>
        
     </MasterPage>
@@ -51,13 +51,8 @@ export default {
             slider: [20, 50],
             textarea: ''
         },
+        tableData:[],
          columns2: [
-            {
-               type: 'selection',
-               width: 60,
-               align: 'center',
-              fixed: 'left'
-             },
             
             {
                 type: 'index',
@@ -77,17 +72,17 @@ export default {
                 minWidth: 100,
             }, {
                 title: '初稿成绩',
-                key: 'teaSex',
+                key: 'firstReportScore',
                 minWidth: 100,
             },
             {
                 title: '终稿成绩',
-                key: 'teaAge',
+                key: 'finalReportScore',
                 minWidth: 100,
             },
             {
                 title: '答辩成绩',
-                key: 'teaBirthday',
+                key: 'replyScore',
                 minWidth: 100,
             } 
         ],
@@ -113,10 +108,10 @@ export default {
       // },
      getData(){
         let params = this.formItem
-       let  token = localStorage.getItem('token')
+       let  userId = localStorage.getItem('userId')
          this.$axios({
                             
-                            url: 'scoreRecord/list?page=' + 1 ,
+                            url: 'scoreRecord/list?page=' + 1,
                             method: 'get',//请求的方式
                            
                             // token:localStorage.getItem('token')
@@ -133,7 +128,9 @@ export default {
                               replyTeam: item.replyTeam,
                               replyTeamId: item.replyTeamId,
                               scoreSubId:item.scoreSubId,
-                              subject: item.subject
+                              subName: item.subject.subName,
+                              subLastScore: item.subject.subLastScore,
+                              stuName: item.subject.student.stuName
                            })
                           })
                   

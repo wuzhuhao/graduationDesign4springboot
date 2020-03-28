@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
-    "iview": "^3.1.5",
+    "view-design": "^4.0.0",
     "vue": "^2.5.17",
     "vue-cookies": "^1.7.0",
     "vue-router": "^3.0.1",

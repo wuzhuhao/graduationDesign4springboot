@@ -19,7 +19,7 @@
                    
                     <li v-for="item in schooleBulletin">
                         
-                       <a href="#"  @click.prevent="showNoticeInfo(item.id)"   >{{item.noticeContent}}</a>
+                       <a href="#"  @click.prevent="showNoticeInfo(item.id)"   >{{item.noticeTitle}}</a>
                         <a @click.prevent="showNoticeInfo(item.id)" style="width:25%;float:right; ">{{item.noticeTime}}</a>
                     </li>
                    
@@ -38,7 +38,7 @@
                     </a>
                     <ul>
                          <li v-for="item in collegeBulletin">
-                        <a @click.prevent="showNoticeInfo(item.id)" target="_blank"  style="width:5%">{{item.noticeContent}}</a>
+                        <a @click.prevent="showNoticeInfo(item.id)" target="_blank"  style="width:5%">{{item.noticeTitle}}</a>
                         <a @click.prevent="showNoticeInfo(item.id)" style="width:25%;float:right; ">{{item.noticeTime}}</a>
                         
                     </li>

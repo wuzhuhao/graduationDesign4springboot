@@ -52,7 +52,7 @@
           <Button type="primary" icon="md-add" @click="handleCreate">添加</Button>
         </div>
         <div slot="paddingContent">
-          <Table border  show-summary :columns="columns" :data="tableData"  @on-selection-change="changeSelect" ref="table"></Table>
+          <Table border   :columns="columns" :data="tableData"  @on-selection-change="changeSelect" ref="table"></Table>
         </div>
         <div slot="pager">
             <Page :total="this.pagination.total"  :page-size="this.pagination.pageSize"  :page-size-opts="this.pagination.pageSizeOpts" 
