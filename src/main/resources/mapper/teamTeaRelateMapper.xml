@@ -72,7 +72,7 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-    id, team_tea_id, team_id, ext1, ext2, ext3
+    team_tea_relate.id, team_tea_relate.team_tea_id, team_tea_relate.team_id, team_tea_relate.ext1, team_tea_relate.ext2, team_tea_relate.ext3
   </sql>
     <select id="selectByExample" parameterType="com.graduationaldesign.graduation.pojo.TeamTeaRelateExample"
             resultMap="BaseResultMap">
@@ -83,6 +83,9 @@
         'true' as QUERYID,
         <include refid="Base_Column_List"/>
         from team_tea_relate
+        <if test="join != null">
+            ${join}
+        </if>
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
@@ -94,6 +97,9 @@
         select 'false' as QUERYID,
         <include refid="Base_Column_List"/>
         from team_tea_relate
+        <if test="join != null">
+            ${join}
+        </if>
         where id = #{id,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -158,6 +164,9 @@
     <select id="countByExample" parameterType="com.graduationaldesign.graduation.pojo.TeamTeaRelateExample"
             resultType="java.lang.Long">
         select count(*) from team_tea_relate
+        <if test="join != null">
+            ${join}
+        </if>
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>

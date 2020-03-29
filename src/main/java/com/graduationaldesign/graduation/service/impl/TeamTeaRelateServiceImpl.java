@@ -91,6 +91,10 @@ public class TeamTeaRelateServiceImpl implements TeamTeaRelateService {
         ExampleHelper.searchJoin(TeamTeaRelate.class, example, criteria, params);
         ExampleHelper.addCondition(TeamTeaRelate.class, criteria, params);
         List<TeamTeaRelate> list = this.teamTeaRelateMapper.selectByExample(example);
+        for(TeamTeaRelate teamTeaRelate:list){
+            teamTeaRelate.getTeacher();
+            teamTeaRelate.getReplyTeam();
+        }
         pageBean.setBeanList(list);
         return pageBean;
     }

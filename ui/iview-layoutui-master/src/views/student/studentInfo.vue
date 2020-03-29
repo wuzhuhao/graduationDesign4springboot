@@ -136,7 +136,7 @@ export default {
           academyId:  '',
         
         },
-       
+       stuSexList:[],
       }
     },
      created(){
@@ -157,19 +157,11 @@ export default {
                             params: {stuId:userId},//请求的表单数据
                         }).then(res => {
                               console.info('报错的信息',res.data);
-                               this.formItem.stuId = res.data.data.stuId,
-                              this.formItem.stuPassword = res.data.data.stuPassword,
-                              this.formItem.stuName = res.data.data.stuName,
-                              this.formItem.stuMajor = res.data.data.stuMajor,
-                              this.formItem.stuClass = res.data.data.stuClass,
-                              this.formItem.stuSex = res.data.data.stuSex,
-                              this.formItem.stuAge =res.data.data.stuAge,
-                              this.formItem.stuBirthday = res.data.data.stuBirthday,
-                              this.formItem.stuPhone = res.data.data.stuPhone,
-                              this.formItem.stuMail = res.data.data.stuMail,
-                              this.formItem.stuAddress = res.data.data.stuAddress,
-                              this.formItem.stuRemarks = res.data.data.stuRemarks,
-                              this.formItem.academyId = res.data.data.academyId
+
+                               this.formItem = res.data.data.beanList[0]
+                               this.stuSexList = res.data.data.dict.student.stuSex
+                               this.formItem.stuSex = stuSexList[this.formItem.stuSex]
+                        
                            
                             })
 

@@ -40,14 +40,14 @@
              <Row>
                 <Col span="12">
                   <FormItem label="答辩组长:  "  :label-width="200"   class="label">
-                    <Input v-model="formItem.teamLeaderId"   size="large"  placeholder="请输入答辩时间"></Input>
+                    <Input v-model="teaName"   size="large"  placeholder="请输入答辩时间"></Input>
                 </FormItem>
                 </Col>
               </Row>
                <Row>
                 <Col span="12">
                   <FormItem label="答辩秘书:  "  :label-width="200"  class="label">
-                    <Input v-model="formItem.replyTime"   size="large"  placeholder="请输入答辩时间"></Input>
+                    <Input v-model="formItem.teamLeaderId"   size="large"  placeholder="请输入答辩时间"></Input>
                 </FormItem>
                 </Col>
               </Row>
@@ -76,6 +76,7 @@ export default {
           teamName:  '',
                   
         },
+        teaName:'',
        
       }
     },
@@ -92,13 +93,14 @@ export default {
       getData(){
         let userId = localStorage.getItem("userId") 
          this.$axios({
-                            url: 'teamTeaRelate/list',//请求的地址
+                            url: 'teamTeaRelate/list?isJoinReplyTeam=true&isJoinScoreRecord=true&isJoinSubject=true',//请求的地址
                             method: 'get',//请求的方式
-                            //  params: {stuId:userId},//请求的表单数据
+                              params: {stuId:userId +'1'},//请求的表单数据
                         }).then(res => {
                              console.info( res.data.data);
-                               this.formItem= res.data.data.beanList[0]
-                            // console.info(this.formItem);
+                               this.formItem= res.data.data.beanList[0].replyTeam
+                               this.teaName =  res.data.data.beanList[0].teacher.teaName
+                             console.info(this.teaName);
                             })
 
                         // }).catch(err => {

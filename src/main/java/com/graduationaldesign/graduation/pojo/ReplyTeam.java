@@ -14,7 +14,7 @@ import java.util.Date;
 
 @Data
 @JsonIgnoreProperties(value = {"handler"})
-@Table(value = "t_progress")
+@Table(value = "reply_team")
 public class ReplyTeam implements Serializable {
 
     /**

@@ -25,13 +25,13 @@ public class TeamTeaRelate implements Serializable {
     /**
      * 表字段 : team_tea_relate.team_tea_id
      */
-    @Column(columnName = "team_tea_id")
+    @Column(columnName = "team_tea_id",joinPojo = "Teacher")
     private String teamTeaId;
 
     /**
      * 表字段 : team_tea_relate.team_id
      */
-    @Column(columnName = "team_id")
+    @Column(columnName = "team_id",joinPojo = "ReplyTeam")
     private Integer teamId;
 
     /**
