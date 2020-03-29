@@ -151,6 +151,6 @@ public class TaskController {
         Task task = taskService.selectByPrimaryKey(primaryKey);
         params = BeanUtil.beanToMap(task);
         //这里是我说的一行代码
-        FileUtil.exportWord("word/task.docx", "F:/test", "任务书.docx", params, request, response);
+        FileUtil.exportWord("word/task.docx", "/test", "任务书.docx", params, request, response);
     }
 }

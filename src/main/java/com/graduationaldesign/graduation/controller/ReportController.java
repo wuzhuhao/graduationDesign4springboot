@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -192,6 +193,17 @@ public class ReportController {
             reportService.export(request, response, subId, type);
             return ResponseStatus.success("下载成功", this);
         } catch (RuntimeException e) {
+            return ResponseStatus.failure(e.getMessage(), this);
+        }
+    }
+
+    @RequestMapping("/downloadFile")
+    public ResponseEntity<Object> downloadFile(String subId, Integer reportType, Integer fileType) {
+        try {
+            reportService.downloadFile(request, response, subId, reportType, fileType);
+            return ResponseStatus.success("下载成功", this);
+        } catch (RuntimeException | UnsupportedEncodingException e) {
+            e.printStackTrace();
             return ResponseStatus.failure(e.getMessage(), this);
         }
     }

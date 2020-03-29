@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
@@ -56,4 +57,6 @@ public interface ReportService {
     public void uploadFile(MultipartFile file, String subId, Integer type, boolean isTemp);
 
     public void export(HttpServletRequest request, HttpServletResponse response, String subId, Integer type);
+
+    public void downloadFile(HttpServletRequest request, HttpServletResponse response, String subId, Integer reportType, Integer fileType) throws UnsupportedEncodingException;
 }

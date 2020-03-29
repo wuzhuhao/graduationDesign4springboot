@@ -1,7 +1,10 @@
 package com.graduationaldesign.graduation.service;
 
-import javax.servlet.http.HttpServletResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 
 /**
  * @Author: wuzhuhao
@@ -14,4 +17,6 @@ public interface FileDownService {
     String multipleFiles(MultipartFile[] files);
 
     void exportDemo(Integer type, HttpServletResponse response);
+
+    public ResponseEntity<Object> download(HttpServletResponse response, String fileName) throws UnsupportedEncodingException;
 }

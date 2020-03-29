@@ -108,7 +108,7 @@ public class FileDownController {
         Task task = taskService.selectByPrimaryKey(1);
         params = BeanUtil.beanToMap(task);
         //这里是我说的一行代码
-        FileUtil.exportWord("word/firstReport.docx", "F:/test", "开题报告.docx", params, request, response);
+        FileUtil.exportWord("word/firstReport.docx", "/test", "开题报告.docx", params, request, response);
     }
 
     //, int type, int isdemo

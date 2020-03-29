@@ -2,6 +2,7 @@ package com.graduationaldesign.graduation.pojo;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.graduationaldesign.graduation.pojo.helper.Column;
 import com.graduationaldesign.graduation.pojo.helper.MyPrimaryKey;
 import com.graduationaldesign.graduation.pojo.helper.Table;
@@ -11,6 +12,7 @@ import java.io.Serializable;
 /**
  * @author wuzhuhao
  */
+@JsonIgnoreProperties(value = {"handler"})
 @Table(value = "team_tea_relate")
 public class TeamTeaRelate implements Serializable {
     /**
