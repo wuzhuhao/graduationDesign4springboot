@@ -313,7 +313,7 @@ public class ReportServiceImpl implements ReportService {
             fileString = "word/finalReport.docx";
         }
         //这里是我说的一行代码
-        FileUtil.exportWord(fileString, "F:/test", "开题报告.docx", params, request, response);
+        FileUtil.exportWord(fileString, "/test", "开题报告.docx", params, request, response);
     }
 
     @Override
