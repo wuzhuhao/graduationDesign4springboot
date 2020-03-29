@@ -176,6 +176,11 @@ const router = new Router({
         component: () => import('@/views/teacher/teacherScore')
       },
       {
+        path: '/entryScore',
+        name: 'entryScore',
+        component: () => import('@/views/teacher/entryScore')
+      },
+      {
         path: '/teacherFinalThesis',
         name: 'teacherFinalThesis',
         component: () => import('@/views/teacher/teacherFinalThesis')

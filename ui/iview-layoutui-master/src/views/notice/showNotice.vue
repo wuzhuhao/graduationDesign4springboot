@@ -15,7 +15,12 @@
             <Form :model="formItem" :label-width="80">
               <Row>
                 <Col span="8">
-                  <FormItem label="内容">
+                  <FormItem label="标题：">
+                    <Input v-model="formItem.noticeTitle" placeholder="请输入标题"></Input>
+                </FormItem>
+                </Col>
+                <Col span="8">
+                  <FormItem label="内容：">
                     <Input v-model="formItem.noticeContent" placeholder="请输入内容"></Input>
                 </FormItem>
                 </Col>
@@ -86,6 +91,7 @@ export default {
             noticeTime:  '',
             noticePublisher:  '',
             acaId: '',
+            noticeTitle:'',
             noticeContent:  '',
             academy:  '',
         },
@@ -104,11 +110,16 @@ export default {
                 fixed: 'left',
                 sortable: true
             },
+             {
+                title: '标题',
+                key: 'noticeTitle',
+                width: 200,
+            },
             {
                 title: '内容',
                 key: 'noticeContent',
                 ellipsis:'true',
-                minWidth: 100,
+                minWidth: 200,
                 
             },
             {
@@ -268,6 +279,7 @@ export default {
                                 noticePublisher: item.noticePublisher,
                                 acaId:item.acaId,
                                 noticeContent: item.noticeContent,
+                                noticeTitle: item.noticeTitle,
                                 academy: item.academy
                            })
                           })

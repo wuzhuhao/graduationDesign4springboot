@@ -17,12 +17,12 @@
               <Row>
                 
                 <Col span="8">
-                  <FormItem label="课题名称">
+                  <FormItem label="课题名称：">
                     <Input v-model="formItem.subName" placeholder="请输入课题名称"></Input>
                 </FormItem>
                 </Col>
                 <Col span="8">
-                  <FormItem label="指导老师">
+                  <FormItem label="课题来源：">
                     <Select v-model="formItem.subSource">
                          <Option v-for="(item,index) in subSourceList" :value="index"  >{{item}}
                     </Option>d
@@ -146,6 +146,7 @@ export default {
     data(){
       
       return{
+          length:0,
             dialogStatus: '',//title自定义标题
           value3: false,
                 styles: {
@@ -256,6 +257,7 @@ export default {
   
      created(){
         this.getData(1,10);
+        this.checkHaveSubject()
      },
     methods:{
        exportData (type) {
@@ -323,41 +325,79 @@ export default {
             });
            
     },
-      update(row){
-          
-            this.$axios({     
-                            url: 'sub/update',
-                            method: 'post',//请求的方式
-                            data:this.$Qs.stringify({
-                                subId:row.subId,
-                                subStuState:2 
-                            }),
-                            // token:localStorage.getItem('token')
-                        }).then(res => {
-                        console.log(res.data)
-                        this.getData(1,10)
-                        }).catch(err => {
-                            console.info('报错的信息',err);
+    //   update(row){
+    //       this.checkHaveSubject()
+    //       let userId = localStorage.getItem("userId") 
+    //       console.log('修改')
+    //     if(this.length>0){
+    //        this.$Message.warning("你已经选择过了");
+    //        console.log(this.tableData)
+            
+    //     }else{
+    //         console('12232')
+    //         this.$axios({     
+    //                         url: 'sub/update',
+    //                         method: 'post',//请求的方式
+    //                         data:this.$Qs.stringify({
+    //                             subId:row.subId,
+    //                             subStuState:2 ,
+    //                             stuId:userId
+
+    //                         }),
+    //                         // token:localStorage.getItem('token')
+    //                     }).then(res => {
+    //                     console.log(res.data)
+    //                     this.getData(1,10)
+    //                     }).catch(err => {
+    //                         console.info('报错的信息',err);
                             
-                        });
-             this.$axios({     
-                            url: 'sub/update',
-                            method: 'post',//请求的方式
-                            data:this.$Qs.stringify({
-                                subId:row.subId,
-                                subStuState:2 
-                            }),
-                            // token:localStorage.getItem('token')
-                        }).then(res => {
-                        console.log(res.data)
-                        this.getData(1,10)
-                        }).catch(err => {
-                            console.info('报错的信息',err);
-                            
-                        });
+    //                     });
+           
                        
-        
+    //     }
    
+    //   },
+      update(row){
+           let  userId = localStorage.getItem('userId')
+           this.$axios({
+                            
+                            url: 'sub/list',
+                            method: 'get',//请求的方式
+                            params:{
+                                stuId:userId
+                            },
+                            // token:localStorage.getItem('token')
+                        }).then(res => {
+
+                         this.length = res.data.data.beanList.length;
+                          if(this.length>0){
+                            this.$Message.warning("你已经选择过了");                 
+                            }else{
+                             this.$axios({     
+                                url: 'sub/update',
+                                method: 'post',//请求的方式
+                                data:this.$Qs.stringify({
+                                    subId:row.subId,
+                                    subStuState:2 ,
+                                    stuId:userId
+
+                                }),
+                            // token:localStorage.getItem('token')
+                                }).then(res => {
+                                console.log(res.data)
+                                this.getData(1,10)
+                                }).catch(err => {
+                                    console.info('报错的信息',err);
+                                    
+                                });
+                            }
+                        }).catch(err => {
+                            console.info('报错的信息',err);
+                            
+                        });
+                     
+                       
+
       },
       getData(page,pageSize){
         
@@ -373,7 +413,7 @@ export default {
                           console.log(res.data)
                          this.tableData = [];
                           let list = res.data.data.beanList;
-                          this.subSourceList = res.data.dict.subSource;
+                          this.subSourceList = res.data.dict.subject.subSource;
                           
                         //   for( var key in this.subSourceList ){
                         //     console.log( key+' : '+this.subSourceList[key] );  

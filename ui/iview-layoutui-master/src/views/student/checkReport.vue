@@ -128,22 +128,7 @@ export default {
                                         this.select(params.row)            //编辑方法
                                         }
                                       }
-                                },'查看'),
-                                  h('Button', {
-                                    props: {
-                                        type: 'primary',
-                                        size: 'small',
-                                       
-                                    },
-                                     attrs:{
-                                        title:'下载附件'
-                                    },
-                                      on: {
-                                        click: () => {
-                                        this.select(params.row)            //编辑方法
-                                        }
-                                      }
-                                },'下载附件')
+                                },'查看')
                             ]);
                             
                         }

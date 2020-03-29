@@ -889,7 +889,16 @@ export default {
                     title:'总评',
                     name:'activity-center',
                     icon:'ios-cafe',
-                    children:[
+                    children:[    
+                         {
+                            title:'成绩录入',
+                            name:'entryScore',
+                            href:'/entryScore',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        },
                         {
                             title:'成绩总评',
                             name:'teacherScore',
@@ -898,7 +907,7 @@ export default {
                             showInTags:false,
                             showInMenus:true,
                             choosed:false
-                        }
+                        },
                     ]
                 },
                 {

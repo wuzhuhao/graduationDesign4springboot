@@ -21,7 +21,7 @@
             <Icon type="ios-game-controller-b" />
         </div>
         <div slot="title-toolbar">
-            <Button type="info"  style="float:left;margin:0 8px"  @click="exportDataDemo(2)"><Icon type="ios-download-outline"></Icon>导出模板</Button>&nbsp;
+            <Button type="info"  style="float:left;margin:0 8px"  @click="exportDataDemo()"><Icon type="ios-download-outline"></Icon>导出报告</Button>&nbsp;
         </div>
         
         <div slot="searchContent" class="search-content-slot">
@@ -171,6 +171,10 @@ export default {
                             
                         });
       },
+      exportDataDemo(){
+            window.location.href="http://localhost:8080/graManagement/report/export?type=1&subId=" + this.formItem.reportSubId
+        
+    },
        update(){
           console.log(this.formItem)
             this.$axios({     

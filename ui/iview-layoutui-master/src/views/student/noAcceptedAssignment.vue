@@ -241,12 +241,15 @@ export default {
       
      
       getData(page,pageSize){
-        let params = this.formItem
         let userId = localStorage.getItem("userId") 
        let  token = localStorage.getItem('token')
+        this.formItem.taskState=1
+        this.formItem.stuId= userId
+        let params = this.formItem
+        
          this.$axios({
                             
-                            url: 'task/listByStu/' + userId + '/1?page=' + page + '&pageSize=' + pageSize,
+                            url: 'task/list?isJoinSubject=true',
                             method: 'get',//请求的方式
                              params:params,
                             // token:localStorage.getItem('token')

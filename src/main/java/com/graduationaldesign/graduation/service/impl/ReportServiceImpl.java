@@ -305,7 +305,7 @@ public class ReportServiceImpl implements ReportService {
             fileString = "word/finalReport.docx";
         }
         //这里是我说的一行代码
-        FileUtil.exportWord(fileString, "F:/test", "开题报告.docx", params, request, response);
+        FileUtil.exportWord(fileString, "E:/test", "开题报告.docx", params, request, response);
     }
 
     public Integer updateState(Report report) {
