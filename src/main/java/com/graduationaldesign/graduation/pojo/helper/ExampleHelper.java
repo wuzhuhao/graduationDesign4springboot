@@ -257,13 +257,21 @@ public class ExampleHelper {
                 searchJoin(obj, example, criteria, params, lstJoin, false, false);
             }
         }
+        List<String> relateForce = new ArrayList<>();
+        relateForce.add(pojo.getSimpleName());
+        relateForce.addAll(lstField.stream().map(e -> e.getAnnotation(Column.class).joinPojo()).collect(Collectors.toList()));
         //进行强连
         if (lstJoin.size() != 0 && isForce) {
             for (String e : lstJoin) {
                 Class obj = Class.forName("com.graduationaldesign.graduation.pojo." + e.substring("isJoin".length()));
-                ArrayList<String> lstJoins = new ArrayList<>();
-                lstJoins.add("isJoin" + pojo.getSimpleName());
-                searchJoin(obj, example, criteria, params, lstJoins, false, true);
+                List<Field> lstJoinField = Arrays.asList(obj.getDeclaredFields()).stream().filter(field -> (field.isAnnotationPresent(Column.class) && !field.getAnnotation(Column.class).joinPojo().equals(""))).collect(Collectors.toList());
+                for (String pojoName : relateForce) {
+                    if (lstJoinField.stream().anyMatch(item -> item.getAnnotation(Column.class).joinPojo().equals(pojoName))) {
+                        ArrayList<String> lstJoins = new ArrayList<>();
+                        lstJoins.add("isJoin" + pojoName);
+                        searchJoin(obj, example, criteria, params, lstJoins, false, true);
+                    }
+                }
             }
         }
         //处理多个类lstField
