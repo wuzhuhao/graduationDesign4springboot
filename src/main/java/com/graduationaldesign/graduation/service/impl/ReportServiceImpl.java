@@ -10,7 +10,6 @@ import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.Teacher;
 import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.ReportService;
-import com.graduationaldesign.graduation.util.BeanUtil;
 import com.graduationaldesign.graduation.util.FileUtil;
 import com.graduationaldesign.graduation.util.PageBean;
 import com.graduationaldesign.graduation.util.ResponseStatus;
@@ -297,9 +296,14 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public void export(HttpServletRequest request, HttpServletResponse response, String subId, Integer type) {
-        Map<String, Object> params;
+        Map<String, Object> params = new HashMap<>();
         Report report = reportMapper.selectByPrimaryKey(subId, type);
-        params = BeanUtil.beanToMap(report);
+        report.getSubject();
+        report.getSubject().getStudent();
+        report.getSubject().getTeacher();
+        params.put("reportContent", report.getReportContent());
+        params.put("subject", report.getSubject());
+//        params = BeanUtil.beanToMap(report);
         String fileString = "word/firstReport.docx";
         if (type != null && type.equals(2)) {
             fileString = "word/finalReport.docx";

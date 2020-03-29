@@ -335,4 +335,22 @@ public class Report implements Serializable {
     public void setSubject(Subject subject) {
         this.subject = subject;
     }
+
+    @Override
+    public String toString() {
+        return "Report{" +
+                "reportSubId='" + reportSubId + '\'' +
+                ", reportType=" + reportType +
+                ", id=" + id +
+                ", reportState=" + reportState +
+                ", reportSubtime=" + reportSubtime +
+                ", reportVersion=" + reportVersion +
+                ", reportFile='" + reportFile + '\'' +
+                ", reportTemp='" + reportTemp + '\'' +
+                ", reportContent='" + reportContent + '\'' +
+                ", stuMessage='" + stuMessage + '\'' +
+                ", teaSuggestion='" + teaSuggestion + '\'' +
+                ", subject=" + subject +
+                '}';
+    }
 }
