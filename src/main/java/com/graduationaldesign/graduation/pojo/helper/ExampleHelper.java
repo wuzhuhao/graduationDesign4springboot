@@ -228,7 +228,7 @@ public class ExampleHelper {
             lstJoin = lstKey.stream().filter(e -> (e.contains("isJoin") && DataConvertUtil.strToBoolean(DataConvertUtil.objToStr(params.get(e))))).collect(Collectors.toList());
         }
         //join中的pojo
-        List<String> lstJoinTable = lstJoin.stream().map(e -> e.substring("isJoin".length(), e.length())).collect(Collectors.toList());
+        List<String> lstJoinTable = lstJoin.stream().map(e -> e.substring("isJoin".length())).collect(Collectors.toList());
         //请求中的table和实体类的table交集
         lstField = lstField.stream().filter(item -> lstJoinTable.contains(item.getAnnotation(Column.class).joinPojo())).collect(Collectors.toList());
         String tableName = getTable(pojo);

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -76,7 +77,7 @@ public class TeamTeaRelateController {
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ResponseEntity<Object> list(@RequestParam HashMap<String, Object> params, @RequestParam(required = false, defaultValue = "1") int page, @RequestParam(required = false, defaultValue = "5") int pageSize) {
+    public ResponseEntity<Object> list(@RequestParam HashMap<String, Object> params, @RequestParam(required = false, defaultValue = "1") int page, @RequestParam(required = false, defaultValue = "5") int pageSize) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         return ResponseStatus.success(teamTeaRelateService.listByPage(params, page, pageSize), this);
     }
 

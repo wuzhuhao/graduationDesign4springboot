@@ -426,8 +426,7 @@ public class Subject implements Serializable {
     public Subject(String subId, String subName, Integer subNature, Integer subSource,
                    String subTeaId, String subFile, Date firstReportDeadline, Date lastReportDeadline,
                    String stuId, Integer subStuState, Long subLastScore, Integer showId,
-                   String subIntroduce, Teacher teacher, Student student, DesignShow designShow,
-                   ScoreRecord scoreRecord) {
+                   String subIntroduce, Teacher teacher, Student student, DesignShow designShow) {
         this.subId = subId;
         this.subName = subName;
         this.subNature = subNature;
@@ -444,7 +443,6 @@ public class Subject implements Serializable {
         this.teacher = teacher;
         this.student = student;
         this.designShow = designShow;
-        this.scoreRecord = scoreRecord;
     }
 
     public Subject(String subId) {
@@ -452,5 +450,26 @@ public class Subject implements Serializable {
     }
 
     public Subject() {
+    }
+
+    @Override
+    public String toString() {
+        return "Subject{" +
+                "subId='" + subId + '\'' +
+                ", subName='" + subName + '\'' +
+                ", subNature=" + subNature +
+                ", subSource=" + subSource +
+                ", subTeaId='" + subTeaId + '\'' +
+                ", subFile='" + subFile + '\'' +
+                ", firstReportDeadline=" + firstReportDeadline +
+                ", lastReportDeadline=" + lastReportDeadline +
+                ", stuId='" + stuId + '\'' +
+                ", subStuState=" + subStuState +
+                ", subLastScore=" + subLastScore +
+                ", showId=" + showId +
+                ", subIntroduce='" + subIntroduce + '\'' +
+                ", teacher=" + teacher +
+                ", student=" + student +
+                '}';
     }
 }
