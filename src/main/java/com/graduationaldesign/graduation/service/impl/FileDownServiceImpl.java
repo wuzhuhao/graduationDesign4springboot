@@ -5,10 +5,15 @@ import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.Teacher;
 import com.graduationaldesign.graduation.service.FileDownService;
 import com.graduationaldesign.graduation.util.FileUtil;
-import java.util.ArrayList;
-import javax.servlet.http.HttpServletResponse;
+import com.graduationaldesign.graduation.util.ResponseStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 
 /**
  * @Author: wuzhuhao
@@ -50,4 +55,34 @@ public class FileDownServiceImpl implements FileDownService {
         }
     }
 
+
+    @Override
+    public ResponseEntity<Object> download(HttpServletResponse response, String fileName) throws UnsupportedEncodingException {
+        String filePathName = fileName;
+        File file = new File("upload/" + filePathName);
+        if (!file.exists()) {
+            return ResponseStatus.failure("文件不存在", this);
+        }
+        //使用URLEncoder解决中文变__问题
+        response.setHeader("Content-Disposition",
+                "attachment;fileName=" + URLEncoder.encode(filePathName, "utf-8"));
+        try {
+            InputStream inStream = new FileInputStream(file);
+            OutputStream os = response.getOutputStream();
+            byte[] buff = new byte[1024];
+            int i = 0;
+            //read方法返回读取到字节数，=0说明到达文件结尾，=-1说明发生错误
+            while ((i = inStream.read(buff)) != -1) {
+                //write()方法3个参数，可自定义读取字节数0-i;
+                os.write(buff, 0, i);
+            }
+            os.flush();
+            os.close();
+            inStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseStatus.failure("下载失败", this);
+        }
+        return ResponseStatus.success("下载成功", this);
+    }
 }

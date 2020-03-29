@@ -9,6 +9,7 @@ import com.graduationaldesign.graduation.pojo.ReportExample;
 import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.Teacher;
 import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
+import com.graduationaldesign.graduation.service.FileDownService;
 import com.graduationaldesign.graduation.service.ReportService;
 import com.graduationaldesign.graduation.util.FileUtil;
 import com.graduationaldesign.graduation.util.PageBean;
@@ -21,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.Date;
@@ -41,6 +43,8 @@ public class ReportServiceImpl implements ReportService {
     RootPropeties rootPropeties;
     @Autowired
     FileUploadServiceImpl fileUploadService;
+    @Autowired
+    FileDownService fileDownService;
     final String FILE_PATH = System.getProperty("user.dir") + "/upload/" + this.getClass().getName().substring(0, this.getClass().getName().indexOf("ServiceImpl")) + "/";
 
     @Override
@@ -310,6 +314,19 @@ public class ReportServiceImpl implements ReportService {
         }
         //这里是我说的一行代码
         FileUtil.exportWord(fileString, "F:/test", "开题报告.docx", params, request, response);
+    }
+
+    @Override
+    public void downloadFile(HttpServletRequest request, HttpServletResponse response, String subId, Integer reportType, Integer fileType) throws UnsupportedEncodingException {
+        Report report = reportMapper.selectByPrimaryKey(subId, reportType);
+        if (report == null || report.getId() == 0) {
+            throw new RuntimeException("数据不存在，请检查数据");
+        }
+        String file = FILE_PATH + report.getReportFile();
+        if (fileType.equals(2)) {
+            file = FILE_PATH + report.getReportTemp();
+        }
+        fileDownService.download(response, file);
     }
 
     public Integer updateState(Report report) {
