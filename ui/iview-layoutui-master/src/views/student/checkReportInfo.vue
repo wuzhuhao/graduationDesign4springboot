@@ -53,8 +53,12 @@
          <Table :columns="columns1"  stripe   border  :data="tableData"></Table>
         </div>
         
-       
-           </div>
+         <div slot="search">
+            
+          <Button type="info" icon="ios-search"  style="float:left;margin:0 8px;margin-left:4cm" @click="update">修改</Button>  &nbsp; &nbsp; &nbsp; &nbsp;
+           <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doReset">重置</Button>  &nbsp;
+        </div>
+        
         
     </MasterPage>
      
@@ -99,7 +103,7 @@ export default {
             }, 
           {
                 title: '操作人',
-                key: 'student',
+                key: 'teaName',
                 width: 400,
                 minWidth: 100,
             },
@@ -115,7 +119,7 @@ export default {
             },
             {
                 title: '意见',
-                key: 'yijian',
+                key: 'teaSuggestion',
                 minWidth: 150,
             },    
         ],
@@ -160,11 +164,12 @@ export default {
                               this.formItem.subName =list.subject.subName,
                               this.formItem.teaName =list.subject.teacher.teaName,
                               this.formItem.stuName =list.subject.student.stuName
+                               this.formItem.teaSuggestion=list.teaSuggestion
                               this.tableData.push({
-                                  stuName: this.formItem.stuName,
+                                  teaName: this.formItem.teaName,
                                   firstReportDeadline:list.subject.firstReportDeadline,
                                   subStuState:list.subject.firstReportDeadline,
-                                  yijian:''
+                                  teaSuggestion:list.teaSuggestion
                                 })
                         }).catch(err => {
                             console.info('报错的信息',err);
@@ -172,7 +177,8 @@ export default {
                         });
       },
       exportDataDemo(){
-            window.location.href="http://localhost:8080/graManagement/report/export?type=1&subId=" + this.formItem.reportSubId
+            var url="http://localhost:8080/graManagement/report/export?type=1&subId=" + this.formItem.reportSubId
+            window.open(url) 
         
     },
        update(){

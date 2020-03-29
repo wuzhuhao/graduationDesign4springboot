@@ -1,4 +1,15 @@
 <style lang="postcss" scoped>
+.label > :first-child{
+  font-size: 15px;
+  float: none;
+    width: 1000%;
+    border-radius: 2px;
+    -webkit-box-sizing: border-box!important;
+    -moz-box-sizing: border-box!important;
+    box-sizing: border-box!important;
+    text-align: left;
+    
+}
 .home-container{
 
 }
@@ -17,8 +28,47 @@
 
     </MasterPage>
 
- <Modal v-model="modal11"   closable  :styles="{top: '10px'}":width='1200' >
-        <info></info>
+ <Modal v-model="modal11"  @on-ok='updateReport'   :styles="{top: '10px'}":width='1200' >
+       <MasterPage title="任务书信息">
+        <div slot="title-icon">
+            <Icon type="ios-game-controller-b" />
+        </div>
+        <div slot="title-toolbar">
+            <Button type="info"  style="float:left;margin:0 8px"  @click="exportDataDemo()"><Icon type="ios-download-outline"></Icon>导出报告</Button>&nbsp;
+        </div>
+        
+        <div slot="searchContent" class="search-content-slot">
+            <Form :model="formItem" :label-width=0>
+             <Row>
+                <Col span="24">
+                  <FormItem  span="24" label="开题申请：（包括选题的意义与目的、文献综述、研究现状、创新思路、论文提纲、参考文献等。如果篇幅不够，可另加页。字数不少于1500字。）"    class="label">
+                    
+                    <Input v-model="InfoFormItem.reportContent"  type="textarea" :autosize="{minRows: 10,maxRows: 50}" size="large"  placeholder="Enter something..."></Input>
+                </FormItem>
+                </Col>
+              </Row>
+             
+          </Form>
+        </div>
+       </div>
+        
+    </MasterPage>
+      
+      <!-- <MasterPage title="审核信息">
+        <div slot="title-icon">
+            <Icon type="ios-game-controller-b" />
+        </div>
+        <div slot="title-icon">
+            <Icon type="ios-game-controller-b" />
+        </div>
+        
+        <div slot="paddingContent">
+         <Table :columns="columns1"  stripe   border  :data="tableData1"></Table>
+        </div>
+        
+         
+         
+    </MasterPage> -->
     </Modal>
   
 </section>
@@ -38,7 +88,25 @@ export default {
     data(){
       
       return{
+        InfoFormItem: {
+          reportSubId: "",
+          // reportType: "",
+          id: "",
+          // reportState: "",
+          // reportSubtime: "",
+          reportVersion: "",
+          // reportFile: "",
+          // reportTemp: "",
+          reportContent: "",
+          // stuMessage: "",
+          // teaSuggestion: "",
+          // subject: "",
+          // subName: "",
+          // teaName:"",
+          // stuName:""
+        },
         tableData:[],
+          tableData1:[],
                 modal11: false,
                 styles: {
                     height: 'calc(100% - 55px)',
@@ -121,19 +189,49 @@ export default {
                                         marginRight: '5px'
                                         },
                                      attrs:{
-                                        title:'查看'
+                                        title:'编辑'
                                     },
                                       on: {
                                         click: () => {
                                         this.select(params.row)            //编辑方法
                                         }
                                       }
-                                },'查看')
+                                },'编辑')
                             ]);
                             
                         }
                     }
-        ]
+        ],
+         columns1: [
+            {
+              title: '序号',
+              type: 'index',
+              width: 150,
+              fixed: 'left',
+              align: 'center'
+            }, 
+          {
+                title: '操作人',
+                key: 'teaName',
+                width: 400,
+                minWidth: 100,
+            },
+            {
+                title: '操作时间',
+                key: 'firstReportDeadline',
+                minWidth: 150,
+            },
+            {
+                title: '状态',
+                key: 'subStuState',
+                minWidth: 150,
+            },
+            {
+                title: '意见',
+                key: 'teaSuggestion',
+                minWidth: 150,
+            },    
+        ],
       }
     },
   
@@ -142,7 +240,8 @@ export default {
      },
     methods:{
         select(row){
-       this.modal11 = true;
+          this.getInfo()
+        this.modal11 = true;
       },
        exportData (type) {
                 if (type === 1) {
@@ -208,27 +307,14 @@ export default {
             });
            
     },
-      update(){
-          console.log(this.formItem)
-        if(this.dialogStatus == '新增'){
-            this.$axios({     
-                            url: 'task/add',
-                            method: 'post',//请求的方式
-                            data:this.$Qs.stringify(this.formItem),
-                            // token:localStorage.getItem('token')
-                        }).then(res => {
-                        console.log(res.data)
-                        this.getData(1,10)
-                        }).catch(err => {
-                            console.info('报错的信息',err);
-                            
-                        });
-                        this.value3 = false
-        }else if(this.dialogStatus == '编辑'){
+      updateReport(){
+          // console.log(this.formItem)
+          
+        
              this.$axios({     
-                            url: 'task/update',
+                            url: 'report/update',
                             method: 'post',//请求的方式
-                            data:this.$Qs.stringify(this.formItem),
+                            data:this.$Qs.stringify(this.InfoFormItem),
                             // token:localStorage.getItem('token')
                         }).then(res => {
                         console.log(res.data)
@@ -238,7 +324,7 @@ export default {
                             
                         });
                         this.value3 = false
-        }
+        
    
       },
       getData(page,pageSize){
@@ -429,12 +515,80 @@ export default {
             this.formItem.replyContent =  '',
             this.formItem.subject = '',
         this.getData(1,10);
-    },
-    exportDataDemo(type){
-       
-            window.location.href="http://localhost:8080/graManagement/downFile/exportDemo?type=" + type
+    }, 
+     getInfo(){
+        let params = this.formItem
+        let userId = localStorage.getItem("userId") 
+       let  token = localStorage.getItem('token')
+         this.$axios({
+                            
+                           url: 'report/listOfStu',
+                            method: 'get',//请求的方式
+                            params:{
+                            
+                              stuId:userId,
+                              reportType:1
+                            },
+                            // token:localStorage.getItem('token')
+                        }).then(res => {
+                          console.log(res.data)
+                         this.tableData1 = [];
+                          let list = res.data.data.beanList[0];
+                              this.InfoFormItem.reportSubId = list.reportSubId,
+                              // this.InfoFormItem.reportType = list.reportType,
+                               this.InfoFormItem.id = list.id,
+                              // this.InfoFormItem.reportState = list.reportState,
+                              // this.InfoFormItem.reportSubtime = list.reportSubtime,
+                              this.InfoFormItem.reportVersion = list.reportVersion,
+                              // this.InfoFormItem.reportFile = list.reportFile,
+                              // this.InfoFormItem.reportTemp = list.reportTemp,
+                               this.InfoFormItem.reportContent = list.reportContent.toString(),
+                              // this.InfoFormItem.stuMessage = list.stuMessage,
+                              // this.InfoFormItem.teaSuggestion = list.teaSuggestion,
+                              // this.InfoFormItem.subject = list.subject,
+                              // this.InfoFormItem.subName =list.subject.subName,
+                              // this.InfoFormItem.teaName =list.subject.teacher.teaName,
+                              // this.InfoFormItem.stuName =list.subject.student.stuName
+                              //  this.InfoFormItem.teaSuggestion=list.teaSuggestion
+                              this.tableData1.push({
+                                  teaName: list.subject.teacher.teaName,
+                                  firstReportDeadline:list.subject.firstReportDeadline,
+                                  subStuState:list.subject.firstReportDeadline,
+                                  teaSuggestion:list.teaSuggestion
+                                })
+                        }).catch(err => {
+                            console.info('报错的信息',err);
+                            
+                        });
+      },
+      exportDataDemo(){
+            var url="http://localhost:8080/graManagement/report/export?type=1&subId=" + this.InfoFormItem.reportSubId
+            window.open(url) 
         
-    }
+    },
+       update(){
+          console.log(this.formItem)
+            this.$axios({     
+                            url: 'stu/update',
+                            method: 'post',//请求的方式
+                            data:this.$Qs.stringify(this.formItem),
+                            // token:localStorage.getItem('token')
+                        }).then(res => {
+                        console.log(res.data)
+                        
+                        }).catch(err => {
+                            console.info('报错的信息',err);
+                            
+                        });
+                        this.getUser()
+                      
+        },
+       
+    // exportDataDemo(type){
+       
+    //         window.location.href="http://localhost:8080/graManagement/downFile/exportDemo?type=" + type
+        
+    // },
     
     }
 };

@@ -10,7 +10,14 @@
             <Icon type="ios-game-controller-b" />
         </div>
     
-
+  <div slot="search">
+            
+         
+        <Upload action="http://localhost:8080/graManagement/report/uploadFile"    style="float:left;margin:0 8px">
+            <Button  type="info" icon="ios-cloud-upload-outline">上传论文</Button>
+        </Upload>
+         <Button type="info"  style="float:left;margin:0 8px"  @click="exportData(1)"><Icon type="ios-download-outline"></Icon>下载附件</Button>&nbsp;
+    </div>
         
         <div slot="paddingContent">
           <Table border   :columns="columns2" :data="tableData"  @on-selection-change="changeSelect" ref="table"></Table>
@@ -126,31 +133,7 @@ export default {
                 key: 'reportSubtime',
                  minWidth: 220,
                
-            },{
-                        title: '操作',
-                        key: 'action',
-                        fixed: 'right',
-                        minWidth: 120,
-                        render: (h, params) => {
-                            return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'primary',
-                                        size: 'small',
-                                       
-                                    },
-                                     attrs:{
-                                        title:'上传论文'
-                                    },
-                                      on: {
-                                        click: () => {
-                                        this.select(params.row)            //编辑方法
-                                        }
-                                      }
-                                },'上传论文')
-                            ]);
-                        }
-                    }
+            }
         ]
       }
     },

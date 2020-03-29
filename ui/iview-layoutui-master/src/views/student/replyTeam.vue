@@ -19,35 +19,35 @@
              <Row>
                 <Col span="12">
                   <FormItem label="答辩组名:  "  :label-width="200"  class="label">
-                    <Input v-model="formItem.stuName"   size="large"    placeholder="请输入答辩组名"></Input>
+                    <Input v-model="formItem.teamName"   size="large"    placeholder="请输入答辩组名"></Input>
                 </FormItem>
                 </Col>
               </Row>
              <Row>
                 <Col span="12">
                   <FormItem label="答辩地址:  "  :label-width="200"  class="label">
-                    <Input v-model="formItem.stuMajor"   size="large"    placeholder="请输入答辩地址"></Input>
+                    <Input v-model="formItem.teamAddress"   size="large"    placeholder="请输入答辩地址"></Input>
                 </FormItem>
                 </Col>
               </Row>
              <Row>
                 <Col span="12">
                   <FormItem label="答辩时间:  "  :label-width="200"  class="label">
-                    <Input v-model="formItem.stuClass"   size="large"  placeholder="请输入答辩时间"></Input>
+                    <Input v-model="formItem.replyTime"   size="large"  placeholder="请输入答辩时间"></Input>
                 </FormItem>
                 </Col>
               </Row>
              <Row>
                 <Col span="12">
                   <FormItem label="答辩组长:  "  :label-width="200"   class="label">
-                    <InputNumber  v-model="formItem.stuAge"   size="large"  style="width:620px"  placeholder="请输入答辩组长"></InputNumber>
+                    <Input v-model="formItem.teamLeaderId"   size="large"  placeholder="请输入答辩时间"></Input>
                 </FormItem>
                 </Col>
               </Row>
                <Row>
                 <Col span="12">
                   <FormItem label="答辩秘书:  "  :label-width="200"  class="label">
-                    <InputNumber v-model="formItem.stuPhone"   size="large"  style="width:620px"   placeholder="请输入答辩秘书"></InputNumber>
+                    <Input v-model="formItem.replyTime"   size="large"  placeholder="请输入答辩时间"></Input>
                 </FormItem>
                 </Col>
               </Row>
@@ -68,20 +68,13 @@ export default {
       return{
         id:'',
         formItem: {
-          stuId: '',
-          stuPassword: '',
-          stuName:  '',
-          stuMajor: '',
-          stuClass:  '',
-          stuSex:  '',
-          stuAge: '',
-          stuBirthday:  '',
-          stuPhone:  '',
-          stuMail:  '',
-          stuAddress:  '',
-          stuRemarks: '',
-          academyId:  '',
-        
+         id: '',
+          replyTime: '',
+          teacher: '',
+          teamAddress:  '',
+          teamLeaderId:  '',
+          teamName:  '',
+                  
         },
        
       }
@@ -99,25 +92,13 @@ export default {
       getData(){
         let userId = localStorage.getItem("userId") 
          this.$axios({
-                            url: 'stu/getStuById',//请求的地址
+                            url: 'teamTeaRelate/list',//请求的地址
                             method: 'get',//请求的方式
-                            params: {stuId:userId},//请求的表单数据
+                            //  params: {stuId:userId},//请求的表单数据
                         }).then(res => {
-                              console.info('报错的信息',res.data);
-                               this.formItem.stuId = res.data.data.stuId,
-                              this.formItem.stuPassword = res.data.data.stuPassword,
-                              this.formItem.stuName = res.data.data.stuName,
-                              this.formItem.stuMajor = res.data.data.stuMajor,
-                              this.formItem.stuClass = res.data.data.stuClass,
-                              this.formItem.stuSex = res.data.data.stuSex,
-                              this.formItem.stuAge =res.data.data.stuAge,
-                              this.formItem.stuBirthday = res.data.data.stuBirthday,
-                              this.formItem.stuPhone = res.data.data.stuPhone,
-                              this.formItem.stuMail = res.data.data.stuMail,
-                              this.formItem.stuAddress = res.data.data.stuAddress,
-                              this.formItem.stuRemarks = res.data.data.stuRemarks,
-                              this.formItem.academyId = res.data.data.academyId
-                           
+                             console.info( res.data.data);
+                               this.formItem= res.data.data.beanList[0]
+                            // console.info(this.formItem);
                             })
 
                         // }).catch(err => {
