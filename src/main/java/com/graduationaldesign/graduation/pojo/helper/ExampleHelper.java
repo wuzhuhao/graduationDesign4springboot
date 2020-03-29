@@ -216,10 +216,10 @@ public class ExampleHelper {
 
     public static void searchJoin(Class pojo, Example example, Object criteria, Map<String, Object> params) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         example.setDistinct(true);
-        searchJoin(pojo, example, criteria, params, null, true, false);
+        searchJoin(pojo, example, criteria, params, null, true, false, null);
     }
 
-    public static void searchJoin(Class pojo, Example example, Object criteria, Map<String, Object> params, List<String> lstJoin, boolean isForce, boolean isConversion) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public static void searchJoin(Class pojo, Example example, Object criteria, Map<String, Object> params, List<String> lstJoin, boolean isForce, boolean isConversion, List<String> lstAdd) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         List<String> lstKey = params.keySet().stream().collect(Collectors.toList());
         //查找出所有外键
         List<Field> lstField = Arrays.asList(pojo.getDeclaredFields()).stream().filter(field -> (field.isAnnotationPresent(Column.class) && !field.getAnnotation(Column.class).joinPojo().equals(""))).collect(Collectors.toList());
@@ -235,6 +235,9 @@ public class ExampleHelper {
         List<String> lstJoinEdTable = lstField.stream().map(e -> e.getAnnotation(Column.class).joinPojo()).collect(Collectors.toList());
         List<String> lstJoin1 = lstJoin.stream().filter(e -> lstJoinEdTable.contains(e.substring("isJoin".length()))).collect(Collectors.toList());
         lstJoin.removeAll(lstJoin1);
+        if (lstAdd != null) {
+            lstJoin.addAll(lstAdd);
+        }
         for (Field field : lstField) {
             Column column = field.getAnnotation(Column.class);
             Class obj = Class.forName("com.graduationaldesign.graduation.pojo." + column.joinPojo());
@@ -253,23 +256,34 @@ public class ExampleHelper {
                         .getMethod("setJoin", String.class);
                 setJoin.invoke(example, joinSql);
                 //增加条件
+//                if(isConversion){
+//                    addJoinCondition(pojo, criteria, params);
+//                }else{
+//                    addJoinCondition(obj, criteria, params);
+//                }
                 addJoinCondition(obj, criteria, params);
-                searchJoin(obj, example, criteria, params, lstJoin, false, false);
+                if (isConversion) {
+                    searchJoin(pojo, example, criteria, params, lstJoin, false, false, null);
+                } else {
+                    searchJoin(obj, example, criteria, params, lstJoin, false, false, null);
+                }
             }
         }
-        List<String> relateForce = new ArrayList<>();
-        relateForce.add(pojo.getSimpleName());
-        relateForce.addAll(lstField.stream().map(e -> e.getAnnotation(Column.class).joinPojo()).collect(Collectors.toList()));
         //进行强连
         if (lstJoin.size() != 0 && isForce) {
+            List<String> relateForce = new ArrayList<>();
+            relateForce.add(pojo.getSimpleName());
+            relateForce.addAll(lstField.stream().map(e -> e.getAnnotation(Column.class).joinPojo()).collect(Collectors.toList()));
+            List<String> logJoin = new ArrayList<>();
             for (String e : lstJoin) {
                 Class obj = Class.forName("com.graduationaldesign.graduation.pojo." + e.substring("isJoin".length()));
                 List<Field> lstJoinField = Arrays.asList(obj.getDeclaredFields()).stream().filter(field -> (field.isAnnotationPresent(Column.class) && !field.getAnnotation(Column.class).joinPojo().equals(""))).collect(Collectors.toList());
                 for (String pojoName : relateForce) {
                     if (lstJoinField.stream().anyMatch(item -> item.getAnnotation(Column.class).joinPojo().equals(pojoName))) {
+                        logJoin.add(e);
                         ArrayList<String> lstJoins = new ArrayList<>();
                         lstJoins.add("isJoin" + pojoName);
-                        searchJoin(obj, example, criteria, params, lstJoins, false, true);
+                        searchJoin(obj, example, criteria, params, lstJoins, false, true, lstJoin.stream().filter(item -> !logJoin.contains(item)).collect(Collectors.toList()));
                     }
                 }
             }

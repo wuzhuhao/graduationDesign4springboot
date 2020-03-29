@@ -153,4 +153,16 @@ public class TaskController {
         //这里是我说的一行代码
         FileUtil.exportWord("word/task.docx", "/test", "任务书.docx", params, request, response);
     }
+
+//    @RequestMapping("/export")
+//    public void export(List<Integer> lstPrimaryKey) {
+//        Map<String, Object> params;
+//
+//        for(Integer primaryKey:lstPrimaryKey){
+//            Task task = taskService.selectByPrimaryKey(primaryKey);
+//        }
+//        params = BeanUtil.beanToMap(task);
+//        //这里是我说的一行代码
+//        FileUtil.exportWord("word/task.docx", "/test", "任务书.docx", params, request, response);
+//    }
 }
