@@ -1,5 +1,7 @@
 package com.graduationaldesign.graduation.pojo;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
+import cn.afterturn.easypoi.excel.annotation.ExcelTarget;
 import cn.hutool.core.date.DateUtil;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -15,6 +17,7 @@ import java.util.Date;
 @Data
 @JsonIgnoreProperties(value = {"handler"})
 @Table(value = "t_subject")
+@ExcelTarget("score")
 public class Subject implements Serializable {
 
     /**
@@ -30,6 +33,7 @@ public class Subject implements Serializable {
      * 表字段 : t_subject.sub_name
      */
     @Column(columnName = "sub_name")
+    @Excel(name = "课题名称", width = 30, orderNum = "1")
     private String subName;
 
     /**

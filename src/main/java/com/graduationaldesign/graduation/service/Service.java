@@ -26,4 +26,8 @@ public abstract class Service<T, R extends Example, M extends Mapper> {
         List<T> list = mapper.selectByExample(example);
         return list;
     }
+
+    public void insertSelectiveList(List<ScoreRecord> scoreRecordList) {
+        mapper.insertBatchSelective(scoreRecordList);
+    }
 }

@@ -54,4 +54,15 @@ public class FileUploadController {
             return ResponseStatus.failure(e.getMessage(), this);
         }
     }
+
+    @RequestMapping("/importReplyScoreByExcel")
+    public ResponseEntity<Object> importReplyScoreByExcel(@RequestParam("file") MultipartFile file) {
+        try {
+            fileUploadService.importReplyScore(file);
+            return ResponseStatus.success("导入答辩数据成功", this);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseStatus.failure("导入答辩数据失败", this);
+        }
+    }
 }

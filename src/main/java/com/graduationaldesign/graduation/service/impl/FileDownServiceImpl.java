@@ -1,19 +1,24 @@
 package com.graduationaldesign.graduation.service.impl;
 
 import com.graduationaldesign.graduation.pojo.Admin;
+import com.graduationaldesign.graduation.pojo.ScoreRecord;
 import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.Teacher;
 import com.graduationaldesign.graduation.service.FileDownService;
 import com.graduationaldesign.graduation.util.FileUtil;
 import com.graduationaldesign.graduation.util.ResponseStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @Author: wuzhuhao
@@ -21,6 +26,8 @@ import java.util.ArrayList;
  */
 @Service
 public class FileDownServiceImpl implements FileDownService {
+    @Autowired
+    ScoreRecordServiceImpl scoreRecordService;
 
     @Override
     public String singleFile(MultipartFile file) {
@@ -84,5 +91,17 @@ public class FileDownServiceImpl implements FileDownService {
             return ResponseStatus.failure("下载失败", this);
         }
         return ResponseStatus.success("下载成功", this);
+    }
+
+    @Override
+    public void exportScore(HttpServletResponse response) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+        List<ScoreRecord> scoreRecordList = scoreRecordService.selectByParam(new HashMap<>());
+        scoreRecordList.forEach(e -> {
+            e.getSubject();
+            e.getReplyTeam();
+        });
+        FileUtil.exportExcel(scoreRecordList, "答辩信息表", "中山大学南方学院", ScoreRecord.class,
+                "答辩信息表.xls",
+                response);
     }
 }

@@ -1,5 +1,8 @@
 package com.graduationaldesign.graduation.pojo;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
+import cn.afterturn.easypoi.excel.annotation.ExcelEntity;
+import cn.afterturn.easypoi.excel.annotation.ExcelTarget;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.graduationaldesign.graduation.pojo.helper.Column;
@@ -12,6 +15,7 @@ import java.io.Serializable;
 @Data
 @Table(value = "t_scorerecord")
 @JsonIgnoreProperties(value = {"handler"})
+@ExcelTarget("scoreRecord")
 public class ScoreRecord implements Serializable {
 
     /**
@@ -19,12 +23,14 @@ public class ScoreRecord implements Serializable {
      */
     @MyPrimaryKey
     @Column(columnName = "id")
+    @Excel(name = "ID", width = 0, orderNum = "0")
     private Integer id;
 
     /**
      * 表字段 : t_scorerecord.score_sub_id
      */
     @Column(columnName = "score_sub_id", joinPojo = "Subject")
+    @Excel(name = "课题编号", width = 30, orderNum = "0")
     private String scoreSubId;
 
     /**
@@ -43,6 +49,7 @@ public class ScoreRecord implements Serializable {
      * 表字段 : t_scorerecord.reply_score_
      */
     @Column(columnName = "reply_score_")
+    @Excel(name = "答辩成绩", width = 30, orderNum = "5")
     private Long replyScore;
 
     /**
@@ -63,8 +70,10 @@ public class ScoreRecord implements Serializable {
     @Column(columnName = "ext2")
     private String ext2;
 
+    @ExcelEntity(name = "课题信息")
     private Subject subject;
 
+    @ExcelEntity(name = "答辩组信息")
     private ReplyTeam replyTeam;
 
     /**
@@ -247,5 +256,8 @@ public class ScoreRecord implements Serializable {
 
     public ScoreRecord(String scoreSubId) {
         this.scoreSubId = scoreSubId;
+    }
+
+    public ScoreRecord() {
     }
 }

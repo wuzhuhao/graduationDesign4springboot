@@ -5,6 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * @Author: wuzhuhao
@@ -17,6 +18,8 @@ public interface FileDownService {
     String multipleFiles(MultipartFile[] files);
 
     void exportDemo(Integer type, HttpServletResponse response);
+
+    void exportScore(HttpServletResponse response) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
     public ResponseEntity<Object> download(HttpServletResponse response, String fileName) throws UnsupportedEncodingException;
 }

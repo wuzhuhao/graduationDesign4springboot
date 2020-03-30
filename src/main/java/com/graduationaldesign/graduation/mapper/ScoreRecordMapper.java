@@ -86,6 +86,7 @@ public interface ScoreRecordMapper extends Mapper<ScoreRecord, ScoreRecordExampl
      */
     int updateByPrimaryKey(ScoreRecord record);
 
+    @Override
     int insertBatchSelective(List<ScoreRecord> records);
 
     int updateBatchByPrimaryKeySelective(List<ScoreRecord> records);

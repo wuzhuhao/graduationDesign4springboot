@@ -4,6 +4,7 @@ import com.graduationaldesign.graduation.pojo.Progress;
 import com.graduationaldesign.graduation.pojo.Task;
 import com.graduationaldesign.graduation.service.FileDownService;
 import com.graduationaldesign.graduation.service.TaskService;
+import com.graduationaldesign.graduation.service.impl.ScoreRecordServiceImpl;
 import com.graduationaldesign.graduation.util.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,8 @@ public class FileDownController {
     private HttpServletResponse response;
     @Autowired
     TaskService taskService;
+    @Autowired
+    ScoreRecordServiceImpl scoreRecordService;
 
     @GetMapping(value = "/downSingleFile")
     public ResponseEntity<Object> download(HttpServletResponse response, String fileName)
@@ -128,6 +131,59 @@ public class FileDownController {
         }
         return result;
     }
+
+    @RequestMapping("/exportScore")
+    @ResponseBody
+    public ResponseEntity<Object> exportScore(HttpServletResponse response) {
+        ResponseEntity<Object> result = null;
+        try {
+            fileDownService.exportScore(response);
+            result = ResponseStatus.success("导出答辩信息成功", this);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            result = ResponseStatus.failure(e.getMessage(), this);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = ResponseStatus.failure("导出答辩信息失败", this);
+        }
+        return result;
+    }
+
+//    @RequestMapping("/exportScore")
+//    public void export(HttpServletResponse response) {
+//        try {
+//            // 设置响应输出的头类型
+//            response.setHeader("content-Type", "application/vnd.ms-excel");
+//            // 下载文件的默认名称
+//            response.setHeader("Content-Disposition", "attachment;filename=user.xls");
+//            // =========easypoi部分
+//            ExportParams deptExportParams = new ExportParams();
+//            // 设置sheet得名称
+//            deptExportParams.setSheetName("员工报表1");
+//            List<ScoreRecord> scoreRecordList = scoreRecordService.selectByParam(new HashMap<>());
+//            scoreRecordList.forEach(e -> {
+//                e.getSubject();
+//                e.getReplyTeam();
+//            });
+//            Map<String, Object> deptExportMap = new HashMap<>();
+//            // title的参数为ExportParams类型，目前仅仅在ExportParams中设置了sheetName
+//            deptExportMap.put("title", deptExportParams);
+//            // 模版导出对应得实体类型
+//            deptExportMap.put("entity", ScoreRecord.class);
+//            // sheet中要填充得数据
+//            deptExportMap.put("data", scoreRecordList);
+//
+//            List<Map<String, Object>> sheetsList = new ArrayList<>();
+//            sheetsList.add(deptExportMap);
+//            Workbook workbook = ExcelExportUtil.exportExcel(sheetsList, ExcelType.HSSF);
+//            ServletOutputStream outputStream = response.getOutputStream();
+//            workbook.write(outputStream);
+//            outputStream.flush();
+//            outputStream.close();
+//        } catch (Exception e) {
+//            log.error(e.getMessage(), e);
+//        }
+//    }
 
     @RequestMapping("/exportDemo1")
     @ResponseBody

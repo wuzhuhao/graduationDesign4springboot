@@ -11,4 +11,6 @@ public interface FileUploadService {
     String singleFile(MultipartFile file, String path);
 
     String multipleFiles(MultipartFile[] files);
+
+    void importReplyScore(MultipartFile file);
 }

@@ -1,5 +1,7 @@
 package com.graduationaldesign.graduation.pojo;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
+import cn.afterturn.easypoi.excel.annotation.ExcelTarget;
 import cn.hutool.core.date.DateUtil;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -15,6 +17,7 @@ import java.util.Date;
 @Data
 @JsonIgnoreProperties(value = {"handler"})
 @Table(value = "reply_team")
+@ExcelTarget("score")
 public class ReplyTeam implements Serializable {
 
     /**
@@ -29,6 +32,7 @@ public class ReplyTeam implements Serializable {
      * 表字段 : reply_team.team_name
      */
     @Column(columnName = "team_name")
+    @Excel(name = "答辩小组名称", width = 30, orderNum = "2")
     private String teamName;
 
     /**
@@ -36,6 +40,7 @@ public class ReplyTeam implements Serializable {
      * 表字段 : reply_team.team_address
      */
     @Column(columnName = "team_address")
+    @Excel(name = "答辩地址", width = 30, orderNum = "3")
     private String teamAddress;
 
     /**
@@ -43,6 +48,7 @@ public class ReplyTeam implements Serializable {
      * 表字段 : reply_team.reply_time
      */
     @Column(columnName = "reply_time")
+    @Excel(name = "答辩时间", width = 30, orderNum = "4", format = "yyyy/MM/dd HH:mm")
     private Date replyTime;
 
     /**
@@ -51,7 +57,6 @@ public class ReplyTeam implements Serializable {
      */
     @Column(columnName = "team_leader_id", joinPojo = "Teacher")
     private String teamLeaderId;
-
     private Teacher teacher;
 
     /**
@@ -164,5 +169,8 @@ public class ReplyTeam implements Serializable {
 
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
+    }
+
+    public ReplyTeam() {
     }
 }

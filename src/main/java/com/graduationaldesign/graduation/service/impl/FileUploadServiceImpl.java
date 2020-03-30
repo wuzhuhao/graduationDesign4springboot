@@ -2,6 +2,7 @@ package com.graduationaldesign.graduation.service.impl;
 
 import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.pojo.Admin;
+import com.graduationaldesign.graduation.pojo.ScoreRecord;
 import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.Teacher;
 import com.graduationaldesign.graduation.service.AdminService;
@@ -35,6 +36,8 @@ public class FileUploadServiceImpl implements FileUploadService {
     AdminService adminService;
     @Autowired
     RootPropeties rootPropeties;
+    @Autowired
+    ScoreRecordServiceImpl scoreRecordService;
 
     @Override
     public String singleFile(MultipartFile file, String path) throws RuntimeException {
@@ -140,6 +143,13 @@ public class FileUploadServiceImpl implements FileUploadService {
                         MessageFormat.format("批量插入{0}失败", rootPropeties.getAdmin()));
             }
         }
+    }
+
+    @Override
+    public void importReplyScore(MultipartFile file) {
+        List<ScoreRecord> scoreRecordList = FileUtil.importExcel(file, 1, 1, ScoreRecord.class);
+        scoreRecordService.updateListByPrimaryKeySelective(scoreRecordList);
+//        scoreRecordService.insertSelectiveList(scoreRecordList);
     }
 
     public void deleteFile(String path, String name) {

@@ -12,4 +12,6 @@ public interface Mapper<T, E> {
      * @return
      */
     List<T> selectByExample(E example);
+
+    int insertBatchSelective(List<T> tList);
 }
