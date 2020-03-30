@@ -5,7 +5,6 @@ import com.graduationaldesign.graduation.mapper.ReportMapper;
 import com.graduationaldesign.graduation.mapper.SubjectMapper;
 import com.graduationaldesign.graduation.pojo.*;
 import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
-import com.graduationaldesign.graduation.service.ScoreRecordService;
 import com.graduationaldesign.graduation.service.SubjectService;
 import com.graduationaldesign.graduation.service.TaskService;
 import com.graduationaldesign.graduation.util.IDUtil;
@@ -45,7 +44,7 @@ public class SubjectServiceImpl implements SubjectService {
     @Autowired
     FileUploadServiceImpl fileUploadService;
     @Autowired
-    ScoreRecordService scoreRecordService;
+    ScoreRecordServiceImpl scoreRecordService;
     @Autowired
     TaskService taskService;
 
@@ -316,5 +315,28 @@ public class SubjectServiceImpl implements SubjectService {
         Subject subject = new Subject(subId);
         subject.setSubFile(fileUploadService.singleFile(file, path));
         subjectMapper.updateByPrimaryKeySelective(subject);
+    }
+
+    @Override
+    public String confirmScore(String subId) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+        String result = "学生成绩已确认";
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("scoreSubId", subId);
+        List<ScoreRecord> scoreRecordList = scoreRecordService.selectByParam(map);
+        if (scoreRecordList.size() <= 0) {
+            throw new RuntimeException("数据错误");
+        }
+        Long replyScore = scoreRecordList.get(0).getReplyScore();
+        Long firstReportScore = scoreRecordList.get(0).getFirstReportScore();
+        Long finalReportScore = scoreRecordList.get(0).getFinalReportScore();
+        if (firstReportScore == null || finalReportScore == null || replyScore == null) {
+            throw new RuntimeException("成绩未齐全");
+        }
+        Long score = (long) (replyScore * 0.5 + firstReportScore * 0.25 + finalReportScore * 0.25);
+        Subject subject = new Subject();
+        subject.setSubId(subId);
+        subject.setSubLastScore(score);
+        subjectMapper.updateByPrimaryKeySelective(subject);
+        return result;
     }
 }

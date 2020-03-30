@@ -6,4 +6,6 @@ package com.graduationaldesign.graduation.pojo;
  */
 public interface Example {
     public void setDistinct(boolean distinct);
+
+    Object createCriteria();
 }

@@ -98,6 +98,7 @@ public class GoodGraduationExample implements Example {
     /**
      * 创建一个查询条件,t_goodgraduation
      */
+    @Override
     public Criteria createCriteria() {
         Criteria criteria = createCriteriaInternal();
         if (oredCriteria.size() == 0) {

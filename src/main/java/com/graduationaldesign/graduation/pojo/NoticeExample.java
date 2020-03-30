@@ -97,6 +97,7 @@ public class NoticeExample implements Example {
     /**
      * 创建一个查询条件,t_notice
      */
+    @Override
     public Criteria createCriteria() {
         Criteria criteria = createCriteriaInternal();
         if (oredCriteria.size() == 0) {

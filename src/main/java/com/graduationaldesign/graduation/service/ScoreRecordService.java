@@ -33,4 +33,5 @@ public interface ScoreRecordService {
 
     PageBean<ScoreRecord> listByPage(HashMap<String, Object> params, int page, int pageSize) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
+//    List<ScoreRecord> selectByParam(Map<String, Object> params) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 }

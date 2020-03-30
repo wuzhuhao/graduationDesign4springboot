@@ -58,4 +58,6 @@ public interface SubjectService {
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException;
 
     void uploadSubjectFile(MultipartFile file, String subId);
+
+    String confirmScore(String subId) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 }

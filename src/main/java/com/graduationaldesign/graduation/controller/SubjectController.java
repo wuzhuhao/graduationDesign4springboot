@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -269,8 +270,16 @@ public class SubjectController {
         try {
             subjectService.uploadSubjectFile(file, subId);
             return ResponseStatus.success("上传附件成功", this);
-//            return ResponseStatu.success(,this);
         } catch (RuntimeException e) {
+            return ResponseStatus.failure(e.getMessage(), this);
+        }
+    }
+
+    @RequestMapping(value = "/confirmScore", method = RequestMethod.POST)
+    public ResponseEntity<Object> confirmScore(String subId) {
+        try {
+            return ResponseStatus.success(subjectService.confirmScore(subId), this);
+        } catch (RuntimeException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             return ResponseStatus.failure(e.getMessage(), this);
         }
     }

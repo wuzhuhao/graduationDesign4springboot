@@ -96,6 +96,7 @@ public class PermissionExample implements Example {
     /**
      * 创建一个查询条件,t_permission
      */
+    @Override
     public Criteria createCriteria() {
         Criteria criteria = createCriteriaInternal();
         if (oredCriteria.size() == 0) {

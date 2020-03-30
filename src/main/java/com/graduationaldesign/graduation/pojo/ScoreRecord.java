@@ -3,6 +3,7 @@ package com.graduationaldesign.graduation.pojo;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.graduationaldesign.graduation.pojo.helper.Column;
+import com.graduationaldesign.graduation.pojo.helper.MyPrimaryKey;
 import com.graduationaldesign.graduation.pojo.helper.Table;
 import lombok.Data;
 
@@ -16,6 +17,7 @@ public class ScoreRecord implements Serializable {
     /**
      * 表字段 : t_scorerecord.id
      */
+    @MyPrimaryKey
     @Column(columnName = "id")
     private Integer id;
 

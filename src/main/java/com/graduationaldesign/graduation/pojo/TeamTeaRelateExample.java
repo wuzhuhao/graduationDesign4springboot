@@ -104,6 +104,7 @@ public class TeamTeaRelateExample implements Example {
     /**
      * 创建一个查询条件,team_tea_relate
      */
+    @Override
     public Criteria createCriteria() {
         Criteria criteria = createCriteriaInternal();
         if (oredCriteria.size() == 0) {

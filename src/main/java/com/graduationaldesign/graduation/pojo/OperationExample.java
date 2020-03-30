@@ -97,6 +97,7 @@ public class OperationExample implements Example {
     /**
      * 创建一个查询条件,log_operation
      */
+    @Override
     public Criteria createCriteria() {
         Criteria criteria = createCriteriaInternal();
         if (oredCriteria.size() == 0) {

@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface ScoreRecordMapper {
+public interface ScoreRecordMapper extends Mapper<ScoreRecord, ScoreRecordExample> {
     /**
      * 根据指定的条件获取数据库记录数,t_scorerecord
      *

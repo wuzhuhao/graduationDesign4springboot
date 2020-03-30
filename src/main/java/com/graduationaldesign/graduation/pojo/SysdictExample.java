@@ -96,6 +96,7 @@ public class SysdictExample implements Example {
     /**
      * 创建一个查询条件,sys_sysdict
      */
+    @Override
     public Criteria createCriteria() {
         Criteria criteria = createCriteriaInternal();
         if (oredCriteria.size() == 0) {

@@ -96,6 +96,7 @@ public class RolePermissionExample implements Example {
     /**
      * 创建一个查询条件,t_role_permission
      */
+    @Override
     public Criteria createCriteria() {
         Criteria criteria = createCriteriaInternal();
         if (oredCriteria.size() == 0) {

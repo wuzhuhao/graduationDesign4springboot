@@ -108,6 +108,7 @@ public class ReplyTeamExample implements Example {
     /**
      * 创建一个查询条件,reply_team
      */
+    @Override
     public Criteria createCriteria() {
         Criteria criteria = createCriteriaInternal();
         if (oredCriteria.size() == 0) {

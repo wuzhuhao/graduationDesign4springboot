@@ -23,7 +23,7 @@ import java.util.List;
  * @Date: 2020/3/14 0014 14:29
  */
 @Service
-public class ScoreRecordServiceImpl implements ScoreRecordService {
+public class ScoreRecordServiceImpl extends com.graduationaldesign.graduation.service.Service<ScoreRecord, ScoreRecordExample, ScoreRecordMapper> implements ScoreRecordService {
 
     @Resource
     private ScoreRecordMapper scoreRecordMapper;
@@ -88,12 +88,22 @@ public class ScoreRecordServiceImpl implements ScoreRecordService {
         ExampleHelper.addCondition(ScoreRecord.class, criteria, params);
         List<ScoreRecord> list = this.scoreRecordMapper.selectByExample(example);
         pageBean.setBeanList(list);
-        for(ScoreRecord scoreRecord :list){
+        for (ScoreRecord scoreRecord : list) {
             scoreRecord.getSubject();
-            if(scoreRecord.getSubject()!=null){
+            if (scoreRecord.getSubject() != null) {
                 scoreRecord.getSubject().getStudent();
             }
         }
         return pageBean;
     }
+//
+//    @Override
+//    public List<ScoreRecord> selectByParam(Map<String, Object> params) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+//        ScoreRecordExample example = new ScoreRecordExample();
+//        ScoreRecordExample.Criteria criteria = example.createCriteria();
+//        ExampleHelper.addCondition(ScoreRecord.class, criteria, params);
+//        List<ScoreRecord> list = this.scoreRecordMapper.selectByExample(example);
+//        return list;
+//    }
+
 }

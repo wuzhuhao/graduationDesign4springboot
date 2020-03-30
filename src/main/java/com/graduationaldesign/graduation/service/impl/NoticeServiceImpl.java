@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -42,6 +43,7 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     public int insertSelective(Notice record) {
+        record.setNoticeTime(new Date());
         return noticeMapper.insertSelective(record);
     }
 

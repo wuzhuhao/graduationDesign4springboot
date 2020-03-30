@@ -107,6 +107,7 @@ public class UserRoleExample implements Example {
     /**
      * 创建一个查询条件,user_role
      */
+    @Override
     public Criteria createCriteria() {
         Criteria criteria = createCriteriaInternal();
         if (oredCriteria.size() == 0) {

@@ -107,6 +107,7 @@ public class TeacherExample implements Example {
     /**
      * 创建一个查询条件,t_teacher
      */
+    @Override
     public Criteria createCriteria() {
         Criteria criteria = createCriteriaInternal();
         if (oredCriteria.size() == 0) {
