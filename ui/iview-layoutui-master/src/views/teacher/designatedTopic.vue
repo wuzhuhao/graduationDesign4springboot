@@ -10,29 +10,21 @@
             <Icon type="ios-game-controller-b" />
         </div>
 
-        <!-- 条件搜索 -->
+       <!-- 条件搜索 -->
         <div slot="searchContent" class="search-content-slot">
             <Form :model="formItem" :label-width="80">
               <Row>
-                <Col span="8">
-                  <FormItem label="id：">
-                    <Input v-model="formItem.subId" placeholder="..."></Input>
+               <Col span="8">
+                  <FormItem label="学生姓名">
+                    <Input v-model="formItem.stuName" placeholder="请输入学生名称"></Input>
                 </FormItem>
                 </Col>
                 <Col span="8">
                   <FormItem label="课题名称">
-                    <Input v-model="formItem.subName" placeholder="Enter something..."></Input>
+                    <Input v-model="formItem.subName" placeholder="请输入课题名称"></Input>
                 </FormItem>
                 </Col>
-                <Col span="8">
-                  <FormItem label="课程性质">
-                    <Select v-model="formItem.subNature">
-                        <Option value="beijing">New York</Option>
-                        <Option value="shanghai">London</Option>
-                        <Option value="shenzhen">Sydney</Option>
-                    </Select>
-                </FormItem>
-                </Col>
+                  
                  
               </Row>
           </Form>
@@ -236,33 +228,34 @@ export default {
                 minWidth: 100,
                   width: 200,
                 sortable: true
-            }, {
-                        title: '操作',
-                        key: 'action',
-                        fixed: 'right',
-                        minWidth: 120,
-                        width: 200,
-                        render: (h, params) => {
-                            return h('div', [
+            }, 
+            // {
+            //             title: '操作',
+            //             key: 'action',
+            //             fixed: 'right',
+            //             minWidth: 120,
+            //             width: 200,
+            //             render: (h, params) => {
+            //                 return h('div', [
                                 
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small',
-                                        icon:'icon iconfont icon-edit'
-                                    },
-                                     attrs:{
-                                        title:'查看'
-                                    },
-                                      on: {
-                                        click: () => {
-                                        this.edit(params.row)             //编辑方法
-                                        }
-                                      }
-                                },'查看')
-                            ]);
-                        }
-                    }
+            //                     h('Button', {
+            //                         props: {
+            //                             type: 'text',
+            //                             size: 'small',
+            //                             icon:'icon iconfont icon-edit'
+            //                         },
+            //                          attrs:{
+            //                             title:'查看'
+            //                         },
+            //                           on: {
+            //                             click: () => {
+            //                             this.edit(params.row)             //编辑方法
+            //                             }
+            //                           }
+            //                     },'查看')
+            //                 ]);
+            //             }
+            //         }
         ]
       }
     },
@@ -377,7 +370,7 @@ export default {
          let params = this.formItem
          this.$axios({
                             
-                            url: 'sub/listOfTea?page=' + page  + '&pageSize=' + pageSize,
+                            url: 'sub/listOfTea?isJoinStudentpage=' + page  + '&pageSize=' + pageSize,
                             method: 'get',//请求的方式
                             params:params,
                             // token:localStorage.getItem('token')
@@ -385,7 +378,7 @@ export default {
                           console.log(res.data)
                          this.tableData = [];
                           let list = res.data.data.beanList;
-                           this.subStuStateList = res.data.dict.subStuState
+                           this.subStuStateList = res.data.dict.subject.subStuState
                           list.forEach((item, index) => {
                            this.tableData.push({
                               subId: item.subId,

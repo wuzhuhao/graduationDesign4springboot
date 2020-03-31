@@ -17,25 +17,13 @@
         <div slot="searchContent" class="search-content-slot">
             <Form :model="formItem" :label-width="80">
               <Row>
+               
                 <Col span="8">
-                  <FormItem label="id">
-                    <Input v-model="formItem.teaId" placeholder="请输入id"></Input>
+                  <FormItem label="字典描述">
+                    <Input v-model="formItem.dictDescription" placeholder="字典描述"></Input>
                 </FormItem>
                 </Col>
-                <Col span="8">
-                  <FormItem label="姓名">
-                    <Input v-model="formItem.teaName" placeholder="请输入姓名"></Input>
-                </FormItem>
-                </Col>
-                <Col span="8">
-                  <FormItem label="学院：">
-                    <Select v-model="formItem.select">
-                        <Option value="beijing">New York</Option>
-                        <Option value="shanghai">London</Option>
-                        <Option value="shenzhen">Sydney</Option>
-                    </Select>
-                </FormItem>
-                </Col>
+              
                  
               </Row>
           </Form>
@@ -45,7 +33,6 @@
           <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doSearch">查询</Button>  &nbsp; &nbsp; &nbsp; &nbsp;
            <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doReset">重置</Button>  &nbsp;
           <Button type="info"  style="float:left;margin:0 8px"  @click="exportData(1)"><Icon type="ios-download-outline"></Icon>导出数据</Button>&nbsp;
-          <Button type="info" icon="ios-search;margin:0 8px"  style="float:left" @click="delAll">批量删除</Button>  &nbsp;
     
         </div>
         <div slot="btns">
@@ -623,7 +610,7 @@ export default {
     console.log(this.selectList)
     var lstprimaryKey = []
     for(var i = 0;i<this.selectCount;i++){
-		lstprimaryKey.push(this.selectList[i].teaId)
+		lstprimaryKey.push(this.selectList[i].id)
 	}
      console.log(lstprimaryKey)
       this.$Modal.confirm({
@@ -631,7 +618,7 @@ export default {
         content: "您确认要删除所选的 " + this.selectCount + " 条数据?",
         onOk: () => {
            this.$axios({     
-                            url: 'tea/deleteAll',
+                            url: 'sysdict/deleteAll',
                             method: 'delete',//请求的方式
                             params: {lstprimaryKey:lstprimaryKey},
                             paramsSerializer: params => {

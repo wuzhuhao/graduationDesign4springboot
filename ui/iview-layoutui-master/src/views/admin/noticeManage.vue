@@ -18,21 +18,19 @@
             <Form :model="formItem" :label-width="80">
               <Row>
                 <Col span="8">
-                  <FormItem label="id：">
-                    <Input v-model="formItem.id" placeholder="请输入id"></Input>
+                  <FormItem label="标题：">
+                    <Input v-model="formItem.noticeTitle" placeholder="请输入标题"></Input>
                 </FormItem>
                 </Col>
                 <Col span="8">
-                  <FormItem label="发布者：">
-                    <Input v-model="formItem.teaName" placeholder="请输入发布者"></Input>
+                  <FormItem label="内容">
+                    <Input v-model="formItem.noticeContent" placeholder="请输入内容"></Input>
                 </FormItem>
                 </Col>
                 <Col span="8">
                   <FormItem label="学院：">
-                    <Select v-model="formItem.select">
-                        <Option value="beijing">New York</Option>
-                        <Option value="shanghai">London</Option>
-                        <Option value="shenzhen">Sydney</Option>
+                    <Select v-model="formItem.acaId">
+                         <Option v-for="(item,index) in acaIdList" :value="index"  >{{item}} </Option>
                     </Select>
                 </FormItem>
                 </Col>
@@ -46,10 +44,6 @@
            <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doReset">重置</Button>  &nbsp;
           <Button type="info"  style="float:left;margin:0 8px"  @click="exportData(1)"><Icon type="ios-download-outline"></Icon>导出数据</Button>&nbsp;
           <Button type="info" icon="ios-search;margin:0 8px"  style="float:left" @click="delAll">批量删除</Button>  &nbsp;
-        <Upload action="http://localhost:8080/graManagement/uploadFile/importUserByExcel?type=2"    style="float:left;margin:0 8px">
-            <Button  type="info" icon="ios-cloud-upload-outline">批量注册</Button>
-        </Upload>
-         <Button type="info"  style="float:left;margin:0 8px"  @click="exportDataDemo(2)"><Icon type="ios-download-outline"></Icon>导出注册模板</Button>&nbsp;
         </div>
         <div slot="btns">
           <Button type="primary" icon="md-add" @click="handleCreate">添加</Button>
@@ -76,73 +70,29 @@
         >
             <Form :model="formData">
                 <Row :gutter="32">
-                    <Col span="12">
-                        <FormItem label="id：" label-position="top">
-                            <Input v-model="formData.teaId" placeholder="请输入id" />
+                    <Col span="20">
+                        <FormItem label="标题：" label-position="top">
+                            <Input v-model="formData.noticeTitle" placeholder="请输入标题" />
                         </FormItem>
                     </Col>
-                    <Col span="12">
+                     </Row>
+                      <Row :gutter="32">
+                    <Col span="20">
                         <FormItem label="内容：" label-position="top">
-                            <Input v-model="formData.teaPassword" placeholder="请输入内容">
+                            <Input v-model="formData.noticeContent" placeholder="请输入内容">
                             </Input>
                         </FormItem>
                     </Col>
                 </Row>
                 <Row :gutter="32">
-                    <Col span="12">
-                        <FormItem label="时间：" label-position="top">
-                            <Input v-model="formData.teaName" placeholder="请输入时间" />
+                    <Col span="20">
+                        <FormItem label="学院：" label-position="top">
+                           <Select v-model="formData.acaId">
+                         <Option v-for="(item,index) in acaIdList" :value="index"  >{{item}} </Option>
+                    </Select>
                         </FormItem>
                     </Col>
-                    <Col span="12">
-                        <FormItem label="发布者：" label-position="top">
-                            <Input v-model="formData.teaSex" placeholder="请输入发布者">
-                            </Input>
-                        </FormItem>
-                    </Col>
-                </Row><Row :gutter="32">
-                    <Col span="12">
-                        <FormItem label="年龄：" label-position="top">
-                            <Input v-model="formData.teaAge" placeholder="请输入年龄" />
-                        </FormItem>
-                    </Col>
-                    <Col span="12">
-                        <FormItem label="生日：" label-position="top">
-                            <Input v-model="formData.teaBirthday" placeholder="请输入生日">
-                            </Input>
-                        </FormItem>
-                    </Col>
-                </Row><Row :gutter="32">
-                    <Col span="12">
-                        <FormItem label="电话：" label-position="top">
-                            <Input v-model="formData.teaPhone" placeholder="请输入电话" />
-                        </FormItem>
-                    </Col>
-                    <Col span="12">
-                        <FormItem label="邮箱：" label-position="top">
-                            <Input v-model="formData.teaMail" placeholder="请输入邮箱">
-                            </Input>
-                        </FormItem>
-                    </Col>
-                </Row><Row :gutter="32">
-                    <Col span="12">
-                        <FormItem label="地址：" label-position="top">
-                            <Input v-model="formData.teaAddress" placeholder="请输入地址" />
-                        </FormItem>
-                    </Col>
-                    <Col span="12">
-                        <FormItem label="备注：" label-position="top">
-                            <Input v-model="formData.teaRemarks" placeholder="请输入备注">
-                            </Input>
-                        </FormItem>
-                    </Col>
-                </Row>
-                </Row><Row :gutter="32">
-                    <Col span="12">
-                        <FormItem label="学院id：" label-position="top">
-                            <Input v-model="formData.academyId" placeholder="请输入学院id" />
-                        </FormItem>
-                    </Col>
+                   
                 </Row>
             </Form>
             <div class="demo-drawer-footer">
@@ -169,6 +119,7 @@ export default {
       return{
             dialogStatus: '',//title自定义标题
           value3: false,
+          acaIdList:[],
                 styles: {
                     height: 'calc(100% - 55px)',
                     overflow: 'auto',
@@ -176,12 +127,11 @@ export default {
                     position: 'static'
                 },
                 formData: {
-                    id: '',
-                    noticeTime:  '',
                     noticePublisher:  '',
                     acaId: '',
+                    noticeTitle :'',
                     noticeContent:  '',
-                    academy:  '',
+                 
                 },
             
         pagination: {
@@ -199,6 +149,7 @@ export default {
             noticeTime:  '',
             noticePublisher:  '',
             acaId: '',
+             noticeTitle :'',
             noticeContent:  '',
             academy:  '',
         },
@@ -217,6 +168,11 @@ export default {
                 fixed: 'left',
                 sortable: true
             },
+              {
+                title: '标题',
+                key: 'noticeContent',
+                minWidth: 100,
+            },
             {
                 title: '内容',
                 key: 'noticeContent',
@@ -227,9 +183,14 @@ export default {
                 key: 'noticeTime',
                 minWidth: 100,
             },
+              {
+                title: '发布人',
+                key: 'noticePublisher',
+                minWidth: 100,
+            },
             {
-                title: 'acaId',
-                key: '学院',
+                title: '学院',
+                key: 'acaId',
                 minWidth: 100,
             },
             {
@@ -382,13 +343,15 @@ export default {
                           console.log(res.data)
                          this.tableData = [];
                           let list = res.data.data.beanList;
+                          this.acaIdList = res.data.dict.notice.acaId
                           list.forEach((item, index) => {
                            this.tableData.push({
                                id:item.id,
                                 noticeTime: item.noticeTime,
                                 noticePublisher: item.noticePublisher,
-                                acaId:item.acaId,
+                                acaId: this.acaIdList[item.acaId],
                                 noticeContent: item.noticeContent,
+                                 noticeTitle :item.noticeTitle,
                                 academy: item.academy
                            })
                           })
@@ -414,13 +377,11 @@ export default {
      
    
        handleCreate () {
-        this.formData.id = row.id
-        this.formData.noticeTime = row.noticeTime
-        this.formData.noticePublisher =  row.noticePublisher
-        this.formData.acaId =  row.acaId
-        this.formData.noticeContent =  row.noticeContent
-        this.formData.academy =  row.academy
-        this.formData.academyId = ''
+        let  userId = localStorage.getItem('userId')
+        this.formData.noticePublisher =  userId,
+        this.formData.acaId = '',
+         this.formData.noticeTitle = '',
+        this.formData.noticeContent = '',
         this.dialogStatus = '新增';//对应标题
         this.value3 = true
         

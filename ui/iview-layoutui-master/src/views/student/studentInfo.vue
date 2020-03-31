@@ -41,8 +41,8 @@
                 <Col span="12">
                   <FormItem label="性别:  "  :label-width="200"  class="label">
                      <Select v-model="formItem.stuSex" >
-                        <Option value="男" >男</Option>
-                        <Option value="女">女</Option>
+                         <Option v-for="(item,index) in stuSexList" :value="index"  >{{item}}
+                    </Option>
                     </Select>
                 </FormItem>
                 </Col>
@@ -57,7 +57,7 @@
              <Row>
                 <Col span="12">
                   <FormItem label="出生日期"  :label-width="200"   class="label">
-                    <DatePicker type="date" placeholder="请输入出生日期"></DatePicker>
+                    <DatePicker type="date" v-model="formItem.stuBirthday"  style="width:620px" placeholder="请输入出生日期"></DatePicker>
                   </FormItem>  
                 </Col>
               </Row>
@@ -89,16 +89,16 @@
                 </FormItem>
                 </Col>
               </Row>
-               <Row>
+               <!-- <Row>
                 <Col span="12">
                   <FormItem label="学院:  "  :label-width="200"  class="label">
-                     <Select v-model="formItem.stuSex" >
-                        <Option value="计算机学院" >计算机学院</Option>
-                        <Option value="财务管理学院">财务管理学院</Option>
+                     <Select v-model="formItem.academyId" >
+                        <Option v-for="(item,index) in academyIdList" :value="index"  >{{item}}
+                    </Option>
                     </Select>
                 </FormItem>
                 </Col>
-              </Row>
+              </Row> -->
           </Form>
         </div>
          <div slot="search">
@@ -137,6 +137,7 @@ export default {
         
         },
        stuSexList:[],
+       academyIdList:[],
       }
     },
      created(){
@@ -156,19 +157,35 @@ export default {
                             method: 'get',//请求的方式
                             params: {stuId:userId},//请求的表单数据
                         }).then(res => {
-                              console.info('报错的信息',res.data);
+                              console.info(res.data);
 
-                               this.formItem = res.data.data.beanList[0]
-                               this.stuSexList = res.data.data.dict.student.stuSex
-                               this.formItem.stuSex = stuSexList[this.formItem.stuSex]
+                             
+                                 this.formItem.stuId=res.data.data.stuId
+                                 this.formItem.stuPassword=res.data.data.stuPassword
+                                 this.formItem.stuName=res.data.data.stuName
+                                 this.formItem.stuMajor=res.data.data.stuMajor
+                                 this.formItem.stuClass=res.data.data.stuClass
+                                 this.formItem.stuSex=res.data.data.stuSex
+                                 this.formItem.stuAge=res.data.data.stuAge
+                                 this.formItem.stuBirthday=res.data.data.stuBirthday
+                                 this.formItem.stuPhone=res.data.data.stuPhone
+                                 this.formItem.stuMail=res.data.data.stuMail
+                                 this.formItem.stuAddress=res.data.data.stuAddress
+                                 this.formItem.stuRemarks=res.data.data.stuRemarks
+                                 this.formItem.academyId=res.data.data.academyId
+                                 console.log(this.formItem.academyId)
+                               this.stuSexList = res.data.dict.student.stuSex
+                              this.academyIdList = res.data.dict.student.academyId
                         
-                           
+                          
                             })
+                            
 
                         // }).catch(err => {
                         //     console.info('报错的信息',err);
                             
                         // });
+                        
       },
        update(){
           console.log(this.formItem)
@@ -179,12 +196,12 @@ export default {
                             // token:localStorage.getItem('token')
                         }).then(res => {
                         console.log(res.data)
-                        
+                          this.getUser()
                         }).catch(err => {
                             console.info('报错的信息',err);
                             
                         });
-                        this.getUser()
+                      
                       
         }
        

@@ -55,7 +55,7 @@
           <Button type="primary" icon="md-add" @click="handleCreate">添加</Button>
         </div>
         <div slot="paddingContent">
-          <Table border   :columns="columns2" :data="tableData"  @on-selection-change="changeSelect" ref="table"></Table>
+          <Table border  show-summary :columns="columns2" :data="tableData"  @on-selection-change="changeSelect" ref="table"></Table>
         </div>
         <div slot="pager">
             <Page :total="this.pagination.total"  :page-size="this.pagination.pageSize"  :page-size-opts="this.pagination.pageSizeOpts" 
@@ -243,10 +243,34 @@ export default {
           academyId:  '',
         //   academy:  '',
         },
-        columns1: [
+        columns2: [
+            {
+               type: 'selection',
+               width: 60,
+               align: 'center',
+              fixed: 'left'
+             },
+           
+            {
+                title: '账号',
+                key: 'stuId',
+                 width: 100,
+                fixed: 'left',
+                sortable: true
+            },
+            {
+                title: '密码',
+                key: 'stuPassword',
+                minWidth: 100,
+                
+            },
             {
                 title: '姓名',
                 key: 'stuName',
+                minWidth: 100,
+            }, {
+                title: '专业',
+                key: 'stuMajor',
                 minWidth: 100,
             },
             {
@@ -254,7 +278,43 @@ export default {
                 key: 'stuClass',
                 minWidth: 100,
             },
-           {
+            {
+                title: '性别',
+                key: 'stuSex',
+                minWidth: 100,
+            } ,
+            {
+                title: '年龄',
+                key: 'stuAge',
+                minWidth: 100,
+            },
+            {
+                title: '生日',
+                key: 'stuBirthday',
+                minWidth: 100,
+            },
+            {
+                title: '电话',
+                key: 'stuPhone',
+                minWidth: 100,
+            }, {
+                title: '邮箱',
+                key: 'stuMail',
+                minWidth: 100,
+            },{
+                title: '地址',
+                key: 'stuAddress',
+                minWidth: 100,
+            },
+            {
+                title: '##',
+                key: 'stuRemarks',
+                minWidth: 100,
+            }, {
+                title: '学院',
+                key: 'academyId',
+                minWidth: 100,
+            },{
                         title: '操作',
                         key: 'action',
                         fixed: 'right',
@@ -263,19 +323,34 @@ export default {
                             return h('div', [
                                 h('Button', {
                                     props: {
+                                       type: 'primary',
+                                        size: 'small',
+                                        icon: "icon iconfont icon-shanchu"
+                                    },
+                                     attrs:{
+                                        title:'删除'
+                                    },
+                                      on: {
+                                        click: () => {
+                                        this.delById(params.row)             //编辑方法
+                                        }
+                                      }
+                                }),
+                                h('Button', {
+                                    props: {
                                         type: 'text',
                                         size: 'small',
                                         icon:'icon iconfont icon-edit'
                                     },
                                      attrs:{
-                                        title:'分配'
+                                        title:'编辑'
                                     },
                                       on: {
                                         click: () => {
                                         this.edit(params.row)             //编辑方法
                                         }
                                       }
-                                },'分配')
+                                })
                             ]);
                         }
                     }
@@ -369,7 +444,7 @@ export default {
         }else if(this.dialogStatus == '编辑'){
              this.$axios({     
                             url: 'stu/update',
-                            method: 'post',//请求的方式
+                            method: 'put',//请求的方式
                             data:this.$Qs.stringify(this.formData),
                             // token:localStorage.getItem('token')
                         }).then(res => {

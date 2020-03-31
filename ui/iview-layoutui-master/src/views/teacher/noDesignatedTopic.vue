@@ -17,25 +17,13 @@
         <div slot="searchContent" class="search-content-slot">
             <Form :model="formItem" :label-width="80">
               <Row>
-                <Col span="8">
-                  <FormItem label="id：">
-                    <Input v-model="formItem.subId" placeholder="..."></Input>
-                </FormItem>
-                </Col>
+               
                 <Col span="8">
                   <FormItem label="课题名称">
-                    <Input v-model="formItem.subName" placeholder="Enter something..."></Input>
+                    <Input v-model="formItem.subName" placeholder="请输入课题名称"></Input>
                 </FormItem>
                 </Col>
-                <Col span="8">
-                  <FormItem label="课程性质">
-                    <Select v-model="formItem.subNature">
-                        <Option value="beijing">New York</Option>
-                        <Option value="shanghai">London</Option>
-                        <Option value="shenzhen">Sydney</Option>
-                    </Select>
-                </FormItem>
-                </Col>
+                
                  
               </Row>
           </Form>
@@ -70,68 +58,54 @@
         >
             <Form :model="formData">
                 <Row :gutter="32">
-                    <Col span="12">
-                        <FormItem label="id" label-position="top">
-                            <Input v-model="formData.subId" placeholder="please enter user name" />
-                        </FormItem>
-                    </Col>
-                    <Col span="12">
+                    
+                    <Col span="20">
                         <FormItem label="课题名称" label-position="top">
-                            <Input v-model="formData.subName" placeholder="please enter url">
+                            <Input v-model="formData.subName" placeholder="请输入课题名称">
                             </Input>
                         </FormItem>
                     </Col>
+                    
                 </Row>
                 <Row :gutter="32">
-                    <Col span="12">
+                   
+                    <Col span="20">
                         <FormItem label="课题性质" label-position="top">
-                            <Input v-model="formData.subNature" placeholder="please enter user name" />
+                            
+                            <Select v-model="formData.subNature">
+    
+                            <Option v-for="(item,index) in subNatureList" :value="index"  >{{item}} </Option>
+    
+                        </Select>
                         </FormItem>
                     </Col>
-                    <Col span="12">
-                        <FormItem label="课题来源" label-position="top">
-                            <Input v-model="formData.subSource" placeholder="please enter url">
-                            </Input>
-                        </FormItem>
-                    </Col>
-                </Row><Row :gutter="32">
-                    <Col span="12">
-                        <FormItem label="开题报告截止期限" label-position="top">
-                            <Input v-model="formData.firstReportDeadline" placeholder="please enter user name" />
-                        </FormItem>
-                    </Col>
-                    <Col span="12">
-                        <FormItem label="论文定稿截止期限" label-position="top">
-                            <Input v-model="formData.lastReportDeadline" placeholder="please enter url">
-                            </Input>
-                        </FormItem>
-                    </Col>
-                </Row><Row :gutter="32">
-                    <Col span="12">
-                        <FormItem label="学生id" label-position="top">
-                            <Input v-model="formData.stuId" placeholder="please enter user name" />
-                        </FormItem>
-                    </Col>
-                    <Col span="12">
-                        <FormItem label="提交状态" label-position="top">
-                            <Input v-model="formData.subStuState" placeholder="please enter url">
-                            </Input>
-                        </FormItem>
-                    </Col>
-                </Row><Row :gutter="32">
-                    <Col span="12">
-                        <FormItem label="总评" label-position="top">
-                            <Input v-model="formData.subLastScore" placeholder="please enter user name" />
-                        </FormItem>
-                    </Col>
-                    <Col span="12">
-                        <FormItem label="展示id" label-position="top">
-                            <Input v-model="formData.showId" placeholder="please enter url">
-                            </Input>
-                        </FormItem>
-                    </Col>
+                   
                 </Row>
-                
+                <Row :gutter="32">
+                   
+                    <Col span="20">
+                        <FormItem label="课题来源" label-position="top">
+                            
+                            <Select v-model="formData.subSource">
+    
+                            <Option v-for="(item,index) in subSourceList" :value="index"  >{{item}} </Option>
+    
+                        </Select>
+                        </FormItem>
+                    </Col>
+                   
+                </Row>
+               <Row :gutter="32">
+                    
+                    <Col span="20">
+                        <FormItem label="课题介绍" label-position="top">
+                            
+                            <Input v-model="formData.subIntroduce" placeholder="请输入课题介绍">
+                            </Input>
+                        </FormItem>
+                    </Col>
+                    
+                </Row>
             </Form>
             <div class="demo-drawer-footer">
                 <Button style="margin-right: 8px" @click="value3 = false">Cancel</Button>
@@ -166,22 +140,14 @@ export default {
                     position: 'static'
                 },
                 subStuStateList:{},
+                subNatureList:{},
+                subSourceList:{},
                 formData: {
-                   subId: '',
+                   teaId:'',
                     subName: '',
                     subNature: '',
                     subSource: '',
-                    subTeaId: '',
-                    subFile:'',
-                    firstReportDeadline: '',
-                    lastReportDeadline:'',
-                    stuId:'',
-                    subStuState: '',
-                    subLastScore:'',
-                    showId:'',
-                    subIntroduce: '',
-                    student:'',
-                    teacher: '',
+                   
                 },
             
         pagination: {
@@ -300,19 +266,19 @@ export default {
       //编辑
         edit(row){
             this.dialogStatus = '编辑';//对应标题
-            this.formData.subId = row.subId
+            // this.formData.subId = row.subId
             this.formData.subName = row.subName
-            this.formData.subNature =  row.subNature
-            this.formData.subSource =  row.subSource
-            this.formData.subTeaId =  row.subTeaId
-            this.formData.subFile =  row.subFile
-            this.formData.firstReportDeadline = row.firstReportDeadline
-            this.formData.lastReportDeadline =  row.lastReportDeadline
-            this.formData.stuId =  row.stuId
-            this.formData.subStuState =  row.subStuState
-            this.formData.subLastScore =  row.subLastScore
-            this.formData.showId = row.showId
-            this.formData.subIntroduce = row.subIntroduce
+            // this.formData.subNature =  row.subNature
+            // this.formData.subSource =  row.subSource
+            // this.formData.subTeaId =  row.subTeaId
+            // this.formData.subFile =  row.subFile
+            // this.formData.firstReportDeadline = row.firstReportDeadline
+            // this.formData.lastReportDeadline =  row.lastReportDeadline
+            // this.formData.stuId =  row.stuId
+            // this.formData.subStuState =  row.subStuState
+            // this.formData.subLastScore =  row.subLastScore
+            // this.formData.showId = row.showId
+            // this.formData.subIntroduce = row.subIntroduce
             this.formData.subNature =  row.subNature
             this.formData.subSource =  row.subSource
             this.value3 = true
@@ -340,6 +306,8 @@ export default {
            
     },
       update(){
+         let  userId = localStorage.getItem('userId')
+         this.formData.teaId = userId
           console.log(this.formData)
         if(this.dialogStatus == '新增'){
             this.$axios({     
@@ -387,7 +355,10 @@ export default {
                           console.log(res.data)
                          this.tableData = [];
                           let list = res.data.data.beanList;
-                          this.subStuStateList = res.data.dict.subStuState
+                          this.subStuStateList = res.data.dict.subject.subStuState
+                           this.subNatureList = res.data.dict.subject.subNature
+                           this.subSourceList = res.data.dict.subject.subSource
+
                           console.log( this.subStuStateList)
                           list.forEach((item, index) => {
                            this.tableData.push({
@@ -430,18 +401,18 @@ export default {
      
    
        handleCreate () {
-        this.formData.subId = ''
+        // this.formData.subId = ''
         this.formData.subName = ''
         this.formData.subNature = ''
         this.formData.subSource = ''
-        this.formData.subTeaId = ''
-        this.formData.firstReportDeadline = ''
-        this.formData.lastReportDeadline = ''
-        this.formData.stuId = ''
-        this.formData.subStuState = ''
-        this.formData.subLastScore = ''
-        this.formData.showId = ''
-        this.formData.subIntroduce = ''
+        // this.formData.subTeaId = ''
+        // this.formData.firstReportDeadline = ''
+        // this.formData.lastReportDeadline = ''
+        // this.formData.stuId = ''
+        // this.formData.subStuState = ''
+        // this.formData.subLastScore = ''
+        // this.formData.showId = ''
+        // this.formData.subIntroduce = ''
         this.dialogStatus = '新增';//对应标题
         this.value3 = true
         

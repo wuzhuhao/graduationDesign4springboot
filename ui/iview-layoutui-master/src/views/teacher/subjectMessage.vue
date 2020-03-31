@@ -22,21 +22,13 @@
     
                     <Row>
     
-                        <Col span="8">
-    
-                        <FormItem label="id：">
-    
-                            <Input v-model="formItem.subId" placeholder="..."></Input>
-    
-                        </FormItem>
-    
-                        </Col>
+                       
     
                         <Col span="8">
     
                         <FormItem label="课题名称">
     
-                            <Input v-model="formItem.subName" placeholder="Enter something..."></Input>
+                            <Input v-model="formItem.subName" placeholder="请输入课题名称"></Input>
     
                         </FormItem>
     
@@ -44,15 +36,11 @@
     
                         <Col span="8">
     
-                        <FormItem label="课程性质">
+                        <FormItem label="课题状态">
     
-                            <Select v-model="formItem.subNature">
+                            <Select v-model="formItem.subStuState">
     
-                            <Option value="beijing">New York</Option>
-    
-                            <Option value="shanghai">London</Option>
-    
-                            <Option value="shenzhen">Sydney</Option>
+                            <Option v-for="(item,index) in subStuStateList" :value="index"  >{{item}} </Option>
     
                         </Select>
     
@@ -500,9 +488,18 @@ export default {
             }).then(res => {
                 console.log(res.data)
                 this.tableData = [];
+                var stuName = ""
+                 var stuClass = ""
                 let list = res.data.data.beanList;
-                this.subStuStateList = res.data.dict.subStuState
+                this.subStuStateList = res.data.dict.subject.subStuState
                 list.forEach((item, index) => {
+                    if(item.student==null){
+                         stuName = ""
+                         stuClass =""
+                    }else{
+                         stuName = item.student.stuName
+                         stuClass =item.student.stuClass
+                    }
                     this.tableData.push({
                         subId: item.subId,
                         subName: item.subName,
@@ -518,16 +515,17 @@ export default {
                         subLastScore: item.subLastScore,
                         showId: item.showId,
                         subIntroduce: item.subIntroduce,
-                        stuName: item.student.stuName,
-                        stuClass: item.student.stuClass,
+                        stuName: stuName,
+                        stuClass: stuClass,
                         teaName: item.teacher.teaName
                     })
                 })
-
+           
                 this.pagination.total = res.data.data.totalRecord
                 this.pagination.currentPage = res.data.data.currentPage
 
             }).catch(err => {
+                 console.log(this.tableData)
                 console.info('报错的信息', err);
 
             });

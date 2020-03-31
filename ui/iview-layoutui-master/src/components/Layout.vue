@@ -497,15 +497,7 @@ export default {
                     icon:'ios-people',
                     children:[   
                        
-                        {
-                            title:'答辩小组管理',
-                            name:'replyTeamManage',
-                            href:'replyTeamManage',
-                            closable:true,
-                            showInTags:false,
-                            showInMenus:true,
-                            choosed:false
-                        },
+                    
                         {
                             title:'学院管理',
                             name:'academyManage',
@@ -525,6 +517,15 @@ export default {
                             showInMenus:true,
                             choosed:false
                         },
+                        //     {
+                        //     title:'答辩小组管理',
+                        //     name:'replyTeamManage',
+                        //     href:'replyTeamManage',
+                        //     closable:true,
+                        //     showInTags:false,
+                        //     showInMenus:true,
+                        //     choosed:false
+                        // },
                         
                     ]
                 },
@@ -570,7 +571,7 @@ export default {
                         {
                             title:'选题管理',
                             name:'subjectManage',
-                            href:'subjectManage',
+                            href:'/subjectManage',
                             closable:true,
                             showInTags:false,
                             showInMenus:true,
@@ -579,30 +580,30 @@ export default {
                         {
                             title:'任务管理',
                             name:'taskManage',
-                            href:'taskManage',
+                            href:'/taskManage',
                             closable:true,
                             showInTags:false,
                             showInMenus:true,
                             choosed:false
                         },
-                        {
-                            title:'开题报告管理',
-                            name:'reportManage',
-                            href:'reportManage',
-                            closable:true,
-                            showInTags:false,
-                            showInMenus:true,
-                            choosed:false
-                        },
-                        {
-                            title:'进展管理',
-                            name:'progressManage',
-                            href:'progressManage',
-                            closable:true,
-                            showInTags:false,
-                            showInMenus:true,
-                            choosed:false
-                        }, 
+                        // {
+                        //     title:'开题报告管理',
+                        //     name:'reportManage',
+                        //     href:'/reportManage',
+                        //     closable:true,
+                        //     showInTags:false,
+                        //     showInMenus:true,
+                        //     choosed:false
+                        // // },
+                        // {
+                        //     title:'进展管理',
+                        //     name:'progressManage',
+                        //     href:'progressManage',
+                        //     closable:true,
+                        //     showInTags:false,
+                        //     showInMenus:true,
+                        //     choosed:false
+                        // }, 
                         // {
                         //     title:'选优申请管理',
                         //     name:'applyManage',
@@ -670,9 +671,9 @@ export default {
                     icon:'ios-document',
                     children:[
                         {
-                            title:'学生论文定稿',
-                            name:'about26',
-                            href:'/home',
+                            title:'答辩成绩录入',
+                            name:'EntryOfDefenseScore',
+                            href:'/EntryOfDefenseScore',
                             closable:true,
                             showInTags:false,
                             showInMenus:true,
@@ -890,15 +891,15 @@ export default {
                     name:'activity-center',
                     icon:'ios-cafe',
                     children:[    
-                         {
-                            title:'成绩录入',
-                            name:'entryScore',
-                            href:'/entryScore',
-                            closable:true,
-                            showInTags:false,
-                            showInMenus:true,
-                            choosed:false
-                        },
+                        //  {
+                        //     title:'成绩录入',
+                        //     name:'entryScore',
+                        //     href:'/entryScore',
+                        //     closable:true,
+                        //     showInTags:false,
+                        //     showInMenus:true,
+                        //     choosed:false
+                        // },
                         {
                             title:'成绩总评',
                             name:'teacherScore',

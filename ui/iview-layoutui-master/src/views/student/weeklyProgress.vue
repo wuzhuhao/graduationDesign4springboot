@@ -227,7 +227,7 @@ export default {
                         title: '操作',
                         key: 'action',
                         fixed: 'right',
-                        minWidth: 120,
+                        width: 150,
                         render: (h, params) => {
                             return h('div', [
                                 h('Button', {
@@ -235,7 +235,9 @@ export default {
                                         type: 'primary',
                                         size: 'small',
                                      
-                                    },
+                                    }  ,style: {
+                                        marginRight: '5px'
+                                        },
                                      attrs:{
                                         title:'修改'
                                     },
@@ -244,7 +246,23 @@ export default {
                                         this.select(params.row)             //编辑方法
                                         }
                                       }
-                                },'修改')
+                                },'修改'),
+                               
+                                h('Button', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small',
+                                     
+                                    } ,
+                                     attrs:{
+                                        title:'删除'
+                                    },
+                                      on: {
+                                        click: () => {
+                                        this.delById(params.row)             //编辑方法
+                                        }
+                                      }
+                                },'删除')
                             ]);
                         }
                     }
@@ -359,7 +377,7 @@ export default {
                 onOk: () => {
                     console.log(row)
                  this.$axios({     
-                            url: 'progress/delete/' + row.id,
+                            url: 'progress/delete?processId=' + row.id,
                             method: 'delete',//请求的方式
                             data:this.$Qs.stringify(this.formData),
                             // token:localStorage.getItem('token')

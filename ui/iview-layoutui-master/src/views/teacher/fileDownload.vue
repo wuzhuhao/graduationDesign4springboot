@@ -13,29 +13,22 @@
             <Button type="primary" icon="md-add"  @click="handleCreate">新增</Button>
         </div>
 
+       
         <!-- 条件搜索 -->
         <div slot="searchContent" class="search-content-slot">
             <Form :model="formItem" :label-width="80">
               <Row>
                 <Col span="8">
-                  <FormItem label="id">
-                    <Input v-model="formItem.teaId" placeholder="请输入id"></Input>
+                  <FormItem label="学生姓名">
+                    <Input v-model="formItem.stuName" placeholder="请输入学生姓名"></Input>
                 </FormItem>
                 </Col>
                 <Col span="8">
-                  <FormItem label="姓名">
-                    <Input v-model="formItem.teaName" placeholder="请输入姓名"></Input>
+                  <FormItem label="课题名称">
+                    <Input v-model="formItem.subName" placeholder="请输入课题名称"></Input>
                 </FormItem>
                 </Col>
-                <Col span="8">
-                  <FormItem label="学院：">
-                    <Select v-model="formItem.select">
-                        <Option value="beijing">New York</Option>
-                        <Option value="shanghai">London</Option>
-                        <Option value="shenzhen">Sydney</Option>
-                    </Select>
-                </FormItem>
-                </Col>
+                
                  
               </Row>
           </Form>
@@ -44,9 +37,10 @@
             
           <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doSearch">查询</Button>  &nbsp; &nbsp; &nbsp; &nbsp;
            <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doReset">重置</Button>  &nbsp;
-          <Button type="info"  style="float:left;margin:0 8px"  @click="exportData(1)"><Icon type="ios-download-outline"></Icon>导出开题报告</Button>&nbsp;
-          <Button type="info"  style="float:left;margin:0 8px"  @click="exportData(1)"><Icon type="ios-download-outline"></Icon>导出任务书</Button>&nbsp;
-          <Button type="info"  style="float:left;margin:0 8px"  @click="exportData(1)"><Icon type="ios-download-outline"></Icon>导出周进展</Button>&nbsp;
+          <Button type="info"  style="float:left;margin:0 8px"  @click="exportDataReport(1)"><Icon type="ios-download-outline"></Icon>导出开题报告</Button>&nbsp;
+          <Button type="info"  style="float:left;margin:0 8px"  @click="exportDataTask()"><Icon type="ios-download-outline"></Icon>导出任务书</Button>&nbsp;
+           <Button type="info"  style="float:left;margin:0 8px"  @click="exportDataReport(2)"><Icon type="ios-download-outline"></Icon>导出论文</Button>&nbsp; 
+           <Button type="info"  style="float:left;margin:0 8px"  @click="exportData(1)"><Icon type="ios-download-outline"></Icon>导出周进展</Button>&nbsp;
         </div>
         <div slot="btns">
           <Button type="primary" icon="md-add" @click="handleCreate">添加</Button>
@@ -89,6 +83,11 @@ export default {
                     paddingBottom: '53px',
                     position: 'static'
                 },
+                 formItem: {
+                  teaId:'',
+                subName:'',
+                stuName:'',
+              },
                 formData: {
                     teaId: '',
                     teaPassword: '',
@@ -128,6 +127,12 @@ export default {
         },
         columns2: [
             
+             {
+               type: 'selection',
+               width: 60,
+               align: 'center',
+              fixed: 'left'
+             },
             {
                 title: '序号',
                 type: 'index',
@@ -260,6 +265,8 @@ export default {
       getData(page,pageSize){
         let params = this.formItem
        let  token = localStorage.getItem('token')
+        let  userId = localStorage.getItem('userId')
+       this.formItem.teaId = userId
          this.$axios({
                             
                             // url: 'sub/listScheduleOfTea?page=' + page  + '&pageSize=' + pageSize,
@@ -492,10 +499,17 @@ export default {
     check(str){
         return str.search('完成')!=-1
     },
-    exportDataDemo(type){
-       
-            window.location.href="http://localhost:8080/graManagement/downFile/exportDemo?type=" + type
-        
+    exportDataTask(){
+     var url="http://localhost:8080/graManagement/task/export?primaryKey="+ this.selectList[0].taskList[0].taskId
+           console.log( url)
+           window.open(url) 
+    },
+    exportDataReport(type){
+       console.log( this.selectList)
+           var url="http://localhost:8080/graManagement/report/export?type=" + type+ "&subId=" + this.selectList[0].subId
+           console.log( url)
+           window.open(url) 
+
     }
     
     }

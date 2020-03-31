@@ -9,7 +9,13 @@
         <div slot="title-icon">
             <Icon type="ios-game-controller-b" />
         </div>
-       
+        <div slot="search">
+            
+        <Upload action="http://localhost:8080/graManagement/uploadFile/importReplyScoreByExcel"    style="float:left;margin:0 8px">
+            <Button  type="info" icon="ios-cloud-upload-outline">批量录入答辩成绩</Button>
+        </Upload>
+         <Button type="info"  style="float:left;margin:0 8px"  @click="exportDataDemo()"><Icon type="ios-download-outline"></Icon>导出成绩模板</Button>&nbsp;
+        </div>
         <div slot="paddingContent">
           <Table border  :columns="columns2" :data="tableData"   ref="table"></Table>
         </div>
@@ -20,26 +26,19 @@
         <div slot="title-icon">
             <Icon type="ios-game-controller-b" />
         </div>
-        <div slot="title-toolbar">
-            <Button type="info"  style="float:left;margin:0 8px"  @click="exportDataDemo(2)"><Icon type="ios-download-outline"></Icon>导出模板</Button>&nbsp;
-        </div>
-        
+      
         <div slot="searchContent" class="search-content-slot">
             <Form :model="formItem" :label-width="100">
            <Row>
                 <Col span="24">
-                  <FormItem label="初稿成绩:  "   class="label">
-                    <Input v-model="formItem.firstReportScore"   size="large"  placeholder="请输入初稿成绩"></Input>
+                  <FormItem label="答辩成绩:  "   class="label">
+                    <Input v-model="formItem.replyScore"   size="large"  placeholder="请输入初稿成绩"></Input>
                 </FormItem>
                 </Col>
               </Row>
               
                <Row>
-                <Col span="24">
-                  <FormItem label="终稿成绩:  "   class="label">
-                    <Input v-model="formItem.finalReportScore"   size="large"  placeholder="请输入初稿成绩"></Input>
-                </FormItem>
-                </Col>
+               
               </Row>
               
           </Form>
@@ -108,27 +107,11 @@ export default {
             } ,{
                         title: '操作',
                         key: 'action',
-                        width: 200,
-                         minWidth: 200,
+                        width: 120,
+                         minWidth: 120,
                         render: (h, params) => {
                             return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'primary',
-                                        size: 'small',
-                                        // icon: "icon iconfont icon-shanchu"
-                                    },  style: {
-                                        marginRight: '5px'
-                                        },
-                                     attrs:{
-                                        title:'最终评定'
-                                    },
-                                      on: {
-                                        click: () => {
-                                        this.delById(params.row)             //编辑方法
-                                        }
-                                      }
-                                },'最终评定'),
+                              
                                  h('Button', {
                                     props: {
                                         type: 'primary',
@@ -136,14 +119,14 @@ export default {
                                         // icon: "icon iconfont icon-shanchu"
                                     }, 
                                      attrs:{
-                                        title:'成绩录入'
+                                        title:'答辩成绩录入'
                                     },
                                       on: {
                                         click: () => {
                                         this.updateScore(params.row)             //编辑方法
                                         }
                                       }
-                                },'成绩录入'),
+                                },'答辩成绩录入'),
                               
                             ]);
                         }
@@ -198,6 +181,11 @@ export default {
         
    
       },
+        exportDataDemo(type){
+       
+            window.location.href="http://localhost:8080/graManagement/downFile/exportScore" 
+        
+    },
      getData(){
         let params = this.formItem
        let  userId = localStorage.getItem('userId')

@@ -303,6 +303,11 @@ const router = new Router({
         },
         
         {
+          path: '/EntryOfDefenseScore',
+          name: 'EntryOfDefenseScore',
+          component: () => import('@/views/admin/EntryOfDefenseScore')
+        },
+        {
           path: '/admin/notice',
           name: 'adminNotice',
           component: () => import('@/views/Home')

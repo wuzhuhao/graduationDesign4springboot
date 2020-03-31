@@ -5,37 +5,25 @@
 </style>
 <template>
 <section class="home-container">
-    <MasterPage title="首页">
+    <MasterPage :title="title">
         <div slot="title-icon">
             <Icon type="ios-game-controller-b" />
         </div>
         <div slot="title-toolbar">
-            <Button type="primary" icon="md-add"  @click="handleCreate">新增</Button>
+            <Button type="primary"   @click="reload1">返回字典首页</Button>
         </div>
 
         <!-- 条件搜索 -->
         <div slot="searchContent" class="search-content-slot">
             <Form :model="formItem" :label-width="80">
               <Row>
+               
                 <Col span="8">
-                  <FormItem label="id：">
-                    <Input v-model="formItem.teaId" placeholder="请输入id"></Input>
+                  <FormItem label="字典描述">
+                    <Input v-model="formItem.dictDescription" placeholder="字典描述"></Input>
                 </FormItem>
                 </Col>
-                <Col span="8">
-                  <FormItem label="姓名：">
-                    <Input v-model="formItem.teaName" placeholder="请输入姓名"></Input>
-                </FormItem>
-                </Col>
-                <Col span="8">
-                  <FormItem label="学院：">
-                    <Select v-model="formItem.select">
-                        <Option value="beijing">New York</Option>
-                        <Option value="shanghai">London</Option>
-                        <Option value="shenzhen">Sydney</Option>
-                    </Select>
-                </FormItem>
-                </Col>
+              
                  
               </Row>
           </Form>
@@ -45,17 +33,13 @@
           <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doSearch">查询</Button>  &nbsp; &nbsp; &nbsp; &nbsp;
            <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doReset">重置</Button>  &nbsp;
           <Button type="info"  style="float:left;margin:0 8px"  @click="exportData(1)"><Icon type="ios-download-outline"></Icon>导出数据</Button>&nbsp;
-          <Button type="info" icon="ios-search;margin:0 8px"  style="float:left" @click="delAll">批量删除</Button>  &nbsp;
-        <Upload action="http://localhost:8080/graManagement/uploadFile/importUserByExcel?type=2"    style="float:left;margin:0 8px">
-            <Button  type="info" icon="ios-cloud-upload-outline">批量注册</Button>
-        </Upload>
-         <Button type="info"  style="float:left;margin:0 8px"  @click="exportDataDemo(2)"><Icon type="ios-download-outline"></Icon>导出注册模板</Button>&nbsp;
+    
         </div>
         <div slot="btns">
           <Button type="primary" icon="md-add" @click="handleCreate">添加</Button>
         </div>
         <div slot="paddingContent">
-          <Table border   :columns="columns2" :data="tableData"  @on-selection-change="changeSelect" ref="table"></Table>
+          <Table border   :columns="columns" :data="tableData"  @on-selection-change="changeSelect" ref="table"></Table>
         </div>
         <div slot="pager">
             <Page :total="this.pagination.total"  :page-size="this.pagination.pageSize"  :page-size-opts="this.pagination.pageSizeOpts" 
@@ -63,93 +47,44 @@
         </div>    
 
     </MasterPage>
+  
+<Modal v-model="modal1"   closable @on-ok='updateModel()' :styles="{top: '30%'}":width='700' >
+       <MasterPage :title="dialogStatus">
+        <div slot="title-icon">
+            <Icon type="ios-game-controller-b" />
+        </div>
+        
+        <div slot="searchContent" class="search-content-slot">
+            <Form :model="formItem" :label-width="100">
+           <Row>
+                <Col span="24">
+                  <FormItem :label="dictValueLabel"   class="label">
+                    <Input v-model="formData.dictValue"   size="large"  placeholder="请输入课题名称"></Input>
+                </FormItem>
+                </Col>
+              </Row>
+              <Row  v-show="dictShow"> 
+                <Col span="24">
+                  <FormItem label="value"   class="label">
+                    <Input v-model="formData.dictText"   size="large"  placeholder="请输入指导教师"></Input>
+                </FormItem>
+                </Col>
+              </Row>
+               <Row>
+                <Col span="24">
+                  <FormItem :label="dictDescriptionLabel"   class="label">
+                    <Input v-model="formData.dictDescription"   size="large"  placeholder="请输入指导教师"></Input>
+                </FormItem>
+                </Col>
+              </Row>
+              
+          </Form>
+        </div>
+       </div>
+         
+        </MasterPage>
+    </Modal>
 
-
-    <!--  添加和编辑弹出抽屉  +++++++++++++++++++++++++++++++++++++++++++++++++++++     -->
-        <!--  :title 加:为绑定数据 即实现自定义标题  -->
-       <Drawer
-            :title='this.dialogStatus'
-            v-model="value3"
-            width="720"
-            :mask-closable="false"
-            :styles="styles"
-        >
-            <Form :model="formData">
-                <Row :gutter="32">
-                    <Col span="12">
-                        <FormItem label="id" label-position="top">
-                            <Input v-model="formData.teaId" placeholder="请输入id" />
-                        </FormItem>
-                    </Col>
-                    <Col span="12">
-                        <FormItem label="密码" label-position="top">
-                            <Input v-model="formData.teaPassword" placeholder="请输入密码">
-                            </Input>
-                        </FormItem>
-                    </Col>
-                </Row>
-                <Row :gutter="32">
-                    <Col span="12">
-                        <FormItem label="名称" label-position="top">
-                            <Input v-model="formData.teaName" placeholder="请输入名称" />
-                        </FormItem>
-                    </Col>
-                    <Col span="12">
-                        <FormItem label="性别" label-position="top">
-                            <Input v-model="formData.teaSex" placeholder="请输入性别">
-                            </Input>
-                        </FormItem>
-                    </Col>
-                </Row><Row :gutter="32">
-                    <Col span="12">
-                        <FormItem label="年龄" label-position="top">
-                            <Input v-model="formData.teaAge" placeholder="请输入年龄" />
-                        </FormItem>
-                    </Col>
-                    <Col span="12">
-                        <FormItem label="生日" label-position="top">
-                            <Input v-model="formData.teaBirthday" placeholder="请输入生日">
-                            </Input>
-                        </FormItem>
-                    </Col>
-                </Row><Row :gutter="32">
-                    <Col span="12">
-                        <FormItem label="电话" label-position="top">
-                            <Input v-model="formData.teaPhone" placeholder="请输入电话" />
-                        </FormItem>
-                    </Col>
-                    <Col span="12">
-                        <FormItem label="邮箱" label-position="top">
-                            <Input v-model="formData.teaMail" placeholder="请输入邮箱">
-                            </Input>
-                        </FormItem>
-                    </Col>
-                </Row><Row :gutter="32">
-                    <Col span="12">
-                        <FormItem label="地址" label-position="top">
-                            <Input v-model="formData.teaAddress" placeholder="请输入地址" />
-                        </FormItem>
-                    </Col>
-                    <Col span="12">
-                        <FormItem label="备注" label-position="top">
-                            <Input v-model="formData.teaRemarks" placeholder="请输入备注">
-                            </Input>
-                        </FormItem>
-                    </Col>
-                </Row>
-                </Row><Row :gutter="32">
-                    <Col span="12">
-                        <FormItem label="学院id" label-position="top">
-                            <Input v-model="formData.academyId" placeholder="请输入学院id" />
-                        </FormItem>
-                    </Col>
-                </Row>
-            </Form>
-            <div class="demo-drawer-footer">
-                <Button style="margin-right: 8px" @click="value3 = false">Cancel</Button>
-                <Button type="primary" @click="update()">Submit</Button>
-            </div>
-        </Drawer>    
   
 </section>
 
@@ -167,7 +102,14 @@ export default {
     data(){
       
       return{
+        dictValueLabel:'',
+        dictTextLabel:'',
+        dictDescriptionLabel:'',
+        modal1:false,
+        dictShow:false,
+          isRouterShow:true,
             dialogStatus: '',//title自定义标题
+            title:'系统字典',
           value3: false,
                 styles: {
                     height: 'calc(100% - 55px)',
@@ -176,18 +118,13 @@ export default {
                     position: 'static'
                 },
                 formData: {
-                    teaId: '',
-                    teaPassword: '',
-                    teaName: '',
-                    teaSex: '',
-                    teaAge: '',
-                    teaBirthday: '',
-                    teaPhone: '',
-                    teaMail: '',
-                    teaAddress: '',
-                    teaRemarks: '',
-                    academyId: '',
-                },
+                    dictDescription: '',
+                    dictParentid: '',
+                    dictText: '',
+                    dictType:'model',
+                    dictValue:'',
+                    id: '',
+                        },
             
         pagination: {
                 pageSize:10,
@@ -200,19 +137,15 @@ export default {
          selectCount: 0, // 多选计数
         tableData:[],
         formItem: {
-            teaId: '',
-            teaPassword: '',
-            teaName: '',
-            teaSex: '',
-            teaAge: '',
-            teaBirthday: '',
-            teaPhone: '',
-            teaMail: '',
-            teaAddress: '',
-            teaRemarks: '',
-            academyId: '',
+            id: '',
+            replyTime: '',
+            teacher: '',
+            teamAddress: '',
+            teamLeaderId: '',
+            teamName:'',
         },
-        columns2: [
+        columns:[],
+       columns2: [
             {
                type: 'selection',
                width: 60,
@@ -222,80 +155,55 @@ export default {
             
             {
                 title: 'id',
-                key: 'teaId',
+                key: 'id',
                 width: 100,
                 fixed: 'left',
                 sortable: true
             },
             {
-                title: '教师密码',
-                key: 'teaPassword',
+                title: '答辩组名称',
+                key: 'teamName',
                 minWidth: 100,
             },
             {
-                title: '教师名称',
-                key: 'teaName',
+                title: '答辩地址',
+                key: 'teamAddress',
                 minWidth: 100,
             }, {
-                title: '教师性别',
-                key: 'teaSex',
+                title: '答辩时间',
+                key: 'replyTime',
                 minWidth: 100,
             },
             {
-                title: '教师年龄',
-                key: 'teaAge',
+                title: '答辩组长id',
+                key: 'teamLeaderId',
                 minWidth: 100,
             },
-            {
-                title: '教师生日',
-                key: 'teaBirthday',
-                minWidth: 100,
-            } ,
-            {
-                title: '教师电话',
-                key: 'teaPhone',
-                minWidth: 100,
-            },
-            {
-                title: '教师邮箱',
-                key: 'teaMail',
-                minWidth: 100,
-            },
-            {
-                title: '教师地址',
-                key: 'teaAddress',
-                minWidth: 100,
-            }, {
-                title: '备注',
-                key: 'teaRemarks',
-                minWidth: 100,
-            },{
-                title: '学院id',
-                key: 'academyId',
-                minWidth: 100,
-            },{
+          {
                         title: '操作',
                         key: 'action',
                         fixed: 'right',
-                        minWidth: 120,
+                         width: 150,
                         render: (h, params) => {
                             return h('div', [
                                 h('Button', {
                                     props: {
                                         type: 'text',
                                         size: 'small',
-                                        icon: "icon iconfont icon-shanchu"
+                                        icon:'icon iconfont icon-xiangqing'
                                     },
                                      attrs:{
-                                        title:'删除'
-                                    },
+                                        title:'查询'
+                                    }, style: {
+                                        marginRight: '5px'
+                                        },
                                       on: {
                                         click: () => {
-                                        this.delById(params.row)             //编辑方法
+                                        this.Info(params.row)             //编辑方法
                                         }
                                       }
                                 }),
-                                h('Button', {
+                                  h('Button', {
                                     props: {
                                         type: 'text',
                                         size: 'small',
@@ -309,17 +217,37 @@ export default {
                                         this.edit(params.row)             //编辑方法
                                         }
                                       }
-                                })
+                                }),
+                                 h('Button', {
+                                    props: {
+                                       type: 'text',
+                                        size: 'small',
+                                        icon: "icon iconfont icon-shanchu"
+                                    },
+                                     attrs:{
+                                        title:'删除'
+                                    },
+                                      on: {
+                                        click: () => {
+                                        this.delById(params.row)             //编辑方法
+                                        }
+                                      }
+                                }),
+                              
+                                
                             ]);
                         }
                     }
         ]
+        
       }
     },
   
      created(){
+         this.columns = this.columns2
         this.getData(1,10);
      },
+    
     methods:{
        exportData (type) {
                 if (type === 1) {
@@ -339,26 +267,65 @@ export default {
                     });
                 }
             } ,
+             Info (row) {
+                   
+                    let  token = localStorage.getItem('token')
+                this.$axios({
+                                    
+                                    url: 'scoreRecord/list' ,
+                                    method: 'get',//请求的方式
+                                    params:{
+                                        replyTeamId:row.id
+                                    },
+                                    // token:localStorage.getItem('token')
+                                }).then(res => {
+                                console.log(res.data)
+                                this.tableData = [];
+                                let list = res.data.data.beanList;
+                                list.forEach((item, index) => {
+                                this.tableData.push({
+                                    id :item.id,
+                                        replyTime : item.replyTime,
+                                        teacher : item.teacher,
+                                        teamAddress : item.teamAddress,
+                                        teamLeaderId : item.teamLeaderId,
+                                        teamName : item.teamName
+                                })
+                                })
+                        
+                                this.pagination.total =res.data.data.totalRecord
+                                this.pagination.currentPage =res.data.data.currentPage
+                                
+                                }).catch(err => {
+                                    console.info('报错的信息',err);
+                                    
+                                });
+            } ,
       
       // watch: {
       //   // 监测路由变化,只要变化了就调用获取路由参数方法将数据存储本组件即可
       //     '$route': 'getParams'
       // },
       //编辑
-        edit(row){
+      edit(row){
             this.dialogStatus = '编辑';//对应标题
-            this.formData.teaId = row.teaId
-            this.formData.teaPassword = row.teaPassword
-            this.formData.teaName =  row.teaName
-            this.formData.teaSex =  row.teaSex
-            this.formData.teaAge =  row.teaAge
-            this.formData.teaBirthday =  row.teaBirthday
-            this.formData.teaPhone = row.teaPhone
-            this.formData.teaMail =  row.teaMail
-            this.formData.teaAddress =  row.teaAddress
-            this.formData.teaRemarks =  row.teaRemarks
-            this.formData.academyId =  row.academyId
-            this.value3 = true
+           if( this.formItem.dictType=='model'){
+                this.dictValueLabel = '实体类名：'
+                this.dictDescriptionLabel = '实体类描述：'
+            }else if( this.formItem.dictType=='item'){
+                this.dictValueLabel = '字典名称:'
+                this.dictDescriptionLabel = '字典描述:'
+            }else{
+                this.dictValueLabel = 'key:'
+                this.dictDescriptionLabel = '值描述:'
+            }
+             this.formData.dictDescription= row.dictDescription
+            this.formData.dictParentid= row.dictParentid
+            this.formData.dictText= row.dictText
+            this.formData.dictType=row.dictType
+            this.formData.dictValue=row.dictValue
+            this.formData.id= row.id
+            this.modal1 = true
         },
         delById(row) {
             this.$Modal.confirm({
@@ -367,7 +334,7 @@ export default {
                 onOk: () => {
                     console.log(row)
                  this.$axios({     
-                            url: 'tea/delete/' + row.teaId,
+                            url: 'sysdict/delete/' + row.id,
                             method: 'delete',//请求的方式
                             data:this.$Qs.stringify(this.formData),
                             // token:localStorage.getItem('token')
@@ -382,11 +349,11 @@ export default {
             });
            
     },
-      update(){
+      updateModel(){
           console.log(this.formData)
         if(this.dialogStatus == '新增'){
             this.$axios({     
-                            url: 'tea/add',
+                            url: 'sysdict/add',
                             method: 'post',//请求的方式
                             data:this.$Qs.stringify(this.formData),
                             // token:localStorage.getItem('token')
@@ -400,7 +367,7 @@ export default {
                         this.value3 = false
         }else if(this.dialogStatus == '编辑'){
              this.$axios({     
-                            url: 'tea/update',
+                            url: 'sysdict/update',
                             method: 'post',//请求的方式
                             data:this.$Qs.stringify(this.formData),
                             // token:localStorage.getItem('token')
@@ -413,14 +380,15 @@ export default {
                         });
                         this.value3 = false
         }
-   
+           
+            
       },
       getData(page,pageSize){
         let params = this.formItem
        let  token = localStorage.getItem('token')
          this.$axios({
                             
-                            url: 'tea/list?page=' + page  + '&pageSize=' + pageSize,
+                            url: 'replyTeam/list?page=' + page  + '&pageSize=' + pageSize ,
                             method: 'get',//请求的方式
                             params:params,
                             // token:localStorage.getItem('token')
@@ -430,17 +398,12 @@ export default {
                           let list = res.data.data.beanList;
                           list.forEach((item, index) => {
                            this.tableData.push({
-                              teaId: item.teaId,
-                              teaPassword: item.teaPassword,
-                              teaName:item.teaName,
-                              teaSex: item.teaSex,
-                              teaAge: item.teaAge,
-                              teaBirthday:item.teaBirthday,
-                              teaPhone:item.teaPhone,
-                              teaMail:item.teaMail,
-                              teaAddress:item.teaAddress,
-                              teaRemarks: item.teaRemarks,
-                              academyId: item.academyId,
+                               id :item.id,
+                                replyTime : item.replyTime,
+                                teacher : item.teacher,
+                                teamAddress : item.teamAddress,
+                                teamLeaderId : item.teamLeaderId,
+                                teamName : item.teamName
                            })
                           })
                   
@@ -451,6 +414,7 @@ export default {
                             console.info('报错的信息',err);
                             
                         });
+                        console.log(this.tableData)
       },
 
       pageChange(page){
@@ -465,19 +429,30 @@ export default {
      
    
        handleCreate () {
-        this.formData.teaId = ''
-        this.formData.teaPassword = ''
-        this.formData.teaName = ''
-        this.formData.teaSex = ''
-        this.formData.teaAge = ''
-        this.formData.teaBirthday = ''
-        this.formData.teaPhone = ''
-        this.formData.teaMail = ''
-        this.formData.teaAddress = ''
-        this.formData.teaRemarks = ''
-        this.formData.academyId = ''
+           if( this.formItem.dictType=='model'){
+                this.formData.dictType='model',
+                this.dictValueLabel = '实体类名：'
+                this.dictDescriptionLabel = '实体类描述：'
+                this.dictShow = false
+            }else if( this.formItem.dictType=='item'){
+                 this.formData.dictType='item',
+                this.dictValueLabel = '字典名称:'
+                this.dictDescriptionLabel = '字典描述:'
+                 this.dictShow = false
+            }else{
+                 this.formData.dictType='dict',
+                this.dictValueLabel = 'key:'
+                this.dictDescriptionLabel = '值描述:'
+                this.dictShow = true
+            }
+        this.formData.dictDescription= '',
+        this.formData.id= '',
+        this.formData.dictText= '',
+       
+        this.formData.dictValue='',
+        console.log(this.formData.id + 666)
         this.dialogStatus = '新增';//对应标题
-        this.value3 = true
+        this.modal1 = true
         
         // this.getData();
         // this.resetFormColumns();//重置
@@ -496,7 +471,7 @@ export default {
     console.log(this.selectList)
     var lstprimaryKey = []
     for(var i = 0;i<this.selectCount;i++){
-		lstprimaryKey.push(this.selectList[i].teaId)
+		lstprimaryKey.push(this.selectList[i].id)
 	}
      console.log(lstprimaryKey)
       this.$Modal.confirm({
@@ -504,7 +479,7 @@ export default {
         content: "您确认要删除所选的 " + this.selectCount + " 条数据?",
         onOk: () => {
            this.$axios({     
-                            url: 'tea/deleteAll',
+                            url: 'sysdict/deleteAll',
                             method: 'delete',//请求的方式
                             params: {lstprimaryKey:lstprimaryKey},
                             paramsSerializer: params => {
@@ -573,20 +548,20 @@ export default {
       cancel () {
         this.drawer = false;
       },
+      reload1 (){
+           this.title = '系统字典'
+       this.doReset();
+       this.getData(1,10)
+       this.columns = this.columns2
+    },
       doReset(){
-        this.formItem.teaId = ''
-        this.formItem.teaPassword = ''
-        this.formItem.teaName = ''
-        this.formItem.teaSex = ''
-        this.formItem.teaAge = ''
-        this.formItem.teaBirthday = ''
-        this.formItem.teaPhone = ''
-        this.formItem.teaMail = ''
-        this.formItem.teaAddress = ''
-        this.formItem.teaRemarks = ''
-        this.formItem.academyId = ''
-        this.formItem.academy = ''
-        this.getData(1,10);
+          this.title = '系统字典'
+            this.formItem.dictDescription='',
+            this.formItem.dictParentid='',
+            this.formItem.dictText='',
+            this.formItem.dictType='model',
+            this.formItem.dictValue='',
+            this.formItem.id=''
     },
     exportDataDemo(type){
        

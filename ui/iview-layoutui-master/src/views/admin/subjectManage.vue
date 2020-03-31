@@ -18,22 +18,22 @@
             <Form :model="formItem" :label-width="80">
               <Row>
                 <Col span="8">
-                  <FormItem label="id">
-                    <Input v-model="formItem.subId" placeholder="请输入id"></Input>
-                </FormItem>
-                </Col>
-                <Col span="8">
                   <FormItem label="课题名称">
                     <Input v-model="formItem.subName" placeholder="请输入课题名称"></Input>
                 </FormItem>
                 </Col>
                 <Col span="8">
+                  <FormItem label="导师">
+                    <Input v-model="formItem.subName" placeholder="请输入导师id"></Input>
+                </FormItem>
+                </Col>
+                <Col span="8">
                   <FormItem label="课程性质">
-                    <Select v-model="formItem.subNature">
-                        <Option value="beijing">New York</Option>
-                        <Option value="shanghai">London</Option>
-                        <Option value="shenzhen">Sydney</Option>
-                    </Select>
+                     <Select v-model="formItem.subNature">
+    
+                            <Option v-for="(item,index) in subNatureList" :value="index"  >{{item}} </Option>
+    
+                        </Select>
                 </FormItem>
                 </Col>
                  
@@ -46,10 +46,6 @@
            <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doReset">重置</Button>  &nbsp;
           <Button type="info"  style="float:left;margin:0 8px"  @click="exportData(1)"><Icon type="ios-download-outline"></Icon>导出数据</Button>&nbsp;
           <Button type="info" icon="ios-search;margin:0 8px"  style="float:left" @click="delAll">批量删除</Button>  &nbsp;
-        <Upload action="http://localhost:8080/graManagement/uploadFile/importUserByExcel?type=2"    style="float:left;margin:0 8px">
-            <Button  type="info" icon="ios-cloud-upload-outline">批量注册</Button>
-        </Upload>
-         <Button type="info"  style="float:left;margin:0 8px"  @click="exportDataDemo(2)"><Icon type="ios-download-outline"></Icon>导出注册模板</Button>&nbsp;
         </div>
         <div slot="btns">
           <Button type="primary" icon="md-add" @click="handleCreate">添加</Button>
@@ -87,49 +83,46 @@
                             </Input>
                         </FormItem>
                     </Col>
-                  <Col span="12">
-                    <FormItem label="学生id" label-position="top">
-                      <Input v-model="formData.stuId" placeholder="请输入指定学生id(为空则不指定)" />
-                    </FormItem>
-                  </Col>
+                       <Col span="12">
+                        <FormItem label="导师" label-position="top">
+                            <Input v-model="formData.teaId" placeholder="请输入导师id">
+                            </Input>
+                        </FormItem>
+                    </Col>
+               
                 </Row>
                 <Row :gutter="32">
                     <Col span="12">
                         <FormItem label="课题性质" label-position="top">
-                            <Input v-model="formData.subNature" placeholder="请输入课题性质" />
+                               <Select v-model="formData.subNature">
+    
+                            <Option v-for="(item,index) in subNatureList" :value="index"  >{{item}} </Option>
+    
+                        </Select>
                         </FormItem>
                     </Col>
                     <Col span="12">
                         <FormItem label="课题来源" label-position="top">
-                            <Input v-model="formData.subSource" placeholder="请输入课题来源">
-                            </Input>
+                              <Select v-model="formData.subSource">
+    
+                            <Option v-for="(item,index) in subSourceList" :value="index"  >{{item}} </Option>
+    
+                        </Select>
                         </FormItem>
                     </Col>
                 </Row><Row :gutter="32">
                     <Col span="12">
                         <FormItem label="开题报告截止期限" label-position="top">
-                            <Input v-model="formData.firstReportDeadline" placeholder="请输入开题报告截止期限" />
+                              <DatePicker type="date" placeholder="请选择"   size="large" v-model="formData.firstReportDeadline" style="width:100%"></DatePicker>     
                         </FormItem>
                     </Col>
                     <Col span="12">
                         <FormItem label="论文定稿截止期限" label-position="top">
-                            <Input v-model="formData.lastReportDeadline" placeholder="请输入论文定稿截止期限">
+                             <DatePicker type="date" placeholder="请选择"   size="large" v-model="formItem.lastReportDeadline" style="width:100%"></DatePicker>     
                             </Input>
                         </FormItem>
                     </Col>
-                </Row><Row :gutter="32">
-                    <Col span="12">
-                        <FormItem label="学生id" label-position="top">
-                            <Input v-model="formData.stuId" placeholder="请输入指定学生id(为空则不指定)" />
-                        </FormItem>
-                    </Col>
-                    <Col span="12">
-                        <FormItem label="提交状态" label-position="top">
-                            <Input v-model="formData.subStuState" placeholder="请输入提交状态">
-                            </Input>
-                        </FormItem>
-                    </Col>
-                </Row><Row :gutter="32">
+               
 <!--                    <Col span="12">-->
 <!--                        <FormItem label="总评" label-position="top">-->
 <!--                            <Input v-model="formData.subLastScore" placeholder="请输入总评" />-->
@@ -167,6 +160,9 @@ export default {
       
       return{
             dialogStatus: '',//title自定义标题
+             subStuStateList:{},
+                subNatureList:{},
+                subSourceList:{},
           value3: false,
                 styles: {
                     height: 'calc(100% - 55px)',
@@ -218,20 +214,24 @@ export default {
             subIntroduce: '',
         },
         columns2: [
-            {
-               type: '课题id',
-                key: 'subId',
+             {
+               type: 'selection',
                width: 60,
                align: 'center',
               fixed: 'left'
              },
-            
+            {
+               type: 'index',
+                title: '序号',
+               width: 80,
+               align: 'center',
+              fixed: 'left'
+             },
             {
                 title: '课题名称',
                 key: 'subName',
-                width: 100,
-                fixed: 'left',
-                sortable: true
+               minWidth: 200,
+                fixed: 'left'
             },
             {
                 title: '课题性质',
@@ -245,7 +245,8 @@ export default {
             }, {
                 title: '课题介绍',
                 key: 'subIntroduce',
-                minWidth: 100,
+                tooltip:true,
+                minWidth: 200,
             },
             {
                 title: '课题导师',
@@ -255,29 +256,17 @@ export default {
             {
                 title: '开题报告截止',
                 key: 'firstReportDeadline',
-                minWidth: 100,
+                minWidth: 150,
             } ,
             {
                 title: '论文定稿截止',
                 key: 'lastReportDeadline',
-                minWidth: 100,
+                minWidth: 150,
             },
-            {
-                title: '学生',
-                key: 'studId',
-                minWidth: 100,
-            },
+           
             {
                 title: '选定状态',
                 key: 'subStuState',
-                minWidth: 100,
-            }, {
-                title: '最终评分',
-                key: 'subLastScore',
-                minWidth: 100,
-            },{
-                title: '展示id',
-                key: 'showId',
                 minWidth: 100,
             },{
                         title: '操作',
@@ -436,22 +425,25 @@ export default {
                             // token:localStorage.getItem('token')
                         }).then(res => {
                           console.log(res.data)
+                        
                          this.tableData = [];
                           let list = res.data.data.beanList;
+                            this.subStuStateList = res.data.dict.subject.subStuState
+                           this.subNatureList = res.data.dict.subject.subNature
+                           this.subSourceList = res.data.dict.subject.subSource
+                              console.log(  this.subSourceList)
                           list.forEach((item, index) => {
                            this.tableData.push({
                               subId: item.subId,
                               subName: item.subName,
-                              subNature:item.subNature,
-                              subNature: item.subNature,
-                              subSource: item.subSource,
+                              subNature: this.subNatureList[item.subNature],
+                               subLastScore: item.subLastScore,
+                              subSource:this.subSourceList[item.subSource],
                               subTeaId:item.subTeaId,
                               subFile:item.subFile,
-                              teafirstReportDeadlineMail:item.firstReportDeadline,
+                              firstReportDeadline:item.firstReportDeadline,
                               lastReportDeadline:item.lastReportDeadline,
-                              stuId: item.stuId,
-                              subStuState: item.subStuState,
-                              subLastScore: item.subLastScore,
+                              subStuState:  this.subStuStateList[item.subStuState],
                               showId: item.showId,
                               subIntroduce: item.subIntroduce,
      

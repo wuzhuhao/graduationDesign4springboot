@@ -95,7 +95,7 @@ export default {
          this.$axios({
                             url: 'teamTeaRelate/list?isJoinReplyTeam=true&isJoinScoreRecord=true&isJoinSubject=true',//请求的地址
                             method: 'get',//请求的方式
-                              params: {stuId:userId +'1'},//请求的表单数据
+                              params: {stuId:userId},//请求的表单数据
                         }).then(res => {
                              console.info( res.data.data);
                                this.formItem= res.data.data.beanList[0].replyTeam

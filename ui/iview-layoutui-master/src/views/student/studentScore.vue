@@ -120,6 +120,9 @@ export default {
                          this.tableData = [];
                           let list = res.data.data.beanList;
                           list.forEach((item, index) => {
+                              if(item.replyScore==-1){
+                              item.replyScore=''
+                            }
                            this.tableData.push({
                               finalReportScore: item.finalReportScore,
                               firstReportScore:item.firstReportScore,

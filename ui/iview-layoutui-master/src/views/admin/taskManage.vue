@@ -22,20 +22,8 @@
                     <Input v-model="formItem.id" placeholder="请输入任务编号"></Input>
                 </FormItem>
                 </Col>
-                <Col span="8">
-                  <FormItem label="任务内容">
-                    <Input v-model="formItem.taskContent" placeholder="请输入任务内容"></Input>
-                </FormItem>
-                </Col>
-                <Col span="8">
-                  <FormItem label="课程id：">
-                    <Select v-model="formItem.select">
-                        <Option value="beijing">New York</Option>
-                        <Option value="shanghai">London</Option>
-                        <Option value="shenzhen">Sydney</Option>
-                    </Select>
-                </FormItem>
-                </Col>
+              
+              
                  
               </Row>
           </Form>
@@ -46,10 +34,7 @@
            <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doReset">重置</Button>  &nbsp;
           <Button type="info"  style="float:left;margin:0 8px"  @click="exportData(1)"><Icon type="ios-download-outline"></Icon>导出数据</Button>&nbsp;
           <Button type="info" icon="ios-search;margin:0 8px"  style="float:left" @click="delAll">批量删除</Button>  &nbsp;
-        <Upload action="http://localhost:8080/graManagement/uploadFile/importUserByExcel?type=2"    style="float:left;margin:0 8px">
-            <Button  type="info" icon="ios-cloud-upload-outline">批量注册</Button>
-        </Upload>
-         <Button type="info"  style="float:left;margin:0 8px"  @click="exportDataDemo(2)"><Icon type="ios-download-outline"></Icon>导出注册模板</Button>&nbsp;
+        
         </div>
         <div slot="btns">
           <Button type="primary" icon="md-add" @click="handleCreate">添加</Button>
@@ -257,69 +242,45 @@ export default {
              {
                 title: '任务编号',
                 key: 'id',
-                 width: 100,
+                 width: 120,
+                 minWidth: 120,
                 fixed: 'left',
                 sortable: true
             },
             {
                 title: '主要内容',
-                key: 'task_content',
+                key: 'taskContent',
+                 tooltip:true,
                 minWidth: 100,
             },
             {
                 title: '基本要求',
-                key: 'task_require',
+                key: 'taskRequire',
+                 tooltip:true,
                 minWidth: 100,
             }, {
                 title: '任务调度',
-                key: 'task_schedule',
+                key: 'taskSchedule',
+                 tooltip:true,
                 minWidth: 100,
             },
             {
                 title: '应收集的资料及主要参考文献',
-                key: 'task_literature',
-                minWidth: 100,
+                key: 'taskLiterature',
+                 tooltip:true,
+                minWidth: 200,
             },
+           
+           
             {
-                title: '任务附件',
-                key: 'task_file',
-                minWidth: 100,
-            } ,
-            {
-                title: '任务状态',
-                key: 'task_state',
-                minWidth: 100,
-            },
-            {
-                title: '点击次数',
-                key: 'task_number',
-                minWidth: 100,
-            },
-            {
-                title: '课题id',
-                key: 'task_sub_id',
-                minWidth: 100,
-            }, {
-                title: '回复内容',
-                key: 'reply_content',
-                minWidth: 100,
-            },{
-                title: '回复附件',
-                key: 'reply_file',
-                minWidth: 100,
-            },{
-                title: '任务发布时间',
-                key: 'task_time',
-                minWidth: 100,
-            },{
-                title: '回复时间',
-                key: 'reply_time',
-                minWidth: 100,
+                title: '课题名称',
+                key: 'subName',
+                minWidth: 200,
             },{
                         title: '操作',
                         key: 'action',
                         fixed: 'right',
-                        minWidth: 120,
+                        width: 120,
                         render: (h, params) => {
                             return h('div', [
                                 h('Button', {
@@ -337,21 +298,8 @@ export default {
                                         }
                                       }
                                 }),
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small',
-                                        icon:'icon iconfont icon-edit'
-                                    },
-                                     attrs:{
-                                        title:'编辑'
-                                    },
-                                      on: {
-                                        click: () => {
-                                        this.edit(params.row)             //编辑方法
-                                        }
-                                      }
-                                })
+                              
+                                
                             ]);
                         }
                     }
@@ -488,7 +436,7 @@ export default {
                               taskSchedule : item.taskSchedule,
                               taskLiterature : item.taskLiterature,
                               replyContent : item.replyContent,
-                              subject : item.subject,
+                              subName : item.subject.subName,
                            })
                           })
                   

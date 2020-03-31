@@ -25,7 +25,7 @@
                   <FormItem label="课题来源：">
                     <Select v-model="formItem.subSource">
                          <Option v-for="(item,index) in subSourceList" :value="index"  >{{item}}
-                    </Option>d
+                    </Option>
 
                     </Select>
                 </FormItem>
