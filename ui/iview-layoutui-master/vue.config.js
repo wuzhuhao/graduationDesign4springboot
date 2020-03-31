@@ -1,5 +1,7 @@
 module.exports = {
-    baseUrl: 'iview-layoutui',
+    baseUrl: './',
+    // 输出文件目录
+    outputDir: 'dist',
 	 devServer: {
         // 设置主机地址
         host: 'localhost',

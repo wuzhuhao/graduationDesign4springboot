@@ -47,7 +47,7 @@ router.beforeEach((to, from, next) => {
 
 
 // 配置公共url
-axios.defaults.baseURL = '/api'
+axios.defaults.baseURL = 'http://localhost:8080/graManagement/'
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 // axios.defaults.headers.post['Access-Control-Allow-Origin'] = 'http://localhost:8080'
 // axios.defaults.headers.post['Access-Control-Allow-Methods'] = 'GET, POST, PATCH, post, DELETE, OPTIONS'

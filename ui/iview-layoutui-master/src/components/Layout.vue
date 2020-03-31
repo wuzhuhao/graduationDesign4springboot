@@ -464,9 +464,9 @@ export default {
                 {
                     title:'首页',
                     num:1,
-                    name:'admin',
+                    name:'adminHome',
                     icon:'ios-home',
-                    href:'/notice',
+                    href:'/adminHome',
                     closable:false,
                     showInTags:true,
                     showInMenus:true,

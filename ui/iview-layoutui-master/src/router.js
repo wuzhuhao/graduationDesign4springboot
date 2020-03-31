@@ -9,7 +9,6 @@ Router.prototype.push = function push(location) {
 }
 
 const router = new Router({
-  // mode: 'history',
   routes: [
     //学生树
     {
@@ -221,9 +220,9 @@ const router = new Router({
           },
         },
         {
-          path: '/notice',
+          path: '/adminHome',
           name: 'adminHome',
-          component: () => import('@/views/Home')
+          component: () => import('@/views/admin/home/home')
         },
         
         {
