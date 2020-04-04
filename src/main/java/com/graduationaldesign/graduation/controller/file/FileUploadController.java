@@ -1,5 +1,6 @@
 package com.graduationaldesign.graduation.controller.file;
 
+import com.graduationaldesign.graduation.controller.Api;
 import com.graduationaldesign.graduation.service.impl.FileUploadServiceImpl;
 import com.graduationaldesign.graduation.util.ResponseStatus;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @Slf4j
 @RequestMapping("/uploadFile")
+@Api(Pojo = "FileUpload", description = "文件上传控制层")
 public class FileUploadController {
 
     @Autowired

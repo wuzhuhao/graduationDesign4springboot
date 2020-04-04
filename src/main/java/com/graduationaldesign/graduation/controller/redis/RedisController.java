@@ -1,13 +1,10 @@
 package com.graduationaldesign.graduation.controller.redis;
 
+import com.graduationaldesign.graduation.controller.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Author: wuzhuhao
@@ -15,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/redis")
+@Api(Pojo = "Redis", description = "redis控制层")
 public class RedisController {
 
     @Autowired
@@ -29,7 +27,7 @@ public class RedisController {
 
     @PostMapping("/set/{key}/{value}")
     public String getRedis(@PathVariable(name = "key") String key,
-            @PathVariable(name = "value") String value) {
+                           @PathVariable(name = "value") String value) {
         stringRedisTemplate.opsForValue().set(key, value);
         return "SUCCESS";
     }

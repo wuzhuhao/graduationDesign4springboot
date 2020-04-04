@@ -1,6 +1,7 @@
 package com.graduationaldesign.graduation.controller.shiro;
 
 import com.graduationaldesign.graduation.aop.RootPropeties;
+import com.graduationaldesign.graduation.controller.Api;
 import com.graduationaldesign.graduation.pojo.Role;
 import com.graduationaldesign.graduation.service.RoleService;
 import com.graduationaldesign.graduation.util.ResponseStatus;
@@ -22,6 +23,7 @@ import java.util.List;
 @Controller
 @RestController
 @RequestMapping("/role")
+@Api(Pojo = "Role", description = "角色表")
 public class RoleController {
 
     @Autowired

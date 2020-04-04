@@ -20,6 +20,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/admin")
+@Api(Pojo = "Admin", description = "管理员表")
 public class AdminController {
 
     @Autowired
@@ -29,10 +30,6 @@ public class AdminController {
     @Autowired
     RootPropeties rootPropeties;
 
-    //    @RequestMapping(value="/temp")
-    public ResponseEntity<Object> temp() {
-        return ResponseStatus.success("退出登陆成功", this);
-    }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<Object> add(Admin admin) {

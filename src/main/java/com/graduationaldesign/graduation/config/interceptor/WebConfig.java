@@ -99,7 +99,10 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loggerInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/exit").excludePathPatterns("/task/export").excludePathPatterns("/report/export")
+//                .excludePathPatterns("/static/**")
+                .excludePathPatterns("/exit")
+//                .excludePathPatterns("/task/export")
+//                .excludePathPatterns("/report/export")
                 .excludePathPatterns("/login");
 //                .addPathPatterns("/**/changPassword")
 //                .addPathPatterns("/**/changeInformation")

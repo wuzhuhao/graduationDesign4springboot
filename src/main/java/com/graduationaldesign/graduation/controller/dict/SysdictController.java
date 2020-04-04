@@ -1,6 +1,7 @@
 package com.graduationaldesign.graduation.controller.dict;
 
 import com.graduationaldesign.graduation.aop.RootPropeties;
+import com.graduationaldesign.graduation.controller.Api;
 import com.graduationaldesign.graduation.pojo.Sysdict;
 import com.graduationaldesign.graduation.service.SysdictService;
 import com.graduationaldesign.graduation.util.ResponseStatus;
@@ -20,6 +21,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/sysdict")
+@Api(Pojo = "Sysdict", description = "系统字典表")
 public class SysdictController {
     @Autowired
     SysdictService sysdictService;

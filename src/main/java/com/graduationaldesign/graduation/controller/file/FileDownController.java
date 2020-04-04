@@ -1,5 +1,6 @@
 package com.graduationaldesign.graduation.controller.file;
 
+import com.graduationaldesign.graduation.controller.Api;
 import com.graduationaldesign.graduation.pojo.Progress;
 import com.graduationaldesign.graduation.pojo.Task;
 import com.graduationaldesign.graduation.service.FileDownService;
@@ -28,6 +29,7 @@ import java.util.*;
 @RestController
 @Slf4j
 @RequestMapping("/downFile")
+@Api(Pojo = "FileDown", description = "文件下载控制层")
 public class FileDownController {
 
     @Autowired

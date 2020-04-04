@@ -26,6 +26,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/report")
+@Api(Pojo = "Report", description = "报告表")
 public class ReportController {
 
     @Autowired

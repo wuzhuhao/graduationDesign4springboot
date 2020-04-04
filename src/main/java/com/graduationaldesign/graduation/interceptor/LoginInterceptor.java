@@ -42,7 +42,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         // 返回false则不执行拦截
         log.warn("拦截器启动");
         String uri = request.getRequestURI(); // 获取登录的uri，这个是不进行拦截的
-        if (uri.indexOf("/graManagement/index.html") != -1) {
+        if (uri.indexOf("/index.html") != -1) {
             return true;
         }
         //if(session.getAttribute("LOGIN_USER")!=null || uri.indexOf("system/login")!=-1) {// 说明登录成功 或者 执行登录功能
@@ -52,7 +52,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (null == token || StringUtils.isEmpty(token)) {
             log.error("token为空");
             // 拦截后进入登录页面
-            response.sendRedirect(request.getContextPath() + "http://localhost:8082/iview-layoutui/");
+            response.sendRedirect("http://localhost:80/");
             return false;
         }
         try {

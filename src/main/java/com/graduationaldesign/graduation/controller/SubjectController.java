@@ -26,6 +26,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/sub")
+@Api(Pojo = "Subject", description = "课题表")
 public class SubjectController {
 
     @Autowired

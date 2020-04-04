@@ -21,6 +21,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/teamTeaRelate")
+@Api(Pojo = "TeamTeaRelate", description = "答辩小组导师关联表")
 public class TeamTeaRelateController {
     @Autowired
     TeamTeaRelateService teamTeaRelateService;

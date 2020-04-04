@@ -27,6 +27,7 @@ import javax.servlet.http.HttpSession;
  * @Author: wuzhuhao
  * @Date: 2020/1/9 18:28
  */
+@Api(Pojo = "SysUser", description = "用户Controller")
 @RestController
 public class GlobalController {
 

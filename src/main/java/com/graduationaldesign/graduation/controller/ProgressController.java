@@ -24,6 +24,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/progress")
+@Api(Pojo = "Progress", description = "问题进展表")
 public class ProgressController {
 
     @Autowired

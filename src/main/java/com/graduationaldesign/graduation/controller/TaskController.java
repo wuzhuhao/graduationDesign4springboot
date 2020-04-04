@@ -28,6 +28,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/task")
 @Slf4j
+@Api(Pojo = "Task", description = "任务书表")
 public class TaskController {
 
     @Autowired

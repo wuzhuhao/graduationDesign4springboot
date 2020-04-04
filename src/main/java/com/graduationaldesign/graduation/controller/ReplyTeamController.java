@@ -20,6 +20,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/replyTeam")
+@Api(Pojo = "ReplyTeam", description = "答辩组表")
 public class ReplyTeamController {
 
     @Autowired

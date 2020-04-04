@@ -1,6 +1,7 @@
 package com.graduationaldesign.graduation.controller.shiro;
 
 import com.graduationaldesign.graduation.aop.RootPropeties;
+import com.graduationaldesign.graduation.controller.Api;
 import com.graduationaldesign.graduation.pojo.RolePermission;
 import com.graduationaldesign.graduation.service.RolePermissionService;
 import com.graduationaldesign.graduation.util.ResponseStatus;
@@ -22,6 +23,7 @@ import java.util.List;
 @Controller
 @RestController
 @RequestMapping("/rolePermission")
+@Api(Pojo = "RolePermission", description = "角色权限中间表")
 public class RolePermissionController {
 
     @Autowired

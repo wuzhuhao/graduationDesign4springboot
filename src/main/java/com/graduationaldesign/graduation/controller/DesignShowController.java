@@ -21,6 +21,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/designShow")
+@Api(Pojo = "DesignShow", description = "")
 public class DesignShowController {
 
     @Autowired

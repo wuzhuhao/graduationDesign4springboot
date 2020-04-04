@@ -1,5 +1,6 @@
 package com.graduationaldesign.graduation.controller.shiro;
 
+import com.graduationaldesign.graduation.controller.Api;
 import com.graduationaldesign.graduation.pojo.Admin;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -9,6 +10,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Api(Pojo = "Shiro", description = "shiro控制层")
 public class ShiroController {
 
     //    @RequestMapping("/login1")

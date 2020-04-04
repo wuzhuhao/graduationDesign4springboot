@@ -20,6 +20,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/goodGraduation")
+@Api(Pojo = "GoodGraduation", description = "优秀毕业设计表")
 public class GoodGraduationController {
 
     @Autowired

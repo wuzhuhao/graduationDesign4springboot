@@ -20,6 +20,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/scoreRecord")
+@Api(Pojo = "ScoreRecord", description = "成绩表")
 public class ScoreRecordController {
     @Autowired
     ScoreRecordService scoreRecordService;

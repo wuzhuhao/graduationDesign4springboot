@@ -98,26 +98,41 @@ public class PageHelperAspect {
     @Around("controllerFunction()")
     public Object controllerAop(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         log.info("进入controller AOP");
-        // 获取连接点的方法签名对象
         Signature signature = proceedingJoinPoint.getSignature();
+        //方法名字
+        String methodName = signature.getName();
+        //请求方式
+        String requestMethod = request.getMethod();
+        //请求连接
+        String requestURI = request.getRequestURI();
         log.info("方法[{}]开始执行...", signature.getName());
         Object object = proceedingJoinPoint.proceed();
         log.info("方法[{}]执行结束.", signature.getName());
+        resetCookie(signature, object);
+        return object;
+    }
+
+    private void resetCookie(Signature signature, Object object) throws Exception {
         if (object instanceof ResponseEntity && (!("login".equals(signature.getName()) || "exit".equals(signature.getName())))) {
             String token = CookieUtil.getCookieValue(request, "token");
-            if (token == null || token.length() == 0) {
-                return object;
+            if (!(token == null || token.length() == 0)) {
+                Map<String, Object> userMap = JWTUtil.getUserId(token);
+                ResponseEntity responseEntity = (ResponseEntity) object;
+                if (responseEntity.getStatusCode().value() == HttpStatus.SC_OK) {
+                    CookieUtil.setCookie(request, response, "token", JWTUtil.createToken((String) userMap.get("number"), (Integer) userMap.get("type")),
+                            CookieUtil.COOKIEMAXTIME);
+                    log.info("重设[{}]cookie成功.", signature.getName());
+                }
             }
-            Map<String, Object> userMap = JWTUtil.getUserId(token);
-            ResponseEntity responseEntity = (ResponseEntity) object;
-            if (responseEntity.getStatusCode().value() == HttpStatus.SC_OK) {
-                CookieUtil.setCookie(request, response, "token", JWTUtil.createToken((String) userMap.get("number"), (Integer) userMap.get("type")),
-                        CookieUtil.COOKIEMAXTIME);
-                log.info("重设[{}]cookie成功.", signature.getName());
-            }
-            return object;
+//            Map<String, Object> userMap = JWTUtil.getUserId(token);
+//            ResponseEntity responseEntity = (ResponseEntity) object;
+//            if (responseEntity.getStatusCode().value() == HttpStatus.SC_OK) {
+//                CookieUtil.setCookie(request, response, "token", JWTUtil.createToken((String) userMap.get("number"), (Integer) userMap.get("type")),
+//                        CookieUtil.COOKIEMAXTIME);
+//                log.info("重设[{}]cookie成功.", signature.getName());
+//            }
+//            return object;
         }
-        return object;
     }
 
 }
