@@ -64,7 +64,7 @@ public class StudentServiceImpl implements StudentService {
         return student;
     }
 
-    @CacheEvict(value = "student", key = "#id")
+    @CacheEvict(value = "student", key = "#userModel.id")
     //    @CachePut(value = "student", key = "#id")
     @Override
     public String changeInformation(UserModel userModel) {
@@ -109,6 +109,7 @@ public class StudentServiceImpl implements StudentService {
         return null;
     }
 
+    @CacheEvict(value = "student", key = "#stuId")
     @Override
     public int deleteByPrimaryKey(String stuId) {
         return studentMapper.deleteByPrimaryKey(stuId);
@@ -137,11 +138,13 @@ public class StudentServiceImpl implements StudentService {
         return studentMapper.selectByPrimaryKey(stuId);
     }
 
+    @CacheEvict(value = "student", key = "#record.stuId")
     @Override
     public int updateByPrimaryKeySelective(Student record) {
         return studentMapper.updateByPrimaryKeySelective(record);
     }
 
+    @CacheEvict(value = "student", key = "#record.stuId")
     @Override
     public int updateByPrimaryKey(Student record) {
         return studentMapper.updateByPrimaryKey(record);
@@ -157,7 +160,6 @@ public class StudentServiceImpl implements StudentService {
         ExampleHelper.addCondition(Student.class, criteria, params);
         List<Student> list = this.studentMapper.selectByExample(example);
         pageBean.setBeanList(list);
-        //pageBean.setParams(params);
         return pageBean;
     }
 

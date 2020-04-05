@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Data
 @JsonIgnoreProperties(value = {"handler"})
 @Table(value = "t_teacher")
-public class Teacher implements Serializable {
+public class Teacher implements Serializable, User {
 
     /**
      * 教师id
@@ -379,5 +379,15 @@ public class Teacher implements Serializable {
         this.setTeaPhone(userModel.getPhone());
         this.setTeaRemarks(userModel.getRemarks());
         this.setTeaSex(userModel.getSex());
+    }
+
+    @Override
+    public String findUserName() {
+        return teaId;
+    }
+
+    @Override
+    public String findUserType() {
+        return "导师";
     }
 }

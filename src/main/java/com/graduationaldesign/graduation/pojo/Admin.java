@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Data
 @JsonIgnoreProperties(value = {"handler"})
 @Table(value = "t_admin")
-public class Admin implements Serializable {
+public class Admin implements Serializable, User {
 
     /**
      * 管理员账号
@@ -319,6 +319,16 @@ public class Admin implements Serializable {
      */
     public void setAdminType(Integer adminType) {
         this.adminType = adminType;
+    }
+
+    @Override
+    public String findUserName() {
+        return adminId;
+    }
+
+    @Override
+    public String findUserType() {
+        return "管理员";
     }
 
     @Override

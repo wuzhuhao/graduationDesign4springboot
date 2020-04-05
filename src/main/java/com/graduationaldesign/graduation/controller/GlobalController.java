@@ -69,29 +69,27 @@ public class GlobalController {
         } catch (RuntimeException e) {
             return ResponseStatus.failure(e.getMessage(), this);
         }
-//        session.setAttribute(rootPropeties.getUserAttribute(), result);
-        CookieUtil.setCookie(request, response, "token", JWTUtil.createToken(number, type),
-                CookieUtil.COOKIEMAXTIME);
+        CookieUtil.setCookie(request, response, "token", JWTUtil.createToken(number, type), CookieUtil.COOKIEMAXTIME);
         return ResponseStatus.success(result, this);
     }
 
     @RequestMapping(value = "/stu/changPassword", method = RequestMethod.POST)
-    public ResponseEntity<Object> stuChangPassword(String oldPassword, String newPassword) {
-        return changPassword(oldPassword, newPassword, STU);
+    public ResponseEntity<Object> stuChangePassword(String oldPassword, String newPassword) {
+        return ChangePassword(oldPassword, newPassword, STU);
     }
 
     @RequestMapping(value = "/tea/changPassword", method = RequestMethod.POST)
-    public ResponseEntity<Object> teaChangPassword(String oldPassword, String newPassword) {
-        return changPassword(oldPassword, newPassword, TEA);
+    public ResponseEntity<Object> teaChangePassword(String oldPassword, String newPassword) {
+        return ChangePassword(oldPassword, newPassword, TEA);
     }
 
     @RequestMapping(value = "/admin/changPassword", method = RequestMethod.POST)
-    public ResponseEntity<Object> adminChangPassword(String oldPassword, String newPassword) {
-        return changPassword(oldPassword, newPassword, ADMIN);
+    public ResponseEntity<Object> adminChangePassword(String oldPassword, String newPassword) {
+        return ChangePassword(oldPassword, newPassword, ADMIN);
     }
 
-    private ResponseEntity<Object> changPassword(String oldPassword, String newPassword,
-                                                 Integer type) {
+    private ResponseEntity<Object> ChangePassword(String oldPassword, String newPassword,
+                                                  Integer type) {
         Object user;
         user = tokenService.getUserByToken(request);
         String userID;
@@ -168,10 +166,6 @@ public class GlobalController {
         return result;
     }
 
-    //    @RequestMapping("/login")
-    public String loginForward() {
-        return "login";
-    }
 
     /**
      * 退出登陆

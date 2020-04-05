@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Data
 @JsonIgnoreProperties(value = {"handler"})
 @Table(value = "t_student")
-public class Student implements Serializable {
+public class Student implements Serializable, User {
 
     /**
      * 学生登陆账号
@@ -376,6 +376,16 @@ public class Student implements Serializable {
 
     public void setAcademy(Academy academy) {
         this.academy = academy;
+    }
+
+    @Override
+    public String findUserName() {
+        return stuId;
+    }
+
+    @Override
+    public String findUserType() {
+        return "学生";
     }
 
     @Override

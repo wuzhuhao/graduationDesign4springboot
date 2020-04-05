@@ -13,7 +13,7 @@ import java.util.List;
  * @Author: wuzhuhao
  * @Date: 2020/1/14 19:32
  */
-public interface StudentService {
+public interface StudentService extends CurdService<Student> {
 
     Student login(Student student);
 
@@ -33,9 +33,9 @@ public interface StudentService {
 
     Student selectByPrimaryKey(String stuId);
 
-    int updateByPrimaryKeySelective(Student record);
-
-    int updateByPrimaryKey(Student record);
+//    int updateByPrimaryKeySelective(Student record);
+//
+//    int updateByPrimaryKey(Student record);
 
     PageBean<Student> listByPage(HashMap<String, Object> params, int page, int pageSize)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException;

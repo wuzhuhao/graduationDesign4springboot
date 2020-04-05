@@ -57,7 +57,7 @@ public class ResponseStatus {
         String className = controller.getClass().getSimpleName().split("_")[0].substring(0, controller.getClass().getSimpleName().split("_")[0].indexOf("Controller"));
         Result result1 = Result.failure(message);
         result1.setDict(ApplicationContextProvider.getBean(SysdictService.class).selectByModel(lowerFirstCapse(className)));
-        return ResponseStatus.response(HttpStatus.SC_OK, result1);
+        return ResponseStatus.response(HttpStatus.SC_UNAUTHORIZED, result1);
     }
 
     public static String lowerFirstCapse(String str) {

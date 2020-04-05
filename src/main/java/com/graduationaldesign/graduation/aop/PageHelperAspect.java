@@ -2,18 +2,14 @@ package com.graduationaldesign.graduation.aop;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.graduationaldesign.graduation.JWT.JWTUtil;
-import com.graduationaldesign.graduation.util.CookieUtil;
 import com.graduationaldesign.graduation.util.PageBean;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.HttpStatus;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
+ * 分页AOP
+ *
  * @Author: wuzhuhao
  * @Date: 2020/1/31 15:43
  */
@@ -35,15 +33,11 @@ public class PageHelperAspect {
     HttpServletRequest request;
     @Autowired
     private HttpServletResponse response;
-    private static final String AOP_POINTCUT_CONTRELLER = "execution(public * com.graduationaldesign.graduation.controller.*.*(..))";
 
     @Pointcut("execution(public * com.graduationaldesign.graduation.service.*.*ByPage*(..))")
     public void serviceListFunction() {
     }
 
-    @Pointcut(AOP_POINTCUT_CONTRELLER)
-    public void controllerFunction() {
-    }
 
     /**
      * 使用around方法 在执行查询方法前执行PageHelper.startWith 在执行查询方法后 将结果封装到PageInfo中
@@ -93,46 +87,6 @@ public class PageHelperAspect {
             return pageBean;
         }
         return object;
-    }
-
-    @Around("controllerFunction()")
-    public Object controllerAop(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        log.info("进入controller AOP");
-        Signature signature = proceedingJoinPoint.getSignature();
-        //方法名字
-        String methodName = signature.getName();
-        //请求方式
-        String requestMethod = request.getMethod();
-        //请求连接
-        String requestURI = request.getRequestURI();
-        log.info("方法[{}]开始执行...", signature.getName());
-        Object object = proceedingJoinPoint.proceed();
-        log.info("方法[{}]执行结束.", signature.getName());
-        resetCookie(signature, object);
-        return object;
-    }
-
-    private void resetCookie(Signature signature, Object object) throws Exception {
-        if (object instanceof ResponseEntity && (!("login".equals(signature.getName()) || "exit".equals(signature.getName())))) {
-            String token = CookieUtil.getCookieValue(request, "token");
-            if (!(token == null || token.length() == 0)) {
-                Map<String, Object> userMap = JWTUtil.getUserId(token);
-                ResponseEntity responseEntity = (ResponseEntity) object;
-                if (responseEntity.getStatusCode().value() == HttpStatus.SC_OK) {
-                    CookieUtil.setCookie(request, response, "token", JWTUtil.createToken((String) userMap.get("number"), (Integer) userMap.get("type")),
-                            CookieUtil.COOKIEMAXTIME);
-                    log.info("重设[{}]cookie成功.", signature.getName());
-                }
-            }
-//            Map<String, Object> userMap = JWTUtil.getUserId(token);
-//            ResponseEntity responseEntity = (ResponseEntity) object;
-//            if (responseEntity.getStatusCode().value() == HttpStatus.SC_OK) {
-//                CookieUtil.setCookie(request, response, "token", JWTUtil.createToken((String) userMap.get("number"), (Integer) userMap.get("type")),
-//                        CookieUtil.COOKIEMAXTIME);
-//                log.info("重设[{}]cookie成功.", signature.getName());
-//            }
-//            return object;
-        }
     }
 
 }

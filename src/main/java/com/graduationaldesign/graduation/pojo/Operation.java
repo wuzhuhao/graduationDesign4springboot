@@ -1,13 +1,17 @@
 package com.graduationaldesign.graduation.pojo;
 
 import cn.hutool.core.date.DateUtil;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.graduationaldesign.graduation.pojo.helper.Column;
 import com.graduationaldesign.graduation.pojo.helper.MyPrimaryKey;
 import com.graduationaldesign.graduation.pojo.helper.Table;
+import com.graduationaldesign.graduation.util.JsonUtils;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Map;
 
 @Data
 @Table(value = "log_operation")
@@ -91,7 +95,13 @@ public class Operation implements Serializable {
      *
      * @return log_operation.opera_time, 操作时间
      */
-    public String getOperaTime() {
+    @JsonIgnore
+    public Date getOperaTime() {
+        return operaTime;
+    }
+
+    @JsonGetter(value = "operaTime")
+    public String getOperaTimeDetail() {//自定的方法
         return DateUtil.formatDateTime(operaTime);
     }
 
@@ -109,8 +119,14 @@ public class Operation implements Serializable {
      *
      * @return log_operation.opera_content, 操作内容
      */
+    @JsonIgnore
     public String getOperaContent() {
         return operaContent;
+    }
+
+    @JsonGetter(value = "operaContent")
+    public Map getOperaContentDetail() {//自定的方法
+        return JsonUtils.jsonToPojo(operaContent, Map.class);
     }
 
     /**

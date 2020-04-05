@@ -1,5 +1,6 @@
 package com.graduationaldesign.graduation.JWT;
 
+import com.graduationaldesign.graduation.pojo.User;
 import com.graduationaldesign.graduation.service.AdminService;
 import com.graduationaldesign.graduation.service.StudentService;
 import com.graduationaldesign.graduation.service.TeacherService;
@@ -48,11 +49,11 @@ public class TokenService {
         return flag;
     }
 
-    public Object getUserBytoken(String token) {
+    public User getUserBytoken(String token) {
         Map<String, Object> tokenMap = JWTUtil.getUserId(token);
         Integer type = (Integer) tokenMap.get("type");
         String number = (String) tokenMap.get("number");
-        Object user = null;
+        User user = null;
         if (type.equals(1)) {
             user = studentService.findById(number);
         } else if (type.equals(2)) {
@@ -63,7 +64,7 @@ public class TokenService {
         return user;
     }
 
-    public Object getUserByToken(HttpServletRequest request) {
+    public User getUserByToken(HttpServletRequest request) {
         String token = CookieUtil.getCookieValue(request, "token");
         return getUserBytoken(token);
     }
