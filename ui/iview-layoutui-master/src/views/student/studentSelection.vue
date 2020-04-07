@@ -43,6 +43,9 @@ export default {
         },
         tableData:[],
         id:'',
+        subStuStateList:[],
+        subNatureList:[],
+        subSourceList:[],
         teacher:  {
                     teaId: '',
                     teaPassword: '',
@@ -162,19 +165,21 @@ export default {
                                 console.log(res.data)
                          this.tableData = [];
                           let list = res.data.data.beanList;
+                          this.subStuStateList = res.data.dict.subject.subStuState
+                           this.subNatureList = res.data.dict.subject.subNature
+                           this.subSourceList = res.data.dict.subject.subSource
                           list.forEach((item, index) => {
                            this.tableData.push({
                               subId: item.subId,
                               subName: item.subName,
-                              subNature:item.subNature,
-                              subNature: item.subNature,
-                              subSource: item.subSource,
+                              subNature:this.subNatureList[item.subNature],
+                              subSource: this.subStuStateList[item.subSource],
                               subTeaId:item.subTeaId,
                               subFile:item.subFile,
                               teafirstReportDeadlineMail:item.firstReportDeadline,
                               lastReportDeadline:item.lastReportDeadline,
                               stuId: item.stuId,
-                              subStuState: item.subStuState,
+                              subStuState: this.subStuStateList[item.subStuState],
                               subLastScore: item.subLastScore,
                               showId: item.showId,
                               subIntroduce: item.subIntroduce,

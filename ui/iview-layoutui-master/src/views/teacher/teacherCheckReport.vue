@@ -80,7 +80,7 @@ export default {
                     paddingBottom: '53px',
                     position: 'static'
                 },
-            
+          reportStateList:[],
             
         pagination: {
                 pageSize:10,
@@ -142,7 +142,8 @@ export default {
                         title: '操作',
                         key: 'action',
                         fixed: 'right',
-                        width: 150,
+                        width: 200,
+                        minWidth: 200,
                         render: (h, params) => {
                             return h('div', [
                                 h('Button', {
@@ -308,12 +309,13 @@ export default {
                           console.log(res.data)
                          this.tableData = [];
                           let list = res.data.data.beanList;
+                           this.reportStateList = res.data.dict.report.reportState
                           list.forEach((item, index) => {
                            this.tableData.push({
                               reportSubId: item.reportSubId,
                               reportType: item.reportType,
                               id: item.id,
-                              reportState: item.reportState,
+                              reportState:  this.reportStateList[item.reportState],
                               reportSubtime: item.reportSubtime,
                               reportVersion: item.reportVersion,
                               reportFile: item.reportFile,

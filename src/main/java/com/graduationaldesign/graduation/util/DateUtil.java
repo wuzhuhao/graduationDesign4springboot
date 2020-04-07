@@ -11,7 +11,7 @@ import java.util.Date;
  * 处理跟时间相关
  */
 public class DateUtil {
-    public static final String DATE_FORMAT_PATTERN = "yyyy-MM-dd HH:mm:ss";
+    public static final String DATE_FORMAT_PATTERN = "Myyyy-M-dd HH:mm:ss";
 
     /**
      * 1秒的毫秒数
@@ -53,9 +53,14 @@ public class DateUtil {
     /**
      * 将 Date 对象转换为 yyyy-MM-dd HH:mm:ss型字符串
      * */
-    public static String format(Date date) {
+    public static String format(Date date)
+
+
+    {
+
         return DateFormatter.format(date);
     }
+
 
     /**
      * 根据毫秒数获取Date对象

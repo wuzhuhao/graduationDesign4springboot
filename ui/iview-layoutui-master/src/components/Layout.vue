@@ -623,15 +623,15 @@ export default {
                     children:[
                        
                    
-                        {
-                            title:'周进展管理',
-                            name:'progressManage',
-                            href:'progressManage',
-                            closable:true,
-                            showInTags:false,
-                            showInMenus:true,
-                            choosed:false
-                        }, 
+                        // {
+                        //     title:'周进展管理',
+                        //     name:'progressManage',
+                        //     href:'progressManage',
+                        //     closable:true,
+                        //     showInTags:false,
+                        //     showInMenus:true,
+                        //     choosed:false
+                        // }, 
                         {
                             title:'答辩组管理',
                             name:'replyTeamManage',

@@ -19,8 +19,8 @@
               <Row>
                
                 <Col span="8">
-                  <FormItem label="字典描述" >
-                    <Input v-model="formItem.dictDescription" placeholder="字典描述"></Input>
+                  <FormItem label="组长id：" >
+                    <Input v-model="formItem.teamLeaderId" placeholder="组长id"></Input>
                 </FormItem>
                 </Col>
               
@@ -70,13 +70,13 @@
                 </FormItem>
                 </Col>
               </Row>
-               <!-- <Row>
+               <Row>
                 <Col span="24">
                   <FormItem label="答辩时间"   class="label">
-                    <DatePicker type="date"  v-model = "formData.replyTime" @on-change="formData.replyTime=$event"  style="width:540px" placeholder="请输入答辩时间"></DatePicker>
+                    <DatePicker type="date"  format="yyyy-MM-dd HH:mm:ss"  v-model = "formData.replyTime" @on-change="formData.replyTime=$event"  style="width:540px" placeholder="请输入答辩时间"></DatePicker>
                 </FormItem>
                 </Col>
-              </Row> -->
+              </Row>
                <Row>
                 <Col span="24">
                   <FormItem label="答辩组长id"   class="label">

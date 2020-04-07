@@ -68,7 +68,7 @@ export default {
                     paddingBottom: '53px',
                     position: 'static'
                 },
-            
+        taskStateList:[],
             
         pagination: {
                 pageSize:10,
@@ -257,11 +257,12 @@ export default {
                           console.log(res.data)
                          this.tableData = [];
                           let list = res.data.data.beanList;
+                           this.taskStateList = res.data.dict.task.taskState
                           list.forEach((item, index) => {
                            this.tableData.push({
                               id : item.id,
                               taskFile :item.taskFile,
-                              taskState : item.taskState,
+                              taskState :  this.taskStateList[item.taskState],
                               taskNumber : item.taskNumber,
                               taskSubName : item.subject.subName,
                               teaName: item.subject.teacher.teaName,
