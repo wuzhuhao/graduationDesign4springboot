@@ -46,7 +46,7 @@
            <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doReset">重置</Button>  &nbsp;
           <Button type="info"  style="float:left;margin:0 8px"  @click="exportData(1)"><Icon type="ios-download-outline"></Icon>导出数据</Button>&nbsp;
           <Button type="info" icon="ios-search;margin:0 8px"  style="float:left" @click="delAll">批量删除</Button>  &nbsp;
-        <Upload action="http://localhost:8080/graManagement/uploadFile/importUserByExcel?type=1"    style="float:left;margin:0 8px">
+        <Upload action="http://localhost:8080/uploadFile/importUserByExcel?type=1"    style="float:left;margin:0 8px">
             <Button  type="info" icon="ios-cloud-upload-outline">批量注册</Button>
         </Upload>
          <Button type="info"  style="float:left;margin:0 8px"  @click="exportDataDemo(1)"><Icon type="ios-download-outline"></Icon>导出注册模板</Button>&nbsp;
@@ -55,7 +55,7 @@
           <Button type="primary" icon="md-add" @click="handleCreate">添加</Button>
         </div>
         <div slot="paddingContent">
-          <Table border  show-summary :columns="columns2" :data="tableData"  @on-selection-change="changeSelect" ref="table"></Table>
+          <Table border :columns="columns2" :data="tableData"  @on-selection-change="changeSelect" ref="table"></Table>
         </div>
         <div slot="pager">
             <Page :total="this.pagination.total"  :page-size="this.pagination.pageSize"  :page-size-opts="this.pagination.pageSizeOpts" 
@@ -323,7 +323,7 @@ export default {
                             return h('div', [
                                 h('Button', {
                                     props: {
-                                       type: 'primary',
+                                       type: 'text',
                                         size: 'small',
                                         icon: "icon iconfont icon-shanchu"
                                     },
@@ -639,7 +639,7 @@ export default {
     },
     exportDataDemo(type){
       
-            window.location.href="http://localhost:8080/graManagement/downFile/exportDemo?type=" + type
+            window.location.href="http://localhost:8080/downFile/exportDemo?type=" + type
         
     }
     

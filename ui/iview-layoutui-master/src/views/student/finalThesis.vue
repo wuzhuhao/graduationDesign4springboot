@@ -13,7 +13,7 @@
   <div slot="search">
             
          
-        <Upload action="http://localhost:8080/graManagement/report/uploadFile"    style="float:left;margin:0 8px">
+        <Upload action="http://localhost:8080/report/uploadFile"    style="float:left;margin:0 8px">
             <Button  type="info" icon="ios-cloud-upload-outline">上传论文</Button>
         </Upload>
          <Button type="info"  style="float:left;margin:0 8px"  @click="exportData(1)"><Icon type="ios-download-outline"></Icon>下载附件</Button>&nbsp;
@@ -434,7 +434,7 @@ export default {
     },
     exportDataDemo(type){
        
-            window.location.href="http://localhost:8080/graManagement/downFile/exportDemo?type=" + type
+            window.location.href="http://localhost:8080/downFile/exportDemo?type=" + type
         
     }
     

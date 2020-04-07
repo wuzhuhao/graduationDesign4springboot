@@ -538,7 +538,7 @@ export default {
     },
     exportDataDemo(type){
        
-            window.location.href="http://localhost:8080/graManagement/downFile/exportDemo?type=" + type
+            window.location.href="http://localhost:8080/downFile/exportDemo?type=" + type
         
     }
     

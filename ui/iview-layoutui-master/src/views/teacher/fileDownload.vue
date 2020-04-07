@@ -500,13 +500,13 @@ export default {
         return str.search('完成')!=-1
     },
     exportDataTask(){
-     var url="http://localhost:8080/graManagement/task/export?primaryKey="+ this.selectList[0].taskList[0].taskId
+     var url="http://localhost:8080/task/export?primaryKey="+ this.selectList[0].taskList[0].taskId
            console.log( url)
            window.open(url) 
     },
     exportDataReport(type){
        console.log( this.selectList)
-           var url="http://localhost:8080/graManagement/report/export?type=" + type+ "&subId=" + this.selectList[0].subId
+           var url="http://localhost:8080/report/export?type=" + type+ "&subId=" + this.selectList[0].subId
            console.log( url)
            window.open(url) 
 

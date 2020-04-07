@@ -11,14 +11,14 @@
 
 <script>
 import InforCard from 'vue-info-card'
-import CountTo from 'vue-count-to'
+// import CountTo from 'vue-count-to'
 import { ChartPie, ChartBar } from 'v-charts'
 import Example from './example.vue'
 export default {
   name: 'home',
   components: {
     InforCard,
-    CountTo,
+    // CountTo,
     ChartPie,
     ChartBar,
     Example

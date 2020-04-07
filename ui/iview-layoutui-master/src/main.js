@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import iView from 'view-design';
-import 'iview/dist/styles/iview.css';
+import 'view-design/dist/styles/iview.css';
 import store from './store/store'
 import Qs from 'qs'
 import '@/styles/icon/iconfont.css'
@@ -47,7 +47,7 @@ router.beforeEach((to, from, next) => {
 
 
 // 配置公共url
-axios.defaults.baseURL = 'http://localhost:8080/graManagement/'
+axios.defaults.baseURL = 'http://localhost:8080/'
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 // axios.defaults.headers.post['Access-Control-Allow-Origin'] = 'http://localhost:8080'
 // axios.defaults.headers.post['Access-Control-Allow-Methods'] = 'GET, POST, PATCH, post, DELETE, OPTIONS'
