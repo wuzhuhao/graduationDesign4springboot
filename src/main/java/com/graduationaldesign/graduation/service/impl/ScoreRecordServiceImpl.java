@@ -92,6 +92,7 @@ public class ScoreRecordServiceImpl extends com.graduationaldesign.graduation.se
             scoreRecord.getSubject();
             if (scoreRecord.getSubject() != null) {
                 scoreRecord.getSubject().getStudent();
+                scoreRecord.getSubject().getTeacher();
             }
         }
         return pageBean;

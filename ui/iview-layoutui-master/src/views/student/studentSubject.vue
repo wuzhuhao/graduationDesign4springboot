@@ -17,12 +17,12 @@
               <Row>
                 
                 <Col span="8">
-                  <FormItem label="课题名称：">
+                  <FormItem label="课题名称：" :label-width="100" >
                     <Input v-model="formItem.subName" placeholder="请输入课题名称"></Input>
                 </FormItem>
                 </Col>
                 <Col span="8">
-                  <FormItem label="课题来源：">
+                  <FormItem label="课题来源：" :label-width="100" >
                     <Select v-model="formItem.subSource">
                          <Option v-for="(item,index) in subSourceList" :value="index"  >{{item}}
                     </Option>
@@ -590,7 +590,7 @@ export default {
     },
     exportDataDemo(type){
        
-            window.location.href="http://localhost:8080/graManagement/downFile/exportDemo?type=" + type
+            window.location.href="http://localhost:8080/downFile/exportDemo?type=" + type
         
     }
     

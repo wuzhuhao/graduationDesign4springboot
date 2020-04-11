@@ -18,7 +18,7 @@
             <Form :model="formItem" :label-width="80">
               <Row>
                 <Col span="8">
-                  <FormItem label="任务编号：">
+                  <FormItem label="编号：">
                     <Input v-model="formItem.id" placeholder="..."></Input>
                 </FormItem>
                 </Col>
@@ -84,7 +84,7 @@ export default {
                     paddingBottom: '53px',
                     position: 'static'
                 },
-            
+         reportStateList:[],
             
         pagination: {
                 pageSize:10,
@@ -294,12 +294,13 @@ export default {
                           console.log(res.data)
                          this.tableData = [];
                           let list = res.data.data.beanList;
+                            this.reportStateList = res.data.dict.report.reportState
                           list.forEach((item, index) => {
                            this.tableData.push({
                               reportSubId: item.reportSubId,
                               reportType: item.reportType,
                               id: item.id,
-                              reportState: item.reportState,
+                             reportState:  this.reportStateList[item.reportState],
                               reportSubtime: item.reportSubtime,
                               reportVersion: item.reportVersion,
                               reportFile: item.reportFile,
@@ -466,7 +467,7 @@ export default {
     },
     exportDataDemo(type){
        
-            window.location.href="http://localhost:8080/graManagement/downFile/exportDemo?type=" + type
+            window.location.href="http://localhost:8080/downFile/exportDemo?type=" + type
         
     }
     

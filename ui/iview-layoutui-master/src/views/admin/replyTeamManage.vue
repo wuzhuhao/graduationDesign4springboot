@@ -10,7 +10,7 @@
             <Icon type="ios-game-controller-b" />
         </div>
         <div slot="title-toolbar">
-            <Button type="primary"   @click="reload1">返回字典首页</Button>
+            <Button type="primary"   @click="reload1">答辩组首页</Button>
         </div>
 
         <!-- 条件搜索 -->
@@ -19,8 +19,8 @@
               <Row>
                
                 <Col span="8">
-                  <FormItem label="字典描述">
-                    <Input v-model="formItem.dictDescription" placeholder="字典描述"></Input>
+                  <FormItem label="组长id：" >
+                    <Input v-model="formItem.teamLeaderId" placeholder="组长id"></Input>
                 </FormItem>
                 </Col>
               
@@ -58,22 +58,29 @@
             <Form :model="formItem" :label-width="100">
            <Row>
                 <Col span="24">
-                  <FormItem :label="dictValueLabel"   class="label">
-                    <Input v-model="formData.dictValue"   size="large"  placeholder="请输入课题名称"></Input>
+                  <FormItem label="答辩组名称"   class="label">
+                    <Input v-model="formData.teamName"   size="large"  placeholder="请输入答辩组名"></Input>
                 </FormItem>
                 </Col>
               </Row>
-              <Row  v-show="dictShow"> 
+              <Row > 
                 <Col span="24">
-                  <FormItem label="value"   class="label">
-                    <Input v-model="formData.dictText"   size="large"  placeholder="请输入指导教师"></Input>
+                  <FormItem label="答辩地址"   class="label">
+                    <Input v-model="formData.teamAddress"   size="large"  placeholder="请输入答辩地址"></Input>
                 </FormItem>
                 </Col>
               </Row>
                <Row>
                 <Col span="24">
-                  <FormItem :label="dictDescriptionLabel"   class="label">
-                    <Input v-model="formData.dictDescription"   size="large"  placeholder="请输入指导教师"></Input>
+                  <FormItem label="答辩时间"   class="label">
+                    <DatePicker type="date"  format="yyyy-MM-dd HH:mm:ss"  v-model = "formData.replyTime" @on-change="formData.replyTime=$event"  style="width:540px" placeholder="请输入答辩时间"></DatePicker>
+                </FormItem>
+                </Col>
+              </Row>
+               <Row>
+                <Col span="24">
+                  <FormItem label="答辩组长id"   class="label">
+                    <Input v-model="formData.teamLeaderId"   size="large"  placeholder="请输入组长id"></Input>
                 </FormItem>
                 </Col>
               </Row>
@@ -118,12 +125,10 @@ export default {
                     position: 'static'
                 },
                 formData: {
-                    dictDescription: '',
-                    dictParentid: '',
-                    dictText: '',
-                    dictType:'model',
-                    dictValue:'',
-                    id: '',
+                  //  replyTime: '',
+                  teamAddress: '',
+                  teamLeaderId: '',
+                  teamName:'',
                         },
             
         pagination: {
@@ -137,7 +142,7 @@ export default {
          selectCount: 0, // 多选计数
         tableData:[],
         formItem: {
-            id: '',
+           
             replyTime: '',
             teacher: '',
             teamAddress: '',
@@ -145,6 +150,7 @@ export default {
             teamName:'',
         },
         columns:[],
+
        columns2: [
             {
                type: 'selection',
@@ -238,6 +244,33 @@ export default {
                             ]);
                         }
                     }
+        ],
+         columns1: [
+         
+            
+            {
+                title: '教师号/学号',
+                key: 'id',
+                width: 200,
+                fixed: 'left',
+                sortable: true
+            },
+            {
+                title: '身份',
+                key: 'type',
+                minWidth: 100,
+            },
+            {
+                title: '姓名',
+                key: 'name',
+                minWidth: 100,
+            }, {
+                title: '答辩组号',
+                key: 'replyTeamId',
+                minWidth: 100,
+            },
+         
+         
         ]
         
       }
@@ -268,7 +301,7 @@ export default {
                 }
             } ,
              Info (row) {
-                   
+                   this.columns = this.columns1
                     let  token = localStorage.getItem('token')
                 this.$axios({
                                     
@@ -283,16 +316,29 @@ export default {
                                 this.tableData = [];
                                 let list = res.data.data.beanList;
                                 list.forEach((item, index) => {
-                                this.tableData.push({
-                                    id :item.id,
-                                        replyTime : item.replyTime,
-                                        teacher : item.teacher,
-                                        teamAddress : item.teamAddress,
-                                        teamLeaderId : item.teamLeaderId,
-                                        teamName : item.teamName
+                                  let flag = true;
+                                 this.tableData.forEach(item1=>{
+                                  if(item.subject.teacher==item1.id){
+                                   flag = false
+                                  }
+                                  })
+                                if(item.subject.teacher!=null&&flag){
+                                    this.tableData.push({
+                                          id :item.subject.teacher.teaId,
+                                          type:'教师',
+                                          name : item.subject.teacher.teaName,
+                                          replyTeamId:row.id
+                                    })
+                                }  if(item.subject.student!=null){
+                                 this.tableData.push({
+                                      id :item.subject.student.stuId,
+                                      type:'学生',
+                                      name : item.subject.student.stuName,
+                                      replyTeamId:row.id
                                 })
+                                }
                                 })
-                        
+                          console.log(this.tableData)
                                 this.pagination.total =res.data.data.totalRecord
                                 this.pagination.currentPage =res.data.data.currentPage
                                 
@@ -308,24 +354,24 @@ export default {
       // },
       //编辑
       edit(row){
-            this.dialogStatus = '编辑';//对应标题
-           if( this.formItem.dictType=='model'){
-                this.dictValueLabel = '实体类名：'
-                this.dictDescriptionLabel = '实体类描述：'
-            }else if( this.formItem.dictType=='item'){
-                this.dictValueLabel = '字典名称:'
-                this.dictDescriptionLabel = '字典描述:'
-            }else{
-                this.dictValueLabel = 'key:'
-                this.dictDescriptionLabel = '值描述:'
-            }
-             this.formData.dictDescription= row.dictDescription
-            this.formData.dictParentid= row.dictParentid
-            this.formData.dictText= row.dictText
-            this.formData.dictType=row.dictType
-            this.formData.dictValue=row.dictValue
-            this.formData.id= row.id
-            this.modal1 = true
+          //   this.dialogStatus = '编辑';//对应标题
+          //  if( this.formItem.dictType=='model'){
+          //       this.dictValueLabel = '实体类名：'
+          //       this.dictDescriptionLabel = '实体类描述：'
+          //   }else if( this.formItem.dictType=='item'){
+          //       this.dictValueLabel = '字典名称:'
+          //       this.dictDescriptionLabel = '字典描述:'
+          //   }else{
+          //       this.dictValueLabel = 'key:'
+          //       this.dictDescriptionLabel = '值描述:'
+          //   }
+          //    this.formData.dictDescription= row.dictDescription
+          //   this.formData.dictParentid= row.dictParentid
+          //   this.formData.dictText= row.dictText
+          //   this.formData.dictType=row.dictType
+          //   this.formData.dictValue=row.dictValue
+          //   this.formData.id= row.id
+          //   this.modal1 = true
         },
         delById(row) {
             this.$Modal.confirm({
@@ -353,7 +399,7 @@ export default {
           console.log(this.formData)
         if(this.dialogStatus == '新增'){
             this.$axios({     
-                            url: 'sysdict/add',
+                            url: 'replyTeam/add',
                             method: 'post',//请求的方式
                             data:this.$Qs.stringify(this.formData),
                             // token:localStorage.getItem('token')
@@ -388,7 +434,7 @@ export default {
        let  token = localStorage.getItem('token')
          this.$axios({
                             
-                            url: 'replyTeam/list?page=' + page  + '&pageSize=' + pageSize ,
+                            url: 'replyTeam/list?isJoinSubject=true&page=' + page  + '&pageSize=' + pageSize ,
                             method: 'get',//请求的方式
                             params:params,
                             // token:localStorage.getItem('token')
@@ -398,7 +444,7 @@ export default {
                           let list = res.data.data.beanList;
                           list.forEach((item, index) => {
                            this.tableData.push({
-                               id :item.id,
+                                id :item.id,
                                 replyTime : item.replyTime,
                                 teacher : item.teacher,
                                 teamAddress : item.teamAddress,
@@ -429,28 +475,6 @@ export default {
      
    
        handleCreate () {
-           if( this.formItem.dictType=='model'){
-                this.formData.dictType='model',
-                this.dictValueLabel = '实体类名：'
-                this.dictDescriptionLabel = '实体类描述：'
-                this.dictShow = false
-            }else if( this.formItem.dictType=='item'){
-                 this.formData.dictType='item',
-                this.dictValueLabel = '字典名称:'
-                this.dictDescriptionLabel = '字典描述:'
-                 this.dictShow = false
-            }else{
-                 this.formData.dictType='dict',
-                this.dictValueLabel = 'key:'
-                this.dictDescriptionLabel = '值描述:'
-                this.dictShow = true
-            }
-        this.formData.dictDescription= '',
-        this.formData.id= '',
-        this.formData.dictText= '',
-       
-        this.formData.dictValue='',
-        console.log(this.formData.id + 666)
         this.dialogStatus = '新增';//对应标题
         this.modal1 = true
         
@@ -549,10 +573,10 @@ export default {
         this.drawer = false;
       },
       reload1 (){
-           this.title = '系统字典'
+      this.columns = this.columns2    
        this.doReset();
        this.getData(1,10)
-       this.columns = this.columns2
+      
     },
       doReset(){
           this.title = '系统字典'
@@ -565,7 +589,7 @@ export default {
     },
     exportDataDemo(type){
        
-            window.location.href="http://localhost:8080/graManagement/downFile/exportDemo?type=" + type
+            window.location.href="http://localhost:8080/downFile/exportDemo?type=" + type
         
     }
     

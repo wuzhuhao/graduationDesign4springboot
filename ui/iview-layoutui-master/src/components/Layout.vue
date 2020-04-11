@@ -616,6 +616,34 @@ export default {
                         
                     ]
                   },
+                   {
+                    title:'流程管理',
+                    name:'technologicalProcess',
+                    icon:'ios-document',
+                    children:[
+                       
+                   
+                        // {
+                        //     title:'周进展管理',
+                        //     name:'progressManage',
+                        //     href:'progressManage',
+                        //     closable:true,
+                        //     showInTags:false,
+                        //     showInMenus:true,
+                        //     choosed:false
+                        // }, 
+                        {
+                            title:'答辩组管理',
+                            name:'replyTeamManage',
+                            href:'/replyTeamManage',
+                            closable:true,
+                            showInTags:false,
+                            showInMenus:true,
+                            choosed:false
+                        },
+                        
+                    ]
+                  },
 
                 {
                     title:'操作日志',

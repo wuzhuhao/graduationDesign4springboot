@@ -53,7 +53,7 @@ export default {
                     position: 'static'
                 },
             
-            
+             reportStateList:[],
         pagination: {
                 pageSize:10,
                 page: 1,
@@ -297,12 +297,13 @@ export default {
                           console.log(res.data)
                          this.tableData = [];
                           let list = res.data.data.beanList;
+                           this.reportStateList = res.data.dict.report.reportState
                           list.forEach((item, index) => {
                            this.tableData.push({
                               reportSubId: item.reportSubId,
                               reportType: item.reportType,
                               id: item.id,
-                              reportState: item.reportState,
+                               reportState:  this.reportStateList[item.reportState],
                               reportSubtime: item.reportSubtime,
                               reportVersion: item.reportVersion,
                               reportFile: item.reportFile,
@@ -470,7 +471,7 @@ export default {
     },
     exportDataDemo(type){
        
-            window.location.href="http://localhost:8080/graManagement/downFile/exportDemo?type=" + type
+            window.location.href="http://localhost:8080/downFile/exportDemo?type=" + type
         
     }
     

@@ -12,9 +12,7 @@
         <div slot="title-icon">
             <Icon type="ios-game-controller-b" />
         </div>
-        <div slot="title-toolbar">
-            <Button type="info"  style="float:left;margin:0 8px"  @click="exportDataDemo(2)"><Icon type="ios-download-outline"></Icon>导出模板</Button>&nbsp;
-        </div>
+      
         
         <div slot="searchContent" class="search-content-slot">
             <Form :model="formItem" :label-width="100">

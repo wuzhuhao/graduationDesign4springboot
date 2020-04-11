@@ -11,7 +11,7 @@
         </div>
         <div slot="search">
             
-        <Upload action="http://localhost:8080/graManagement/uploadFile/importReplyScoreByExcel"    style="float:left;margin:0 8px">
+        <Upload action="http://localhost:8080/uploadFile/importReplyScoreByExcel"    style="float:left;margin:0 8px">
             <Button  type="info" icon="ios-cloud-upload-outline">批量录入答辩成绩</Button>
         </Upload>
          <Button type="info"  style="float:left;margin:0 8px"  @click="exportDataDemo()"><Icon type="ios-download-outline"></Icon>导出成绩模板</Button>&nbsp;
@@ -183,7 +183,7 @@ export default {
       },
         exportDataDemo(type){
        
-            window.location.href="http://localhost:8080/graManagement/downFile/exportScore" 
+            window.location.href="http://localhost:8080/downFile/exportScore" 
         
     },
      getData(){

@@ -50,6 +50,7 @@ public class ReplyTeam implements Serializable {
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(columnName = "reply_time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Excel(name = "答辩时间", width = 30, orderNum = "4", format = "yyyy/MM/dd HH:mm")
     private Date replyTime;
 

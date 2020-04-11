@@ -10,49 +10,7 @@
             <Icon type="ios-game-controller-b" />
         </div>
         <div slot="title-toolbar">
-            <Button type="primary" icon="md-add"  @click="handleCreate">新增</Button>
-        </div>
-
-        <!-- 条件搜索 -->
-        <div slot="searchContent" class="search-content-slot">
-            <Form :model="formItem" :label-width="80">
-              <Row>
-                <Col span="8">
-                  <FormItem label="id：">
-                    <Input v-model="formItem.id" placeholder="请输入id"></Input>
-                </FormItem>
-                </Col>
-                <Col span="8">
-                  <FormItem label="内容：">
-                    <Input v-model="formItem.progContent" placeholder="请输入内容"></Input>
-                </FormItem>
-                </Col>
-                <Col span="8">
-                  <FormItem label="课题id：">
-                    <Select v-model="formItem.progressSubId">
-                        <Option value="beijing">New York</Option>
-                        <Option value="shanghai">London</Option>
-                        <Option value="shenzhen">Sydney</Option>
-                    </Select>
-                </FormItem>
-                </Col>
-                 
-              </Row>
-          </Form>
-        </div>
-        <div slot="search">
-            
-          <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doSearch">查询</Button>  &nbsp; &nbsp; &nbsp; &nbsp;
-           <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doReset">重置</Button>  &nbsp;
-          <Button type="info"  style="float:left;margin:0 8px"  @click="exportData(1)"><Icon type="ios-download-outline"></Icon>导出数据</Button>&nbsp;
-          <Button type="info" icon="ios-search;margin:0 8px"  style="float:left" @click="delAll">批量删除</Button>  &nbsp;
-        <Upload action="http://localhost:8080/graManagement/uploadFile/importUserByExcel?type=2"    style="float:left;margin:0 8px">
-            <Button  type="info" icon="ios-cloud-upload-outline">批量注册</Button>
-        </Upload>
-         <Button type="info"  style="float:left;margin:0 8px"  @click="exportDataDemo(2)"><Icon type="ios-download-outline"></Icon>导出注册模板</Button>&nbsp;
-        </div>
-        <div slot="btns">
-          <Button type="primary" icon="md-add" @click="handleCreate">添加</Button>
+            <Button type="primary" icon="md-add"  @click="modal12=true">新增</Button>
         </div>
         <div slot="paddingContent">
           <Table border   :columns="columns2" :data="tableData"  @on-selection-change="changeSelect" ref="table"></Table>
@@ -64,62 +22,105 @@
 
     </MasterPage>
 
-
-    <!--  添加和编辑弹出抽屉  +++++++++++++++++++++++++++++++++++++++++++++++++++++     -->
-        <!--  :title 加:为绑定数据 即实现自定义标题  -->
-       <Drawer
-            :title='this.dialogStatus'
-            v-model="value3"
-            width="720"
-            :mask-closable="false"
-            :styles="styles"
-        >
-            <Form :model="formData">
-                <Row :gutter="32">
-                    <Col span="12">
-                        <FormItem label="id" label-position="top">
-                            <Input v-model="formData.id" placeholder="请输入id" />
-                        </FormItem>
-                    </Col>
-                    <Col span="12">
-                        <FormItem label="内容" label-position="top">
-                            <Input v-model="formData.progContent" placeholder="请输入内容">
-                            </Input>
-                        </FormItem>
-                    </Col>
-                </Row>
-                <Row :gutter="32">
-                    <Col span="12">
-                        <FormItem label="创建时间" label-position="top">
-                            <Input v-model="formData.progContentTime" placeholder="请输入创建时间" />
-                        </FormItem>
-                    </Col>
-                    <Col span="12">
-                        <FormItem label="回复内容" label-position="top">
-                            <Input v-model="formData.progReply" placeholder="请输入回复内容">
-                            </Input>
-                        </FormItem>
-                    </Col>
-                </Row>
-                <Row :gutter="32">
-                    <Col span="12">
-                        <FormItem label="回复时间" label-position="top">
-                            <Input v-model="formData.progReplyTime" placeholder="请输入回复时间" />
-                        </FormItem>
-                    </Col>
-                    <Col span="12">
-                        <FormItem label="课题id" label-position="top">
-                            <Input v-model="formData.progressSubId" placeholder="请输入课题id">
-                            </Input>
-                        </FormItem>
-                    </Col>
-                </Row>
-            </Form>
-            <div class="demo-drawer-footer">
-                <Button style="margin-right: 8px" @click="value3 = false">Cancel</Button>
-                <Button type="primary" @click="update()">Submit</Button>
-            </div>
-        </Drawer>    
+<Modal v-model="modal11"   closable @on-ok='edit' :styles="{top: '10px'}":width='1000' >
+          <MasterPage :title="dialogStatus">
+        <div slot="title-icon">
+            <Icon type="ios-game-controller-b" />
+        </div>
+        <div slot="title-toolbar">
+            <Button type="info"  style="float:left;margin:0 8px"  @click="exportDataDemo(2)"><Icon type="ios-download-outline"></Icon>导出模板</Button>&nbsp;
+        </div>
+        
+        <div slot="searchContent" class="search-content-slot">
+            <Form :model="formItem" :label-width="100">
+           <Row>
+                <Col span="24">
+                  <FormItem label="课题名称:  "   class="label">
+                    <Input v-model="formItem1.subName" readonly  size="large"  placeholder="请输入课题名称"></Input>
+                </FormItem>
+                </Col>
+              </Row>
+              
+               <Row>
+                <Col span="24">
+                  <FormItem label="指导教师:  "   class="label">
+                    <Input v-model="formItem1.teaName"  readonly size="large"  placeholder="请输入指导教师"></Input>
+                </FormItem>
+                </Col>
+              </Row>
+               <Row>
+                <Col span="24">
+                  <FormItem label="指导内容:  "   class="label">
+                    <Input v-model="zhidao"  readonly size="large"  placeholder="请输入内容指导"></Input>
+                </FormItem>
+                </Col>
+              </Row>
+              
+             <Row>
+                <Col span="24">
+                  <FormItem label="指导内容:  "    class="label">
+                    <Input v-model="formItem1.progContent"  type="textarea" :autosize="{minRows: 10,maxRows: 20}" size="large"  placeholder="请输入内容指导"></Input>
+                </FormItem>
+                </Col>
+              </Row>
+          </Form>
+        </div>
+       </div>
+         
+        </MasterPage>
+    </Modal>
+    <Modal v-model="modal12"   closable @on-ok='add' :styles="{top: '10px'}":width='1000' >
+       <MasterPage :title="dialogStatus">
+        <div slot="title-icon">
+            <Icon type="ios-game-controller-b" />
+        </div>
+        <div slot="title-toolbar">
+            <Button type="info"  style="float:left;margin:0 8px"  @click="exportDataDemo(2)"><Icon type="ios-download-outline"></Icon>导出模板</Button>&nbsp;
+        </div>
+        
+        <div slot="searchContent" class="search-content-slot">
+            <Form :model="formItem" :label-width="100">
+           <Row>
+                <Col span="24">
+                  <FormItem label="课题名称:  "   class="label">
+                    <Input v-model="formItem1.subName" readonly  size="large"  placeholder="请输入课题名称"></Input>
+                </FormItem>
+                </Col>
+              </Row>
+              
+               <Row>
+                <Col span="24">
+                  <FormItem label="指导教师:  "   class="label">
+                    <Input v-model="formItem1.teaName"  readonly size="large"  placeholder="请输入指导教师"></Input>
+                </FormItem>
+                </Col>
+              </Row>
+               <Row>
+                <Col span="24">
+                  <FormItem label="指导方式:  "   class="label">
+                    <Input v-model="zhidao"  readonly size="large"  placeholder="请输入内容指导"></Input>
+                </FormItem>
+                </Col>
+              </Row>
+              
+             <Row>
+                <Col span="24">
+                  <FormItem label="指导内容:  "    class="label">
+                    <Input v-model="formItem1.progContent"  type="textarea" :autosize="{minRows: 10,maxRows: 20}" size="large"  placeholder="请输入内容指导"></Input>
+                </FormItem>
+                </Col>
+              </Row>
+          </Form>
+        </div>
+       </div>
+         
+        </MasterPage>
+    </Modal>
+    
+    
+    
+     
+  
   
 </section>
 
@@ -129,14 +130,16 @@
 </template>
 <script>
 import MasterPage from '@/components/Master'
-
 export default {
     components:{
-        MasterPage
+        MasterPage,
     },
     data(){
       
       return{
+          zhidao:'面授',
+             modal11: false,
+              modal12: false,
             dialogStatus: '',//title自定义标题
           value3: false,
                 styles: {
@@ -145,6 +148,7 @@ export default {
                     paddingBottom: '53px',
                     position: 'static'
                 },
+                progContent:'',
                 formData: {
                     id: '',
                     progContent: '',
@@ -153,6 +157,13 @@ export default {
                     progReplyTime: '',
                     progressSubId: '',
                 },
+                formItem1: {   
+                    id:'',
+                    progContent: '',
+                    subName:'',
+                    teaName:'',  
+                    progressSubId:'',
+        },
             
         pagination: {
                 pageSize:10,
@@ -173,23 +184,28 @@ export default {
             progressSubId: '',
         },
         columns2: [
-            {
-               type: 'selection',
-               width: 60,
-               align: 'center',
-              fixed: 'left'
-             },
+           
             
             {
-                title: 'id',
-                key: 'id',
+                 title: '序号',
+                type: 'index',
                 width: 100,
                 fixed: 'left',
                 sortable: true
             },
+             {
+                title: '所属课题',
+                key: 'subName',
+                minWidth: 200,
+            },
             {
                 title: '内容',
                 key: 'progContent',
+                minWidth: 100,
+            },
+             {
+                title: '教师回复',
+                key: 'progReply',
                 minWidth: 100,
             },
             {
@@ -197,32 +213,47 @@ export default {
                 key: 'progContentTime',
                 minWidth: 100,
             },
+            // {
+            //     title: '导师回复',
+            //     key: 'progReply',
+            //     minWidth: 100,
+            // }, 
             {
-                title: '导师回复',
-                key: 'progReply',
-                minWidth: 100,
-            }, {
                 title: '回复时间',
                 key: 'progReplyTime',
                 minWidth: 100,
             },
-            {
-                title: '课题id',
-                key: 'progressSubId',
-                minWidth: 100,
-            },{
+           {
                         title: '操作',
                         key: 'action',
                         fixed: 'right',
-                        minWidth: 120,
+                        width: 150,
                         render: (h, params) => {
                             return h('div', [
                                 h('Button', {
                                     props: {
-                                        type: 'text',
+                                        type: 'primary',
                                         size: 'small',
-                                        icon: "icon iconfont icon-shanchu"
+                                     
+                                    }  ,style: {
+                                        marginRight: '5px'
+                                        },
+                                     attrs:{
+                                        title:'修改'
                                     },
+                                      on: {
+                                        click: () => {
+                                        this.select(params.row)             //编辑方法
+                                        }
+                                      }
+                                },'修改'),
+                               
+                                h('Button', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small',
+                                     
+                                    } ,
                                      attrs:{
                                         title:'删除'
                                     },
@@ -231,22 +262,7 @@ export default {
                                         this.delById(params.row)             //编辑方法
                                         }
                                       }
-                                }),
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small',
-                                        icon:'icon iconfont icon-edit'
-                                    },
-                                     attrs:{
-                                        title:'编辑'
-                                    },
-                                      on: {
-                                        click: () => {
-                                        this.edit(params.row)             //编辑方法
-                                        }
-                                      }
-                                })
+                                },'删除')
                             ]);
                         }
                     }
@@ -256,8 +272,61 @@ export default {
   
      created(){
         this.getData(1,10);
+         this.getSubject()
      },
     methods:{
+         getSubject(){
+           let subId = localStorage.getItem("subId") 
+           console.log(subId)
+            this.$axios({     
+                          url: 'sub/listOfChoice',
+                            method: 'get',//请求的方式
+                            params:{
+                                stuId:localStorage.getItem("userId") 
+                            },
+                            // token:localStorage.getItem('token')
+                        }).then(res => {
+                        console.log(res.data)
+                         let list = res.data.data.beanList[0];
+                         this.formItem1.subName=list.subName
+                         this.formItem1.teaName=list.teacher.teaName
+                         this.formItem1.progressSubId = list.subId
+                        }).catch(err => {
+                            console.info('报错的信息',err);
+                            
+                        });
+                        this.getUser()
+                      
+        },
+        add(){
+            
+            this.$axios({     
+                            url: 'progress/add',
+                            method: 'post',//请求的方式
+                            data:this.$Qs.stringify(this.formItem1),
+                            // token:localStorage.getItem('token')
+                        }).then(res => {
+                        console.log(res.data)
+                        this.getData(1,10)
+                        }).catch(err => {
+                            console.info('报错的信息',err);
+                            
+                        });
+                        this.$Modal.remove()
+        },
+        doReset(){
+          this.formItem.progContent=''
+           this.$Modal.remove()
+        },
+         select(row){
+
+           this.formItem1.progContent = row.progContent
+             this.formItem1.id = row.id
+
+            this.modal11 = true;
+       
+      },
+    
        exportData (type) {
                 if (type === 1) {
                     this.$refs.table.exportCsv({
@@ -284,13 +353,22 @@ export default {
       //编辑
         edit(row){
             this.dialogStatus = '编辑';//对应标题
-            this.formData.id = row.id
-            this.formData.progContent = row.progContent
-            this.formData.progContentTime =  row.progContentTime
-            this.formData.progReply =  row.progReply
-            this.formData.progReplyTime =  row.progReplyTime
-            this.formData.progressSubId =  row.progressSubId
-            this.value3 = true
+            console.log
+         
+            this.$axios({     
+                            url: 'progress/update',
+                            method: 'post',//请求的方式
+                            data:this.$Qs.stringify(this.formItem1),
+                            // token:localStorage.getItem('token')
+                        }).then(res => {
+                        console.log(res.data)
+                        this.getData(1,10)
+                        }).catch(err => {
+                            console.info('报错的信息',err);
+                            
+                        });
+                       this.formItem1.progContent =''
+        
         },
         delById(row) {
             this.$Modal.confirm({
@@ -299,7 +377,7 @@ export default {
                 onOk: () => {
                     console.log(row)
                  this.$axios({     
-                            url: 'progress/delete/' + row.id,
+                            url: 'progress/delete?processId=' + row.id,
                             method: 'delete',//请求的方式
                             data:this.$Qs.stringify(this.formData),
                             // token:localStorage.getItem('token')
@@ -348,12 +426,14 @@ export default {
    
       },
       getData(page,pageSize){
+        let userId = localStorage.getItem("userId") 
         let params = this.formItem
+        
        let  token = localStorage.getItem('token')
          this.$axios({
                             
-                            url: 'progress/list?page=' + page  + '&pageSize=' + pageSize,
-                            method: 'get',//请求的方式
+                           url: 'progress/listOfStu?stuId=' + userId + '&page=' + page + '&pageSize=' + pageSize,
+                           method: 'get',//请求的方式
                             params:params,
                             // token:localStorage.getItem('token')
                         }).then(res => {
@@ -361,6 +441,9 @@ export default {
                          this.tableData = [];
                           let list = res.data.data.beanList;
                           list.forEach((item, index) => {
+                            if(item.progReplyTime==null){
+                              item.progReplyTime='未回复'
+                            }
                            this.tableData.push({
                             id: item.id,
                             progContent:item.progContent,
@@ -368,6 +451,7 @@ export default {
                             progReply: item.progReply,
                             progReplyTime: item.progReplyTime,
                             progressSubId: item.progressSubId,
+                            subName:item.subject.subName
                            })
                           })
                   
@@ -404,6 +488,24 @@ export default {
         // this.getData();
         // this.resetFormColumns();//重置
       },
+      handleRender1 () {
+                this.$Modal.confirm({
+                    render: (h) => {
+                        return h('Input', {
+                            props: {
+                                value: this.value,
+                                autofocus: true,
+                                placeholder: 'Please enter your name...'
+                            },
+                            on: {
+                                input: (val) => {
+                                    this.value = val;
+                                }
+                            }
+                        })
+                    }
+                })
+            },
        //多选
     changeSelect(e) {
       this.selectList = e;
@@ -506,7 +608,7 @@ export default {
     },
     exportDataDemo(type){
        
-            window.location.href="http://localhost:8080/graManagement/downFile/exportDemo?type=" + type
+            window.location.href="http://localhost:8080/downFile/exportDemo?type=" + type
         
     }
     

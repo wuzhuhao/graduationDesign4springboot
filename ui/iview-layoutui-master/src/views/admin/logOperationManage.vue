@@ -9,33 +9,23 @@
         <div slot="title-icon">
             <Icon type="ios-game-controller-b" />
         </div>
-        <div slot="title-toolbar">
-            <Button type="primary" icon="md-add"  @click="handleCreate">新增</Button>
-        </div>
+      
 
         <!-- 条件搜索 -->
         <div slot="searchContent" class="search-content-slot">
             <Form :model="formItem" :label-width="80">
               <Row>
                 <Col span="8">
-                  <FormItem label="id：">
-                    <Input v-model="formItem.teaId" placeholder="请输入id"></Input>
+                  <FormItem label="操作人：">
+                    <Input v-model="formItem.operaRole" placeholder="请输入操作人"></Input>
                 </FormItem>
                 </Col>
                 <Col span="8">
-                  <FormItem label="姓名：">
-                    <Input v-model="formItem.teaName" placeholder="请输入姓名"></Input>
+                  <FormItem label="内容：">
+                    <Input v-model="formItem.operaContent" placeholder="请输入内容"></Input>
                 </FormItem>
                 </Col>
-                <Col span="8">
-                  <FormItem label="学院：">
-                    <Select v-model="formItem.select">
-                        <Option value="beijing">New York</Option>
-                        <Option value="shanghai">London</Option>
-                        <Option value="shenzhen">Sydney</Option>
-                    </Select>
-                </FormItem>
-                </Col>
+                
                  
               </Row>
           </Form>
@@ -44,15 +34,7 @@
             
           <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doSearch">查询</Button>  &nbsp; &nbsp; &nbsp; &nbsp;
            <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doReset">重置</Button>  &nbsp;
-          <Button type="info"  style="float:left;margin:0 8px"  @click="exportData(1)"><Icon type="ios-download-outline"></Icon>导出数据</Button>&nbsp;
-          <Button type="info" icon="ios-search;margin:0 8px"  style="float:left" @click="delAll">批量删除</Button>  &nbsp;
-        <Upload action="http://localhost:8080/graManagement/uploadFile/importUserByExcel?type=2"    style="float:left;margin:0 8px">
-            <Button  type="info" icon="ios-cloud-upload-outline">批量注册</Button>
-        </Upload>
-         <Button type="info"  style="float:left;margin:0 8px"  @click="exportDataDemo(2)"><Icon type="ios-download-outline"></Icon>导出注册模板</Button>&nbsp;
-        </div>
-        <div slot="btns">
-          <Button type="primary" icon="md-add" @click="handleCreate">添加</Button>
+         
         </div>
         <div slot="paddingContent">
           <Table border   :columns="columns2" :data="tableData"  @on-selection-change="changeSelect" ref="table"></Table>
@@ -200,119 +182,63 @@ export default {
          selectCount: 0, // 多选计数
         tableData:[],
         formItem: {
-            teaId: '',
-            teaPassword: '',
-            teaName: '',
-            teaSex: '',
-            teaAge: '',
-            teaBirthday: '',
-            teaPhone: '',
-            teaMail: '',
-            teaAddress: '',
-            teaRemarks: '',
-            academyId: '',
+            id: '',
+            operaRole:'',
+            operaContent:'',
+             operaTime:'',
         },
         columns2: [
-            {
-               type: 'selection',
-               width: 60,
-               align: 'center',
-              fixed: 'left'
-             },
+           
             
             {
                 title: 'id',
-                key: 'teaId',
+                key: 'id',
                 width: 100,
                 fixed: 'left',
                 sortable: true
             },
             {
-                title: '教师密码',
-                key: 'teaPassword',
+                title: '操作人',
+                key: 'operaRole',
+                windth:100,
                 minWidth: 100,
             },
             {
-                title: '教师名称',
-                key: 'teaName',
-                minWidth: 100,
+                title: '操作内容',
+                key: 'operaContent',
+                minWidth: 300,
+                tooltip:true,  
+              render: (h, params) => {
+                    let texts = params.row.operaContent.title;//表格列显示文字
+                   
+                    return h('div', [
+                        h('Tooltip', {
+                                props: {
+                                    placement: 'top',
+                                    transfer: true
+                                }
+                            }, [//这个中括号表示是Tooltip标签的子标签
+                                texts,//表格列显示文字
+                                h('div', {
+                                    slot: 'content',
+                                    style: {
+                                        whiteSpace: 'normal'
+                                    }
+                                }, JSON.stringify(params.row.operaContent))//整个的信息即气泡内文字
+                                ])
+                    ]);
+            }
+
+                
+
+
             }, {
-                title: '教师性别',
-                key: 'teaSex',
-                minWidth: 100,
-            },
-            {
-                title: '教师年龄',
-                key: 'teaAge',
-                minWidth: 100,
-            },
-            {
-                title: '教师生日',
-                key: 'teaBirthday',
-                minWidth: 100,
-            } ,
-            {
-                title: '教师电话',
-                key: 'teaPhone',
-                minWidth: 100,
-            },
-            {
-                title: '教师邮箱',
-                key: 'teaMail',
-                minWidth: 100,
-            },
-            {
-                title: '教师地址',
-                key: 'teaAddress',
-                minWidth: 100,
-            }, {
-                title: '备注',
-                key: 'teaRemarks',
-                minWidth: 100,
-            },{
-                title: '学院id',
-                key: 'academyId',
-                minWidth: 100,
-            },{
-                        title: '操作',
-                        key: 'action',
-                        fixed: 'right',
-                        minWidth: 120,
-                        render: (h, params) => {
-                            return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small',
-                                        icon: "icon iconfont icon-shanchu"
-                                    },
-                                     attrs:{
-                                        title:'删除'
-                                    },
-                                      on: {
-                                        click: () => {
-                                        this.delById(params.row)             //编辑方法
-                                        }
-                                      }
-                                }),
-                                h('Button', {
-                                    props: {
-                                        type: 'text',
-                                        size: 'small',
-                                        icon:'icon iconfont icon-edit'
-                                    },
-                                     attrs:{
-                                        title:'编辑'
-                                    },
-                                      on: {
-                                        click: () => {
-                                        this.edit(params.row)             //编辑方法
-                                        }
-                                      }
-                                })
-                            ]);
-                        }
-                    }
+                title: '操作时间',
+                key: 'operaTime',
+                windth:200,
+                minWidth: 150,
+            }
+           
         ]
       }
     },
@@ -420,7 +346,7 @@ export default {
        let  token = localStorage.getItem('token')
          this.$axios({
                             
-                            url: 'tea/list?page=' + page  + '&pageSize=' + pageSize,
+                            url: 'operation/list?page=' + page  + '&pageSize=' + pageSize,
                             method: 'get',//请求的方式
                             params:params,
                             // token:localStorage.getItem('token')
@@ -428,19 +354,13 @@ export default {
                           console.log(res.data)
                          this.tableData = [];
                           let list = res.data.data.beanList;
-                          list.forEach((item, index) => {
+                          list.forEach((item, index) => {        
                            this.tableData.push({
-                              teaId: item.teaId,
-                              teaPassword: item.teaPassword,
-                              teaName:item.teaName,
-                              teaSex: item.teaSex,
-                              teaAge: item.teaAge,
-                              teaBirthday:item.teaBirthday,
-                              teaPhone:item.teaPhone,
-                              teaMail:item.teaMail,
-                              teaAddress:item.teaAddress,
-                              teaRemarks: item.teaRemarks,
-                              academyId: item.academyId,
+                              id: item.id,
+                              operaRole: item.operaRole,
+                              operaContent:item.operaContent,
+                              operaTime: item.operaTime,
+                            
                            })
                           })
                   
@@ -574,23 +494,15 @@ export default {
         this.drawer = false;
       },
       doReset(){
-        this.formItem.teaId = ''
-        this.formItem.teaPassword = ''
-        this.formItem.teaName = ''
-        this.formItem.teaSex = ''
-        this.formItem.teaAge = ''
-        this.formItem.teaBirthday = ''
-        this.formItem.teaPhone = ''
-        this.formItem.teaMail = ''
-        this.formItem.teaAddress = ''
-        this.formItem.teaRemarks = ''
-        this.formItem.academyId = ''
-        this.formItem.academy = ''
+        this.formItemid= '',
+        this.formItemoperaRole='',
+        this.formItemoperaContent='',
+        this.formItemoperaTime='',
         this.getData(1,10);
     },
     exportDataDemo(type){
        
-            window.location.href="http://localhost:8080/graManagement/downFile/exportDemo?type=" + type
+            window.location.href="http://localhost:8080/downFile/exportDemo?type=" + type
         
     }
     

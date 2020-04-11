@@ -82,7 +82,7 @@ export default {
                     position: 'static'
                 },
             
-            
+         taskStateList:[], 
         pagination: {
                 pageSize:10,
                 page: 1,
@@ -291,11 +291,12 @@ export default {
                           console.log(res.data)
                          this.tableData = [];
                           let list = res.data.data.beanList;
+                           this.taskStateList = res.data.dict.task.taskState
                           list.forEach((item, index) => {
                            this.tableData.push({
                               id : item.id,
                               taskFile :item.taskFile,
-                              taskState : item.taskState,
+                             taskState :  this.taskStateList[item.taskState],
                               taskNumber : item.taskNumber,
                               taskSubName : item.subject.subName,
                               teaName: item.subject.teacher.teaName,
@@ -465,7 +466,7 @@ export default {
     },
     exportDataDemo(type){
        
-            window.location.href="http://localhost:8080/graManagement/downFile/exportDemo?type=" + type
+            window.location.href="http://localhost:8080/downFile/exportDemo?type=" + type
         
     }
     
