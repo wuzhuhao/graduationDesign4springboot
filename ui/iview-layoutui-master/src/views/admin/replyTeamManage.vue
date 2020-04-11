@@ -33,6 +33,11 @@
           <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doSearch">查询</Button>  &nbsp; &nbsp; &nbsp; &nbsp;
            <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doReset">重置</Button>  &nbsp;
           <Button type="info"  style="float:left;margin:0 8px"  @click="exportData(1)"><Icon type="ios-download-outline"></Icon>导出数据</Button>&nbsp;
+     <Upload action="http://localhost:8080/uploadFile/importReplyTeamByExcel"   :on-success="UpdateSuccess" style="float:left;margin:0 8px">
+            <Button  type="info" icon="ios-cloud-upload-outline">导入答辩组</Button>
+        </Upload>
+         <Button type="info"  style="float:left;margin:0 8px"  @click="exportDataDemo(1)"><Icon type="ios-download-outline"></Icon>导出答辩组模板</Button>&nbsp;
+ 
     
         </div>
         <div slot="btns">
@@ -381,7 +386,7 @@ export default {
                     console.log(row)
                  this.$axios({     
                             url: 'sysdict/delete/' + row.id,
-                            method: 'delete',//请求的方式
+                            method: 'get',//请求的方式
                             data:this.$Qs.stringify(this.formData),
                             // token:localStorage.getItem('token')
                         }).then(res => {
@@ -504,7 +509,7 @@ export default {
         onOk: () => {
            this.$axios({     
                             url: 'sysdict/deleteAll',
-                            method: 'delete',//请求的方式
+                            method: 'get',//请求的方式
                             params: {lstprimaryKey:lstprimaryKey},
                             paramsSerializer: params => {
                                 return this.$Qs.stringify(params, { indices: false })
@@ -589,7 +594,7 @@ export default {
     },
     exportDataDemo(type){
        
-            window.location.href="http://localhost:8080/downFile/exportDemo?type=" + type
+            window.location.href="http://localhost:8080/downFile/exportReplyTeamDemo"
         
     }
     

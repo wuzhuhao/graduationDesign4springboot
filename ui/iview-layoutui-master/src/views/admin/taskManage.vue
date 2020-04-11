@@ -361,7 +361,7 @@ export default {
                     console.log(row)
                  this.$axios({     
                             url: 'task/delete/' + row.teaId,
-                            method: 'delete',//请求的方式
+                            method: 'get',//请求的方式
                             data:this.$Qs.stringify(this.formItem),
                             // token:localStorage.getItem('token')
                         }).then(res => {
@@ -505,7 +505,7 @@ export default {
         onOk: () => {
            this.$axios({     
                             url: 'task/deleteAll',
-                            method: 'delete',//请求的方式
+                            method: 'get',//请求的方式
                             params: {lstprimaryKey:lstprimaryKey},
                             paramsSerializer: params => {
                                 return this.$Qs.stringify(params, { indices: false })

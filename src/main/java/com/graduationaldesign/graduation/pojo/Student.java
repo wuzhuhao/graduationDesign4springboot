@@ -1,6 +1,8 @@
 package com.graduationaldesign.graduation.pojo;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
+import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUtil;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -271,6 +273,12 @@ public class Student implements Serializable, User {
      * @param stuBirthday the value for t_student.stu_birthday, 学生生日
      */
     public void setStuBirthday(String stuBirthday) {
+        try {
+            DateTime parse = DateUtil.parse(stuBirthday);
+            stuBirthday = DateUtil.formatDateTime(parse);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         this.stuBirthday = stuBirthday == null ? null : stuBirthday.trim();
     }
 

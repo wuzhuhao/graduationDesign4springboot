@@ -9,6 +9,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,7 @@ import java.util.Map;
 @RequestMapping("/redis")
 @Api(Pojo = "Redis", description = "redis控制层")
 public class RedisController {
-    
+
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
     @Autowired
@@ -51,13 +52,15 @@ public class RedisController {
         Map<String, Object> result = new HashMap<>();
         for (String keyPre : REDIS_KEY) {
             Map<String, Object> map = new HashMap<>();
+            List list = new ArrayList();
             for (String suffix : lstDay) {
                 String key = keyPre + ":" + suffix;
                 String numberString = stringRedisTemplate.opsForValue().get(key);
                 int number = numberString == null ? 0 : Integer.parseInt(numberString);
                 map.put(suffix, number);
+                list.add(number);
             }
-            result.put(keyPre.replaceAll(":", "_"), map);
+            result.put(keyPre.replaceAll(":", "_"), list);
         }
         return ResponseStatus.success(result, this);
     }

@@ -90,7 +90,7 @@ public class SubjectController {
      * @param sudId
      * @return
      */
-    @RequestMapping(value = "/delete/{sudId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{sudId}", method = RequestMethod.GET)
     public ResponseEntity<Object> deleteSubject(@PathVariable(value = "sudId") String sudId) {
         try {
             return ResponseStatus.success(subjectService.deleteByPrimaryKey(sudId), this);
@@ -250,7 +250,7 @@ public class SubjectController {
         }
     }
 
-    @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/deleteAll", method = RequestMethod.GET)
     public ResponseEntity<Object> deleteSubjectList(
             @RequestParam(value = "primaryKey") List<String> lstprimaryKey) {
         ResponseEntity<Object> result = null;
@@ -276,7 +276,7 @@ public class SubjectController {
         }
     }
 
-    @RequestMapping(value = "/confirmScore", method = RequestMethod.POST)
+    @RequestMapping(value = "/confirmScore", method = RequestMethod.GET)
     public ResponseEntity<Object> confirmScore(String subId) {
         try {
             return ResponseStatus.success(subjectService.confirmScore(subId), this);

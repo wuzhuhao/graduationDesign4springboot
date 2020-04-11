@@ -103,7 +103,7 @@ export default {
             } ,
             {
                 title: '总成绩',
-                key: ' subLasScore',
+                key: 'subLastScore',
                 minWidth: 100,
             } ,{
                         title: '操作',
@@ -125,7 +125,7 @@ export default {
                                     },
                                       on: {
                                         click: () => {
-                                        this.delById(params.row)             //编辑方法
+                                        this.confirmScore(params.row.subId)             //编辑方法
                                         }
                                       }
                                 },'最终评定'),
@@ -198,6 +198,23 @@ export default {
         
    
       },
+      confirmScore(subId){
+         this.$axios({
+                            
+                            url: 'sub/confirmScore?subId=' + subId ,
+                            method: 'get',//请求的方式
+                           
+                            // token:localStorage.getItem('token')
+                        }).then(res => {
+                          
+                            this.$Message.success(res.data.data)
+                            this.getData()
+                          
+                        }).catch(err => {
+                            console.info('报错的信息',err);
+                            
+                        });
+      },
      getData(){
         let params = this.formItem
        let  userId = localStorage.getItem('userId')
@@ -224,11 +241,13 @@ export default {
                               replyTeam: item.replyTeam,
                               replyTeamId: item.replyTeamId,
                               scoreSubId:item.scoreSubId,
+                              subId:item.subject.subId,
                               subName: item.subject.subName,
                               subLastScore: item.subject.subLastScore,
                               stuName: item.subject.student.stuName,
-                              subLasScore:item.subject.student.subLasScore,
+                             
                            })
+                       
                           })
                   
                           

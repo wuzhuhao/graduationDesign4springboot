@@ -53,7 +53,7 @@ public class TeamTeaRelateController {
 
     }
 
-    @RequestMapping(value = "/delete/{primaryKey}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{primaryKey}", method = RequestMethod.GET)
     public ResponseEntity<Object> deleteSubject(
             @PathVariable(value = "primaryKey") Integer primaryKey) {
         ResponseEntity<Object> result = null;
@@ -82,7 +82,7 @@ public class TeamTeaRelateController {
         return ResponseStatus.success(teamTeaRelateService.listByPage(params, page, pageSize), this);
     }
 
-    @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/deleteAll", method = RequestMethod.GET)
     public ResponseEntity<Object> deleteTeamTeaRelateList(List<Integer> lstprimaryKey) {
         ResponseEntity<Object> result = null;
         try {

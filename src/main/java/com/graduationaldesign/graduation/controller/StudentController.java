@@ -65,7 +65,7 @@ public class StudentController {
 
     }
 
-    @RequestMapping(value = "/delete/{primaryKey}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{primaryKey}", method = RequestMethod.GET)
     public ResponseEntity<Object> deleteSubject(
             @PathVariable(value = "primaryKey") String primaryKey) {
         ResponseEntity<Object> result = null;
@@ -105,8 +105,8 @@ public class StudentController {
         }
     }
 
-    @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> deleteStudentList(List<String> lstprimaryKey) {
+    @RequestMapping(value = "/deleteAll", method = RequestMethod.GET)
+    public ResponseEntity<Object> deleteStudentList(@RequestParam List<String> lstprimaryKey) {
         ResponseEntity<Object> result = null;
         try {
             studentService.deleteByPrimaryKeyIn(lstprimaryKey);

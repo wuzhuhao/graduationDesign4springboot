@@ -345,7 +345,7 @@ export default {
         onOk: () => {
            this.$axios({     
                             url: 'task/deleteAll',
-                            method: 'delete',//请求的方式
+                            method: 'get',//请求的方式
                             params: {lstprimaryKey:lstprimaryKey},
                             paramsSerializer: params => {
                                 return this.$Qs.stringify(params, { indices: false })

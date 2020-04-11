@@ -49,7 +49,7 @@ public class ReportController {
         }
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public ResponseEntity<Object> delete(Integer reportId) {
         try {
             return ResponseStatus.success(reportService.deleteById(reportId), this);
@@ -125,7 +125,8 @@ public class ReportController {
                                             @RequestParam(required = false, defaultValue = "1") int page, int reportType,
                                             String stuId,
                                             @RequestParam(required = false, defaultValue = "5") int pageSize) {
-        Student student = (Student) tokenService.getUserByToken(request);
+//        Student student = (Student) tokenService.getUserByToken(request);
+        Student student;
         student = new Student();
         student.setStuId(stuId);
         try {
@@ -163,7 +164,7 @@ public class ReportController {
         }
     }
 
-    @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/deleteAll", method = RequestMethod.GET)
     public ResponseEntity<Object> deleteReportList(
             @RequestParam(value = "primaryKey") List<Integer> lstprimaryKey) {
         ResponseEntity<Object> result = null;

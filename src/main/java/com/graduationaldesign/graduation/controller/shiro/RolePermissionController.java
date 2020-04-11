@@ -60,7 +60,7 @@ public class RolePermissionController {
 
     }
 
-    @RequestMapping(value = "/delete/{primaryKey}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{primaryKey}", method = RequestMethod.GET)
     public ResponseEntity<Object> deleteSubject(
             @PathVariable(value = "primaryKey") long primaryKey) {
         ResponseEntity<Object> result = null;
@@ -99,7 +99,7 @@ public class RolePermissionController {
         }
     }
 
-    @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/deleteAll", method = RequestMethod.GET)
     public ResponseEntity<Object> deleteRolePermissionList(List<Long> lstprimaryKey) {
         ResponseEntity<Object> result = null;
         try {

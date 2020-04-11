@@ -58,7 +58,7 @@ public class AdminController {
 
     }
 
-    @RequestMapping(value = "/delete/{primaryKey}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{primaryKey}", method = RequestMethod.GET)
     public ResponseEntity<Object> deleteSubject(
             @PathVariable(value = "primaryKey") String primaryKey) {
         ResponseEntity<Object> result = null;
@@ -97,7 +97,7 @@ public class AdminController {
         }
     }
 
-    @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/deleteAll", method = RequestMethod.GET)
     public ResponseEntity<Object> deleteAdminList(
             @RequestParam(value = "primaryKey") List<String> lstprimaryKey) {
         ResponseEntity<Object> result = null;

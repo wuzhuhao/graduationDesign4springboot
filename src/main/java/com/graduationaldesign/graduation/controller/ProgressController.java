@@ -91,7 +91,7 @@ public class ProgressController {
         }
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public ResponseEntity<Object> delete(Integer processId) {
         try {
             return ResponseStatus.success(progressService.deleteByPrimaryKey(processId), this);
@@ -169,7 +169,7 @@ public class ProgressController {
         }
     }
 
-    @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/deleteAll", method = RequestMethod.GET)
     public ResponseEntity<Object> deleteProgressList(
             @RequestParam(value = "primaryKey") List<Integer> lstprimaryKey) {
         ResponseEntity<Object> result = null;

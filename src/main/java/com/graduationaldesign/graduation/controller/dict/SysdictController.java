@@ -57,7 +57,7 @@ public class SysdictController {
 
     }
 
-    @RequestMapping(value = "/delete/{primaryKey}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{primaryKey}", method = RequestMethod.GET)
     public ResponseEntity<Object> deleteSubject(
             @PathVariable(value = "primaryKey") Long primaryKey) {
         ResponseEntity<Object> result = null;
@@ -96,7 +96,7 @@ public class SysdictController {
         }
     }
 
-    @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/deleteAll", method = RequestMethod.GET)
     public ResponseEntity<Object> deleteSysdictList(List<Long> lstprimaryKey) {
         ResponseEntity<Object> result = null;
         try {

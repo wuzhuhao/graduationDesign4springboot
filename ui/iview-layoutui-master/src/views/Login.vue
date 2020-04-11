@@ -184,10 +184,17 @@ export default {
                                 }
                         
 
-                        }).catch(err => {
-                            console.info('报错的信息',err);
-                            
+                        },err => {
+                        // 对响应错误做些什么
+                        console.log('err', err.response) // 修改后
+                        this.$Message.error(err.response.data.message);
+                        return Promise.reject(err)
                         });
+                        // .catch(err => {
+                        //     console.info('报错的信息',error.response);
+                        //     this.$Message.error(err);
+                            
+                        // });
                     } else {
                         console.info(this.$Message.error('表单校验失败!'));
                         

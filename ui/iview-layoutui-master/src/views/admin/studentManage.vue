@@ -29,11 +29,11 @@
                 </Col>
                 <Col span="8">
                   <FormItem label="学院：">
-                    <Select v-model="formItem.select">
-                        <Option value="beijing">New York</Option>
-                        <Option value="shanghai">London</Option>
-                        <Option value="shenzhen">Sydney</Option>
-                    </Select>
+                    <Select v-model="formItem.academyId">
+    
+                            <Option v-for="(item,index) in academyIdList" :value="index"  >{{item}} </Option>
+    
+                        </Select>
                 </FormItem>
                 </Col>
                  
@@ -46,7 +46,7 @@
            <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doReset">重置</Button>  &nbsp;
           <Button type="info"  style="float:left;margin:0 8px"  @click="exportData(1)"><Icon type="ios-download-outline"></Icon>导出数据</Button>&nbsp;
           <Button type="info" icon="ios-search;margin:0 8px"  style="float:left" @click="delAll">批量删除</Button>  &nbsp;
-        <Upload action="http://localhost:8080/uploadFile/importUserByExcel?type=1"    style="float:left;margin:0 8px">
+        <Upload action="http://localhost:8080/uploadFile/importUserByExcel?type=1"   :on-success="UpdateSuccess" style="float:left;margin:0 8px">
             <Button  type="info" icon="ios-cloud-upload-outline">批量注册</Button>
         </Upload>
          <Button type="info"  style="float:left;margin:0 8px"  @click="exportDataDemo(1)"><Icon type="ios-download-outline"></Icon>导出注册模板</Button>&nbsp;
@@ -227,6 +227,7 @@ export default {
          selectList: [], // 多选数据
          selectCount: 0, // 多选计数
         tableData:[],
+        academyIdList:[],
         formItem: {
           stuId: '',
           stuPassword: '',
@@ -252,10 +253,11 @@ export default {
              },
            
             {
-                title: '账号',
+                title: '学号',
                 key: 'stuId',
-                 width: 100,
+                 width: 200,
                 fixed: 'left',
+                minWidth: 150,
                 sortable: true
             },
             {
@@ -411,7 +413,7 @@ export default {
                     console.log(row)
                  this.$axios({     
                             url: 'stu/delete/' + row.stuId,
-                            method: 'delete',//请求的方式
+                            method: 'get',//请求的方式
                             data:this.$Qs.stringify(this.formData),
                             // token:localStorage.getItem('token')
                         }).then(res => {
@@ -444,7 +446,7 @@ export default {
         }else if(this.dialogStatus == '编辑'){
              this.$axios({     
                             url: 'stu/update',
-                            method: 'put',//请求的方式
+                            method: 'post',//请求的方式
                             data:this.$Qs.stringify(this.formData),
                             // token:localStorage.getItem('token')
                         }).then(res => {
@@ -471,6 +473,7 @@ export default {
                           console.log(res.data)
                          this.tableData = [];
                           let list = res.data.data.beanList;
+                           this.academyIdList = res.data.dict.student.academyId
                           list.forEach((item, index) => {
                            this.tableData.push({
                               stuId: item.stuId,
@@ -485,7 +488,7 @@ export default {
                               stuMail: item.stuMail,
                               stuAddress: item.stuAddress,
                               stuRemarks: item.stuRemarks,
-                              academyId: item.academyId,
+                              academyId: this.academyIdList[item.academyId],
                             //   academy: item.academy
                            })
                           })
@@ -553,8 +556,9 @@ export default {
         onOk: () => {
            this.$axios({     
                             url: 'stu/deleteAll',
-                            method: 'delete',//请求的方式
+                            method: 'get',//请求的方式
                             params: {lstprimaryKey:lstprimaryKey},
+                            withCredentials:true,
                             paramsSerializer: params => {
                                 return this.$Qs.stringify(params, { indices: false })
                             }
@@ -636,6 +640,9 @@ export default {
         this.formItem.stuRemarks = ''
         this.formItem.academyId = ''
          this.getData(1,10);
+    },
+    UpdateSuccess(){
+        this.$router.go(0) 
     },
     exportDataDemo(type){
       

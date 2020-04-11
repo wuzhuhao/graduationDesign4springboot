@@ -414,6 +414,7 @@ export default {
              Info (row) {
                  console.log(row.dictType=== 'model')
                 if (row.dictType === 'model') {
+                  this.formItem.dictDescription=''
                     this.formItem.dictType='item'
                     this.formItem.dictParentid = row.id;
                    this.formData.dictType= 'item'
@@ -421,6 +422,7 @@ export default {
                    this.title = '实体类详情'
                     this.columns = this.columns3
                 } else if (row.dictType === 'item') {
+                   this.formItem.dictDescription='';
                   this.dictShow=true
                      this.formItem.dictType='dict'
                       this.formItem.dictParentid = row.id;
@@ -454,6 +456,7 @@ export default {
             }else if( this.formItem.dictType=='item'){
                 this.dictValueLabel = '字典名称:'
                 this.dictDescriptionLabel = '字典描述:'
+               
             }else{
                 this.dictValueLabel = 'key:'
                 this.dictDescriptionLabel = '值描述:'
@@ -474,7 +477,7 @@ export default {
                     console.log(row)
                  this.$axios({     
                             url: 'sysdict/delete/' + row.id,
-                            method: 'delete',//请求的方式
+                            method: 'get',//请求的方式
                             data:this.$Qs.stringify(this.formData),
                             // token:localStorage.getItem('token')
                         }).then(res => {
@@ -619,7 +622,7 @@ export default {
         onOk: () => {
            this.$axios({     
                             url: 'sysdict/deleteAll',
-                            method: 'delete',//请求的方式
+                            method: 'get',//请求的方式
                             params: {lstprimaryKey:lstprimaryKey},
                             paramsSerializer: params => {
                                 return this.$Qs.stringify(params, { indices: false })

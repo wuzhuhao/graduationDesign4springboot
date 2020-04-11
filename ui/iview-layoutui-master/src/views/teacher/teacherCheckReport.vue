@@ -23,7 +23,7 @@
                   <FormItem label="任务内容">
                     <Input v-model="formItem.taskContent" placeholder="请输入任务内容"></Input>
                 </FormItem>
-                </Col>
+                 </Col>
                 <Col span="8">
                   <FormItem label="课程id：">
                     <Select v-model="formItem.select">
@@ -51,7 +51,7 @@
 
     </MasterPage>
 
- <Modal v-model="modal11"   closable  :styles="{top: '10px'}":width='1200' >
+ <Modal v-model="modal11"   closable  :styles="{top: '10px'}" :width='1200' >
         <info></info>
     </Modal>
   
@@ -243,7 +243,7 @@ export default {
                     console.log(row)
                  this.$axios({     
                             url: 'task/delete/' + row.teaId,
-                            method: 'delete',//请求的方式
+                            method: 'get',//请求的方式
                             data:this.$Qs.stringify(this.formItem),
                             // token:localStorage.getItem('token')
                         }).then(res => {
@@ -310,12 +310,13 @@ export default {
                          this.tableData = [];
                           let list = res.data.data.beanList;
                            this.reportStateList = res.data.dict.report.reportState
+                           console.log(this.reportStateList)
                           list.forEach((item, index) => {
                            this.tableData.push({
                               reportSubId: item.reportSubId,
                               reportType: item.reportType,
                               id: item.id,
-                              reportState:  this.reportStateList[item.reportState],
+                              reportState: this.reportStateList[item.reportState],
                               reportSubtime: item.reportSubtime,
                               reportVersion: item.reportVersion,
                               reportFile: item.reportFile,
@@ -395,7 +396,7 @@ export default {
         onOk: () => {
            this.$axios({     
                             url: 'task/deleteAll',
-                            method: 'delete',//请求的方式
+                            method: 'get',//请求的方式
                             params: {lstprimaryKey:lstprimaryKey},
                             paramsSerializer: params => {
                                 return this.$Qs.stringify(params, { indices: false })

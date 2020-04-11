@@ -80,7 +80,7 @@ public class TaskController {
         return ResponseStatus.success(taskService.insertSelective(task), this);
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public ResponseEntity<Object> delTask(Integer id) {
         try {
             return ResponseStatus.success(taskService.deleteByPrimaryKey(id), this);
@@ -121,7 +121,7 @@ public class TaskController {
         }
     }
 
-    @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/deleteAll", method = RequestMethod.GET)
     public ResponseEntity<Object> deleteTaskList(
             @RequestParam(value = "primaryKey") List<Integer> lstprimaryKey) {
         ResponseEntity<Object> result = null;
