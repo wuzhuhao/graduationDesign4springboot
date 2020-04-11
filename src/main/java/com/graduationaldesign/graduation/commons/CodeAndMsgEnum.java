@@ -8,6 +8,9 @@ import java.util.Map;
  * Created by Administrator on 2018/11/13.
  */
 public enum CodeAndMsgEnum {
+    /**
+     *
+     */
     SUCCESS(100200, "请求受理成功！"),
     INFO(100204, "请求受理成功，响应数据为空！"),
     UNAUTHENTIC(100401, "无权访问，当前是匿名访问，请先登录！"),

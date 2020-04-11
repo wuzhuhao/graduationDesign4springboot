@@ -10,6 +10,7 @@ import com.graduationaldesign.graduation.pojo.helper.Column;
 import com.graduationaldesign.graduation.pojo.helper.MyPrimaryKey;
 import com.graduationaldesign.graduation.pojo.helper.Table;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -47,6 +48,7 @@ public class ReplyTeam implements Serializable {
      * 答辩时间
      * 表字段 : reply_team.reply_time
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(columnName = "reply_time")
     @Excel(name = "答辩时间", width = 30, orderNum = "4", format = "yyyy/MM/dd HH:mm")
     private Date replyTime;

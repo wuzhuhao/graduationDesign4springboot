@@ -152,7 +152,9 @@ public class TaskController {
         Task task = taskService.selectByPrimaryKey(primaryKey);
         params = BeanUtil.beanToMap(task);
         //这里是我说的一行代码
-        FileUtil.exportWord("word/task.docx", "/test", "任务书.docx", params, request, response);
+        String tempPath = "word/task.docx";
+        tempPath = "/usr/local/graduation/word/task.docx";
+        FileUtil.exportWord(tempPath, "/test", "任务书.docx", params, request, response);
     }
 
 //    @RequestMapping("/export")

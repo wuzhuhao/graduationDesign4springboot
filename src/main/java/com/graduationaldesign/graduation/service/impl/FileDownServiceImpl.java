@@ -100,8 +100,6 @@ public class FileDownServiceImpl implements FileDownService {
             e.getSubject();
             e.getReplyTeam();
         });
-        FileUtil.exportExcel(scoreRecordList, "答辩信息表", "中山大学南方学院", ScoreRecord.class,
-                "答辩信息表.xls",
-                response);
+        FileUtil.exportExcel(scoreRecordList, "答辩信息表", "中山大学南方学院", ScoreRecord.class, "答辩信息表.xls", response);
     }
 }

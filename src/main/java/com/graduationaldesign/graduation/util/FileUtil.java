@@ -8,6 +8,16 @@ import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
 import cn.afterturn.easypoi.word.WordExportUtil;
 import cn.hutool.core.lang.Assert;
 import io.micrometer.core.instrument.util.StringUtils;
+import org.apache.poi.hssf.usermodel.DVConstraint;
+import org.apache.poi.hssf.usermodel.HSSFDataValidation;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddressList;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -16,15 +26,6 @@ import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.apache.poi.hssf.usermodel.DVConstraint;
-import org.apache.poi.hssf.usermodel.HSSFDataValidation;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.util.CellRangeAddressList;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @Author: wuzhuhao
@@ -46,8 +47,7 @@ public class FileUtil {
      * @param request      HttpServletRequest
      * @param response     HttpServletResponse
      */
-    public static void exportWord(String templatePath, String temDir, String fileName,
-            Map<String, Object> params, HttpServletRequest request, HttpServletResponse response) {
+    public static void exportWord(String templatePath, String temDir, String fileName, Map<String, Object> params, HttpServletRequest request, HttpServletResponse response) {
         Assert.notNull(templatePath, "模板路径不能为空");
         Assert.notNull(temDir, "临时文件路径不能为空");
         Assert.notNull(fileName, "导出文件名不能为空");
@@ -74,6 +74,8 @@ public class FileUtil {
             response.setContentType("application/force-download");
             // 设置文件名
             response.addHeader("Content-Disposition", "attachment;fileName=" + fileName);
+//            response.setContentLengthLong();
+            response.setHeader("Access-Control-Expose-Headers", "FileName");
             OutputStream out = response.getOutputStream();
             doc.write(out);
             out.close();
@@ -85,7 +87,7 @@ public class FileUtil {
     }
 
     public static void exportExcel(List<?> list, String title, String sheetName, Class<?> pojoClass,
-            String fileName, boolean isCreateHeader, HttpServletResponse response) {
+                                   String fileName, boolean isCreateHeader, HttpServletResponse response) {
         ExportParams exportParams = new ExportParams(title, sheetName);
         exportParams.setCreateHeadRows(isCreateHeader);
         defaultExport(list, pojoClass, fileName, response, exportParams);
@@ -93,13 +95,13 @@ public class FileUtil {
     }
 
     public static void exportExcel(List<?> list, String title, String sheetName, Class<?> pojoClass,
-            String fileName, HttpServletResponse response) {
+                                   String fileName, HttpServletResponse response) {
         defaultExport(list, pojoClass, fileName, response, new ExportParams(title, sheetName));
     }
 
     public static void exportExcel1(List<?> list, String title, String sheetName,
-            Class<?> pojoClass,
-            String fileName, HttpServletResponse response) {
+                                    Class<?> pojoClass,
+                                    String fileName, HttpServletResponse response) {
         defaultExport(list, pojoClass, fileName, response, new ExportParams(title, sheetName));
         Workbook workbook = ExcelExportUtil
                 .exportExcel(new ExportParams(title, sheetName), pojoClass, list);
@@ -131,12 +133,12 @@ public class FileUtil {
     }
 
     public static void exportExcel(List<Map<String, Object>> list, String fileName,
-            HttpServletResponse response) {
+                                   HttpServletResponse response) {
         defaultExport(list, fileName, response);
     }
 
     private static void defaultExport(List<?> list, Class<?> pojoClass, String fileName,
-            HttpServletResponse response, ExportParams exportParams) {
+                                      HttpServletResponse response, ExportParams exportParams) {
         Workbook workbook = ExcelExportUtil.exportExcel(exportParams, pojoClass, list);
         if (workbook != null) {
         }
@@ -144,7 +146,7 @@ public class FileUtil {
     }
 
     private static void downLoadExcel(String fileName, HttpServletResponse response,
-            Workbook workbook) {
+                                      Workbook workbook) {
         try {
             response.setCharacterEncoding("UTF-8");
             response.setHeader("content-Type", "application/vnd.ms-excel");
@@ -157,7 +159,7 @@ public class FileUtil {
     }
 
     private static void defaultExport(List<Map<String, Object>> list, String fileName,
-            HttpServletResponse response) {
+                                      HttpServletResponse response) {
         Workbook workbook = ExcelExportUtil.exportExcel(list, ExcelType.HSSF);
         if (workbook != null) {
             ;
@@ -166,7 +168,7 @@ public class FileUtil {
     }
 
     public static <T> List<T> importExcel(String filePath, Integer titleRows, Integer headerRows,
-            Class<T> pojoClass) {
+                                          Class<T> pojoClass) {
         if (StringUtils.isBlank(filePath)) {
             return null;
         }
@@ -186,7 +188,7 @@ public class FileUtil {
     }
 
     public static <T> List<T> importExcel(MultipartFile file, Integer titleRows, Integer headerRows,
-            Class<T> pojoClass) {
+                                          Class<T> pojoClass) {
         if (file == null) {
             return null;
         }

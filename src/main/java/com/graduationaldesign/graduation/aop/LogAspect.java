@@ -123,10 +123,12 @@ public class LogAspect {
         log.info("方法[{}]开始执行...", signature.getName());
         Object object = proceedingJoinPoint.proceed();
         log.info("方法[{}]执行结束.", signature.getName());
-        //记录日志
-        takeNoteLog(signature, (ResponseEntity) object, proceedingJoinPoint);
-        //重设cookie
-        resetCookie(signature, object);
+        if (object != null) {
+            //记录日志
+            takeNoteLog(signature, (ResponseEntity) object, proceedingJoinPoint);
+            //重设cookie
+            resetCookie(signature, object);
+        }
         return object;
     }
 
@@ -176,7 +178,8 @@ public class LogAspect {
             if (methodName.indexOf("exit") != -1) {
                 title.append("退出了系统");
             } else {
-                title.append("查询了");
+                return;
+//                title.append("查询了");
             }
         } else {
             if (methodName.indexOf("update") != -1 || methodName.indexOf("Change") != -1) {

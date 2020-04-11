@@ -308,7 +308,8 @@ public class ReportServiceImpl implements ReportService {
         params.put("reportContent", report.getReportContent());
         params.put("subject", report.getSubject());
 //        params = BeanUtil.beanToMap(report);
-        String fileString = "word/firstReport.docx";
+//        String fileString = "word/firstReport.docx";
+        String fileString = "/usr/local/graduation/word/firstReport.docx";
         if (type != null && type.equals(2)) {
             fileString = "word/finalReport.docx";
         }

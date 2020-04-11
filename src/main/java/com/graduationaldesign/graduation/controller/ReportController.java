@@ -189,12 +189,13 @@ public class ReportController {
     }
 
     @RequestMapping("/export")
-    public ResponseEntity<Object> export(String subId, Integer type) {
+    public void export(String subId, Integer type) {
         try {
+            //todo
             reportService.export(request, response, subId, type);
-            return ResponseStatus.success("下载成功", this);
+//            return ResponseStatus.success("下载成功", this);
         } catch (RuntimeException e) {
-            return ResponseStatus.failure(e.getMessage(), this);
+//            return ResponseStatus.failure(e.getMessage(), this);
         }
     }
 
