@@ -32,7 +32,8 @@ public class DesignShowServiceImpl implements DesignShowService {
     RootPropeties rootPropeties;
     @Autowired
     FileUploadServiceImpl fileUploadService;
-    final String FILE_PATH = System.getProperty("user.dir") + "/upload/" + this.getClass().getName().substring(0, this.getClass().getName().indexOf("ServiceImpl")) + "/";
+    //    final String FILE_PATH = System.getProperty("user.dir") + "/upload/" + this.getClass().getName().substring(0, this.getClass().getName().indexOf("ServiceImpl")) + "/";
+    final String FILE_PATH = "/usr/local/graduation/upload/" + this.getClass().getSimpleName().substring(0, this.getClass().getSimpleName().indexOf("ServiceImpl")) + "/";
 
 
     @Override

@@ -1,9 +1,8 @@
 package com.graduationaldesign.graduation.service.impl;
 
-import com.graduationaldesign.graduation.pojo.Admin;
-import com.graduationaldesign.graduation.pojo.ScoreRecord;
-import com.graduationaldesign.graduation.pojo.Student;
-import com.graduationaldesign.graduation.pojo.Teacher;
+import com.graduationaldesign.graduation.pojo.*;
+import com.graduationaldesign.graduation.pojo.excelPojo.ReplyTeamExt;
+import com.graduationaldesign.graduation.pojo.excelPojo.ReplyTeamModel;
 import com.graduationaldesign.graduation.service.FileDownService;
 import com.graduationaldesign.graduation.util.FileUtil;
 import com.graduationaldesign.graduation.util.ResponseStatus;
@@ -17,6 +16,7 @@ import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -64,15 +64,15 @@ public class FileDownServiceImpl implements FileDownService {
 
 
     @Override
-    public ResponseEntity<Object> download(HttpServletResponse response, String fileName) throws UnsupportedEncodingException {
+    public ResponseEntity<Object> download(HttpServletResponse response, String fileName, String viewName) throws UnsupportedEncodingException {
         String filePathName = fileName;
-        File file = new File("upload/" + filePathName);
+        File file = new File("/usr/local/graduation/upload/" + filePathName);
         if (!file.exists()) {
             return ResponseStatus.failure("文件不存在", this);
         }
         //使用URLEncoder解决中文变__问题
         response.setHeader("Content-Disposition",
-                "attachment;fileName=" + URLEncoder.encode(filePathName, "utf-8"));
+                "attachment;fileName=" + URLEncoder.encode(FileUtil.getViewFileName(fileName, viewName), "utf-8"));
         try {
             InputStream inStream = new FileInputStream(file);
             OutputStream os = response.getOutputStream();
@@ -96,10 +96,31 @@ public class FileDownServiceImpl implements FileDownService {
     @Override
     public void exportScore(HttpServletResponse response) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         List<ScoreRecord> scoreRecordList = scoreRecordService.selectByParam(new HashMap<>());
-        scoreRecordList.forEach(e -> {
-            e.getSubject();
-            e.getReplyTeam();
-        });
+        for (int i = 0; i < scoreRecordList.size(); i++) {
+            ScoreRecord scoreRecord = scoreRecordList.get(i);
+            scoreRecord.getSubject();
+            ReplyTeam replyTeam = scoreRecord.getReplyTeam();
+            replyTeam.setTeamLeaderId(replyTeam.getTeacher().getTeaName());
+            scoreRecord.setReplyTeam(replyTeam);
+            scoreRecordList.set(i, scoreRecord);
+        }
         FileUtil.exportExcel(scoreRecordList, "答辩信息表", "中山大学南方学院", ScoreRecord.class, "答辩信息表.xls", response);
+    }
+
+    @Override
+    public void exportReplyTeamDemo(HttpServletResponse response) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+        List<ReplyTeamModel> lstReplyTeamModel = new ArrayList<>();
+        for (int i = 0; i < 2; i++) {
+            ReplyTeamModel replyTeamModel = new ReplyTeamModel("答辩小组名称" + i, "答辩地址" + i, new Date(), "答辩小组组长编号" + i, "答辩关联课题编号" + i);
+            replyTeamModel.setId(0);
+            List<ReplyTeamExt> lstReplyTeamExt = new ArrayList<>();
+            for (int j = 0; j < 4; j++) {
+                ReplyTeamExt replyTeamExt = new ReplyTeamExt("导师编号" + j, "导师名称" + j);
+                lstReplyTeamExt.add(replyTeamExt);
+            }
+            replyTeamModel.setLstReplyTeamExt(lstReplyTeamExt);
+            lstReplyTeamModel.add(replyTeamModel);
+        }
+        FileUtil.exportExcel(lstReplyTeamModel, "答辩小组信息表", "中山大学南方学院", ReplyTeamModel.class, "答辩小组批量导入模板.xls", response);
     }
 }

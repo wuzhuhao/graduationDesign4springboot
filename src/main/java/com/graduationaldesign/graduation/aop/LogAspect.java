@@ -125,7 +125,11 @@ public class LogAspect {
         log.info("方法[{}]执行结束.", signature.getName());
         if (object != null) {
             //记录日志
-            takeNoteLog(signature, (ResponseEntity) object, proceedingJoinPoint);
+            try {
+                takeNoteLog(signature, (ResponseEntity) object, proceedingJoinPoint);
+            } catch (Exception e) {
+                log.error("日记系统出错");
+            }
             //重设cookie
             resetCookie(signature, object);
         }

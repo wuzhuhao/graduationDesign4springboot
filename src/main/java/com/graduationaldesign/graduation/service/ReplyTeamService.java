@@ -1,6 +1,7 @@
 package com.graduationaldesign.graduation.service;
 
 import com.graduationaldesign.graduation.pojo.ReplyTeam;
+import com.graduationaldesign.graduation.pojo.excelPojo.ReplyTeamModel;
 import com.graduationaldesign.graduation.util.PageBean;
 import org.springframework.http.ResponseEntity;
 
@@ -33,4 +34,5 @@ public interface ReplyTeamService {
 
     ResponseEntity<Object> updateListByPrimaryKeySelective(List<ReplyTeam> lstRecord);
 
+    ResponseEntity<Object> insertListByExcelModel(List<ReplyTeamModel> lstRecord);
 }

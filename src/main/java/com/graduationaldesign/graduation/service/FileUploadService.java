@@ -13,4 +13,6 @@ public interface FileUploadService {
     String multipleFiles(MultipartFile[] files);
 
     void importReplyScore(MultipartFile file);
+
+    void importReplyTeam(MultipartFile file);
 }

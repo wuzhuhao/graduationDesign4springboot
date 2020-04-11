@@ -4,9 +4,13 @@ import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.mapper.ReplyTeamMapper;
 import com.graduationaldesign.graduation.pojo.ReplyTeam;
 import com.graduationaldesign.graduation.pojo.ReplyTeamExample;
+import com.graduationaldesign.graduation.pojo.ScoreRecord;
 import com.graduationaldesign.graduation.pojo.TeamTeaRelate;
+import com.graduationaldesign.graduation.pojo.excelPojo.ReplyTeamExt;
+import com.graduationaldesign.graduation.pojo.excelPojo.ReplyTeamModel;
 import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.ReplyTeamService;
+import com.graduationaldesign.graduation.service.ScoreRecordService;
 import com.graduationaldesign.graduation.service.TeamTeaRelateService;
 import com.graduationaldesign.graduation.util.PageBean;
 import com.graduationaldesign.graduation.util.ResponseStatus;
@@ -19,6 +23,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @Author: wuzhuhao
@@ -33,6 +38,8 @@ public class ReplyTeamServiceImpl implements ReplyTeamService {
     RootPropeties rootPropeties;
     @Autowired
     TeamTeaRelateService teamTeaRelateService;
+    @Autowired
+    ScoreRecordService scoreRecordService;
 
     @Override
     public int deleteByPrimaryKey(Integer id) {
@@ -45,11 +52,25 @@ public class ReplyTeamServiceImpl implements ReplyTeamService {
     }
 
     @Override
-    public int insertSelective(ReplyTeam record) {
-        int rowNum = replyTeamMapper.insertSelective(record);
+    public int insertSelective(ReplyTeam replyTeam) {
+        int rowNum = replyTeamMapper.insertSelective(replyTeam);
         if (rowNum > 0) {
-            TeamTeaRelate teamTeaRelate = new TeamTeaRelate(record.getTeamLeaderId(), record.getId());
+            TeamTeaRelate teamTeaRelate = new TeamTeaRelate(replyTeam.getTeamLeaderId(), replyTeam.getId());
             teamTeaRelateService.insertSelective(teamTeaRelate);
+            List<ReplyTeamExt> lstReplyTeamExt = replyTeam.getLstReplyTeamExt();
+            String replyTeamSubId = replyTeam.getReplyTeamSubId();
+            if (lstReplyTeamExt != null && lstReplyTeamExt.size() > 0) {
+                for (ReplyTeamExt replyTeamExt : lstReplyTeamExt) {
+                    TeamTeaRelate teamTeaRelate1 = new TeamTeaRelate(replyTeamExt.getTeaId(), replyTeam.getId());
+                    teamTeaRelateService.insertSelective(teamTeaRelate1);
+                }
+            }
+            if (replyTeamSubId != null && replyTeamSubId.length() > 0 && (!"0".equals(replyTeamSubId))) {
+                ScoreRecord scoreRecord = new ScoreRecord();
+                scoreRecord.setScoreSubId(replyTeamSubId);
+                scoreRecord.setReplyTeamId(replyTeam.getId());
+                scoreRecordService.updateByScoreSubId(scoreRecord);
+            }
         }
         return rowNum;
     }
@@ -84,7 +105,6 @@ public class ReplyTeamServiceImpl implements ReplyTeamService {
         ExampleHelper.addCondition(ReplyTeam.class, criteria, params);
         List<ReplyTeam> list = this.replyTeamMapper.selectByExample(example);
         pageBean.setBeanList(list);
-        //pageBean.setParams(params);
         return pageBean;
     }
 
@@ -104,6 +124,22 @@ public class ReplyTeamServiceImpl implements ReplyTeamService {
         } catch (Exception e) {
             e.printStackTrace();
             message = MessageFormat.format("批量修改{0}失败", rootPropeties.getReplyTeam());
+        }
+        return ResponseStatus.success(message);
+    }
+
+    @Override
+    public ResponseEntity<Object> insertListByExcelModel(List<ReplyTeamModel> lstReplyTeamModel) {
+        String message = MessageFormat.format("批量导入{0}成功", rootPropeties.getReplyTeam());
+        try {
+            List<ReplyTeam> list = lstReplyTeamModel.stream().map(e -> e.convertReplyTeam()).collect(Collectors.toList());
+            for (ReplyTeam replyTeam : list) {
+                //插入答辩组和导师
+                insertSelective(replyTeam);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            message = MessageFormat.format("批量导入{0}失败", rootPropeties.getReplyTeam());
         }
         return ResponseStatus.success(message);
     }

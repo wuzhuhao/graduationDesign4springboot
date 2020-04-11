@@ -45,7 +45,8 @@ public class ReportServiceImpl implements ReportService {
     FileUploadServiceImpl fileUploadService;
     @Autowired
     FileDownService fileDownService;
-    final String FILE_PATH = System.getProperty("user.dir") + "/upload/" + this.getClass().getName().substring(0, this.getClass().getName().indexOf("ServiceImpl")) + "/";
+    //    final String FILE_PATH = System.getProperty("user.dir") + "/upload/" + this.getClass().getName().substring(0, this.getClass().getName().indexOf("ServiceImpl")) + "/";
+    final String FILE_PATH = "/usr/local/graduation/upload/" + this.getClass().getSimpleName().substring(0, this.getClass().getSimpleName().indexOf("ServiceImpl")) + "/";
 
     @Override
     public int deleteByPrimaryKey(String subId, Integer reportType) {
@@ -284,7 +285,7 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public void uploadFile(MultipartFile file, String subId, Integer type, boolean isTemp) {
         Report report = new Report(subId, type);
-        if (isTemp) {
+        if (!isTemp) {
             report.setReportFile(fileUploadService.singleFile(file, FILE_PATH));
         } else {
             report.setReportTemp(fileUploadService.singleFile(file, FILE_PATH));
@@ -323,11 +324,17 @@ public class ReportServiceImpl implements ReportService {
         if (report == null || report.getId() == 0) {
             throw new RuntimeException("数据不存在，请检查数据");
         }
+        String typeName = "附件";
+        if (reportType.equals(2)) {
+            typeName = "模板";
+        }
+        String viewName = report.getSubject().getSubName() + "开题报告" + typeName;
         String file = FILE_PATH + report.getReportFile();
         if (fileType.equals(2)) {
             file = FILE_PATH + report.getReportTemp();
+            viewName = report.getSubject().getSubName() + "终稿" + typeName;
         }
-        fileDownService.download(response, file);
+        fileDownService.download(response, file, viewName);
     }
 
     public Integer updateState(Report report) {

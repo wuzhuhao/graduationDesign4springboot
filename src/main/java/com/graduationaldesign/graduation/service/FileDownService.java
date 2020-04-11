@@ -21,5 +21,7 @@ public interface FileDownService {
 
     void exportScore(HttpServletResponse response) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
-    public ResponseEntity<Object> download(HttpServletResponse response, String fileName) throws UnsupportedEncodingException;
+    void exportReplyTeamDemo(HttpServletResponse response) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
+
+    ResponseEntity<Object> download(HttpServletResponse response, String fileName, String viewName) throws UnsupportedEncodingException;
 }

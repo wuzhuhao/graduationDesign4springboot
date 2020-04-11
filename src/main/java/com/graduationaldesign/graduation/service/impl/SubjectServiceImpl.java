@@ -48,7 +48,8 @@ public class SubjectServiceImpl implements SubjectService {
     @Autowired
     TaskService taskService;
 
-    final String FILE_PATH = System.getProperty("user.dir") + "/upload/" + this.getClass().getName().substring(0, this.getClass().getName().indexOf("ServiceImpl")) + "/";
+    //    final String FILE_PATH = System.getProperty("user.dir") + "/upload/" + this.getClass().getName().substring(0, this.getClass().getName().indexOf("ServiceImpl")) + "/";
+    final String FILE_PATH = "/usr/local/graduation/upload/" + this.getClass().getSimpleName().substring(0, this.getClass().getSimpleName().indexOf("ServiceImpl")) + "/";
 
     /*==============私有接口=====================*/
 
@@ -311,9 +312,8 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public void uploadSubjectFile(MultipartFile file, String subId) {
-        String path = System.getProperty("user.dir") + "/upload/" + this.getClass().getName().substring(0, this.getClass().getName().indexOf("ServiceImpl")) + "/";
         Subject subject = new Subject(subId);
-        subject.setSubFile(fileUploadService.singleFile(file, path));
+        subject.setSubFile(fileUploadService.singleFile(file, FILE_PATH));
         subjectMapper.updateByPrimaryKeySelective(subject);
     }
 

@@ -47,7 +47,7 @@ public class FileDownController {
     public ResponseEntity<Object> download(HttpServletResponse response, String fileName)
             throws UnsupportedEncodingException {
         String filePathName = fileName;
-        File file = new File("upload/" + filePathName);
+        File file = new File("/usr/local/graduation/upload/" + filePathName);
         if (!file.exists()) {
             return ResponseStatus.failure("文件不存在", this);
         }
@@ -148,6 +148,23 @@ public class FileDownController {
         } catch (Exception e) {
             e.printStackTrace();
             result = ResponseStatus.failure("导出答辩信息失败", this);
+        }
+        return result;
+    }
+
+    @RequestMapping("/exportReplyTeamDemo")
+    @ResponseBody
+    public ResponseEntity<Object> exportReplyTeamDemo(HttpServletResponse servletResponse) {
+        ResponseEntity<Object> result = null;
+        try {
+            fileDownService.exportReplyTeamDemo(servletResponse);
+            result = ResponseStatus.success("导出答辩信息模板成功", this);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            result = ResponseStatus.failure(e.getMessage(), this);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = ResponseStatus.failure("导出答辩信息模板失败", this);
         }
         return result;
     }

@@ -27,6 +27,8 @@ public interface ScoreRecordService {
 
     int updateByPrimaryKey(ScoreRecord record);
 
+    int updateByScoreSubId(ScoreRecord record);
+
     public ResponseEntity<Object> updateListByPrimaryKeySelective(List<ScoreRecord> lstRecord);
 
     public void deleteByPrimaryKeyIn(List<Integer> lstPrimaryKey) throws Exception;//分页service层

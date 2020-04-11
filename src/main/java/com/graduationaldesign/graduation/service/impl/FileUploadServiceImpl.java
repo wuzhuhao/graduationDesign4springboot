@@ -5,10 +5,8 @@ import com.graduationaldesign.graduation.pojo.Admin;
 import com.graduationaldesign.graduation.pojo.ScoreRecord;
 import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.Teacher;
-import com.graduationaldesign.graduation.service.AdminService;
-import com.graduationaldesign.graduation.service.FileUploadService;
-import com.graduationaldesign.graduation.service.StudentService;
-import com.graduationaldesign.graduation.service.TeacherService;
+import com.graduationaldesign.graduation.pojo.excelPojo.ReplyTeamModel;
+import com.graduationaldesign.graduation.service.*;
 import com.graduationaldesign.graduation.util.FileUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +36,8 @@ public class FileUploadServiceImpl implements FileUploadService {
     RootPropeties rootPropeties;
     @Autowired
     ScoreRecordServiceImpl scoreRecordService;
+    @Autowired
+    ReplyTeamService replyTeamService;
 
     @Override
     public String singleFile(MultipartFile file, String path) throws RuntimeException {
@@ -51,16 +51,17 @@ public class FileUploadServiceImpl implements FileUploadService {
             log.info("[文件组件名称Name] - [{}]", file.getName());
             log.info("[文件原名称OriginalFileName] - [{}]", file.getOriginalFilename());
             log.info("[文件大小] - [{}]", file.getSize());
-            log.info(this.getClass().getName() + "图片路径：" + path);
+            log.info(this.getClass().getSimpleName() + "图片路径：" + path);
             File f = new File(path);
             //如果不存在该路径就创建
             if (!f.exists()) {
                 f.mkdir();
             }
-            File dir = new File(path + file.getOriginalFilename());
+            String generateFileName = FileUtil.generateFileName(file.getOriginalFilename());
+            File dir = new File(path + generateFileName);
             // 文件写入
             file.transferTo(dir);
-            return file.getOriginalFilename();
+            return generateFileName;
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("上传单个文件失败");
@@ -73,8 +74,9 @@ public class FileUploadServiceImpl implements FileUploadService {
             throw new RuntimeException("上传的文件不能为空");
         }
         //设置上传文件路径
-        String filePath = System.getProperty("user.dir") + "/upload/";
-        log.info(this.getClass().getName() + "图片路径：" + filePath);
+//        String filePath = System.getProperty("user.dir") + "/upload/";
+        String filePath = "/usr/local/graduation/upload/";
+        log.info(this.getClass().getSimpleName() + "图片路径：" + filePath);
         File f = new File(filePath);
         //如果不存在该路径就创建
         if (!f.exists()) {
@@ -149,7 +151,12 @@ public class FileUploadServiceImpl implements FileUploadService {
     public void importReplyScore(MultipartFile file) {
         List<ScoreRecord> scoreRecordList = FileUtil.importExcel(file, 1, 1, ScoreRecord.class);
         scoreRecordService.updateListByPrimaryKeySelective(scoreRecordList);
-//        scoreRecordService.insertSelectiveList(scoreRecordList);
+    }
+
+    @Override
+    public void importReplyTeam(MultipartFile file) {
+        List<ReplyTeamModel> lstReplyTeamModel = FileUtil.importExcel(file, 1, 2, ReplyTeamModel.class);
+        replyTeamService.insertListByExcelModel(lstReplyTeamModel);
     }
 
     public void deleteFile(String path, String name) {

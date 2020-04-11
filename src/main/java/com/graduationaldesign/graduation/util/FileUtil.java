@@ -205,4 +205,15 @@ public class FileUtil {
         }
         return list;
     }
+
+    public static String generateFileName(String fileName) {
+        String generateUUID = IDUtil.generateUUID();
+        String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+        return generateUUID + "." + suffix;
+    }
+
+    public static String getViewFileName(String fileName, String preFileName) {
+        String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+        return preFileName + "." + suffix;
+    }
 }

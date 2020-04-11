@@ -61,6 +61,15 @@ public class ScoreRecordServiceImpl extends com.graduationaldesign.graduation.se
     }
 
     @Override
+    public int updateByScoreSubId(ScoreRecord record) {
+        ScoreRecordExample example = new ScoreRecordExample();
+        ScoreRecordExample.Criteria criteria = example.createCriteria();
+        criteria.andScoreSubIdEqualTo(record.getScoreSubId());
+        scoreRecordMapper.updateByExampleSelective(record, example);
+        return scoreRecordMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
     public ResponseEntity<Object> updateListByPrimaryKeySelective(List<ScoreRecord> lstRecord) {
         String message = MessageFormat.format("批量修改{0}成功", rootPropeties.getScoreRecord());
         try {

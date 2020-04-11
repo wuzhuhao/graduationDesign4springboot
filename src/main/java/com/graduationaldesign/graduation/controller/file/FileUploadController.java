@@ -67,4 +67,15 @@ public class FileUploadController {
             return ResponseStatus.failure("导入答辩数据失败", this);
         }
     }
+
+    @RequestMapping("/importReplyTeamByExcel")
+    public ResponseEntity<Object> importReplyTeamByExcel(@RequestParam("file") MultipartFile file) {
+        try {
+            fileUploadService.importReplyTeam(file);
+            return ResponseStatus.success("导入答辩数据成功", this);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseStatus.failure("导入答辩数据失败", this);
+        }
+    }
 }
