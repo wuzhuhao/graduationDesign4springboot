@@ -106,6 +106,14 @@ public class WebConfig implements WebMvcConfigurer {
 //                .excludePathPatterns("/**/deleteAll")
                 .excludePathPatterns("/uploadFile/importUserByExcel")
                 .excludePathPatterns("/uploadFile/importReplyTeamByExcel")
+
+                .excludePathPatterns("/uploadFile/importUserByExcel")
+                .excludePathPatterns("/sub/uploadSubjectFile")
+                .excludePathPatterns("/uploadFile/importReplyScoreByExcel")
+                .excludePathPatterns("/report/uploadFile")
+                .excludePathPatterns("/report/uploadTemp")
+
+
                 .excludePathPatterns("/exit")
 //                .excludePathPatterns("/task/export")
 //                .excludePathPatterns("/report/export")

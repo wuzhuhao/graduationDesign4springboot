@@ -33,7 +33,7 @@
           <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doSearch">查询</Button>  &nbsp; &nbsp; &nbsp; &nbsp;
            <Button type="info" icon="ios-search"  style="float:left;margin:0 8px" @click="doReset">重置</Button>  &nbsp;
           <Button type="info"  style="float:left;margin:0 8px"  @click="exportData(1)"><Icon type="ios-download-outline"></Icon>导出数据</Button>&nbsp;
-     <Upload action="http://localhost:8080/uploadFile/importReplyTeamByExcel"   :on-success="UpdateSuccess" style="float:left;margin:0 8px">
+     <Upload action="http://47.100.136.105:8080/uploadFile/importReplyTeamByExcel"   :on-success="UpdateSuccess" style="float:left;margin:0 8px">
             <Button  type="info" icon="ios-cloud-upload-outline">导入答辩组</Button>
         </Upload>
          <Button type="info"  style="float:left;margin:0 8px"  @click="exportDataDemo(1)"><Icon type="ios-download-outline"></Icon>导出答辩组模板</Button>&nbsp;
@@ -594,7 +594,7 @@ export default {
     },
     exportDataDemo(type){
        
-            window.location.href="http://localhost:8080/downFile/exportReplyTeamDemo"
+            window.location.href="http://47.100.136.105:8080/downFile/exportReplyTeamDemo"
         
     }
     

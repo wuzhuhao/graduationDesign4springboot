@@ -90,8 +90,9 @@ public class ScoreRecordController {
         try {
             return ResponseStatus.success(scoreRecordService.listByPage(params, page, pageSize), this);
         } catch (Exception e) {
+            e.getStackTrace();
             return ResponseStatus.failure(
-                    MessageFormat.format("获取{0}列表失败", rootPropeties.getAcademy()), this);
+                    MessageFormat.format("获取{0}列表失败", "评分"), this);
         }
     }
 

@@ -247,6 +247,7 @@ public class ReportServiceImpl implements ReportService {
         }
         ReportExample.Criteria criteria = example.createCriteria();
         criteria.andJoinTeaIdEqualTo(teacher.getTeaId());
+        criteria.andJoinStuIdNotEqualTo("");
         ExampleHelper.addCondition(Report.class, criteria, params);
         if (reportType == 1 || reportType == 2) {
             criteria.andReportTypeEqualTo(reportType);
@@ -325,10 +326,13 @@ public class ReportServiceImpl implements ReportService {
             throw new RuntimeException("数据不存在，请检查数据");
         }
         String typeName = "附件";
-        if (reportType.equals(2)) {
+        if (fileType.equals(2)) {
             typeName = "模板";
         }
         String viewName = report.getSubject().getSubName() + "开题报告" + typeName;
+        if (report.getReportFile() == null || report.getReportFile().equals("")) {
+            throw new RuntimeException("未有附件");
+        }
         String file = FILE_PATH + report.getReportFile();
         if (fileType.equals(2)) {
             file = FILE_PATH + report.getReportTemp();

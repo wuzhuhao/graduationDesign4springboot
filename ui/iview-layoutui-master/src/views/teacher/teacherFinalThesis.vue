@@ -134,24 +134,7 @@ export default {
                         minWidth: 120,
                         render: (h, params) => {
                             return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'primary',
-                                        size: 'small',
-                                       
-                                    },
-                                     style: {
-                                        marginRight: '5px'
-                                        },
-                                     attrs:{
-                                        title:'上传论文'
-                                    },
-                                      on: {
-                                        click: () => {
-                                        this.select(params.row)            //编辑方法
-                                        }
-                                      }
-                                },'上传论文'),
+                             
                                 h('Button', {
                                     props: {
                                         type: 'primary',
@@ -163,7 +146,7 @@ export default {
                                     },
                                       on: {
                                         click: () => {
-                                        this.select(params.row)            //编辑方法
+                                        this.exportDataDemo(params.row)            //编辑方法
                                         }
                                       }
                                 },'下载附件')
@@ -311,6 +294,7 @@ export default {
                               reportContent: item.reportContent,
                               stuMessage: item.stuMessage,
                               teaSuggestion: item.teaSuggestion,
+                              subId:item.subject.subId,
                               subject: item.subject,
                               stuMajor:item.subject.student.stuMajor,
                               subName:item.subject.subName,
@@ -469,11 +453,13 @@ export default {
             this.formItem.subject = '',
         this.getData(1,10);
     },
-    exportDataDemo(type){
-       
-            window.location.href="http://localhost:8080/downFile/exportDemo?type=" + type
+       exportDataDemo(row){
+            var url="http://47.100.136.105:8080/report/downloadFile?reportType=2&subId=" + row.subId + '&fileType=1'
+            window.open(url) 
         
-    }
+    },
+  
+    
     
     }
 };

@@ -47,9 +47,9 @@ router.beforeEach((to, from, next) => {
 
 
 // 配置公共url
-axios.defaults.baseURL = 'http://localhost:8080/'
+axios.defaults.baseURL = 'http://47.100.136.105:8080/'
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
-// axios.defaults.headers.post['Access-Control-Allow-Origin'] = 'http://localhost:8080'
+// axios.defaults.headers.post['Access-Control-Allow-Origin'] = 'http://47.100.136.105:8080'
 // axios.defaults.headers.post['Access-Control-Allow-Methods'] = 'GET, POST, PATCH, post, DELETE, OPTIONS'
 axios.defaults.withCredentials = true; //配置为true
 //添加请求拦截器

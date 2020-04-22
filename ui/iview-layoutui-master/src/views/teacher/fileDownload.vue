@@ -40,8 +40,7 @@
           <Button type="info"  style="float:left;margin:0 8px"  @click="exportDataReport(1)"><Icon type="ios-download-outline"></Icon>导出开题报告</Button>&nbsp;
           <Button type="info"  style="float:left;margin:0 8px"  @click="exportDataTask()"><Icon type="ios-download-outline"></Icon>导出任务书</Button>&nbsp;
            <Button type="info"  style="float:left;margin:0 8px"  @click="exportDataReport(2)"><Icon type="ios-download-outline"></Icon>导出论文</Button>&nbsp; 
-           <Button type="info"  style="float:left;margin:0 8px"  @click="exportData(1)"><Icon type="ios-download-outline"></Icon>导出周进展</Button>&nbsp;
-        </div>
+                  </div>
         <div slot="btns">
           <Button type="primary" icon="md-add" @click="handleCreate">添加</Button>
         </div>
@@ -500,13 +499,13 @@ export default {
         return str.search('完成')!=-1
     },
     exportDataTask(){
-     var url="http://localhost:8080/task/export?primaryKey="+ this.selectList[0].taskList[0].taskId
+     var url="http://47.100.136.105:8080/task/export?primaryKey="+ this.selectList[0].taskList[0].taskId
            console.log( url)
            window.open(url) 
     },
     exportDataReport(type){
        console.log( this.selectList)
-           var url="http://localhost:8080/report/export?type=" + type+ "&subId=" + this.selectList[0].subId
+           var url="http://47.100.136.105:8080/report/export?type=" + type+ "&subId=" + this.selectList[0].subId
            console.log( url)
            window.open(url) 
 

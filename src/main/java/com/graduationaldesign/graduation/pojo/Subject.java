@@ -256,6 +256,10 @@ public class Subject implements Serializable {
      * @param firstReportDeadline the value for t_subject.first_report_deadline, 开题报告最后的时间
      */
     public void setFirstReportDeadline(Date firstReportDeadline) {
+//        if(){
+////
+////        }
+        System.out.println(firstReportDeadline);
         this.firstReportDeadline = firstReportDeadline;
     }
 
@@ -454,6 +458,9 @@ public class Subject implements Serializable {
     }
 
     public Subject() {
+//        this.teacher = new Teacher();
+//        this.student = new Student();
+//        this.scoreRecord = new ScoreRecord();
     }
 
     @Override

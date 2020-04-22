@@ -912,6 +912,11 @@ public class ReportExample implements Example {
             return (Criteria) this;
         }
 
+        public Criteria andJoinStuIdNotEqualTo(String value) {
+            addCriterion("t_subject.stu_id != ", value, "t_subject.stu_id");
+            return (Criteria) this;
+        }
+
         public Criteria andJoinEqualLike(String value, String tableName) {
             addCriterion(tableName + " like ", value, tableName);
             return (Criteria) this;

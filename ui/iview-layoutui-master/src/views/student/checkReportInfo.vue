@@ -169,7 +169,7 @@ export default {
                         });
       },
       exportDataDemo(){
-            var url="http://localhost:8080/report/export?type=1&subId=" + this.formItem.reportSubId
+            var url="http://47.100.136.105:8080/report/export?type=1&subId=" + this.formItem.reportSubId
             window.open(url) 
         
     },

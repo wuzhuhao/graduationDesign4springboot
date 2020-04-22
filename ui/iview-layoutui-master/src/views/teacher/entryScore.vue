@@ -154,7 +154,7 @@ export default {
                               scoreSubId:item.scoreSubId,
                               subName: item.subject.subName,
                               subLastScore: item.subject.subLastScore,
-                              stuName: item.subject.student.stuName
+                              stuName: (item.subject.student==null||item.subject.student==undefined)?'':item.subject.student.stuName
                            })
                           })
                   

@@ -1,3 +1,4 @@
+
 //  store.js 中都mutation中增加添加和删除token的方法
 import Vue from 'vue'
 import Vuex from 'vuex'

@@ -164,21 +164,21 @@ export default {
                                         }
                                       }
                                 },'查看'),
-                                  h('Button', {
-                                    props: {
-                                        type: 'primary',
-                                        size: 'small',
+                                //   h('Button', {
+                                //     props: {
+                                //         type: 'primary',
+                                //         size: 'small',
                                        
-                                    },
-                                     attrs:{
-                                        title:'下载附件'
-                                    },
-                                      on: {
-                                        click: () => {
-                                        this.select(params.row)            //编辑方法
-                                        }
-                                      }
-                                },'下载附件')
+                                //     },
+                                //      attrs:{
+                                //         title:'下载附件'
+                                //     },
+                                //       on: {
+                                //         click: () => {
+                                //         this.select(params.row)            //编辑方法
+                                //         }
+                                //       }
+                                // },'下载附件')
                             ]);
                         }
                     }
@@ -312,7 +312,9 @@ export default {
                            this.reportStateList = res.data.dict.report.reportState
                            console.log(this.reportStateList)
                           list.forEach((item, index) => {
+                            console.log(item.subject.student.stuName)
                            this.tableData.push({
+                             
                               reportSubId: item.reportSubId,
                               reportType: item.reportType,
                               id: item.id,
@@ -483,7 +485,7 @@ export default {
     },
     exportDataDemo(type){
        
-            window.location.href="http://localhost:8080/downFile/exportDemo?type=" + type
+            window.location.href="http://47.100.136.105:8080/downFile/exportDemo?type=" + type
         
     }
     

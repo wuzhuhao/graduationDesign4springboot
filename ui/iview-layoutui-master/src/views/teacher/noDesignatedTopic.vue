@@ -376,10 +376,11 @@ export default {
                               subLastScore: item.subLastScore,
                               showId: item.showId,
                               subIntroduce: item.subIntroduce,
-                              stuName :item.student.stuName
+                              stuName:item.student==null?'':item.student.stuName
+                              // stuName: item.subject.student==null?'':item.subject.student.stuName
                            })
                           })
-                  
+                          console.log(this.tableData)
                            this.pagination.total =res.data.data.totalRecord
                            this.pagination.currentPage =res.data.data.currentPage
                           
@@ -527,7 +528,7 @@ export default {
     },
     exportDataDemo(type){
        
-            window.location.href="http://localhost:8080/downFile/exportDemo?type=" + type
+            window.location.href="http://47.100.136.105:8080/downFile/exportDemo?type=" + type
         
     }
     

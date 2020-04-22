@@ -597,7 +597,7 @@ export default {
     },
     exportDataDemo(type){
        
-            window.location.href="http://localhost:8080/downFile/exportDemo?type=" + type
+            window.location.href="http://47.100.136.105:8080/downFile/exportDemo?type=" + type
         
     }
     

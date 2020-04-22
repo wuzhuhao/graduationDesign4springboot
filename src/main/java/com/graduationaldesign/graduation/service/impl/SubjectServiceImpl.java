@@ -58,9 +58,13 @@ public class SubjectServiceImpl implements SubjectService {
     public String deleteByPrimaryKey(String subId) {
         String message = "删除课题成功";
         Subject subject = selectByPrimaryKey(subId);
-        File file = new File(subject.getSubFile());
-        if (file.exists()) {
-            file.delete();
+        try {
+            File file = new File(subject.getSubFile());
+            if (file.exists()) {
+                file.delete();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         if (subjectMapper.deleteByPrimaryKey(subId) <= 0) {
             message = "删除课题失败";
@@ -73,6 +77,7 @@ public class SubjectServiceImpl implements SubjectService {
         String message = "增加课题成功！";
         try {
             record.setSubId(IDUtil.generateSubID(record.getSubSource()));
+            record.setSubStuState(1);
         } catch (NullPointerException ne) {
             message = "参数错误，请检查参数！";
         }

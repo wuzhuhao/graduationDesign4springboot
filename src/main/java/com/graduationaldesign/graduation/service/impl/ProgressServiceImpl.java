@@ -62,7 +62,7 @@ public class ProgressServiceImpl implements ProgressService {
     @Override
     public String updateByPrimaryKeySelective(Progress record) {
         String message = "修改问题成功";
-        record.setProgContentTime(new Date());
+//        record.setProgReplyTime(new Date());
         if (progressMapper.updateByPrimaryKeySelective(record) <= 0) {
             throw new RuntimeException("修改问题失败");
         }

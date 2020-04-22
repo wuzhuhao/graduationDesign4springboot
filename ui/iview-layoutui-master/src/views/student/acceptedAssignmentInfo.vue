@@ -206,7 +206,7 @@ export default {
         },
         exportDataDemo(){
           let taskId =  localStorage.getItem('taskId')
-          let url="http://localhost:8080/task/export?primaryKey=" + taskId
+          let url="http://47.100.136.105:8080/task/export?primaryKey=" + taskId
           window.open(url) 
         },
        

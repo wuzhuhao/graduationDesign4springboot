@@ -563,7 +563,7 @@ export default {
                         });
       },
       exportDataDemo(){
-            var url="http://localhost:8080/report/export?type=1&subId=" + this.InfoFormItem.reportSubId
+            var url="http://47.100.136.105:8080/report/export?type=1&subId=" + this.InfoFormItem.reportSubId
             window.open(url) 
         
     },
@@ -587,7 +587,7 @@ export default {
        
     // exportDataDemo(type){
        
-    //         window.location.href="http://localhost:8080/downFile/exportDemo?type=" + type
+    //         window.location.href="http://47.100.136.105:8080/downFile/exportDemo?type=" + type
         
     // },
     

@@ -111,6 +111,7 @@ public class Report implements Serializable {
     }
 
     public Report() {
+//        this.subject = new Subject();
     }
 
     public Report(String subId, Integer reportType) {

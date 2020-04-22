@@ -220,7 +220,7 @@ export default {
        let  userId = localStorage.getItem('userId')
          this.$axios({
                             
-                            url: 'scoreRecord/list?page=' + 1 ,
+                            url: 'scoreRecord/list?&page=' + 1 ,
                             method: 'get',//请求的方式
                            
                             // token:localStorage.getItem('token')
@@ -229,9 +229,12 @@ export default {
                          this.tableData = [];
                           let list = res.data.data.beanList;
                           list.forEach((item, index) => {
-                           
+                            console.log(1111)
                             if(item.replyScore==-1){
                               item.replyScore=''
+                            }
+                            if(item.subject.student==null){
+                                return;
                             }
                            this.tableData.push({
                               finalReportScore: item.finalReportScore,
@@ -242,9 +245,9 @@ export default {
                               replyTeamId: item.replyTeamId,
                               scoreSubId:item.scoreSubId,
                               subId:item.subject.subId,
-                              subName: item.subject.subName,
+                              subName: item.subject.subName ,
                               subLastScore: item.subject.subLastScore,
-                              stuName: item.subject.student.stuName,
+                              stuName: (item.subject.student==null||item.subject.student==undefined)?'':item.subject.student.stuName,
                              
                            })
                        

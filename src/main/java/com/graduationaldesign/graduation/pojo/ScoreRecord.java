@@ -259,5 +259,7 @@ public class ScoreRecord implements Serializable {
     }
 
     public ScoreRecord() {
+//        this.replyTeam = new ReplyTeam();
+//        this.subject = new Subject();
     }
 }

@@ -54,7 +54,12 @@ public class ResponseStatus {
     }
 
     public static ResponseEntity<Object> failure(String message, Object controller) {
-        String className = controller.getClass().getSimpleName().split("_")[0].substring(0, controller.getClass().getSimpleName().split("_")[0].indexOf("Controller"));
+        String className = "Report";
+        try {
+            className = controller.getClass().getSimpleName().split("_")[0].substring(0, controller.getClass().getSimpleName().split("_")[0].indexOf("Controller"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Result result1 = Result.failure(message);
         result1.setDict(ApplicationContextProvider.getBean(SysdictService.class).selectByModel(lowerFirstCapse(className)));
         return ResponseStatus.response(HttpStatus.SC_UNAUTHORIZED, result1);

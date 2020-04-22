@@ -33,7 +33,7 @@ public interface ScoreRecordService {
 
     public void deleteByPrimaryKeyIn(List<Integer> lstPrimaryKey) throws Exception;//分页service层
 
-    PageBean<ScoreRecord> listByPage(HashMap<String, Object> params, int page, int pageSize) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
+    PageBean<ScoreRecord> listByPage(HashMap<String, Object> params, int page, int pageSize) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException;
 
 //    List<ScoreRecord> selectByParam(Map<String, Object> params) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 }

@@ -1389,13 +1389,16 @@ export default {
         this.theme1 = theme1
         //选择菜单
         if(type==1){   
-            this.activeMenuName='student'        
+            this.activeMenuName='student'   
+            this.userName +='（学生）'     
              this.menus =this.studentMenus
         }else if(type==2){  
-            this.activeMenuName='teacher'         
+            this.activeMenuName='teacher'    
+             this.userName +='（教师）'       
              this.menus =this.teacherMenus
         }else if(type==3){  
-            this.activeMenuName='admin'         
+            this.activeMenuName='admin'       
+             this.userName +='（管理员）'    
              this.menus =this.adminMenus
         }
           

@@ -111,7 +111,7 @@ export default {
        let  userId = localStorage.getItem('userId')
          this.$axios({
                             
-                            url: 'scoreRecord/list?page=' + 1,
+                            url: 'scoreRecord/list?page=' + 1 + "&isJoinSubject=true&stuId=" + userId,
                             method: 'get',//请求的方式
                            
                             // token:localStorage.getItem('token')
@@ -133,7 +133,7 @@ export default {
                               scoreSubId:item.scoreSubId,
                               subName: item.subject.subName,
                               subLastScore: item.subject.subLastScore,
-                              stuName: item.subject.student.stuName
+                              stuName: (item.subject.student==null||item.subject.student==undefined)?'':item.subject.student.stuName
                            })
                           })
                   

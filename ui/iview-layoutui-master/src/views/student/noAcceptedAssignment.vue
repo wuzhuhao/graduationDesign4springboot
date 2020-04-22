@@ -266,7 +266,7 @@ export default {
                               taskNumber : item.taskNumber,
                               taskSubName : item.subject.subName,
                               teaName: item.subject.teacher.teaName,
-                              stuName: item.subject.student.stuName,
+                              stuName: (item.subject.student==null||item.subject.student==undefined)?'':item.subject.student.stuName,
                               stuClass: item.subject.student.stuClass,
                               replyFile : item.replyFile,
                               taskTime : item.taskTime,
@@ -432,7 +432,7 @@ export default {
     },
     exportDataDemo(type){
        
-            window.location.href="http://localhost:8080/downFile/exportDemo?type=" + type
+            window.location.href="http://47.100.136.105:8080/downFile/exportDemo?type=" + type
         
     }
     

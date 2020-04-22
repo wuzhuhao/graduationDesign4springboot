@@ -30,6 +30,15 @@ public class ScoreRecordExample implements Example {
      * @mbg.generated
      */
     protected List<Criteria> oredCriteria;
+    protected String join;
+
+    public String getJoin() {
+        return join;
+    }
+
+    public void setJoin(String join) {
+        this.join = join;
+    }
 
     /**
      * 构造查询条件,t_scorerecord
@@ -372,6 +381,11 @@ public class ScoreRecordExample implements Example {
 
         public Criteria andFinalReportScoreEqualTo(Long value) {
             addCriterion("final_report_score =", value, "finalReportScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andJoinStuIdNotEqualTo(String value) {
+            addCriterion("t_subject.stu_id != ", value, "t_subject.stu_id");
             return (Criteria) this;
         }
 

@@ -66,9 +66,10 @@ public class FileDownServiceImpl implements FileDownService {
     @Override
     public ResponseEntity<Object> download(HttpServletResponse response, String fileName, String viewName) throws UnsupportedEncodingException {
         String filePathName = fileName;
-        File file = new File("/usr/local/graduation/upload/" + filePathName);
+        File file = new File(filePathName);
         if (!file.exists()) {
-            return ResponseStatus.failure("文件不存在", this);
+            throw new RuntimeException("文件不存在");
+//            return ResponseStatus.failure("文件不存在", this);
         }
         //使用URLEncoder解决中文变__问题
         response.setHeader("Content-Disposition",
@@ -88,9 +89,10 @@ public class FileDownServiceImpl implements FileDownService {
             inStream.close();
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseStatus.failure("下载失败", this);
+            throw new RuntimeException("下载失败");
+//            return ResponseStatus.failure("下载失败", this);
         }
-        return ResponseStatus.success("下载成功", this);
+        return ResponseStatus.success("下载成功");
     }
 
     @Override

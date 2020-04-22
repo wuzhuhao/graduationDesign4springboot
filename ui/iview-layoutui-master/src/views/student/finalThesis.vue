@@ -13,10 +13,10 @@
   <div slot="search">
             
          
-        <Upload action="http://localhost:8080/report/uploadFile"    style="float:left;margin:0 8px">
+        <Upload :action="this.action"    style="float:left;margin:0 8px">
             <Button  type="info" icon="ios-cloud-upload-outline">上传论文</Button>
         </Upload>
-         <Button type="info"  style="float:left;margin:0 8px"  @click="exportData(1)"><Icon type="ios-download-outline"></Icon>下载附件</Button>&nbsp;
+         <Button type="info"  style="float:left;margin:0 8px"  @click="exportDataDemo"><Icon type="ios-download-outline"></Icon>下载附件</Button>&nbsp;
     </div>
         
         <div slot="paddingContent">
@@ -50,6 +50,8 @@ export default {
     data(){
       
       return{
+        subId:'',
+        action:'',
         tableData:[],
                 modal11: false,
                 styles: {
@@ -163,7 +165,11 @@ export default {
                     });
                 }
             } ,
-      
+      exportDataDemo(){
+            var url="http://47.100.136.105:8080/report/downloadFile?reportType=2&subId=" + this.subId + '&fileType=1'
+            window.open(url) 
+        
+    },
       // watch: {
       //   // 监测路由变化,只要变化了就调用获取路由参数方法将数据存储本组件即可
       //     '$route': 'getParams'
@@ -261,8 +267,12 @@ export default {
                           console.log(res.data)
                          this.tableData = [];
                           let list = res.data.data.beanList;
+                           this.subId = list[0].subject.subId
+                           this.action="http://47.100.136.105:8080/report/uploadFile?type=2&subId=" + this.subId
                            this.reportStateList = res.data.dict.report.reportState
+                           
                           list.forEach((item, index) => {
+                            
                            this.tableData.push({
                               reportSubId: item.reportSubId,
                               reportType: item.reportType,
@@ -433,11 +443,7 @@ export default {
             this.formItem.subject = '',
         this.getData(1,10);
     },
-    exportDataDemo(type){
-       
-            window.location.href="http://localhost:8080/downFile/exportDemo?type=" + type
-        
-    }
+  
     
     }
 };

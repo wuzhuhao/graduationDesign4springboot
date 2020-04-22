@@ -171,6 +171,11 @@ export default {
                             
                         });
       },
+        exportDataDemo(){
+            var url="http://47.100.136.105:8080/report/export?type=1&subId=" + this.formItem.reportSubId
+            window.open(url) 
+        
+    },
        update(){
           console.log(this.formItem)
             this.$axios({     

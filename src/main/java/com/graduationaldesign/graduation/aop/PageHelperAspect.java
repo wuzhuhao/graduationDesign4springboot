@@ -70,6 +70,40 @@ public class PageHelperAspect {
 
         if (object instanceof PageBean) {
             PageBean pageBean = (PageBean) object;
+//            List beanList = pageBean.getBeanList();
+//            if (beanList.size() != 0) {
+//                if (beanList.get(0) instanceof Report) {
+//                    int i = 0;
+//                    for (Object report : beanList) {
+//                        Report reports = (Report) report;
+//                        Subject subject = reports.getSubject();
+//                        subject.setStudent(new Student());
+//                        reports.setSubject(subject);
+//                        beanList.set(i, subject);
+//                        i++;
+//                    }
+//                } else if (beanList.get(0) instanceof ScoreRecord) {
+//                    int i = 0;
+//                    for (Object report : beanList) {
+//                        ScoreRecord scoreRecord = (ScoreRecord) report;
+//                        Subject subject = scoreRecord.getSubject();
+//                        subject.setStudent(new Student());
+//                        scoreRecord.setSubject(subject);
+//                        beanList.set(i, subject);
+//                        i++;
+//                    }
+//                } else if (beanList.get(0) instanceof ScoreRecord) {
+//                    int i = 0;
+//                    for (Object report : beanList) {
+//                        ScoreRecord scoreRecord = (ScoreRecord) report;
+//                        Subject subject = scoreRecord.getSubject();
+//                        subject.setStudent(new Student());
+//                        scoreRecord.setSubject(subject);
+//                        beanList.set(i, subject);
+//                        i++;
+//                    }
+//                }
+//            }
             //得到分页的结果对象
             PageInfo<Object> pageInfo = new PageInfo<>(pageBean.getBeanList());
             //总页数

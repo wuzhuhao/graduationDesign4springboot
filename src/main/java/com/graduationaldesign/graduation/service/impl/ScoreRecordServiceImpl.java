@@ -4,6 +4,7 @@ import com.graduationaldesign.graduation.aop.RootPropeties;
 import com.graduationaldesign.graduation.mapper.ScoreRecordMapper;
 import com.graduationaldesign.graduation.pojo.ScoreRecord;
 import com.graduationaldesign.graduation.pojo.ScoreRecordExample;
+import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.helper.ExampleHelper;
 import com.graduationaldesign.graduation.service.ScoreRecordService;
 import com.graduationaldesign.graduation.util.PageBean;
@@ -90,18 +91,27 @@ public class ScoreRecordServiceImpl extends com.graduationaldesign.graduation.se
     }
 
     @Override
-    public PageBean<ScoreRecord> listByPage(HashMap<String, Object> params, int page, int pageSize) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    public PageBean<ScoreRecord> listByPage(HashMap<String, Object> params, int page, int pageSize) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
         PageBean<ScoreRecord> pageBean = new PageBean<>();
         ScoreRecordExample example = new ScoreRecordExample();
         ScoreRecordExample.Criteria criteria = example.createCriteria();
+        ExampleHelper.searchJoin(ScoreRecord.class, example, criteria, params);
         ExampleHelper.addCondition(ScoreRecord.class, criteria, params);
+//        criteria.andJoinStuIdNotEqualTo("");
         List<ScoreRecord> list = this.scoreRecordMapper.selectByExample(example);
         pageBean.setBeanList(list);
+        int i = 0;
         for (ScoreRecord scoreRecord : list) {
             scoreRecord.getSubject();
             if (scoreRecord.getSubject() != null) {
-                scoreRecord.getSubject().getStudent();
+                Student student = scoreRecord.getSubject().getStudent();
+//                if (student == null) {
+//                    list.remove(i);
+//                    i++;
+//                    continue;
+//                }
                 scoreRecord.getSubject().getTeacher();
+//                i++;
             }
         }
         return pageBean;

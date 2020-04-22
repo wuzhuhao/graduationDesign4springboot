@@ -54,6 +54,10 @@ public class SubjectController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<Object> addSubject(Subject subject) {
         try {
+            Object user = tokenService.getUserByToken(request);
+            if (user instanceof Teacher) {
+                subject.setSubTeaId(((Teacher) user).getTeaId());
+            }
             return subjectService.insert(subject);
         } catch (RuntimeException e) {
             return ResponseStatus.failure(e.getMessage(), this);

@@ -3,6 +3,7 @@ package com.graduationaldesign.graduation.controller;
 
 import com.graduationaldesign.graduation.JWT.TokenService;
 import com.graduationaldesign.graduation.aop.RootPropeties;
+import com.graduationaldesign.graduation.pojo.Admin;
 import com.graduationaldesign.graduation.pojo.Progress;
 import com.graduationaldesign.graduation.pojo.Student;
 import com.graduationaldesign.graduation.pojo.Teacher;
@@ -74,7 +75,10 @@ public class ProgressController {
      */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public ResponseEntity<Object> update(Progress progress) {
-
+        Object user = tokenService.getUserByToken(request);
+        if (user instanceof Teacher || user instanceof Admin) {
+            progress.setProgReplyTime(new Date());
+        }
         try {
             return ResponseStatus.success(progressService.updateByPrimaryKeySelective(progress), this);
         } catch (RuntimeException e) {
